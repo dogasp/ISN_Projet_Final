@@ -64,6 +64,10 @@ Frame2 = Frame(Frame_left)
 Frame_top.pack(side = TOP)
 Frame_right.pack(side = RIGHT)
 Frame_left.pack(side = LEFT)
+
+Frame1.pack(side = TOP)
+Frame2.pack(side = BOTTOM)
+
 Table.pack(fill = BOTH)
 Title_level.place(x = 315, y = 10)
 
