@@ -74,10 +74,6 @@ Table.pack(fill = BOTH)
 #Title_level.place(x = 315, y = 10)
 
 
-
-
-
-
 Table.bind("<Button-1>", click)
 
 nbcases_width = 10
