@@ -46,8 +46,8 @@ root = Tk()
 root.geometry('700x550')
 
 #######################################################
-robot_right = PhotoImage(file = "robot_right.png")
-Flag = PhotoImage(file = "flag.png")
+robot_right = PhotoImage(file = "Tete chercheuse/robot_right.png")
+Flag = PhotoImage(file = "Tete chercheuse/flag.png")
 
 ########------------Frames Pricipaux-------------########################################
 Frame_top = Frame(root, width = 700, height = 50, bg = 'pink')
