@@ -59,7 +59,8 @@ Table = Canvas(Frame_right, width = 500, height = 500)
 Frame1 = Frame(Frame_left)
 Frame2 = Frame(Frame_left)
 
-
+Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
+Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
 
 #######-----------Package des Frames-------------##################################
 Frame_top.pack(side = TOP)
@@ -76,8 +77,7 @@ Table.pack(fill = BOTH)
 
 
 
-Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
-Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
+
 Table.bind("<Button-1>", click)
 
 nbcases_width = 10
