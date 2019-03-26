@@ -27,18 +27,39 @@ def update():
     for i in range(10):
         for j in range(10):
             if (table[i][j])=='X':
-                Table.create_rectangle((cell_width)*(i+1),(cell_height)*(j),(cell_width)*i,(cell_height)*(j+1), fill = "black")
+                Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "black")
             elif table[i][j] == "C":
-                Table.create_rectangle((cell_width)*(i+1),(cell_height)*(j),(cell_width)*i,(cell_height)*(j+1), fill = "lightgrey")
-                Table.create_line((cell_width)*(i+1),(cell_height)*(j),(cell_width)*i,(cell_height)*(j+1), fill = 'red')
-                Table.create_line((cell_width)*i,(cell_height)*(j),(cell_width)*(i+1),(cell_height)*(j+1), fill = 'red')
+                Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "lightgrey")
+                Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
+                Table.create_line((cell_width)*i,(cell_height)*j,(cell_width)*(i+1),(cell_height)*(j+1), fill = 'red')
             elif (table[i][j])=='R':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = robot_right)
             elif (table[i][j])=='P':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
+    root.update()
 
 def start():
+    global table
     Table.unbind("<Button 1>")
+    dir = [1, 0] #matrice de mouvement
+    for i in range(nbcases_width):
+        for j in range(nbcases_height):
+            if table[i][j] == "R":
+                pos = [i, j]
+                break
+    run = True
+    while run == True:
+        sleep(1)
+        table[pos[0]][pos[1]] = "0"
+        x = pos[0] + dir[0]
+        y = pos[1] + dir[1]
+        if nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "0":
+            pos = [x, y]
+        else:
+            dir = [dir[1], -1*dir[0]]
+        print(dir, pos)
+        table[pos[0]][pos[1]] = "R"
+        update()
 
 
 #préparation du jeu
@@ -57,8 +78,8 @@ Frame_left = Frame(root, width = 200, height = 500, bg = 'red')
 Table = Canvas(Frame_right, width = 500, height = 500)
 
 ########-----------Frames Secondaires-----------######################################
-Frame1 = Frame(Frame_left, width = 200, height =250, bg = 'green')
-Frame2 = Frame(Frame_left, width = 200, height =250, bg = 'yellow')
+Frame1 = Frame(Frame_left)
+Frame2 = Frame(Frame_left)
 
 Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
 Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
@@ -74,20 +95,10 @@ Frame2.pack(side = BOTTOM)
 Table.pack(fill = BOTH)
 Title_level.place(x = 315, y = 10)
 
-Button_start = Button(Frame1, text = "START" ,relief = GROOVE, font = 40,pady = 10, padx = 10)
-Button_start.place(x = 65, y = 50)
-
-
-
-
-
-
-
 
 Table.bind("<Button-1>", click)
 
-nbcases_width = 10
-nbcases_height = 10
+nbcases_width = nbcases_height= 10
 rayon = 7
 
 cell_width = 500/nbcases_width
@@ -98,14 +109,16 @@ cell_height = 500/nbcases_height
 #################################################################################
 #génération du terrain
 
-table = [[0 for i in range(10)] for j in range(10)]
+table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
 
-for i in range(10):
-    for j in range(10):
-        table[i][j] = niveau3[(j*10)+i]
+for i in range(nbcases_width):
+    for j in range(nbcases_height):
+        table[i][j] = niveau3[(j*nbcases_width)+i]
 
 update()
 print(table)
+
+start()
 
 
 
