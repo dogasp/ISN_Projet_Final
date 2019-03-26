@@ -33,14 +33,14 @@ def update():
                 Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
                 Table.create_line((cell_width)*i,(cell_height)*j,(cell_width)*(i+1),(cell_height)*(j+1), fill = 'red')
             elif (table[i][j])=='R':
-                Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = robot_right)
+                Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = robot[index_robot])
             elif (table[i][j])=='P':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
     root.update()
 
 def start():
-    global table
-    Table.unbind("<Button 1>")
+    global table, index_robot
+    Table.unbind("<Button-1>")
     dir = [1, 0] #matrice de mouvement
     for i in range(nbcases_width):
         for j in range(nbcases_height):
@@ -49,15 +49,18 @@ def start():
                 break
     run = True
     while run == True:
-        sleep(1)
+        sleep(0.5)
         table[pos[0]][pos[1]] = "0"
         x = pos[0] + dir[0]
-        y = pos[1] + dir[1]
+        y = pos[1] - dir[1]
         if nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "0":
             pos = [x, y]
+        elif table[x][y] == "P":
+            #gagné
+            print("gagné")
         else:
-            dir = [dir[1], -1*dir[0]]
-        print(dir, pos)
+            dir = [dir[1], -dir[0]]
+            index_robot = (index_robot + 1)%4
         table[pos[0]][pos[1]] = "R"
         update()
 
@@ -68,7 +71,8 @@ root = Tk()
 root.geometry('700x550')
 
 #######################################################
-robot_right = PhotoImage(file = "Tete chercheuse/robot_right.png")
+robot = [PhotoImage(file = "Tete chercheuse/robot_right.png"), PhotoImage(file = "Tete chercheuse/robot_front.png"), PhotoImage(file = "Tete chercheuse/robot_left.png"), PhotoImage(file = "Tete chercheuse/robot_back.png")]
+index_robot = 0
 Flag = PhotoImage(file = "Tete chercheuse/flag.png")
 
 ########------------Frames Pricipaux-------------########################################
@@ -78,8 +82,8 @@ Frame_left = Frame(root, width = 200, height = 500, bg = 'red')
 Table = Canvas(Frame_right, width = 500, height = 500)
 
 ########-----------Frames Secondaires-----------######################################
-Frame1 = Frame(Frame_left)
-Frame2 = Frame(Frame_left)
+Frame1 = Frame(Frame_left, width = 200, height =250, bg = 'green')
+Frame2 = Frame(Frame_left, width = 200, height =250, bg = 'yellow')
 
 Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
 Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
@@ -95,10 +99,13 @@ Frame2.pack(side = BOTTOM)
 Table.pack(fill = BOTH)
 Title_level.place(x = 315, y = 10)
 
+Button_start = Button(Frame1, text = "START" ,relief = GROOVE, font = 40,pady = 10, padx = 10,command = start)
+Button_start.place(x = 57, y = 50)
+
 
 Table.bind("<Button-1>", click)
 
-nbcases_width = nbcases_height= 10
+nbcases_width = nbcases_height = 10
 rayon = 7
 
 cell_width = 500/nbcases_width
@@ -117,8 +124,6 @@ for i in range(nbcases_width):
 
 update()
 print(table)
-
-start()
 
 
 
