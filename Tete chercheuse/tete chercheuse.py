@@ -53,6 +53,7 @@ Flag = PhotoImage(file = "Tete chercheuse/flag.png")
 Frame_top = Frame(root, width = 700, height = 50, bg = 'pink')
 Frame_right = Frame(root, width = 500, height = 500)
 Frame_left = Frame(root, width = 200, height = 500, bg = 'red')
+Table = Canvas(Frame_right, width = 500, height = 500)
 
 ########-----------Frames Secondaires-----------######################################
 Frame1 = Frame(Frame_left)
@@ -69,7 +70,7 @@ Frame1.pack(side = TOP)
 Frame2.pack(side = BOTTOM)
 
 Table.pack(fill = BOTH)
-Title_level.place(x = 315, y = 10)
+#Title_level.place(x = 315, y = 10)
 
 
 
