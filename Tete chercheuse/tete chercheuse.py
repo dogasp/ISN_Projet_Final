@@ -1,6 +1,5 @@
 from tkinter import *
 from data import *
-from time import sleep
 
 def click(event):
     x = event.x
