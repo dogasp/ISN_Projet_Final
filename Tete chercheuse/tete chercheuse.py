@@ -56,8 +56,8 @@ Frame_left = Frame(root, width = 200, height = 500, bg = 'red')
 Table = Canvas(Frame_right, width = 500, height = 500)
 
 ########-----------Frames Secondaires-----------######################################
-Frame1 = Frame(Frame_left)
-Frame2 = Frame(Frame_left)
+Frame1 = Frame(Frame_left, width = 200, height =250, bg = 'green')
+Frame2 = Frame(Frame_left, width = 200, height =250, bg = 'yellow')
 
 Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
 Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
@@ -73,10 +73,20 @@ Frame2.pack(side = BOTTOM)
 Table.pack(fill = BOTH)
 Title_level.place(x = 315, y = 10)
 
+Button_start = Button(Frame1, text = "START" ,relief = GROOVE, font = 40,pady = 10, padx = 10)
+Button_start.place(x = 65, y = 50)
+
+
+
+
+
+
+
 
 Table.bind("<Button-1>", click)
 
-nbcases_width = nbcases_height= 10
+nbcases_width = 10
+nbcases_height = 10
 rayon = 7
 
 cell_width = 500/nbcases_width
@@ -87,16 +97,14 @@ cell_height = 500/nbcases_height
 #################################################################################
 #génération du terrain
 
-table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
+table = [[0 for i in range(10)] for j in range(10)]
 
-for i in range(nbcases_width):
-    for j in range(nbcases_height):
-        table[i][j] = niveau3[(j*nbcases_width)+i]
+for i in range(10):
+    for j in range(10):
+        table[i][j] = niveau3[(j*10)+i]
 
 update()
 print(table)
-
-start()
 
 
 
