@@ -35,7 +35,6 @@ def get_score_list():
     s.connect((Host, Port)) #on lie l'adresse ip et le port
     s.send(b"list")
     response = s.recv(1024)
-    print("more")
     response = pickle.loads(response)
     s.close()
     return response

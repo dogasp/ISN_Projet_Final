@@ -13,9 +13,7 @@ def process(msg):
         return "ok".encode()
 
     if command == "list":
-        a = pickle.dumps(players)
-        print(a)
-        return a
+        return pickle.dumps(players)
 
 Host = "localhost"
 Port = 1243
@@ -46,10 +44,7 @@ while launched == True:
         for client in Client_To_Read: #pour chaque client, on observe le message envoyé
             try:
                 msg = client.recv(1024).decode("utf-8")
-                print("avant")
                 answer = process(msg)
-                print(answer)
-                print("qq chose")
                 client.send(answer)
                 if msg == "end":
                     launched = False
