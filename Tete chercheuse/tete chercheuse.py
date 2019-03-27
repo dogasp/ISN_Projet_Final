@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import * #@UnusedWildImport
 from data import *
 from time import sleep
 
