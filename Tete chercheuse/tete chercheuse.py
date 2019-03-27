@@ -74,18 +74,17 @@ def restart_menu():
     restart()
 
 box_placed = 0
-Start_party = True
+Start_game = True
 time_game = 0
+
 def time_num():
-    if Start_party == True:
+    if Start_game == True:
         global time_game
         if time_game != 1000:
             time_game+=1
             show_time['text'] = "Time: %s" %str(time_game)
             root.after(1000,time_num)
         else: pass
-
-
 
 def next():
     global level
@@ -95,7 +94,7 @@ def next():
     restart()
 
 def start():
-    global table, index_robot, Start_party
+    global table, index_robot, Start_game
     Table.unbind("<Button-1>")
     dir = [1, 0] #matrice de mouvement
     for i in range(nbcases_width):
@@ -114,7 +113,7 @@ def start():
             pos = [x, y]
             try:
                 reminder[(pos[0], pos[1])] += 1
-                if reminder[(pos[0], pos[1])] > 2:
+                if reminder[(pos[0], pos[1])] > 4:
                     restart()
                     return
             except:
@@ -122,8 +121,7 @@ def start():
         elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "P":
             table[x][y] = "E"
             end_game()
-            Start_party = False
-
+            Start_game = False
             return
         else:
             dir = [dir[1], -dir[0]]
@@ -132,14 +130,13 @@ def start():
         update()
 
 def restart():
-    global table, timer_start, time_game, Start_party, box_placed
-    Start_party = True
+    global table, timer_start, time_game, Start_game, box_placed, index_robot
+    Start_game = True
+    index_robot = 0
     time_game = box_placed = 0
     Table.bind("<Button-1>", click)
     show_time['text'] = "Time: %s" %str(time_game)
     show_count['text'] = "Nombre de palettes: %s" %str(box_placed)
-
-
 
     for i in range(nbcases_width):
         for j in range(nbcases_height):
@@ -148,8 +145,6 @@ def restart():
     time_num()
     update()
     timer_start = time()
-
-
 
 #preparation du jeu
 root = Tk()
