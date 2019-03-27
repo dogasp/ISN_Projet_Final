@@ -1,6 +1,5 @@
 from tkinter import* #@unusedWildImport
 from tkinter.messagebox import *
-"""Il serait meilleur dans notre cas d'utiliser une classe afin d'eviter les definitions globales, economiser de la RAM / du CPU et simplifier le code"""
 
 def placer(event = None): #fonction executee quand il y a un clic sur le cnavas
     global cases
@@ -30,7 +29,7 @@ def verifier(): #fonction de verification si quelqu'un a aligne trois cases
     global score
     win = None #variable pour verifier si quelqu'un a gagne
     #lignes et colones
-    
+
     for x in range(int(tailleCase/2), int(3*tailleCase + tailleCase/2), tailleCase): # range(50,350,100) x prends les valeurs 50,150,250
         if cases[x, tailleCase/2] == cases[x, tailleCase + tailleCase/2] == cases[x, 2*tailleCase + tailleCase/2] == "O":
             Main["text"]= "Joueur 2 a gagne"
