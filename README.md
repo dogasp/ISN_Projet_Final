@@ -9,7 +9,6 @@ pendu, pong
 début du projet et assemblage des idées
 
 début de la tete chercheuse
-
 Mise en place du repository GitHub avec syncronisation entre les ordinateurs.
 
 ## mercredi 27 mars 2019:
