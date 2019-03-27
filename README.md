@@ -13,3 +13,4 @@ Mise en place du repository GitHub avec syncronisation entre les ordinateurs.
 
 ## mercredi 27 mars 2019:
 début réseau: Script pour transmetre un dictionnaire par TCP
+Finalisation du jeu de tête chercheuse
