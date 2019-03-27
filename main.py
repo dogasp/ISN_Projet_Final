@@ -4,9 +4,9 @@ from Reseau.client import *
 #import Tete_chercheuse.tete_chercheuse
 class BoutonS:
     def __init__(self, x, y, jeux, run):
-        #self.image = PhotoImage(file = "thumbnail/" + jeux + ".jpg")
-        #self.button = Button(Frame_main, image = self.image)
-        #self.button.grid(row = x, column = y)
+        self.image = PhotoImage(file = "thumbnail/" + jeux + ".png")
+        self.button = Button(Frame_main, image = self.image, command = self.command)
+        self.button.grid(row = y, column = x)
         self.jeux = jeux
         self.run = run
 
@@ -44,8 +44,6 @@ nom_de_jeux = ["Tête Cherseuse", "Pong", "space Invaders", "Snake", "Tetris", "
 for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
     Frame_main.columnconfigure(i ,weight =1)
-
-BoutonS(1, 1, "bite", Tete).command()
 
 Label_list0= Label(Frame_main, text = nom_de_jeux[0])
 Label_list1= Label(Frame_main, text = nom_de_jeux[1])
