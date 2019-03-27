@@ -1,6 +1,6 @@
 from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
-from data import *
+from Tete_chercheuse.data import *
 from time import sleep, time
 
 def click(event):
@@ -48,11 +48,11 @@ def update():
 
             elif table[i][j] == "E":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
-    root.update()
+    root_tete.update()
 
 
 def end_game():
-    global question, box_placed
+    global question, box_placed, score
     update()
     timer = time() - timer_start
 
@@ -83,7 +83,7 @@ def time_num():
         if time_game != 1000:
             time_game+=1
             show_time['text'] = "Time: %s" %str(time_game)
-            root.after(1000,time_num)
+            root_tete.after(1000,time_num)
         else: pass
 
 def next():
@@ -146,65 +146,79 @@ def restart():
     update()
     timer_start = time()
 
-#preparation du jeu
-root = Tk()
+def exit():
+    root_tete.quit()
+    root_tete.destroy()
 
-root.geometry('700x550')
+def tete_start():
+    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level
+    #preparation du jeu
+    root_tete = Toplevel()
 
-########---------Import Photos------------------###############################################
-robot = [PhotoImage(file = "Tete chercheuse/robot_right.png"), PhotoImage(file = "Tete chercheuse/robot_front.png"), PhotoImage(file = "Tete chercheuse/robot_left.png"), PhotoImage(file = "Tete chercheuse/robot_back.png")]
-index_robot = 0
-Flag = PhotoImage(file = "Tete chercheuse/flag.png")
-End = PhotoImage(file = "Tete chercheuse/robot_flag.png")
+    root_tete.geometry('700x550')
+    root_tete.overrideredirect(1)
 
-########------------Frames Pricipaux-------------########################################
-Frame_top = Frame(root, width = 700, height = 50, bg = 'pink')
-Frame_right = Frame(root, width = 500, height = 500)
-Frame_left = Frame(root, width = 200, height = 500, bg = 'red')
-Table = Canvas(Frame_right, width = 500, height = 500)
+    ########---------Import Photos------------------###############################################
+    robot = [PhotoImage(file = "Tete_chercheuse/robot_right.png"), PhotoImage(file = "Tete_chercheuse/robot_front.png"), PhotoImage(file = "Tete_chercheuse/robot_left.png"), PhotoImage(file = "Tete_chercheuse/robot_back.png")]
+    index_robot = 0
+    Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
+    End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
 
-########-----------Frames Secondaires-----------######################################
-Frame1 = Frame(Frame_left, width = 200, height =250, bg = 'green')
-Frame2 = Frame(Frame_left, width = 200, height =250, bg = 'yellow')
+    ########------------Frames Pricipaux-------------########################################
+    Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')
+    Frame_right = Frame(root_tete, width = 500, height = 500)
+    Frame_left = Frame(root_tete, width = 200, height = 500, bg = 'red')
 
-Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
-Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
+    ########-----------Frames Secondaires-----------######################################
+    Frame1 = Frame(Frame_left, width = 200, height =250, bg = 'green')
+    Frame2 = Frame(Frame_left, width = 200, height =250, bg = 'yellow')
 
-#######-----------Package des Frames-------------##################################
-Frame_top.pack(side = TOP)
-Frame_right.pack(side = RIGHT)
-Frame_left.pack(side = LEFT)
+    Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
+    Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
 
-Frame1.pack(side = TOP)
-Frame2.pack(side = BOTTOM)
+    #######-----------Package des Frames-------------##################################
+    Frame_top.pack(side = TOP)
+    Frame_right.pack(side = RIGHT)
+    Frame_left.pack(side = LEFT)
 
-Table.pack(fill = BOTH)
-Title_level.place(x = 315, y = 10)
+    Frame1.pack(side = TOP)
+    Frame2.pack(side = BOTTOM)
 
-Button_start = Button(Frame1, text = "START" ,relief = GROOVE, font = 40,pady = 10, padx = 10,command = start)
-Button_start.place(x = 57, y = 50)
-show_time = Label(Frame1, text = "Time: %s" %str(0), relief =GROOVE)
-show_time.place(x = 65, y = 180)
-show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), relief = GROOVE)
-show_count.place(x = 65, y = 220)
+    Table.pack(fill = BOTH)
+    Title_level.place(x = 315, y = 10)
 
-nbcases_width = nbcases_height = 10
-rayon = 7
+    Button_start = Button(Frame1, text = "START" ,relief = GROOVE, font = 40,pady = 10, padx = 10,command = start)
+    Button_start.place(x = 57, y = 50)
+    show_time = Label(Frame1, text = "Time: %s" %str(0), relief =GROOVE)
+    show_time.place(x = 65, y = 180)
+    show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), relief = GROOVE)
+    show_count.place(x = 65, y = 220)
 
-cell_width = 500/nbcases_width
-cell_height = 500/nbcases_height
+    Button_quit = Button(Frame_top, text = "quit", command = exit)
+    Button_quit.place(x = 650, y = 10)
+
+    nbcases_width = nbcases_height = 10
+    rayon = 7
+
+    cell_width = 500/nbcases_width
+    cell_height = 500/nbcases_height
 
 
 
-#################################################################################
-#generation du terrain
+    #################################################################################
+    #generation du terrain
 
-table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
-level = 1
+    table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
+    level = 1
 
-restart()
-update()
+    restart()
+    update()
 
-################################################################################
+    ################################################################################
 
-root.mainloop()
+    root_tete.mainloop()
+
+    try:
+        return score
+    except:
+        return -1

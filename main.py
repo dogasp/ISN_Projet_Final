@@ -1,40 +1,38 @@
 from tkinter import *
-
+from Tete_chercheuse.tete_chercheuse import *
+#import Tete_chercheuse.tete_chercheuse
 class BoutonS:
     def __init__(self, x, y, jeux):
-
+        self.x = x
+        self.y = y
+        self.jeux = jeux
 
     def command(self):
-        pass
+        root_main.withdraw()
+        result = self.jeux()
+        print(result)
+        root_main.deiconify()
 
-root = Tk()
-root.geometry('1000x600')
+root_main = Tk()
+root_main.geometry('1000x600')
 
-
-Frame_top = Frame(root, bg ='pink')
+Frame_top = Frame(root_main, bg ='pink')
 Frame_top.pack(ipadx = 1000, ipady =50, side = TOP)
 
-Frame_left = Frame(root, bg ='yellow')
+Frame_left = Frame(root_main, bg ='yellow')
 Frame_left.pack(ipadx = 50, ipady =500,side = LEFT)
 
-Frame_right = Frame(root, bg ='green')
+Frame_right = Frame(root_main, bg ='green')
 Frame_right.pack(ipadx = 50, ipady =500,side = RIGHT)
 
-Frame_down = Frame(root, bg ='black')
+Frame_down = Frame(root_main, bg ='black')
 Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
 
-Frame_main = Frame(root,bg = 'red',borderwidth=2, relief=GROOVE)
+Frame_main = Frame(root_main,bg = 'red',borderwidth=2, relief=GROOVE)
 Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
 
-nom_de_jeux = ["Tête Cherseuse", "Pong", "space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
+BoutonS(0,1, tete_start).command()
+root_main.mainloop()
 
-for i in range(10):
-    Frame_main.rowconfigure(i)
-    Frame_main.columnconfigure(i)
 
-BoutonS(1, 1, "bite")
-"""
-for i in range(4):
-    for j in range(2):
-        Label[i] = Label(Frame_main, text = nom_de_jeux[i*(j+1)])
-j*nbcases_width)+i
+# [['x', 0, 'x', 0, 'x', 0, 'x', 0], ['x', 0, 'x', 0, 'x', 0, 'x', 0]]
