@@ -36,13 +36,5 @@ BoutonS(1, 1, "bite")
 """
 for i in range(4):
     for j in range(2):
-        Label[i] = Label()
+        Label[i] = Label(Frame_main, text = nom_de_jeux[i*(j+1)])
 j*nbcases_width)+i
-"""
-
-
-
-
-
-
-root.mainloop()
