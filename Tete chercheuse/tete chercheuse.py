@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import * #@UnusedWildImport
 from data import *
 from time import sleep
 
@@ -55,9 +55,8 @@ def start():
         y = pos[1] - dir[1]
         if nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "0":
             pos = [x, y]
-        elif table[x][y] == "P":
-            #gagné
-            print("gagné")
+        elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "P":
+            print("gagne")
         else:
             dir = [dir[1], -dir[0]]
             index_robot = (index_robot + 1)%4
@@ -65,7 +64,7 @@ def start():
         update()
 
 
-#préparation du jeu
+#preparation du jeu
 root = Tk()
 
 root.geometry('700x550')
@@ -114,7 +113,7 @@ cell_height = 500/nbcases_height
 
 
 #################################################################################
-#génération du terrain
+#generation du terrain
 
 table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
 
