@@ -17,8 +17,6 @@ while msg_To_send != b"end":
 print("ending connections")
 s.close()
 
-
-
 #msg = s.recv(1000) #on cherche a recevoir un message
 
 #print(pickle.loads(msg)) #on affiche le message après l'avoir désérialisé
