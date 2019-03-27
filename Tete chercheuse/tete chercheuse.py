@@ -58,6 +58,13 @@ def end_game():
     score = 1000/(box_placed*10 + timer*0.5) * level
     print(score)
 
+    question = TopLevel()
+    Button(question, text = "Restart", command = restart).pack()
+    Button(question, text = "Main Menu", command = lambda: print("WIP")).pack()
+    Button(question, text = "Next Level", command = next).pack()
+
+def next():
+    print("let's go to the next level")
 
 def start():
     global table, index_robot
@@ -86,6 +93,12 @@ def start():
         table[pos[0]][pos[1]] = "R"
         update()
 
+def restart():
+    global table
+    for i in range(nbcases_width):
+        for j in range(nbcases_height):
+            table[i][j] = Levels[level-1][(j*nbcases_width)+i]
+    update()
 
 #preparation du jeu
 root = Tk()
@@ -140,11 +153,9 @@ cell_height = 500/nbcases_height
 #generation du terrain
 
 table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
-level = 1
+level = 2
 
-for i in range(nbcases_width):
-    for j in range(nbcases_height):
-        table[i][j] = niveau3[(j*nbcases_width)+i]
+restart()
 
 update()
 timer_start = time()
