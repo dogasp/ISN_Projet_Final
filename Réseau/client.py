@@ -8,7 +8,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
 s.connect((Host, Port)) #on lie l'adresse ip et le ports
 
 msg_To_send = b""
-while msg_To_send != b"end":
+while msg_To_send != b"end": #tant qu'on a des messages a envoyer
     msg_To_send = input("> ").encode("utf-8")
     s.send(msg_To_send)
     msg_Recived = s.recv(1024)
