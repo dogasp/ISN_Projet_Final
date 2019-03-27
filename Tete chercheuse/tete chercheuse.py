@@ -1,6 +1,7 @@
 from tkinter import * #@UnusedWildImport
+from tkinter.messagebox import *
 from data import *
-from time import sleep
+from time import sleep, time
 
 def click(event):
     x = event.x
@@ -10,7 +11,7 @@ def click(event):
     j = int(y//cell_height)
 
     if table[i][j] == "0":
-        table[i][j] = "C" 
+        table[i][j] = "C"
     elif table[i][j] == "C":
         table[i][j] = "0"
     update()
@@ -28,15 +29,35 @@ def update():
         for j in range(10):
             if (table[i][j])=='X':
                 Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "black")
+
             elif table[i][j] == "C":
                 Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "lightgrey")
                 Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
                 Table.create_line((cell_width)*i,(cell_height)*j,(cell_width)*(i+1),(cell_height)*(j+1), fill = 'red')
+
             elif (table[i][j])=='R':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = robot[index_robot])
+
             elif (table[i][j])=='P':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
+
+            elif table[i][j] == "E":
+                Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
     root.update()
+
+
+def end_game():
+    update()
+    timer = time() - timer_start
+
+    box_placed = 0
+    for i in range(nbcases_width):
+        for j in range(nbcases_height):
+            if table[i][j] == "C":
+                box_placed += 1
+    score = 1000/(box_placed*10 + timer*0.5) * level
+    print(score)
+
 
 def start():
     global table, index_robot
@@ -56,7 +77,9 @@ def start():
         if nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "0":
             pos = [x, y]
         elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "P":
-            print("gagne")
+            table[x][y] = "E"
+            end_game()
+            return True
         else:
             dir = [dir[1], -dir[0]]
             index_robot = (index_robot + 1)%4
@@ -69,10 +92,11 @@ root = Tk()
 
 root.geometry('700x550')
 
-#######################################################
+########---------Import Photos------------------###############################################
 robot = [PhotoImage(file = "Tete chercheuse/robot_right.png"), PhotoImage(file = "Tete chercheuse/robot_front.png"), PhotoImage(file = "Tete chercheuse/robot_left.png"), PhotoImage(file = "Tete chercheuse/robot_back.png")]
 index_robot = 0
 Flag = PhotoImage(file = "Tete chercheuse/flag.png")
+End = PhotoImage(file = "Tete chercheuse/robot_flag.png")
 
 ########------------Frames Pricipaux-------------########################################
 Frame_top = Frame(root, width = 700, height = 50, bg = 'pink')
@@ -116,14 +140,14 @@ cell_height = 500/nbcases_height
 #generation du terrain
 
 table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
+level = 1
 
 for i in range(nbcases_width):
     for j in range(nbcases_height):
         table[i][j] = niveau3[(j*nbcases_width)+i]
 
 update()
-print(table)
-
+timer_start = time()
 
 
 ################################################################################
