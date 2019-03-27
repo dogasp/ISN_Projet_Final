@@ -16,3 +16,5 @@ Mise en place du repository GitHub avec syncronisation entre les ordinateurs.
 début réseau: Script pour transmetre un dictionnaire par TCP connection possible par pusieurs clients et la connection/déconnection est gérée
 
 Finalisation du jeu de tête chercheuse
+
+début de la création de l'interface principale
