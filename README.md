@@ -13,6 +13,6 @@ début de la tete chercheuse
 Mise en place du repository GitHub avec syncronisation entre les ordinateurs.
 
 ## mercredi 27 mars 2019:
-début réseau: Script pour transmetre un dictionnaire par TCP
+début réseau: Script pour transmetre un dictionnaire par TCP connection possible par pusieurs clients et la connection/déconnection est gérée
 
 Finalisation du jeu de tête chercheuse
