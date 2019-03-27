@@ -2,6 +2,21 @@ import socket #imports
 import select
 import pickle
 
+players = {"gwenilapeuf": {"Tete": 20, "Morpion": 30}}
+
+def process(msg):
+    list = msg.split(" ")
+
+    command = list[0]
+    if command == "add":
+        print(f"player {list[1]} scored {list[3]} in {list[2]}")
+        return "ok".encode()
+
+    if command == "list":
+        a = pickle.dumps(players)
+        print(a)
+        return a
+
 Host = "localhost"
 Port = 1243
 
@@ -31,8 +46,11 @@ while launched == True:
         for client in Client_To_Read: #pour chaque client, on observe le message envoyé
             try:
                 msg = client.recv(1024).decode("utf-8")
-                print(f"Get: {msg}")
-                client.send(b"got it")
+                print("avant")
+                answer = process(msg)
+                print(answer)
+                print("qq chose")
+                client.send(answer)
                 if msg == "end":
                     launched = False
             except:

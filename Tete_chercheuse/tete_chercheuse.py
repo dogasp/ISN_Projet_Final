@@ -61,7 +61,7 @@ def end_game():
         for j in range(nbcases_height):
             if table[i][j] == "C":
                 box_placed += 1
-    score = 1000/(box_placed*10 + timer*0.5) * level
+    score = 10000/(box_placed*10 + timer*0.2) * level
     print(score)
 
     question = Toplevel()
@@ -150,7 +150,7 @@ def exit():
     root_tete.quit()
     root_tete.destroy()
 
-def tete_start():
+def Tete():
     global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level
     #preparation du jeu
     root_tete = Toplevel()

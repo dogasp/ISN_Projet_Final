@@ -1,15 +1,18 @@
 from tkinter import *
 from Tete_chercheuse.tete_chercheuse import *
+from Reseau.client import *
 #import Tete_chercheuse.tete_chercheuse
 class BoutonS:
-    def __init__(self, x, y, jeux):
+    def __init__(self, x, y, jeux, run):
         self.x = x
         self.y = y
         self.jeux = jeux
+        self.run = run
 
     def command(self):
         root_main.withdraw()
-        result = self.jeux()
+        result = self.run()
+        push_score("random", self.jeux, result)
         print(result)
         root_main.deiconify()
 
@@ -31,8 +34,36 @@ Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
 Frame_main = Frame(root_main,bg = 'red',borderwidth=2, relief=GROOVE)
 Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
 
-BoutonS(0,1, tete_start).command()
+score = get_score_list()
+print(score)
+
+BoutonS(0,1, "Tete", Tete).command()
+
+
+
+nom_de_jeux = ["Tête Cherseuse", "Pong", "space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
+
+for i in range(9):
+    Frame_main.rowconfigure(i, weight = 1)
+    Frame_main.columnconfigure(i ,weight =1)
+
+#BoutonS(1, 1, "bite").command()
+
+Label_list0= Label(Frame_main, text = nom_de_jeux[0])
+Label_list1= Label(Frame_main, text = nom_de_jeux[1])
+Label_list2= Label(Frame_main, text = nom_de_jeux[2])
+Label_list3= Label(Frame_main, text = nom_de_jeux[3])
+Label_list4= Label(Frame_main, text = nom_de_jeux[4])
+Label_list5= Label(Frame_main, text = nom_de_jeux[5])
+Label_list6= Label(Frame_main, text = nom_de_jeux[6])
+Label_list7= Label(Frame_main, text = nom_de_jeux[7])
+
+Label_list0.grid(row = 2, column = 2)
+Label_list1.grid(row = 2, column = 4)
+Label_list2.grid(row = 2, column = 6)
+Label_list3.grid(row = 2, column = 8)
+Label_list4.grid(row = 4, column = 2)
+Label_list5.grid(row = 4, column = 4)
+Label_list6.grid(row = 4, column = 6)
+Label_list7.grid(row = 4, column = 8)
 root_main.mainloop()
-
-
-# [['x', 0, 'x', 0, 'x', 0, 'x', 0], ['x', 0, 'x', 0, 'x', 0, 'x', 0]]
