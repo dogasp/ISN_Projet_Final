@@ -47,6 +47,7 @@ def update():
 
 
 def end_game():
+    global question
     update()
     timer = time() - timer_start
 
@@ -58,13 +59,21 @@ def end_game():
     score = 1000/(box_placed*10 + timer*0.5) * level
     print(score)
 
-    question = TopLevel()
-    Button(question, text = "Restart", command = restart).pack()
+    question = Toplevel()
+    Button(question, text = "Restart", command = restart_menu).pack()
     Button(question, text = "Main Menu", command = lambda: print("WIP")).pack()
     Button(question, text = "Next Level", command = next).pack()
 
+def restart_menu():
+    question.destroy()
+    restart()
+
 def next():
-    print("let's go to the next level")
+    global level
+    question.destroy()
+    level += 1
+    Title_level["text"] = f"Level {level}"
+    restart()
 
 def start():
     global table, index_robot
@@ -75,6 +84,7 @@ def start():
             if table[i][j] == "R":
                 pos = [i, j]
                 break
+    reminder = {}
     run = True
     while run == True:
         sleep(0.5)
@@ -83,10 +93,17 @@ def start():
         y = pos[1] - dir[1]
         if nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "0":
             pos = [x, y]
+            try:
+                reminder[(pos[0], pos[1])] += 1
+                if reminder[(pos[0], pos[1])] > 2:
+                    restart()
+                    return
+            except:
+                reminder[(pos[0], pos[1])] = 1
         elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "P":
             table[x][y] = "E"
             end_game()
-            return True
+            return
         else:
             dir = [dir[1], -dir[0]]
             index_robot = (index_robot + 1)%4
@@ -94,11 +111,14 @@ def start():
         update()
 
 def restart():
-    global table
+    global table, timer_start
+    Table.bind("<Button-1>", click)
+
     for i in range(nbcases_width):
         for j in range(nbcases_height):
             table[i][j] = Levels[level-1][(j*nbcases_width)+i]
     update()
+    timer_start = time()
 
 #preparation du jeu
 root = Tk()
@@ -138,9 +158,6 @@ Title_level.place(x = 315, y = 10)
 Button_start = Button(Frame1, text = "START" ,relief = GROOVE, font = 40,pady = 10, padx = 10,command = start)
 Button_start.place(x = 57, y = 50)
 
-
-Table.bind("<Button-1>", click)
-
 nbcases_width = nbcases_height = 10
 rayon = 7
 
@@ -153,13 +170,11 @@ cell_height = 500/nbcases_height
 #generation du terrain
 
 table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
-level = 2
+level = 1
 
 restart()
 
 update()
-timer_start = time()
-
 
 ################################################################################
 
