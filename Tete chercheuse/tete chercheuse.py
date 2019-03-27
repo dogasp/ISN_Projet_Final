@@ -10,7 +10,7 @@ def click(event):
     j = int(y//cell_height)
 
     if table[i][j] == "0":
-        table[i][j] = "C"
+        table[i][j] = "C" 
     elif table[i][j] == "C":
         table[i][j] = "0"
     update()
