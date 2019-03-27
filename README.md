@@ -8,8 +8,8 @@ pendu, pong
 ## mardi 26 mars 2019:  
 début du projet et assemblage des idées
 
-travail sur le morpion et début de la tete chercheuse
+début de la tete chercheuse
 Mise en place du repository GitHub avec syncronisation entre les ordinateurs.
 
 ## mercredi 27 mars 2019:
-début réseau: recherche de script pour transmetre des dictionnaires
+début réseau: Script pour transmetre un dictionnaire par TCP
