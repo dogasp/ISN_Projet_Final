@@ -23,6 +23,7 @@ https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/"""
 
 
 def push_score(pseudo, game, score):
+    """pour ajouter un score après une partie """
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
     s.connect((Host, Port)) #on lie l'adresse ip et le port
     msg_To_send = "add {} {} {}".format(pseudo, game, score)
@@ -31,6 +32,7 @@ def push_score(pseudo, game, score):
     s.close()
 
 def get_score_list():
+    """ récupérer le scoreboard"""
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
     s.connect((Host, Port)) #on lie l'adresse ip et le port
     s.send(b"list")

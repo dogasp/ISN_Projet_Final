@@ -10,7 +10,7 @@ def process(msg):
     command = list[0]
     if command == "add":
         print(f"player {list[1]} scored {list[3]} in {list[2]}")
-        return "ok".encode()
+        return b"ok"
 
     if command == "list":
         return pickle.dumps(players)

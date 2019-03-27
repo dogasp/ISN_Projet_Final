@@ -66,7 +66,7 @@ def end_game():
 
     question = Toplevel()
     Button(question, text = "Restart", command = restart_menu).pack()
-    Button(question, text = "Main Menu", command = lambda: print("WIP")).pack()
+    Button(question, text = "Main Menu", command = exit).pack()
     Button(question, text = "Next Level", command = next).pack()
 
 def restart_menu():
@@ -156,7 +156,7 @@ def Tete():
     root_tete = Toplevel()
 
     root_tete.geometry('700x550')
-    root_tete.overrideredirect(1)
+    root_tete.protocol("WM_DELETE_WINDOW", exit)
 
     ########---------Import Photos------------------###############################################
     robot = [PhotoImage(file = "Tete_chercheuse/robot_right.png"), PhotoImage(file = "Tete_chercheuse/robot_front.png"), PhotoImage(file = "Tete_chercheuse/robot_left.png"), PhotoImage(file = "Tete_chercheuse/robot_back.png")]
@@ -193,9 +193,6 @@ def Tete():
     show_time.place(x = 65, y = 180)
     show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), relief = GROOVE)
     show_count.place(x = 65, y = 220)
-
-    Button_quit = Button(Frame_top, text = "quit", command = exit)
-    Button_quit.place(x = 650, y = 10)
 
     nbcases_width = nbcases_height = 10
     rayon = 7
