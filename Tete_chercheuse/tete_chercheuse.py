@@ -81,9 +81,9 @@ time_game = 0
 
 def time_num():
     global time_game
-        time_game+=1
-        show_time['text'] = "Time: %s" %str(time_game)
-        root_tete.after(1000,time_num)
+    time_game+=1
+    show_time['text'] = "Time: %s" %str(time_game)
+    root_tete.after(1000,time_num)
 
 def next():
     global level
