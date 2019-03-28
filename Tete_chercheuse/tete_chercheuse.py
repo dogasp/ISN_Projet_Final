@@ -117,6 +117,7 @@ def start():
                 reminder[(pos[0], pos[1])] += 1
                 if reminder[(pos[0], pos[1])] > 4: #si on est passé plus de 4 fois au meme endroit, on restart
                     run = False
+                    Start_game = False
                     restart()
                     return
             except:
