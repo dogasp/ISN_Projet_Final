@@ -146,7 +146,6 @@ def restart():
         for j in range(nbcases_height):
             table[i][j] = Levels[level-1][(j*nbcases_width)+i]
 
-    time_num()
     update()
     timer_start = time()
 
@@ -219,6 +218,7 @@ def Tete():
     table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
     level = 1
 
+    time_num()
     restart()
     update()
 
