@@ -3,6 +3,18 @@ from tkinter.messagebox import *
 from Tete_chercheuse.data import *
 from time import sleep
 
+########----------Variables------------################################################
+#'0' correpond à une case vide
+#'X' correspond à une case pleine (mur)
+#'R' correpond à la case associée au robot
+#'P' correpond à la case associée à l'arrivée (drapeau)
+#'C' correpond aux palettes, où l'on ajoute un obstacle
+#'S' correspond à une (petite) pièce/récompense
+#'B' correspond à une (grosse) pièce/récompense
+#
+#
+########################################################################################
+
 def click(event):
     global box_placed
     x = event.x
@@ -48,6 +60,10 @@ def update():
             elif (table[i][j])=='P':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
 
+            elif (table[i][j])=='S':
+                pass
+            elif (table[i][j])=='B':
+                pass
             elif table[i][j] == "E":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
     root_tete.update()
