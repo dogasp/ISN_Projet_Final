@@ -80,9 +80,10 @@ def end_game():
 
     question = Toplevel()
     question.geometry("300x125")
-    Button(question, text = "Restart", command = restart_menu).place()
-    Button(question, text = "Main Menu", command = exit).pack()
-    Button(question, text = "Next Level", command = next).pack()
+    Label(question, text= "choose an action:").place(x = 100, y = 20)
+    Button(question, text = "Restart", command = restart_menu).place(x = 30, y = 75)
+    Button(question, text = "Main Menu", command = exit).place(x = 210, y = 75)
+    Button(question, text = "Next Level", command = next).place(x = 110, y = 75)
 
 def restart_menu():
     global score

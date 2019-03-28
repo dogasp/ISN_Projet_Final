@@ -24,5 +24,4 @@ def get_score_list():
     return response #on renvois le scoreboard
 
 
-"""
-https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/"""
+#https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/
