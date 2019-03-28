@@ -71,12 +71,14 @@ def update():
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
     root_tete.update()
 
+    show_score["text"] = "Score: %s" %str(int(sum(score)))
+
 
 def end_game():
     global question, box_placed, score
-    update()
-
     score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
+
+    update()
 
     question = Toplevel()
     question.geometry("300x125")
@@ -185,7 +187,7 @@ def exit():
     root_tete.destroy()
 
 def Tete():
-    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin
+    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin, show_score
     global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star, Button_start
     #preparation du jeu
 
@@ -234,8 +236,8 @@ def Tete():
     Button_start = Button(Frame1, text = "START" ,relief = GROOVE, activeforeground = 'red',font = ("Helvetica", 20),pady = 10, padx = 10,command = start)
     Button_start.place(x = 35, y = 50)
 
-    Button_restart = Button(Frame_top, text = "RESTART", relief = GROOVE, font = ("Helvetica", 10), pady = 20, padx = 50) #""",command = restart_button"""
-    Button_restart.place(x = 900, y = 80)
+    Button_restart = Button(Frame_top, text = "RESTART", relief = GROOVE, font = ("Helvetica", 10),command = restart_button)
+    Button_restart.place(x = 600, y = 19)
 
     show_time = Label(Frame1, text = "Time: %s" %str(0), relief =GROOVE)
     show_time.place(x = 65, y = 180)
