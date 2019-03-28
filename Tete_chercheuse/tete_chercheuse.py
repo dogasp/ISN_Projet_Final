@@ -36,9 +36,11 @@ def update():
                 Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "black")
 
             elif table[i][j] == "C":
-                Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "lightgrey")
-                Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
-                Table.create_line((cell_width)*i,(cell_height)*j,(cell_width)*(i+1),(cell_height)*(j+1), fill = 'red')
+                Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Caisse)
+
+                #Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "lightgrey")
+                #Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
+                #Table.create_line((cell_width)*i,(cell_height)*j,(cell_width)*(i+1),(cell_height)*(j+1), fill = 'red')
 
             elif (table[i][j])=='R':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = robot[index_robot])
@@ -80,10 +82,13 @@ Start_game = True
 time_game = 0
 
 def time_num():
-    global time_game
-        time_game+=1
-        show_time['text'] = "Time: %s" %str(time_game)
-        root_tete.after(1000,time_num)
+    if Start_game == True:
+        global time_game
+        if time_game != 1000:
+            time_game+=1
+            show_time['text'] = "Time: %s" %str(time_game)
+            root_tete.after(1000,time_num)
+        else: pass
 
 def next():
     global level
@@ -93,7 +98,7 @@ def next():
     restart()
 
 def start():
-    global table, index_robot
+    global table, index_robot, Start_game
     Table.unbind("<Button-1>")
     dir = [1, 0] #matrice de mouvement
     for i in range(nbcases_width):
@@ -114,6 +119,7 @@ def start():
                 reminder[(pos[0], pos[1])] += 1
                 if reminder[(pos[0], pos[1])] > 4: #si on est passé plus de 4 fois au meme endroit, on restart
                     run = False
+                    Start_game = False
                     restart()
                     return
             except:
@@ -122,6 +128,7 @@ def start():
             table[x][y] = "E"
             run = False
             end_game()
+            Start_game = False
             return
         else:
             dir = [dir[1], -dir[0]]
@@ -130,7 +137,8 @@ def start():
         update()
 
 def restart():
-    global table, timer_start, time_game, box_placed, index_robot
+    global table, timer_start, time_game, Start_game, box_placed, index_robot
+    Start_game = True
     index_robot = 0
     time_game = box_placed = 0
     Table.bind("<Button-1>", click)
@@ -150,7 +158,8 @@ def exit():
     root_tete.destroy()
 
 def Tete():
-    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score
+    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse
+    global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score
     #preparation du jeu
 
     score = [0]
@@ -164,6 +173,7 @@ def Tete():
     index_robot = 0
     Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
+    Caisse =PhotoImage(file = "Tete_chercheuse/caisse.png")
 
     ########------------Frames Pricipaux-------------########################################
     Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')
