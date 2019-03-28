@@ -24,4 +24,6 @@ Bug de duplication du robot après 2ème essai
 Bug : Inversement du sens du robot après 2ème essai
 Bug sur le timer
 
+Ajout de textures pour le jeux tête chercheuse
+
 idée: ajouter pièces pour avoir un bonus de point
