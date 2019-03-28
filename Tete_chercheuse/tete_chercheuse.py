@@ -82,20 +82,10 @@ Start_game = True
 time_game = 0
 
 def time_num():
-<<<<<<< HEAD
-    if Start_game == True:
-        global time_game
-        if time_game != 1000:
-            time_game+=1
-            show_time['text'] = "Time: %s" %str(time_game)
-            root_tete.after(1000,time_num)
-        else: pass
-=======
     global time_game
     time_game+=1
     show_time['text'] = "Time: %s" %str(time_game)
     root_tete.after(1000,time_num)
->>>>>>> b5006dbfbd6ab766132b68c46554f51f604dcaf1
 
 def next():
     global level
