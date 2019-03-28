@@ -2,6 +2,7 @@ from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
 from Tete_chercheuse.data import *
 from time import sleep
+from PIL import Image, ImageTk
 
 ########----------Variables------------################################################
 #'0' correpond à une case vide
@@ -61,9 +62,9 @@ def update():
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
 
             elif (table[i][j])=='S':
-                pass
+                Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'yellow')
             elif (table[i][j])=='B':
-                pass
+                Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
             elif table[i][j] == "E":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
     root_tete.update()
@@ -178,7 +179,8 @@ def Tete():
     Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
     Caisse =PhotoImage(file = "Tete_chercheuse/caisse.png")
-    Wall =PhotoImage(file = "Tete_chercheuse/mur.png")
+    wall = Image.open("Tete_chercheuse/mur.png")
+    Wall = ImageTk.PhotoImage(wall)
 
     ########------------Frames Pricipaux-------------########################################
     Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')

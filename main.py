@@ -2,7 +2,6 @@ from tkinter import *
 from Tete_chercheuse.tete_chercheuse import *
 from Reseau.client import *
 
-
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run): # a besoin de cligne, colone, ne nom du jeux et la commande our executer le jeu
         self.image = PhotoImage(file = "thumbnail/" + jeux + ".png") #on charge l'immage correspondante au jeu
