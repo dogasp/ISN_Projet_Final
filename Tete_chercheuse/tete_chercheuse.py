@@ -110,6 +110,7 @@ def next():
 def start():
     global table, index_robot, Start_game, score_star
     Table.unbind("<Button-1>")
+    Button_start["state"] = "disabled"
     dir = [1, 0] #matrice de mouvement
     for i in range(nbcases_width):
         for j in range(nbcases_height):
@@ -162,6 +163,7 @@ def restart():
     global table, timer_start, time_game, Start_game, box_placed, index_robot, score_star
     Start_game = True
     index_robot = 0
+    Button_start["state"] = "active"
     time_game = box_placed = score_star = 0
     Table.bind("<Button-1>", click)
     show_time['text'] = "Time: %s" %str(time_game)
@@ -182,7 +184,7 @@ def exit():
 
 def Tete():
     global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin
-    global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star
+    global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star, Button_start
     #preparation du jeu
 
     score = [0]
@@ -225,8 +227,8 @@ def Tete():
     Table.pack(fill = BOTH)
     Title_level.place(x = 315, y = 10)
 
-    Button_start = Button(Frame1, text = "START" ,relief = GROOVE, font = 40,pady = 10, padx = 10,command = start)
-    Button_start.place(x = 57, y = 50)
+    Button_start = Button(Frame1, text = "START" ,relief = GROOVE, activeforeground = 'red',font = ("Helvetica", 20),pady = 10, padx = 10,command = start)
+    Button_start.place(x = 35, y = 50)
     show_time = Label(Frame1, text = "Time: %s" %str(0), relief =GROOVE)
     show_time.place(x = 65, y = 180)
     show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), relief = GROOVE)
