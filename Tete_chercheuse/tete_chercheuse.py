@@ -73,7 +73,8 @@ def update():
 def end_game():
     global question, box_placed, score
     update()
-
+    print(f"sans {(10000/(box_placed*10 + time_game*0.2)) * level}")
+    print(f"avec {(10000/(box_placed*10 + time_game*0.2) + score_star) * level}")
     score.append((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
 
     question = Toplevel()
@@ -237,8 +238,6 @@ def Tete():
     cell_height = 500/nbcases_height
 
     score_star = 0
-
-
 
     #################################################################################
     #generation du terrain
