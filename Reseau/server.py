@@ -9,19 +9,19 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
 
     command = list[0] #la commande est le premier mot, on le stocke pour plus de simplicité
     if command == "add": #si la commande est add, on ajoute le score
-        print(f"player {list[1]} scored {list[3]} in {list[2]}")
+        print("player {} scored {} in {}".format(list[1], list[3], list[2]))
         return b"ok" #le retour n'est pas important
 
     if command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
         return pickle.dumps(players)
 
-Host = "localhost" #variables
+Host = "90.91.5.197" #variables
 Port = 1243
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
 s.bind((Host, Port)) #on lie l'adresse ip et le ports
 s.listen(5) #nombre de connections simultanées entrantes acceptées
-print(f"Server is listening port {Port}.")
+print("Server is listening port {}.".format(Port))
 
 launched = True
 client_list = [] #liste des clients connectés
@@ -31,7 +31,7 @@ while launched == True: #tant que cette vairable est vraie, le serveur tourne
 
     for connection in connection_asked: #on accepte les connections et on stocke les sockets
         clientsocket, adress = connection.accept()
-        print(f"connected to {adress[0]}")
+        print("connected to {}".format(adress[0]))
         client_list.append(clientsocket) #on ajoute les clients cceptés à la liste des clients
 
     Client_To_Read = []
@@ -49,7 +49,7 @@ while launched == True: #tant que cette vairable est vraie, le serveur tourne
                 if msg == "end": #si un utilisateur envoie end , on stoppe le serveur
                     launched = False
             except: #si on ne peut pas lire le message, c'est que le socket n'est pas valide donc le client est déconnecté, on le supprime de la liste
-                print(f"lost connection")
+                print("lost connection")
                 client_list.remove(client) #si on a une erreur, cela veut dire que le client s'est déconnecté, on le supprime
 
 print("Ending connections")
