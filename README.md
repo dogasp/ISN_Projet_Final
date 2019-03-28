@@ -23,3 +23,5 @@ début de la création de l'interface principale
 Bug de duplication du robot après 2ème essai
 Bug : Inversement du sens du robot après 2ème essai
 Bug sur le timer
+
+idée: ajouter pièces pour avoir un bonus de point
