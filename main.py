@@ -39,11 +39,11 @@ print(score)
 
 #############---------Création des labels et autres au contour du Frame_main-------#########################
 
-Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Ar Destine", 45), relief = GROOVE)
-Title_main.place(x = 190, y = 10)
+Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Berlin Sans FB", 45), relief = GROOVE)
+Title_main.place(x = 250, y = 10)
 
-Title_ranking = Label(Frame_left, text = 'Classements',font = ("Ar Destine", 20), relief = GROOVE)
-Title_ranking.place(x = 22, y = 25)
+Title_ranking = Label(Frame_left, text = 'Classements',font = ("Berlin Sans FB", 20), relief = GROOVE)
+Title_ranking.place(x = 27, y = 25)
 
 
 
@@ -51,20 +51,20 @@ Title_ranking.place(x = 22, y = 25)
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
-nom_de_jeux = ["Tête Chercheuse", "Pong", "space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
+nom_de_jeux = ["Tête Chercheuse", "Pong", "Space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
 
 for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
     Frame_main.columnconfigure(i ,weight =1)
 
-Label_list0= Label(Frame_main, text = nom_de_jeux[0],font = ("Ar Destine", 14), relief = GROOVE) #labels
-Label_list1= Label(Frame_main, text = nom_de_jeux[1],font = ("Ar Destine", 14), relief = GROOVE)
-Label_list2= Label(Frame_main, text = nom_de_jeux[2],font = ("Ar Destine", 14), relief = GROOVE)
-Label_list3= Label(Frame_main, text = nom_de_jeux[3],font = ("Ar Destine", 14), relief = GROOVE)
-Label_list4= Label(Frame_main, text = nom_de_jeux[4],font = ("Ar Destine", 14), relief = GROOVE)
-Label_list5= Label(Frame_main, text = nom_de_jeux[5],font = ("Ar Destine", 14), relief = GROOVE)
-Label_list6= Label(Frame_main, text = nom_de_jeux[6],font = ("Ar Destine", 14), relief = GROOVE)
-Label_list7= Label(Frame_main, text = nom_de_jeux[7],font = ("Ar Destine", 14), relief = GROOVE)
+Label_list0= Label(Frame_main, text = nom_de_jeux[0],font = ("Berlin Sans FB", 14), relief = GROOVE) #labels
+Label_list1= Label(Frame_main, text = nom_de_jeux[1],font = ("Berlin Sans FB", 14), relief = GROOVE)
+Label_list2= Label(Frame_main, text = nom_de_jeux[2],font = ("Berlin Sans FB", 14), relief = GROOVE)
+Label_list3= Label(Frame_main, text = nom_de_jeux[3],font = ("Berlin Sans FB", 14), relief = GROOVE)
+Label_list4= Label(Frame_main, text = nom_de_jeux[4],font = ("Berlin Sans FB", 14), relief = GROOVE)
+Label_list5= Label(Frame_main, text = nom_de_jeux[5],font = ("Berlin Sans FB", 14), relief = GROOVE)
+Label_list6= Label(Frame_main, text = nom_de_jeux[6],font = ("Berlin Sans FB", 14), relief = GROOVE)
+Label_list7= Label(Frame_main, text = nom_de_jeux[7],font = ("Berlin Sans FB", 14), relief = GROOVE)
 
 Label_list0.grid(row = 1, column = 1)
 Label_list1.grid(row = 1, column = 3)

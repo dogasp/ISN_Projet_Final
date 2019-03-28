@@ -76,7 +76,7 @@ def end_game():
     global question, box_placed, score
     update()
 
-    score.append((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
+    score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
 
     question = Toplevel()
     question.geometry("300x125")
@@ -87,7 +87,6 @@ def end_game():
 
 def restart_menu():
     global score
-    score[-1] = 0
     question.destroy()
     restart()
 
@@ -101,14 +100,15 @@ def time_num():
     root_tete.after(1000,time_num)
 
 def next():
-    global level
+    global level, score
+    score.append(10)
     question.destroy()
     level += 1
     Title_level["text"] = f"Level {level}"
     restart()
 
 def start():
-    global table, index_robot, Start_game, score_star
+    global table, index_robot, score_star, run
     Table.unbind("<Button-1>")
     Button_start["state"] = "disabled"
     dir = [1, 0] #matrice de mouvement
@@ -130,7 +130,6 @@ def start():
                 reminder[(pos[0], pos[1])] += 1
                 if reminder[(pos[0], pos[1])] > 4: #si on est passé plus de 4 fois au meme endroit, on restart
                     run = False
-                    Start_game = False
                     restart()
                     return
             except:
@@ -151,7 +150,6 @@ def start():
             table[x][y] = "E"
             run = False
             end_game()
-            Start_game = False
             return
         else:
             dir = [dir[1], -dir[0]]
@@ -159,11 +157,16 @@ def start():
         table[pos[0]][pos[1]] = "R"
         update()
 
+def restart_button():
+    global run, score_star
+    run = False
+    restart()
+
 def restart():
-    global table, timer_start, time_game, Start_game, box_placed, index_robot, score_star
-    Start_game = True
+    global table, timer_start, time_game, box_placed, index_robot, score_star, score
     index_robot = 0
-    Button_start["state"] = "active"
+    score[-1] -=10
+    Button_start["state"] = "normal"
     time_game = box_placed = score_star = 0
     Table.bind("<Button-1>", click)
     show_time['text'] = "Time: %s" %str(time_game)
@@ -172,7 +175,6 @@ def restart():
     for i in range(nbcases_width):
         for j in range(nbcases_height):
             table[i][j] = Levels[level-1][(j*nbcases_width)+i]
-
     update()
 
 def exit():
@@ -187,7 +189,7 @@ def Tete():
     global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star, Button_start
     #preparation du jeu
 
-    score = [0]
+    score = [10]
     root_tete = Toplevel()
 
     root_tete.geometry('700x550')
@@ -227,15 +229,28 @@ def Tete():
     Table.pack(fill = BOTH)
     Title_level.place(x = 315, y = 10)
 
+    #########------------Labels et autres-----------##################################
+
     Button_start = Button(Frame1, text = "START" ,relief = GROOVE, activeforeground = 'red',font = ("Helvetica", 20),pady = 10, padx = 10,command = start)
     Button_start.place(x = 35, y = 50)
+
+    Button_restart = Button(Frame_top, text = "RESTART", relief = GROOVE, font = ("Helvetica", 10), pady = 20, padx = 50) #""",command = restart_button"""
+    Button_restart.place(x = 900, y = 80)
+
     show_time = Label(Frame1, text = "Time: %s" %str(0), relief =GROOVE)
     show_time.place(x = 65, y = 180)
+
     show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), relief = GROOVE)
     show_count.place(x = 65, y = 220)
 
     show_score = Label(Frame2, text = "Score: %s" %str(sum(score)), relief = GROOVE)
     show_score.place(x = 65, y = 100)
+
+
+
+
+
+
 
 
     nbcases_width = nbcases_height = 10
