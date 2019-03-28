@@ -3,7 +3,7 @@ from tkinter.messagebox import *
 from Tete_chercheuse.data import *
 from time import sleep
 
-########----------Variables------------################################################
+##################----------Variables------------######################################
 #'0' correpond à une case vide
 #'X' correspond à une case pleine (mur)
 #'R' correpond à la case associée au robot
@@ -198,8 +198,8 @@ def Tete():
     Caisse = PhotoImage(file = "Tete_chercheuse/caisse.png")
     Wall = PhotoImage(file = "Tete_chercheuse/mur.ppm")
 
-    Yellow_Coin = PhotoImage(file = "Tete_chercheuse/yellow_coin.gif")
-    Red_Coin = PhotoImage(file = "Tete_chercheuse/red_coin.gif")
+    Yellow_Coin = PhotoImage(file = "Tete_chercheuse/yellow_coin.ppm")
+    Red_Coin = PhotoImage(file = "Tete_chercheuse/red_coin.ppm")
 
     ########------------Frames Pricipaux-------------########################################
     Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')
