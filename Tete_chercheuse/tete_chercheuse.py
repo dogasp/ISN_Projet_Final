@@ -79,7 +79,8 @@ def end_game():
     score.append((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
 
     question = Toplevel()
-    Button(question, text = "Restart", command = restart_menu).pack()
+    question.geometry("300x125")
+    Button(question, text = "Restart", command = restart_menu).place()
     Button(question, text = "Main Menu", command = exit).pack()
     Button(question, text = "Next Level", command = next).pack()
 
@@ -172,7 +173,9 @@ def restart():
     update()
 
 def exit():
-    question.destroy()
+    try:
+        question.destroy()
+    except: pass
     root_tete.quit()
     root_tete.destroy()
 
