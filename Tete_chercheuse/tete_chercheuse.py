@@ -11,7 +11,7 @@ from time import sleep
 #'C' correpond aux palettes, où l'on ajoute un obstacle
 #'S' correspond à une (petite) pièce/récompense
 #'B' correspond à une (grosse) pièce/récompense
-#
+#'E' correspond au robot arrivé
 #
 ########################################################################################
 
@@ -45,7 +45,7 @@ def update():
     for i in range(10):
         for j in range(10):
             if (table[i][j])=='X':
-                Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "black")
+                Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Wall)
 
             elif table[i][j] == "C":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Caisse)
@@ -72,12 +72,6 @@ def update():
 def end_game():
     global question, box_placed, score
     update()
-
-
-    for i in range(nbcases_width):
-        for j in range(nbcases_height):
-            if table[i][j] == "C":
-                box_placed += 1
 
     score.append(10000/(box_placed*10 + time_game*0.2) * level)
 
@@ -168,7 +162,7 @@ def exit():
     root_tete.destroy()
 
 def Tete():
-    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse
+    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall
     global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score
     #preparation du jeu
 
@@ -184,6 +178,7 @@ def Tete():
     Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
     Caisse =PhotoImage(file = "Tete_chercheuse/caisse.png")
+    Wall =PhotoImage(file = "Tete_chercheuse/mur.png")
 
     ########------------Frames Pricipaux-------------########################################
     Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')
@@ -239,5 +234,17 @@ def Tete():
     ################################################################################
 
     root_tete.mainloop()
+    """
+    enlever des points quand on perd la partie
+    si l'on veut restart, on prévient qu on va lui enlever des points et remettre son score de la partie en cours à 0
+    petite piece = 5
+    grosse piece = 10
+
+
+
+
+
+
+    """
 
     return sum(score)
