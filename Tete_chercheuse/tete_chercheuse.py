@@ -59,10 +59,14 @@ def update():
 
             elif (table[i][j])=='P':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
+                Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
 
             elif (table[i][j])=='S':
+                #Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Yellow_Coin)
                 Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'yellow')
+
             elif (table[i][j])=='B':
+                #Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Red_Coin)
                 Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
             elif table[i][j] == "E":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
@@ -73,7 +77,7 @@ def end_game():
     global question, box_placed, score
     update()
 
-    score.append(10000/(box_placed*10 + time_game*0.2) * level)
+    score.append((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
 
     question = Toplevel()
     Button(question, text = "Restart", command = restart_menu).pack()
@@ -104,7 +108,7 @@ def next():
     restart()
 
 def start():
-    global table, index_robot, Start_game
+    global table, index_robot, Start_game, score_star
     Table.unbind("<Button-1>")
     dir = [1, 0] #matrice de mouvement
     for i in range(nbcases_width):
@@ -131,7 +135,16 @@ def start():
             except:
                 reminder[(pos[0], pos[1])] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1
 
-        #elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "S":
+        elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "S":
+            pos = [x, y]
+            score_star += 5
+            table[x][y] = "0"
+
+        elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "B":
+            pos = [x, y]
+            score_star += 10
+            table[x][y] = "0"
+
 
         elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "P":
             table[x][y] = "E"
@@ -146,10 +159,10 @@ def start():
         update()
 
 def restart():
-    global table, timer_start, time_game, Start_game, box_placed, index_robot
+    global table, timer_start, time_game, Start_game, box_placed, index_robot, score_star
     Start_game = True
     index_robot = 0
-    time_game = box_placed = 0
+    time_game = box_placed = score_star = 0
     Table.bind("<Button-1>", click)
     show_time['text'] = "Time: %s" %str(time_game)
     show_count['text'] = "Nombre de palettes: %s" %str(box_placed)
@@ -165,8 +178,8 @@ def exit():
     root_tete.destroy()
 
 def Tete():
-    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall
-    global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score
+    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin
+    global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star
     #preparation du jeu
 
     score = [0]
@@ -180,8 +193,11 @@ def Tete():
     index_robot = 0
     Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
-    Caisse =PhotoImage(file = "Tete_chercheuse/caisse.png")
+    Caisse = PhotoImage(file = "Tete_chercheuse/caisse.png")
     Wall = PhotoImage(file = "Tete_chercheuse/mur.ppm")
+
+    Yellow_Coin = PhotoImage(file = "Tete_chercheuse/yellow_coin.gif")
+    Red_Coin = PhotoImage(file = "Tete_chercheuse/red_coin.gif")
 
     ########------------Frames Pricipaux-------------########################################
     Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')
@@ -223,6 +239,8 @@ def Tete():
     cell_width = 500/nbcases_width
     cell_height = 500/nbcases_height
 
+    score_star = 0
+
 
 
     #################################################################################
@@ -242,10 +260,6 @@ def Tete():
     si l'on veut restart, on prévient qu on va lui enlever des points et remettre son score de la partie en cours à 0
     petite piece = 5
     grosse piece = 10
-
-
-
-
 
 
     """
