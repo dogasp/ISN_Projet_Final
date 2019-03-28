@@ -80,13 +80,10 @@ Start_game = True
 time_game = 0
 
 def time_num():
-    if Start_game == True:
-        global time_game
-        if time_game != 1000:
-            time_game+=1
-            show_time['text'] = "Time: %s" %str(time_game)
-            root_tete.after(1000,time_num)
-        else: pass
+    global time_game
+        time_game+=1
+        show_time['text'] = "Time: %s" %str(time_game)
+        root_tete.after(1000,time_num)
 
 def next():
     global level
@@ -96,7 +93,7 @@ def next():
     restart()
 
 def start():
-    global table, index_robot, Start_game
+    global table, index_robot
     Table.unbind("<Button-1>")
     dir = [1, 0] #matrice de mouvement
     for i in range(nbcases_width):
@@ -117,7 +114,6 @@ def start():
                 reminder[(pos[0], pos[1])] += 1
                 if reminder[(pos[0], pos[1])] > 4: #si on est passé plus de 4 fois au meme endroit, on restart
                     run = False
-                    Start_game = False
                     restart()
                     return
             except:
@@ -126,7 +122,6 @@ def start():
             table[x][y] = "E"
             run = False
             end_game()
-            Start_game = False
             return
         else:
             dir = [dir[1], -dir[0]]
@@ -135,8 +130,7 @@ def start():
         update()
 
 def restart():
-    global table, timer_start, time_game, Start_game, box_placed, index_robot
-    Start_game = True
+    global table, timer_start, time_game, box_placed, index_robot
     index_robot = 0
     time_game = box_placed = 0
     Table.bind("<Button-1>", click)
