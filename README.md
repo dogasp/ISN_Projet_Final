@@ -22,3 +22,4 @@ début de la création de l'interface principale
 ## Jeudi 28 mars 2019:
 Bug de duplication du robot après 2ème essai
 Bug : Inversement du sens du robot après 2ème essai
+Bug sur le timer
