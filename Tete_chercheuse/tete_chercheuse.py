@@ -61,12 +61,10 @@ def update():
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
 
             elif (table[i][j])=='S':
-                #Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Yellow_Coin)
-                Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'yellow')
+                Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Yellow_Coin)
 
             elif (table[i][j])=='B':
-                #Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Red_Coin)
-                Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
+                Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Red_Coin)
             elif table[i][j] == "E":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
     root_tete.update()
