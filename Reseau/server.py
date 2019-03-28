@@ -2,20 +2,20 @@ import socket #imports
 import select
 import pickle
 
-players = {"gwenilapeuf": {"Tete": 20, "Morpion": 30}}
+players = {"gwenilapeuf": {"Tete": 20, "Morpion": 30}} #dictionnaire de test
 
-def process(msg):
-    list = msg.split(" ")
+def process(msg): #fonction pour décider de ce qu'il faut retourner au client
+    list = msg.split(" ") #on split
 
-    command = list[0]
-    if command == "add":
+    command = list[0] #la commande est le premier mot, on le stocke pour plus de simplicité
+    if command == "add": #si la commande est add, on ajoute le score
         print(f"player {list[1]} scored {list[3]} in {list[2]}")
-        return b"ok"
+        return b"ok" #le retour n'est pas important
 
-    if command == "list":
+    if command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
         return pickle.dumps(players)
 
-Host = "localhost"
+Host = "localhost" #variables
 Port = 1243
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
@@ -25,14 +25,14 @@ print(f"Server is listening port {Port}.")
 
 launched = True
 client_list = [] #liste des clients connectés
-while launched == True:
+while launched == True: #tant que cette vairable est vraie, le serveur tourne
 
-    connection_asked, wlist, xlist = select.select([s], [], [], 0.05) #on rangerde les clients qui veullent commencer une connection
+    connection_asked, wlist, xlist = select.select([s], [], [], 0.05) #on regarde les clients qui veullent commencer une connection
 
     for connection in connection_asked: #on accepte les connections et on stocke les sockets
         clientsocket, adress = connection.accept()
         print(f"connected to {adress[0]}")
-        client_list.append(clientsocket)
+        client_list.append(clientsocket) #on ajoute les clients cceptés à la liste des clients
 
     Client_To_Read = []
 
@@ -42,13 +42,13 @@ while launched == True:
         pass
     else:
         for client in Client_To_Read: #pour chaque client, on observe le message envoyé
-            try:
+            try: #on essaye de décoder le message
                 msg = client.recv(1024).decode("utf-8")
-                answer = process(msg)
-                client.send(answer)
-                if msg == "end":
+                answer = process(msg) #on créé la réponse suivant la demande
+                client.send(answer) #et on renvois cette réponse
+                if msg == "end": #si un utilisateur envoie end , on stoppe le serveur
                     launched = False
-            except:
+            except: #si on ne peut pas lire le message, c'est que le socket n'est pas valide donc le client est déconnecté, on le supprime de la liste
                 print(f"lost connection")
                 client_list.remove(client) #si on a une erreur, cela veut dire que le client s'est déconnecté, on le supprime
 

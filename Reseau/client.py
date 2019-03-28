@@ -1,8 +1,27 @@
 import socket #imports
 import pickle
 
-Host = "localhost"
+Host = "localhost" #création des variables
 Port = 1243
+
+def push_score(pseudo, game, score):
+    """pour ajouter un score après une partie """
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
+    s.connect((Host, Port)) #on lie l'adresse ip et le port
+    msg_To_send = "add {} {} {}".format(pseudo, game, score) #on envois la commande pour ajouter la partie actuelle
+    s.send(msg_To_send.encode())
+    response = s.recv(1024) #la réponse n'est pas utile mais il y en a une
+    s.close()
+
+def get_score_list():
+    """ récupérer le scoreboard"""
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
+    s.connect((Host, Port)) #on lie l'adresse ip et le port
+    s.send(b"list") #on demande la liste
+    response = s.recv(1024)
+    response = pickle.loads(response) #on désérialise la réponse pour récupérer un dictionnaire
+    s.close()
+    return response #on renvois le scoreboard
 
 
 """
@@ -20,23 +39,3 @@ msg = s.recv(1000) #on cherche a recevoir un message
 
 print(pickle.loads(msg)) #on affiche le message après l'avoir désérialisé
 https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/"""
-
-
-def push_score(pseudo, game, score):
-    """pour ajouter un score après une partie """
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
-    s.connect((Host, Port)) #on lie l'adresse ip et le port
-    msg_To_send = "add {} {} {}".format(pseudo, game, score)
-    s.send(msg_To_send.encode())
-    response = s.recv(1024)
-    s.close()
-
-def get_score_list():
-    """ récupérer le scoreboard"""
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
-    s.connect((Host, Port)) #on lie l'adresse ip et le port
-    s.send(b"list")
-    response = s.recv(1024)
-    response = pickle.loads(response)
-    s.close()
-    return response
