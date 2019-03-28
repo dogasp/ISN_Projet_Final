@@ -62,9 +62,11 @@ def update():
 
             elif (table[i][j])=='S':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Yellow_Coin)
+                #Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'yellow')
 
             elif (table[i][j])=='B':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Red_Coin)
+                #Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
             elif table[i][j] == "E":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
     root_tete.update()
@@ -73,8 +75,7 @@ def update():
 def end_game():
     global question, box_placed, score
     update()
-    print(f"sans {(10000/(box_placed*10 + time_game*0.2)) * level}")
-    print(f"avec {(10000/(box_placed*10 + time_game*0.2) + score_star) * level}")
+
     score.append((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
 
     question = Toplevel()
@@ -89,7 +90,6 @@ def restart_menu():
     restart()
 
 box_placed = 0
-Start_game = True
 time_game = 0
 
 def time_num():
@@ -135,12 +135,12 @@ def start():
 
         elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "S":
             pos = [x, y]
-            score_star += 5
+            score_star += 50
             table[x][y] = "0"
 
         elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "B":
             pos = [x, y]
-            score_star += 10
+            score_star += 150
             table[x][y] = "0"
 
 
@@ -172,6 +172,7 @@ def restart():
     update()
 
 def exit():
+    question.destroy()
     root_tete.quit()
     root_tete.destroy()
 
@@ -238,6 +239,8 @@ def Tete():
     cell_height = 500/nbcases_height
 
     score_star = 0
+
+
 
     #################################################################################
     #generation du terrain

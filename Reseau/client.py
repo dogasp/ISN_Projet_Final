@@ -25,17 +25,4 @@ def get_score_list():
 
 
 """
-msg_To_send = b""
-while msg_To_send != b"end": #tant qu'on a des messages a envoyer
-    msg_To_send = input("> ").encode("utf-8")
-    s.send(msg_To_send)
-    msg_Recived = s.recv(1024)
-    print("server response: " + msg_Recived.decode("utf-8"))
-
-print("ending connections")
-s.close()
-
-msg = s.recv(1000) #on cherche a recevoir un message
-
-print(pickle.loads(msg)) #on affiche le message après l'avoir désérialisé
 https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/"""
