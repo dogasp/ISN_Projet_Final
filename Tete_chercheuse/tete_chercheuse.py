@@ -1,7 +1,7 @@
 from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
 from Tete_chercheuse.data import *
-from time import sleep, time
+from time import sleep
 
 def click(event):
     global box_placed
@@ -56,7 +56,6 @@ def update():
 def end_game():
     global question, box_placed, score
     update()
-    timer = time() - timer_start
 
 
     for i in range(nbcases_width):
@@ -64,7 +63,7 @@ def end_game():
             if table[i][j] == "C":
                 box_placed += 1
 
-    score.append(10000/(box_placed*10 + timer*0.2) * level)
+    score.append(10000/(box_placed*10 + time_game*0.2) * level)
 
     question = Toplevel()
     Button(question, text = "Restart", command = restart_menu).pack()
@@ -147,7 +146,6 @@ def restart():
             table[i][j] = Levels[level-1][(j*nbcases_width)+i]
 
     update()
-    timer_start = time()
 
 def exit():
     root_tete.quit()
