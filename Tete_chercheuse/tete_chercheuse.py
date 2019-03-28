@@ -117,7 +117,6 @@ def start():
                 reminder[(pos[0], pos[1])] += 1
                 if reminder[(pos[0], pos[1])] > 4: #si on est passé plus de 4 fois au meme endroit, on restart
                     run = False
-                    Start_game = False
                     restart()
                     return
             except:
@@ -158,6 +157,8 @@ def exit():
 def Tete():
     global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score
     #preparation du jeu
+
+    score = [0]
     root_tete = Toplevel()
 
     root_tete.geometry('700x550')
@@ -199,6 +200,10 @@ def Tete():
     show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), relief = GROOVE)
     show_count.place(x = 65, y = 220)
 
+    show_score = Label(Frame2, text = "Score: %s" %str(sum(score)), relief = GROOVE)
+    show_score.place(x = 65, y = 100)
+
+
     nbcases_width = nbcases_height = 10
     rayon = 7
 
@@ -209,10 +214,8 @@ def Tete():
 
     #################################################################################
     #generation du terrain
-
     table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
     level = 1
-    score = [0]
 
     restart()
     update()
