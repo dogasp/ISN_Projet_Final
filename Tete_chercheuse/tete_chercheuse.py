@@ -2,7 +2,6 @@ from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
 from Tete_chercheuse.data import *
 from time import sleep
-from PIL import Image, ImageTk
 
 ########----------Variables------------################################################
 #'0' correpond à une case vide
@@ -131,6 +130,9 @@ def start():
                     return
             except:
                 reminder[(pos[0], pos[1])] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1
+
+        #elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "S":
+
         elif nbcases_width > x >= 0 and nbcases_height > y >= 0 and table[x][y] == "P":
             table[x][y] = "E"
             run = False
@@ -179,8 +181,7 @@ def Tete():
     Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
     Caisse =PhotoImage(file = "Tete_chercheuse/caisse.png")
-    wall = Image.open("Tete_chercheuse/mur.png")
-    Wall = ImageTk.PhotoImage(wall)
+    Wall = PhotoImage(file = "Tete_chercheuse/mur.ppm")
 
     ########------------Frames Pricipaux-------------########################################
     Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')

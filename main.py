@@ -18,7 +18,7 @@ class BoutonS: #classe pour gérer les boutons interactifs
 
 root_main = Tk()
 root_main.geometry('1000x600')
-
+#########################-----Création de la forme de la page----------------------#######################################
 Frame_top = Frame(root_main, bg ='pink') #création des pannels
 Frame_top.pack(ipadx = 1000, ipady =50, side = TOP)
 
@@ -34,9 +34,19 @@ Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
 Frame_main = Frame(root_main,bg = 'red',borderwidth=2, relief=GROOVE)
 Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
 
+
 score = get_score_list() #récupération du scoreboard
 print(score)
 
+#############---------Création des labels et autres au contour du Frame_main-------#########################
+
+
+
+
+
+
+
+#############----------Création du tableau et des Labels du Frame_main--------------#################################
 
 nom_de_jeux = ["Tête Cherseuse", "Pong", "space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
 
