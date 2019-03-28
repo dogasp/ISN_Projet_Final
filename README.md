@@ -18,3 +18,7 @@ début réseau: Script pour transmetre un dictionnaire par TCP connection possib
 Finalisation du jeu de tête chercheuse
 
 début de la création de l'interface principale
+
+## Jeudi 28 mars 2019:
+Bug de duplication du robot après 2ème essai
+Bug : Inversement du sens du robot après 2ème essai
