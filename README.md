@@ -25,3 +25,5 @@ Bug : Inversement du sens du robot après 2ème essai
 Bug sur le timer
 
 Ajout de textures pour le jeux tête chercheuse et ajout pièces pour avoir un bonus de point
+
+hébergement du serveur sur raspberry: le serveur est acessible en permanence
