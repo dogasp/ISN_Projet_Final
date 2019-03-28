@@ -1,11 +1,12 @@
 from tkinter import *
 from Tete_chercheuse.tete_chercheuse import *
 from Reseau.client import *
+from tkinter import font
 
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run): # a besoin de cligne, colone, ne nom du jeux et la commande our executer le jeu
         self.image = PhotoImage(file = "thumbnail/" + jeux + ".png") #on charge l'immage correspondante au jeu
-        self.button = Button(Frame_main, image = self.image, command = self.command) #création du boutton
+        self.button = Button(Frame_main, image = self.image,  command = self.command) #création du boutton
         self.button.grid(row = x, column = y)
         self.jeux = jeux
         self.run = run
@@ -18,15 +19,13 @@ class BoutonS: #classe pour gérer les boutons interactifs
 
 root_main = Tk()
 root_main.geometry('1000x600')
+root_main.title("Menu")
 #########################-----Création de la forme de la page----------------------#######################################
 Frame_top = Frame(root_main, bg ='pink') #création des pannels
 Frame_top.pack(ipadx = 1000, ipady =50, side = TOP)
 
 Frame_left = Frame(root_main, bg ='yellow')
-Frame_left.pack(ipadx = 50, ipady =500,side = LEFT)
-
-Frame_right = Frame(root_main, bg ='green')
-Frame_right.pack(ipadx = 50, ipady =500,side = RIGHT)
+Frame_left.pack(ipadx = 100, ipady =500,side = LEFT)
 
 Frame_down = Frame(root_main, bg ='black')
 Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
@@ -40,9 +39,11 @@ print(score)
 
 #############---------Création des labels et autres au contour du Frame_main-------#########################
 
-Title_main = Label(Frame_top, text = 'Nom du Jeu',font = 2, relief = GROOVE)
-Title_main.place(x = 500, y = 50)
+Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Ar Destine", 45), relief = GROOVE)
+Title_main.place(x = 190, y = 10)
 
+Title_ranking = Label(Frame_left, text = 'Classements',font = ("Ar Destine", 20), relief = GROOVE)
+Title_ranking.place(x = 22, y = 25)
 
 
 
@@ -50,30 +51,30 @@ Title_main.place(x = 500, y = 50)
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
-nom_de_jeux = ["Tête Cherseuse", "Pong", "space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
+nom_de_jeux = ["Tête Chercheuse", "Pong", "space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
 
 for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
     Frame_main.columnconfigure(i ,weight =1)
 
-Label_list0= Label(Frame_main, text = nom_de_jeux[0]) #labels
-Label_list1= Label(Frame_main, text = nom_de_jeux[1])
-Label_list2= Label(Frame_main, text = nom_de_jeux[2])
-Label_list3= Label(Frame_main, text = nom_de_jeux[3])
-Label_list4= Label(Frame_main, text = nom_de_jeux[4])
-Label_list5= Label(Frame_main, text = nom_de_jeux[5])
-Label_list6= Label(Frame_main, text = nom_de_jeux[6])
-Label_list7= Label(Frame_main, text = nom_de_jeux[7])
+Label_list0= Label(Frame_main, text = nom_de_jeux[0],font = ("Ar Destine", 14), relief = GROOVE) #labels
+Label_list1= Label(Frame_main, text = nom_de_jeux[1],font = ("Ar Destine", 14), relief = GROOVE)
+Label_list2= Label(Frame_main, text = nom_de_jeux[2],font = ("Ar Destine", 14), relief = GROOVE)
+Label_list3= Label(Frame_main, text = nom_de_jeux[3],font = ("Ar Destine", 14), relief = GROOVE)
+Label_list4= Label(Frame_main, text = nom_de_jeux[4],font = ("Ar Destine", 14), relief = GROOVE)
+Label_list5= Label(Frame_main, text = nom_de_jeux[5],font = ("Ar Destine", 14), relief = GROOVE)
+Label_list6= Label(Frame_main, text = nom_de_jeux[6],font = ("Ar Destine", 14), relief = GROOVE)
+Label_list7= Label(Frame_main, text = nom_de_jeux[7],font = ("Ar Destine", 14), relief = GROOVE)
 
-Label_list0.grid(row = 2, column = 1)
-Label_list1.grid(row = 2, column = 3)
-Label_list2.grid(row = 2, column = 5)
-Label_list3.grid(row = 2, column = 7)
+Label_list0.grid(row = 1, column = 1)
+Label_list1.grid(row = 1, column = 3)
+Label_list2.grid(row = 1, column = 5)
+Label_list3.grid(row = 1, column = 7)
 Label_list4.grid(row = 4, column = 1)
 Label_list5.grid(row = 4, column = 3)
 Label_list6.grid(row = 4, column = 5)
 Label_list7.grid(row = 4, column = 7)
 
-bouton_0 = BoutonS(3, 1, "Tete", Tete)
+bouton_0 = BoutonS(2, 1, "Tete", Tete)
 
 root_main.mainloop()
