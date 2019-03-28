@@ -59,7 +59,6 @@ def update():
 
             elif (table[i][j])=='P':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
-                Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
 
             elif (table[i][j])=='S':
                 #Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Yellow_Coin)
@@ -260,7 +259,6 @@ def Tete():
     si l'on veut restart, on prévient qu on va lui enlever des points et remettre son score de la partie en cours à 0
     petite piece = 5
     grosse piece = 10
-
 
     """
 
