@@ -61,8 +61,8 @@ def end_game():
         for j in range(nbcases_height):
             if table[i][j] == "C":
                 box_placed += 1
-    score = 10000/(box_placed*10 + timer*0.2) * level
-    print(score)
+
+    score.append(10000/(box_placed*10 + timer*0.2) * level)
 
     question = Toplevel()
     Button(question, text = "Restart", command = restart_menu).pack()
@@ -70,6 +70,8 @@ def end_game():
     Button(question, text = "Next Level", command = next).pack()
 
 def restart_menu():
+    global score
+    score[-1] = 0
     question.destroy()
     restart()
 
@@ -153,7 +155,7 @@ def exit():
     root_tete.destroy()
 
 def Tete():
-    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level
+    global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score
     #preparation du jeu
     root_tete = Toplevel()
 
@@ -209,6 +211,7 @@ def Tete():
 
     table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
     level = 1
+    score = [0]
 
     restart()
     update()
@@ -217,7 +220,4 @@ def Tete():
 
     root_tete.mainloop()
 
-    try:
-        return score
-    except:
-        return -1
+    return sum(score)
