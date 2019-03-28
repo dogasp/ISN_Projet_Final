@@ -40,7 +40,8 @@ print(score)
 
 #############---------Création des labels et autres au contour du Frame_main-------#########################
 
-
+Title_main = Label(Frame_top, text = 'Nom du Jeu', relief = GROOVE)
+Title_main.place(x = 500, y = 50)
 
 
 
