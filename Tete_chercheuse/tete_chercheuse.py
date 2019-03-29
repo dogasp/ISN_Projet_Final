@@ -2,6 +2,8 @@ from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
 from Tete_chercheuse.data import *
 from time import sleep
+sys.path.append('../Reseau')
+from Reseau.client import *
 
 ##################----------Variables------------######################################
 #'0' correpond à une case vide
@@ -18,9 +20,15 @@ from time import sleep
 def rules_game():
     show_rules = Toplevel()
     show_rules.geometry('670x530')
-    Rules = Label(Toplvel, text = "Les règles: Le but est que le robot arrive au drapeau.\n\
+    Rules = Label(show_rules, text = "Les règles: Le but est que le robot arrive au drapeau.\n\
      Pour cela, tu as à disposition des caisses qui te permettront de dévier le robot. \n\
      A chaque fois que le robot rencontre un obstacle, il tourne à droite.")
+    show_rules.place(x = 200, y = 200)
+    sleep(1)
+    ranking_game = Label(show_rules, text = 'Classement du jeu') #Rajouter une commande Ranking
+    ranking_game.place(x = 300, y= 260 )
+
+
     pass
 
 
