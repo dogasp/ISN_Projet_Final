@@ -28,7 +28,7 @@ def rules_game():
     Frame_main1_wind2 = Canvas(show_rules, bg = 'red', relief = GROOVE)
     Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
 
-    Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/tete2.png")
+    Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
     Frame_main1_wind2.create_image(335,265,image =Fond_Frame_main1_wind2)
 
     Frame_main2_wind2 = Canvas(Frame_main1_wind2,width = 590, height = 450, bg = 'green', relief = GROOVE)
