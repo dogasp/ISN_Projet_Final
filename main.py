@@ -49,7 +49,7 @@ Title_ranking.place(x = 27, y = 25)
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
-nom_de_jeux = ["Tête Chercheuse", "Pong", "Space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
+nom_de_jeux = ["Tête Chercheuse", "Pong", "Space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8"]
 
 for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
