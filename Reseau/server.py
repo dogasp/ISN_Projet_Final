@@ -3,12 +3,20 @@ import select
 import pickle
 import os
 
+Host = "192.168.1.30" #"90.91.3.228" #variables
+Port = 1243
+
 if os.path.isfile("./data"):
     with open("data", "rb") as f:
         players = pickle.load(f)
 else:
     players = {} #dictionnaire des joueurs
 players = {"Beta_Test": {"Tete": 10}}
+
+def save():
+    with open("data", "wb") as f:
+        pickle.dump(players, f)
+
 def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     global players
     list = msg.split(" ") #on split
@@ -17,15 +25,12 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     if command == "add": #si la commande est add, on ajoute le score
         print("player {} scored {} in {}".format(list[1], list[3], list[2]))
         try:
-            print("atempt", list)
-            print(layers[list[1]][list[2]])
-            if players[list[1]][list[2]] < int(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
-                players[list[1]][list[2]] = int(list[3])
-                print("better")
+            if players[list[1]][list[2]] < float(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
+                players[list[1]][list[2]] = float(list[3])
         except:
             players[list[1]] = {"Tete": 0}   #création d'un nouveau joueur et ajout du score
-            players[list[1]][list[2]] = int(list[3])
-        print(players)
+            players[list[1]][list[2]] = float(list[3])
+        save()
         return b"ok" #le retour n'est pas important
 
     if command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
@@ -37,9 +42,6 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
             total_score.append((player, sum))
         total_score.sort(key = lambda list: list[1])
         return pickle.dumps(total_score[:10])
-
-Host = "localhost" #"90.91.3.228" #variables
-Port = 1243
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
 s.bind((Host, Port)) #on lie l'adresse ip et le ports
@@ -79,6 +81,4 @@ print("Ending connections")
 for client in client_list: #fin des connections
     client.close()
 s.close()
-
-with open("data", "wb") as f:
-    pickle.dump(players, f)
+save()
