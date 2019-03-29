@@ -15,7 +15,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     if command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
         return pickle.dumps(players)
 
-Host = "Localhost" #variables
+Host = "90.91.3.228" #variables
 Port = 1243
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket

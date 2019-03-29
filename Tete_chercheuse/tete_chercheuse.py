@@ -16,21 +16,49 @@ from Reseau.client import *
 #'E' correspond au robot arrivé
 #
 ########################################################################################
-"""def rules_game():
+def rules_game():
+    global show_rules
     show_rules = Toplevel()
+    show_rules.title('Règles')
     show_rules.geometry('670x530')
+
+################-----------Création des Frames de la fenetre secondaire----------##############
+    Frame_top_wind2 = Frame(show_rules,bg = 'red',borderwidth=2, relief=GROOVE)
+    Frame_top_wind2.pack(ipadx = 670, ipady =15,side = TOP)
+
+
+    Frame_right_wind2 = Frame(show_rules, bg ='yellow')
+    Frame_right_wind2.pack(ipadx = 15, ipady = 500,side = RIGHT)
+
+    Frame_left_wind2 = Frame(show_rules, bg ='yellow')
+    Frame_left_wind2.pack(ipadx = 15, ipady = 500,side = LEFT)
+
+    Frame_down_wind2 = Frame(show_rules, bg ='black')
+    Frame_down_wind2.pack(ipadx = 640, ipady = 15,side = BOTTOM)
+
+    Frame_main_wind2 = Frame(show_rules, relief = GROOVE)
+    Frame_main_wind2.pack(ipadx = 640, ipady = 500,side = BOTTOM)
+
+
+
+
+
     Rules = Label(show_rules, text = "Les règles: Le but est que le robot arrive au drapeau.\n\
      Pour cela, tu as à disposition des caisses qui te permettront de dévier le robot. \n\
      A chaque fois que le robot rencontre un obstacle, il tourne à droite.")
-    show_rules.after(1000,lambda: Rules.place(x = 200, y = 200))
+    show_rules.after(500, lambda: Rules.place(x = 200, y = 200))
 
     ranking_game = Label(show_rules, text = 'Classement du jeu') #,command =Ranking
     show_rules.after(2000,lambda: ranking_game.place(x = 300, y= 300 ))
 
-    Bouton_continue = Button(show_rules, text = 'Continue...',command = show_rules.destroy)
-    show_rules.after(3000,lambda: Bouton_continue.place(x = 300,y = 400 ))
+    Bouton_continue = Button(show_rules, text = 'Continue...',command = quit_rules)
+    show_rules.after(4000,lambda: Bouton_continue.place(x = 300,y = 400 ))
     show_rules.mainloop()
-"""
+
+
+def quit_rules():
+    show_rules.destroy()
+    show_rules.quit()
 
 
 
