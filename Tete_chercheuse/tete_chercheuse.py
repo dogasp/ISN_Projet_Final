@@ -16,28 +16,21 @@ from Reseau.client import *
 #'E' correspond au robot arrivé
 #
 ########################################################################################
-
-def rules_game():
+"""def rules_game():
     show_rules = Toplevel()
     show_rules.geometry('670x530')
     Rules = Label(show_rules, text = "Les règles: Le but est que le robot arrive au drapeau.\n\
      Pour cela, tu as à disposition des caisses qui te permettront de dévier le robot. \n\
      A chaque fois que le robot rencontre un obstacle, il tourne à droite.")
-    show_rules.place(x = 200, y = 200)
-    sleep(1)
-    ranking_game = Label(show_rules, text = 'Classement du jeu') #Rajouter une commande Ranking
-    ranking_game.place(x = 300, y= 260 )
+    show_rules.after(1000,lambda: Rules.place(x = 200, y = 200))
 
+    ranking_game = Label(show_rules, text = 'Classement du jeu') #,command =Ranking
+    show_rules.after(2000,lambda: ranking_game.place(x = 300, y= 300 ))
 
-    pass
-
-
-
-
-
-
-
-
+    Bouton_continue = Button(show_rules, text = 'Continue...',command = show_rules.destroy)
+    show_rules.after(3000,lambda: Bouton_continue.place(x = 300,y = 400 ))
+    show_rules.mainloop()
+"""
 
 
 
@@ -216,7 +209,7 @@ def Tete():
     global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin, show_score
     global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star, Button_start
     #preparation du jeu
-
+    rules_game()
     score = [10]
     root_tete = Toplevel()
 
