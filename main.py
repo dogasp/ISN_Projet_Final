@@ -17,7 +17,7 @@ class BoutonS: #classe pour gérer les boutons interactifs
         push_score("random", self.jeux, result) #on envois au serveur le score de la partie
         root_main.deiconify() #on fait réapparaite la fenetre principale
 
-root_main = Tk()
+root_main = Tk() 
 root_main.geometry('1000x600')
 root_main.title("Menu")
 #########################-----Création de la forme de la page----------------------#######################################
