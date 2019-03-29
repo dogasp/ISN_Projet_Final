@@ -19,34 +19,25 @@ from Reseau.client import *
 def rules_game():
     global show_rules
     show_rules = Toplevel()
+
     show_rules.title('Règles')
     show_rules.geometry('670x530')
+    show_rules.protocol("WM_DELETE_WINDOW", quit_rules)
 
 ################-----------Création des Frames de la fenetre secondaire----------##############
-    Frame_top_wind2 = Frame(show_rules,bg = 'red',borderwidth=2, relief=GROOVE)
-    Frame_top_wind2.pack(ipadx = 670, ipady =15,side = TOP)
+    Frame_main1_wind2 = Frame(show_rules, padx = 40, pady = 40,bg = 'red', relief = GROOVE)
+    Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
 
-
-    Frame_right_wind2 = Frame(show_rules, bg ='yellow')
-    Frame_right_wind2.pack(ipadx = 15, ipady = 500,side = RIGHT)
-
-    Frame_left_wind2 = Frame(show_rules, bg ='yellow')
-    Frame_left_wind2.pack(ipadx = 15, ipady = 500,side = LEFT)
-
-    Frame_down_wind2 = Frame(show_rules, bg ='black')
-    Frame_down_wind2.pack(ipadx = 640, ipady = 15,side = BOTTOM)
-
-    Frame_main_wind2 = Frame(show_rules, relief = GROOVE)
-    Frame_main_wind2.pack(ipadx = 640, ipady = 500,side = BOTTOM)
-
-
+    Frame_main2_wind2 = Frame(Frame_main1_wind2,width = 590, height = 450, bg = 'green', relief = GROOVE)
+    Frame_main2_wind2.pack()
 
 
 
     Rules = Label(show_rules, text = "Les règles: Le but est que le robot arrive au drapeau.\n\
      Pour cela, tu as à disposition des caisses qui te permettront de dévier le robot. \n\
-     A chaque fois que le robot rencontre un obstacle, il tourne à droite.")
-    show_rules.after(500, lambda: Rules.place(x = 200, y = 200))
+     A chaque fois que le robot rencontre un obstacle, il tourne à droite sinon\n\
+     il va toujours tout droit.")
+    show_rules.after(500, lambda: Rules.place(x = 150, y = 200))
 
     ranking_game = Label(show_rules, text = 'Classement du jeu') #,command =Ranking
     show_rules.after(2000,lambda: ranking_game.place(x = 300, y= 300 ))
