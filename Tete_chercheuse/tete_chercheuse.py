@@ -28,6 +28,7 @@ def rules_game():
     Frame_main1_wind2 = Frame(show_rules, padx = 40, pady = 40,bg = 'red', relief = GROOVE)
     Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
 
+
     Frame_main2_wind2 = Frame(Frame_main1_wind2,width = 590, height = 450, bg = 'green', relief = GROOVE)
     Frame_main2_wind2.pack()
 
@@ -242,6 +243,7 @@ def Tete():
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
     Caisse = PhotoImage(file = "Tete_chercheuse/caisse.png")
     Wall = PhotoImage(file = "Tete_chercheuse/mur.ppm")
+    Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
 
     Yellow_Coin = PhotoImage(file = "Tete_chercheuse/yellow_coin.ppm")
     Red_Coin = PhotoImage(file = "Tete_chercheuse/red_coin.ppm")
