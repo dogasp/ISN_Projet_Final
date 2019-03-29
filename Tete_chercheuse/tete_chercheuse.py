@@ -15,6 +15,23 @@ from time import sleep
 #
 ########################################################################################
 
+"""def rules_game():
+    show_rules = Toplevel()
+    show_rules.geometry('670x530')
+    Rules = Label(Toplvel, text = "Les règles: Le but est que le robot arrive au drapeau.\n\
+     Pour cela, tu as à disposition des caisses qui te permettront de dévier le robot")
+     pass"""
+
+
+
+
+
+
+
+
+
+
+
 def click(event):
     global box_placed
     x = event.x

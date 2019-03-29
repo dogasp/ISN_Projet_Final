@@ -45,10 +45,6 @@ Title_main.place(x = 250, y = 10)
 Title_ranking = Label(Frame_left, text = 'Classements',font = ("Berlin Sans FB", 20), relief = GROOVE)
 Title_ranking.place(x = 27, y = 25)
 
-
-
-
-
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
 nom_de_jeux = ["Tête Chercheuse", "Pong", "Space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8",]
