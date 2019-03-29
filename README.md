@@ -27,3 +27,9 @@ Bug sur le timer
 Ajout de textures pour le jeux tête chercheuse et ajout pièces pour avoir un bonus de point
 
 hébergement du serveur sur raspberry: le serveur est acessible en permanence
+
+
+## Vendredi 29 mars 2019:
+ajout de l'interface avec les regles du jeux et gestion de la fin
+
+envoi du scoreboard avec les 10 meilleurs joueurs
