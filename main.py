@@ -14,8 +14,10 @@ class BoutonS: #classe pour gérer les boutons interactifs
     def command(self): #fonction executée lors du clique sur le boutton
         root_main.withdraw() #on masque l'interface principale
         result = self.run() #on execute le jeu
-        push_score("random", self.jeux, result) #on envois au serveur le score de la partie
+        push_score(User_name, self.jeux, result) #on envois au serveur le score de la partie
         root_main.deiconify() #on fait réapparaite la fenetre principale
+
+User_name = "Beta_Test"
 
 root_main = Tk()
 root_main.geometry('1000x600')

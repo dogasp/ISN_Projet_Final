@@ -23,5 +23,4 @@ def get_score_list():
     s.close()
     return response #on renvois le scoreboard
 
-
 #https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/

@@ -1,19 +1,39 @@
 import socket #imports
 import select
 import pickle
+import os
 
-players = {"gwenilapeuf": {"Tete": 20, "Morpion": 30}} #dictionnaire de test
-
+if os.path.isfile("./data"):
+    with open("data", "rb") as f:
+        players = pickle.load(f)
+else:
+    players = {} #dictionnaire des joueurs
+players = {"Beta_Test": {"Tete": 10}}
 def process(msg): #fonction pour décider de ce qu'il faut retourner au client
+    global players
     list = msg.split(" ") #on split
 
     command = list[0] #la commande est le premier mot, on le stocke pour plus de simplicité
     if command == "add": #si la commande est add, on ajoute le score
         print("player {} scored {} in {}".format(list[1], list[3], list[2]))
+        try:
+            if players[list[1]][list[2]] < int(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
+                players[list[1]][list[2]] = int(list[3])
+        except:
+            players[list[1]] = {"Tete": 0}   #création d'un nouveau joueur et ajout du score
+            players[list[1]][list[2]] = int(list[3])
+        print(players)
         return b"ok" #le retour n'est pas important
 
     if command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
-        return pickle.dumps(players)
+        total_score = []
+        for player in players.keys():
+            sum = 0
+            for jeu in players[player].values():
+                sum += jeu
+            total_score.append((player, sum))
+        total_score.sort(key = lambda list: list[1])
+        return pickle.dumps(total_score[:10])
 
 Host = "90.91.3.228" #variables
 Port = 1243
@@ -56,3 +76,6 @@ print("Ending connections")
 for client in client_list: #fin des connections
     client.close()
 s.close()
+
+with open("data", "wb") as f:
+    pickle.dump(players, f)
