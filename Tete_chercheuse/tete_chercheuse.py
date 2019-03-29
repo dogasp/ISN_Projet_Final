@@ -242,6 +242,7 @@ def Tete():
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
     Caisse = PhotoImage(file = "Tete_chercheuse/caisse.png")
     Wall = PhotoImage(file = "Tete_chercheuse/mur.ppm")
+    Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
 
     Yellow_Coin = PhotoImage(file = "Tete_chercheuse/yellow_coin.ppm")
     Red_Coin = PhotoImage(file = "Tete_chercheuse/red_coin.ppm")
