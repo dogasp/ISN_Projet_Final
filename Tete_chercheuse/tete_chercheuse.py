@@ -84,8 +84,6 @@ def rules_game():
     Bouton_skip = Button(Frame_main2_wind2, text = '-Skip-',font = ("Helvetica", 10), relief = GROOVE,command = quit_rules)
     Bouton_skip.place(x = 200, y = 390)
 
-
-
     show_rules.mainloop()
 
 def quit_rules():
@@ -344,13 +342,6 @@ def Tete():
 
     show_score = Label(Frame2, text = "Score: %s" %str(sum(score)), relief = GROOVE)
     show_score.place(x = 65, y = 100)
-
-
-
-
-
-
-
 
     nbcases_width = nbcases_height = 10
     rayon = 7
