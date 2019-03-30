@@ -3,7 +3,7 @@ import select
 import pickle
 import os
 
-Host = "192.168.1.30" #ip locale sinon "90.91.3.228" 
+Host = "192.168.1.30" #ip locale sinon "90.91.3.228"
 Port = 1243
 
 if os.path.isfile("./data"): #si le fichier est créé, on charge ce qu'il y a dessus
@@ -32,13 +32,20 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         save()
         return b"ok" #le retour n'est pas important
 
-    if command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
+    elif command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
         total_score = []
         for player in players.keys(): #pour chaque joueur, on calcule son score total et on l'ajoute dans une liste
             sum = 0
             for jeu in players[player].values():
                 sum += jeu
             total_score.append((player, sum))
+        total_score.sort(key = lambda list: list[1], reverse = True) #on trie la liste et on renvois les 10 premiers éléments
+        return pickle.dumps(total_score[:10])
+
+    elif command == "game_list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
+        total_score = []
+        for player in players.keys(): #pour chaque joueur, on calcule son score total et on l'ajoute dans une liste
+            total_score.append((player, players[player][list[1]]))
         total_score.sort(key = lambda list: list[1], reverse = True) #on trie la liste et on renvois les 10 premiers éléments
         return pickle.dumps(total_score[:10])
 

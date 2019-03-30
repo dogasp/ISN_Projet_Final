@@ -4,6 +4,8 @@ from Tete_chercheuse.data import *
 from time import sleep
 sys.path.append('../Reseau')
 from Reseau.client import *
+sys.path.append('../Scoreboard')
+from Scoreboard.scoreboard import *
 
 ##################----------Variables------------######################################
 #'0' correpond à une case vide
@@ -85,39 +87,13 @@ def rules_game():
 
     show_rules.mainloop()
 
-def quit_rules():
-    Frame_main2_wind2.destroy()
-    ranking_wind()
-
-def ranking_wind():
-    Frame_main2_wind3 = Frame(Frame_main1_wind2, width = 550, height = 425, relief = GROOVE)
-    Frame_main2_wind3.place(x = 60, y = 45)
-
-    Frame_main2_wind3.after(500,lambda: ranking_game.place(x = 120, y= 20 ))
-    ranking_game = Label(Frame_main2_wind3, text = 'Classement du jeu', font = ("Berlin Sans FB", 35), relief = GROOVE) #,command =Ranking
-
-    players = get_score_list()
-    Label(Frame_main2_wind3, text = "Ranking" + " "*25 + "Name" + " "*75 + "Score" ).place(x = 120, y = 60)
-
-    for i in range(len(players)):
-        Label(Frame_main2_wind3,text = "#{} : {}".format(i+1, players[i][0]),font = ("Helvetica", 15)).place(x = 120, y = 100 +i*25)
-        Label(Frame_main2_wind3, text = "{}".format(str(int(players[i][1]))),font = ("Helvetica", 15)).place(x = 350, y = 100 +i*25)
-    for i in range(10-len(players)):
-        Label(Frame_main2_wind3,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 15)).place(x = 120, y = 100 + 25*len(players) +i*25)
-
-
-
-
-
-
-
-
-    Bouton_continue = Button(Frame_main2_wind3, text = 'Continue...',command = quit_ranking)
-    Frame_main2_wind3.after(2000,lambda: Bouton_continue.place(x = 300,y = 420 ))
-
 def quit_ranking():
     show_rules.destroy()
     show_rules.quit()
+
+def quit_rules():
+    Frame_main2_wind2.destroy()
+    score = Scoreboard(Frame_main1_wind2, "Tete")
 
 def click(event):
     global box_placed
