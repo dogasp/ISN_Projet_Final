@@ -17,7 +17,7 @@ from Reseau.client import *
 #
 ########################################################################################
 def rules_game():
-    global show_rules, Frame_main1_wind2
+    global show_rules, Frame_main2_wind2, Frame_main1_wind2
     show_rules = Toplevel()
 
     show_rules.title('Règles')
@@ -86,14 +86,14 @@ def rules_game():
 
 
 
-    Frame_main2_wind2.mainloop()
+    show_rules.mainloop()
 
 def quit_rules():
     Frame_main2_wind2.destroy()
     ranking_wind()
 
 def ranking_wind():
-    Frame_main2_wind3 = Frame(Frame_main1_wind2,width = 550, height = 425, relief = GROOVE)
+    Frame_main2_wind3 = Frame(Frame_main1_wind2, width = 550, height = 425, relief = GROOVE)
     Frame_main2_wind3.place(x = 60, y = 45)
 
     Frame_main2_wind3.after(2000,lambda: ranking_game.place(x = 300, y= 400 ))
@@ -102,7 +102,7 @@ def ranking_wind():
 
     Bouton_continue = Button(show_rules, text = 'Continue...',command = quit_rules2)
     Frame_main2_wind3.after(4000,lambda: Bouton_continue.place(x = 300,y = 420 ))
-    Frame_main2_wind3.mainloop()
+
 
 
 def quit_rules2():
