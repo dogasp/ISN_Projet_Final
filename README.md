@@ -33,3 +33,11 @@ hébergement du serveur sur raspberry: le serveur est acessible en permanence
 ajout de l'interface avec les règles du jeux et gestion de la fin ajout de la page du scoreboard au début du jeu
 
 envoi du scoreboard avec les 10 meilleurs joueurs et stockage des données dans un fichier
+
+Amélioration de la page des rêgles
+
+## samedi 30 mars 2019:
+création de la classe scoreboard
+
+création d'une fonction pour avoir les 10 meilleurs joueurs dans un jeu spécifique
+
