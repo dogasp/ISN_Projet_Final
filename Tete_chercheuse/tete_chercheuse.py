@@ -14,15 +14,15 @@ from Reseau.client import *
 #'S' correspond à une (petite) pièce/récompense
 #'B' correspond à une (grosse) pièce/récompense
 #'E' correspond au robot arrivé
-#
 ########################################################################################
+
 def rules_game():
     global show_rules, Frame_main2_wind2, Frame_main1_wind2
     show_rules = Toplevel()
 
     show_rules.title('Règles')
     show_rules.geometry('670x530')
-    show_rules.protocol("WM_DELETE_WINDOW", quit_rules2)
+    show_rules.protocol("WM_DELETE_WINDOW", quit_ranking)
 
 ################-----------Création des Frames de la fenetre secondaire----------##############
     Frame_main1_wind2 = Canvas(show_rules, bg = 'red', relief = GROOVE)
@@ -47,7 +47,6 @@ def rules_game():
     Frame_main2_wind2.after(1500, lambda: CANVAS1.place(x = 380, y = 60 ))
     first_photo1 = PhotoImage(file = "Rules_tete_photo/first_photo.png")
     CANVAS1.create_image(75, 30,image = first_photo1)
-
 
 #------------------2-----------------------------------------------------------------
     Rules3 = Label(Frame_main2_wind2, text = 'Pour cela, tu as à disposition des caisses \n\
@@ -97,17 +96,12 @@ def ranking_wind():
     Frame_main2_wind3.after(500,lambda: ranking_game.place(x = 300, y= 400 ))
     ranking_game = Label(show_rules, text = 'Classement du jeu') #,command =Ranking
 
+    Bouton_continue = Button(show_rules, text = 'Continue...',command = quit_ranking)
+    Frame_main2_wind3.after(2000,lambda: Bouton_continue.place(x = 300,y = 420 ))
 
-    Bouton_continue = Button(show_rules, text = 'Continue...',command = quit_rules2)
-    Frame_main2_wind3.after(4000,lambda: Bouton_continue.place(x = 300,y = 420 ))
-
-
-
-def quit_rules2():
+def quit_ranking():
     show_rules.destroy()
     show_rules.quit()
-
-
 
 def click(event):
     global box_placed
@@ -140,38 +134,25 @@ def update():
         for j in range(10):
             if (table[i][j])=='X':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Wall)
-
             elif table[i][j] == "C":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Caisse)
-
-                #Table.create_rectangle((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = "lightgrey")
-                #Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
-                #Table.create_line((cell_width)*i,(cell_height)*j,(cell_width)*(i+1),(cell_height)*(j+1), fill = 'red')
-
             elif (table[i][j])=='R':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = robot[index_robot])
-
             elif (table[i][j])=='P':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Flag)
-
             elif (table[i][j])=='S':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Yellow_Coin)
-                #Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'yellow')
-
             elif (table[i][j])=='B':
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = Red_Coin)
-                #Table.create_line((cell_width)*(i+1),(cell_height)*j,(cell_width)*i,(cell_height)*(j+1), fill = 'red')
             elif table[i][j] == "E":
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
     root_tete.update()
 
     show_score["text"] = "Score: %s" %str(int(sum(score)))
 
-
 def end_game():
     global question, box_placed, score
     score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
-
     update()
 
     question = Toplevel()
@@ -182,7 +163,6 @@ def end_game():
     Button(question, text = "Next Level", command = next).place(x = 110, y = 75)
 
 def restart_menu():
-    global score
     question.destroy()
     restart()
 
@@ -248,7 +228,7 @@ def start():
             end_game()
             return
         else:
-            dir = [dir[1], -dir[0]]
+            dir = [dir[1], -dir[0]] #rotation d'une matrice [a, b] par -PI/2 en faisant [b, -a]
             index_robot = (index_robot + 1)%4
         table[pos[0]][pos[1]] = "R"
         update()
@@ -351,8 +331,6 @@ def Tete():
 
     score_star = 0
 
-
-
     #################################################################################
     #generation du terrain
     table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
@@ -365,12 +343,7 @@ def Tete():
     ################################################################################
 
     root_tete.mainloop()
-    """
-    enlever des points quand on perd la partie
-    si l'on veut restart, on prévient qu on va lui enlever des points et remettre son score de la partie en cours à 0
-    petite piece = 5
-    grosse piece = 10
 
-    """
+    """#si l'on veut restart, on prévient qu on va lui enlever des points"""
 
     return sum(score)
