@@ -172,6 +172,9 @@ def next():
     score.append(10)
     question.destroy()
     level += 1
+    if level == len(Levels):
+        exit()
+        return 
     Title_level["text"] = f"Level {level}"
     restart()
 
