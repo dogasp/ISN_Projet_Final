@@ -3,7 +3,7 @@ sys.path.append('../')
 from Reseau.client import *
 
 class Scoreboard:
-    def __init__(self, parent, root, jeux):
+    def __init__(self, parent, root, jeux, User_name):
         self.parent = parent
         self.root = root
 
@@ -21,6 +21,8 @@ class Scoreboard:
             Label(TopFrame, text = "{}".format(str(int(players[i][1]))),font = ("Helvetica", 15)).place(x = 385, y = 130 +i*25)
         for i in range(10-len(players)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
             Label(TopFrame,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 15)).place(x = 85, y = 130 + 25*len(players) +i*25)
+
+        #coder player score pour avoir le score individuel
 
         Label(TopFrame, text = "Votre Score:  {}".format(str(int(players[0][1]))) ,font = ("Helvetica",15), relief = GROOVE).place(x = 50, y = 390)
         Bouton_continue = Button(TopFrame, text = 'Continue...-->',font = ("Berlin Sans FB", 15), command = self.quit_ranking)

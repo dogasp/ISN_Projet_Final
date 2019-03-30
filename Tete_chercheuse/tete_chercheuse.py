@@ -93,7 +93,7 @@ def quit_ranking():
 
 def quit_rules():
     Frame_main2_wind2.destroy()
-    score = Scoreboard(Frame_main1_wind2, show_rules, "Tete")
+    score = Scoreboard(Frame_main1_wind2, show_rules, "Tete", User_name)
 
 def click(event):
     global box_placed
@@ -174,7 +174,7 @@ def next():
     level += 1
     if level == len(Levels):
         exit()
-        return 
+        return
     Title_level["text"] = f"Level {level}"
     restart()
 
@@ -255,11 +255,14 @@ def exit():
     root_tete.quit()
     root_tete.destroy()
 
-def Tete():
+def Tete(user):
     global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin, show_score
     global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star, Button_start
+    global User_name
     #preparation du jeu
+    User_name = user
     rules_game()
+    
     score = [10]
     root_tete = Toplevel()
 
