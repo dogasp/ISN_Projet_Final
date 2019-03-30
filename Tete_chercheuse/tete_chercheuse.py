@@ -93,15 +93,21 @@ def ranking_wind():
     Frame_main2_wind3 = Frame(Frame_main1_wind2, width = 550, height = 425, relief = GROOVE)
     Frame_main2_wind3.place(x = 60, y = 45)
 
-    Frame_main2_wind3.after(500,lambda: ranking_game.place(x = 220, y= 20 ))
-    ranking_game = Label(Frame_main2_wind3, text = 'Classement du jeu', font = ("Berlin Sans FB", 12), relief = GROOVE) #,command =Ranking
+    Frame_main2_wind3.after(500,lambda: ranking_game.place(x = 120, y= 20 ))
+    ranking_game = Label(Frame_main2_wind3, text = 'Classement du jeu', font = ("Berlin Sans FB", 35), relief = GROOVE) #,command =Ranking
 
     players = get_score_list()
-    for i in range(len(players)):
-        Label(Frame_main2_wind3,text = "#{} : {}".format(i+1, players[i][0] + "with" + str(int(players[i][1]))),font = ("Helvetica", 10)).place(x = 180, y = 50 +i*20)
+    Label(Frame_main2_wind3, text = "Ranking" + " "*25 + "Name" + " "*75 + "Score" ).place(x = 120, y = 60)
 
+    for i in range(len(players)):
+        Label(Frame_main2_wind3,text = "#{} : {}".format(i+1, players[i][0]),font = ("Helvetica", 15)).place(x = 120, y = 100 +i*25)
+        Label(Frame_main2_wind3, text = "{}".format(str(int(players[i][1]))),font = ("Helvetica", 15)).place(x = 350, y = 100 +i*25)
     for i in range(10-len(players)):
-        Label(Frame_main2_wind3,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 10)).place(x = 180, y = 50 + 20*len(players) +i*20)
+        Label(Frame_main2_wind3,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 15)).place(x = 120, y = 100 + 25*len(players) +i*25)
+
+
+
+
 
 
 
