@@ -11,7 +11,7 @@ class Scoreboard:
         TopFrame.after(500,lambda: ranking_game.place(x = 120, y= 20 ))
         ranking_game = Label(TopFrame, text = 'Classement du jeu', font = ("Berlin Sans FB", 35), relief = GROOVE) #,command =Ranking
 
-        players = get__game_score_list(jeux)
+        players = get_game_score_list(jeux)
         Label(TopFrame, text = "Ranking" + " "*15 + "Name" + " "*35 + "Score" ).place(x = 120, y = 80)
 
         for i in range(len(players)):
