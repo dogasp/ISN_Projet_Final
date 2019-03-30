@@ -93,7 +93,7 @@ def quit_ranking():
 
 def quit_rules():
     Frame_main2_wind2.destroy()
-    score = Scoreboard(Frame_main1_wind2, "Tete")
+    score = Scoreboard(Frame_main1_wind2, show_rules, "Tete")
 
 def click(event):
     global box_placed

@@ -3,7 +3,9 @@ sys.path.append('../')
 from Reseau.client import *
 
 class Scoreboard:
-    def __init__(self, parent, jeux):
+    def __init__(self, parent, root, jeux):
+        self.parent = parent
+        self.root = root
 
         TopFrame = Frame(parent, width = 550, height = 425, relief = GROOVE) #frame contenant le scoreboard
         TopFrame.place(x = 60, y = 45)
@@ -21,10 +23,10 @@ class Scoreboard:
             Label(TopFrame,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 15)).place(x = 85, y = 130 + 25*len(players) +i*25)
 
         Label(TopFrame, text = "Votre Score:  {}".format(str(int(players[0][1]))) ,font = ("Helvetica",15), relief = GROOVE).place(x = 50, y = 390)
-        Bouton_continue = Button(TopFrame, text = 'Continue...-->',font = ("Berlin Sans FB", 15),command = quit_ranking)
+        Bouton_continue = Button(TopFrame, text = 'Continue...-->',font = ("Berlin Sans FB", 15), command = self.quit_ranking)
         TopFrame.after(2000, lambda: Bouton_continue.place(x = 350,y = 380))
 
 
-def quit_ranking():
-    show_rules.destroy()
-    show_rules.quit()
+    def quit_ranking(self):
+        self.root.destroy()
+        self.root.quit()
