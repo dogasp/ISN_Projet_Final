@@ -30,6 +30,6 @@ hébergement du serveur sur raspberry: le serveur est acessible en permanence
 
 
 ## Vendredi 29 mars 2019:
-ajout de l'interface avec les regles du jeux et gestion de la fin
+ajout de l'interface avec les règles du jeux et gestion de la fin ajout de la page du scoreboard au début du jeu
 
-envoi du scoreboard avec les 10 meilleurs joueurs
+envoi du scoreboard avec les 10 meilleurs joueurs et stockage des données dans un fichier
