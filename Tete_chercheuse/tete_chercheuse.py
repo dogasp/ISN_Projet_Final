@@ -93,10 +93,20 @@ def ranking_wind():
     Frame_main2_wind3 = Frame(Frame_main1_wind2, width = 550, height = 425, relief = GROOVE)
     Frame_main2_wind3.place(x = 60, y = 45)
 
-    Frame_main2_wind3.after(500,lambda: ranking_game.place(x = 300, y= 400 ))
-    ranking_game = Label(show_rules, text = 'Classement du jeu') #,command =Ranking
+    Frame_main2_wind3.after(500,lambda: ranking_game.place(x = 220, y= 20 ))
+    ranking_game = Label(Frame_main2_wind3, text = 'Classement du jeu', font = ("Berlin Sans FB", 12), relief = GROOVE) #,command =Ranking
 
-    Bouton_continue = Button(show_rules, text = 'Continue...',command = quit_ranking)
+    players = get_score_list()
+    for i in range(len(players)):
+        Label(Frame_main2_wind3,text = "#{} : {}".format(i+1, players[i])).place(x = 180, y = 50 +i*15)
+
+    for i in range(10-len(players)):
+        Label(Frame_main2_wind3,text = "#{} :".format(i+1+len(players))).place(x = 180, y = 50 + 15*len(players) +i*15)
+
+
+
+
+    Bouton_continue = Button(Frame_main2_wind3, text = 'Continue...',command = quit_ranking)
     Frame_main2_wind3.after(2000,lambda: Bouton_continue.place(x = 300,y = 420 ))
 
 def quit_ranking():
