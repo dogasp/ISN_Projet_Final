@@ -98,10 +98,10 @@ def ranking_wind():
 
     players = get_score_list()
     for i in range(len(players)):
-        Label(Frame_main2_wind3,text = "#{} : {}".format(i+1, players[i]),font = ("Helvetica", 10)).place(x = 180, y = 50 +i*15)
+        Label(Frame_main2_wind3,text = "#{} : {}".format(i+1, players[i]),font = ("Helvetica", 10)).place(x = 180, y = 50 +i*20)
 
     for i in range(10-len(players)):
-        Label(Frame_main2_wind3,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 10)).place(x = 180, y = 50 + 15*len(players) +i*15)
+        Label(Frame_main2_wind3,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 10)).place(x = 180, y = 50 + 20*len(players) +i*20)
 
 
 
