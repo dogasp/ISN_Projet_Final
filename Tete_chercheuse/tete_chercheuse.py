@@ -94,7 +94,7 @@ def ranking_wind():
     Frame_main2_wind3 = Frame(Frame_main1_wind2, width = 550, height = 425, relief = GROOVE)
     Frame_main2_wind3.place(x = 60, y = 45)
 
-    Frame_main2_wind3.after(2000,lambda: ranking_game.place(x = 300, y= 400 ))
+    Frame_main2_wind3.after(500,lambda: ranking_game.place(x = 300, y= 400 ))
     ranking_game = Label(show_rules, text = 'Classement du jeu') #,command =Ranking
 
 

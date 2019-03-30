@@ -40,7 +40,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
             for jeu in players[player].values():
                 sum += jeu
             total_score.append((player, sum))
-        total_score.sort(key = lambda list: list[1])
+        total_score.sort(key = lambda list: list[1], reverse = True)
         return pickle.dumps(total_score[:10])
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
