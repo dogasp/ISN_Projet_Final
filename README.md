@@ -36,10 +36,17 @@ envoi du scoreboard avec les 10 meilleurs joueurs et stockage des données dans 
 
 Amélioration de la page des rêgles
 
-## samedi 30 mars 2019:
+## Samedi 30 mars 2019:
 création de la classe scoreboard
+
 création d'une fonction pour avoir les 10 meilleurs joueurs dans un jeu spécifique
+
+## Dimanche 31 mars 2019:
 création du classement Total dans la page principale
 
 Bug: Départ à (-10)
 Bug: non réactulisation de la variable (score) lors du restart, c'est a dire que la variable garde l'ancienne valeur et lui ajoute la nouvelle. Il devrait juste sauvegarder la nouvelle.
+
+Ajout de la demande du pseudo au départ
+
+serveur: ajout d'une fonction pour récupérer le score d'un joueur en particulier
