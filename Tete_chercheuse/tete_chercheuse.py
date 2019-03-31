@@ -147,8 +147,9 @@ def update(Print_Score = True):
         show_score["text"] = "Score: %s" %str(int(sum(score)))
 
 def end_game():
-    global question, box_placed
-    show_score["text"] = "Score: %s"%str(int(sum(score + [(10000/(box_placed*10 + time_game*0.2) + score_star) * level])))
+    global question, box_placed, score_temp
+    score_temp = (10000/(box_placed*10 + time_game*0.2) + score_star) * level
+    show_score["text"] = "Score: %s"%str(int(sum(score + [score_temp])))
     update(False)
 
     question = Toplevel()
@@ -177,7 +178,7 @@ def time_num():
 
 def next():
     global level, score
-    score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
+    score[-1] += score_temp
     score.append(50*(level+1))
     question.destroy()
     level += 1
@@ -259,7 +260,7 @@ def restart():
 
 def exit_menu():
     global  score
-    score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
+    score[-1] += score_temp
     exit()
 
 def exit():
