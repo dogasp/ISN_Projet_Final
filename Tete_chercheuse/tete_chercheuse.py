@@ -276,7 +276,7 @@ def Tete(user):
     User_name = user
     rules_game()
 
-    score = [10]
+    score = [50]
     root_tete = Toplevel()
 
     root_tete.geometry('700x550')
