@@ -202,7 +202,7 @@ def start():
     reminder = {} #pour vérifier le nombre de fois qu'on est passé a un meme endroit
     run = True
     while run == True:
-        sleep(0.1)
+        sleep(0.5)
         table[pos[0]][pos[1]] = "0"
         x = pos[0] + dir[0]
         y = pos[1] - dir[1]
