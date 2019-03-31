@@ -48,9 +48,11 @@ with open('Data/mots.txt', 'r') as file:
 def valider(event = None):
     global User_name
     temp = entry.get().replace(" ", "_")
+    if temp == "":
+        alert.place(x = 50, y = 100)
+        return
     for elt in mots_interdits[:-1]:
-        if elt in temp:
-            print(mots_interdits, elt, temp)
+        if elt in temp.lower():
             alert.place(x = 50, y = 100)
             return
     User_name = temp
