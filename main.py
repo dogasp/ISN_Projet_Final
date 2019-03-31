@@ -45,7 +45,7 @@ with open('Data/mots.txt', 'r') as file:
     mots = file.read()
     mots_interdits = mots.split("\n")
 
-def valider():
+def valider(event = None):
     global User_name
     temp = entry.get().replace(" ", "_")
     for elt in mots_interdits[:-1]:
@@ -60,11 +60,13 @@ def valider():
 root_user = Tk()
 root_user.geometry("300x120")
 pseudo = StringVar()
+root_user.bind("<Return>", valider)
 
 Label(root_user, text = "Entre un pseudo pour jouer").place(x = 100, y = 30)
 
 entry = Entry(root_user, textvariable = pseudo)
 entry.place(x = 25, y = 80)
+entry.focus()
 
 alert = Label(root_user, text = "Nom invalide", fg = "red")
 
