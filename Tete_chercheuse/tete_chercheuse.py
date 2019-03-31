@@ -150,6 +150,7 @@ def end_game():
     global question, box_placed, score_temp
     score_temp = (10000/(box_placed*10 + time_game*0.2) + score_star) * level
     show_score["text"] = "Score: %s"%str(int(sum(score + [score_temp])))
+    Button_restart["state"] = "disabled"
     update(False)
 
     question = Toplevel()
@@ -245,6 +246,7 @@ def restart_button():
 
 def restart():
     global table, timer_start, time_game, box_placed, index_robot, score_star, score
+    Button_restart["state"] = "normal"
     index_robot = 0
     score[-1] -= 50*level
     Button_start["state"] = "normal"
@@ -273,7 +275,7 @@ def exit():
 def Tete(user):
     global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin, show_score
     global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star, Button_start
-    global User_name
+    global User_name, Button_restart
     #preparation du jeu
     User_name = user
     rules_game()
