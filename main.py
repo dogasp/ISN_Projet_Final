@@ -2,6 +2,8 @@ from tkinter import *
 from Tete_chercheuse.tete_chercheuse import *
 from Reseau.client import *
 from tkinter import font
+sys.path.append('../')
+from Reseau.client import *
 
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run): # a besoin de cligne, colone, ne nom du jeux et la commande our executer le jeu
@@ -17,7 +19,7 @@ class BoutonS: #classe pour gérer les boutons interactifs
         push_score(User_name, self.jeux, result) #on envois au serveur le score de la partie
         root_main.deiconify() #on fait réapparaite la fenetre principale
 
-User_name = "Beta_Test"
+User_name = "Gwenilapeuf"
 
 root_main = Tk()
 root_main.geometry('1000x600')
@@ -47,6 +49,17 @@ Title_main.place(x = 250, y = 10)
 Title_ranking = Label(Frame_left, text = 'Classements',font = ("Berlin Sans FB", 20), relief = GROOVE)
 Title_ranking.place(x = 27, y = 25)
 
+################---------Création du Classement-----------------------------################################
+Label(Frame_left, text = "Rang" + " "*8 + "Nom" + " "*20 + "Score    " ,font = ("Helvetica",9), relief = GROOVE).place(x = 2, y = 70) #légende
+
+for i in range(10): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
+    Label(Frame_left,text = "#{} :       {}".format(i+1, "gwendal"),font = ("Helvetica", 10)).place(x = 4, y = 95 +i*25)
+    Label(Frame_left, text = "{}".format("bite"),font = ("Helvetica", 9)).place(x = 150, y = 95 +i*25)
+
+"""for i in range(10-len(players)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
+    Label(Frame_left,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 7)).place(x = 5, y = 90 + 25*len(players) +i*10)"""
+
+
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
 nom_de_jeux = ["Tête Chercheuse", "Pong", "Space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8"]
@@ -72,6 +85,10 @@ Label_list4.grid(row = 4, column = 1)
 Label_list5.grid(row = 4, column = 3)
 Label_list6.grid(row = 4, column = 5)
 Label_list7.grid(row = 4, column = 7)
+
+
+
+
 
 bouton_0 = BoutonS(2, 1, "Tete", Tete)
 

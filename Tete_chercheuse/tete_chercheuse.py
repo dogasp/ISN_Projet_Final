@@ -95,6 +95,9 @@ def quit_rules():
     Frame_main2_wind2.destroy()
     score = Scoreboard(Frame_main1_wind2, show_rules, "Tete", User_name)
 
+
+"""######################------------------Début du Jeu---------------------------########################################"""
+
 def click(event):
     global box_placed
     x = event.x
@@ -172,7 +175,7 @@ def next():
     score.append(10)
     question.destroy()
     level += 1
-    if level == len(Levels):
+    if level == len(Levels)+1:
         exit()
         return
     Title_level["text"] = f"Level {level}"
@@ -262,7 +265,7 @@ def Tete(user):
     #preparation du jeu
     User_name = user
     rules_game()
-    
+
     score = [10]
     root_tete = Toplevel()
 
