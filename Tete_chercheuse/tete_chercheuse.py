@@ -116,7 +116,7 @@ def click(event):
         show_count['text'] = "Nombre de palettes: %s" %str(box_placed)
     update()
 
-def update():
+def update(Print_Score = True):
     Table.delete("all")
     for i in range(nbcases_width):
         Table.create_line((cell_width)*i,0,(cell_width)*i,500)
@@ -143,17 +143,18 @@ def update():
                 Table.create_image(cell_width* i + cell_width/2, cell_height* j + cell_height/2, image = End)
     root_tete.update()
 
-    show_score["text"] = "Score: %s" %str(int(sum(score)))
+    if Print_Score == True:
+        show_score["text"] = "Score: %s" %str(int(sum(score)))
 
 def end_game():
-    global question, box_placed, score
-    score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
-    update()
+    global question, box_placed
+    show_score["text"] = "Score: %s"%str(int(sum(score + [(10000/(box_placed*10 + time_game*0.2) + score_star) * level])))
+    update(False)
 
     question = Toplevel()
     question.geometry("300x125")
     Button(question, text = "Restart", command = restart_question, font = ("Helvetica", 10)).place(x = 30, y = 45)
-    Button(question, text = "Main Menu", command = exit, font = ("Helvetica", 10)).place(x = 210, y = 45)
+    Button(question, text = "Main Menu", command = exit_menu, font = ("Helvetica", 10)).place(x = 210, y = 45)
     Button(question, text = "Next Level", command = next, font = ("Helvetica", 10)).place(x = 110, y = 45)
 
 def restart_question():
@@ -164,12 +165,6 @@ def restart_question():
         restart()
     else:
         end_game()
-
-
-def restart_menu():
-    question.destroy()
-    score[-1] -=50
-    restart()
 
 box_placed = 0
 time_game = 0
@@ -182,7 +177,8 @@ def time_num():
 
 def next():
     global level, score
-    score.append(10)
+    score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
+    score.append(50)
     question.destroy()
     level += 1
     if level == len(Levels)+1:
@@ -249,7 +245,7 @@ def restart_button():
 def restart():
     global table, timer_start, time_game, box_placed, index_robot, score_star, score
     index_robot = 0
-    score[-1] -=50
+    score[-1] -= 50*level
     Button_start["state"] = "normal"
     time_game = box_placed = score_star = 0
     Table.bind("<Button-1>", click)
@@ -260,6 +256,11 @@ def restart():
         for j in range(nbcases_height):
             table[i][j] = Levels[level-1][(j*nbcases_width)+i]
     update()
+
+def exit_menu():
+    global  score
+    score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
+    exit()
 
 def exit():
     try:
