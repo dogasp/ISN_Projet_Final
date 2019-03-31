@@ -16,6 +16,7 @@ from Scoreboard.scoreboard import *
 #'S' correspond à une (petite) pièce/récompense
 #'B' correspond à une (grosse) pièce/récompense
 #'E' correspond au robot arrivé
+#meilleur score possible: 4163,9
 ########################################################################################
 
 def rules_game():
