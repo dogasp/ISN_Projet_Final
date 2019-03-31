@@ -46,6 +46,7 @@ with open('Data/mots.txt', 'r') as file:
     mots_interdits = mots.split("\n")
 
 def valider():
+    global User_name
     temp = entry.get().replace(" ", "_")
     for elt in mots_interdits[:-1]:
         if elt in temp:
