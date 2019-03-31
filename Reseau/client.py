@@ -32,4 +32,14 @@ def get_game_score_list(game):
     response = pickle.loads(response) #on désérialise la réponse pour récupérer un dictionnaire
     s.close()
     return response #on renvois le scoreboard
+
+def get_player_score(User_name):
+    """récupération des scores d'un joueur"""
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
+    s.connect((Host, Port)) #on lie l'adresse ip et le port
+    s.send("player_score {}".format(User_name).encode("utf-8")) #on demande la liste
+    response = s.recv(1024)
+    response = pickle.loads(response) #on désérialise la réponse pour récupérer un dictionnaire
+    s.close()
+    return response #on renvois le scoreboard
 #https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/

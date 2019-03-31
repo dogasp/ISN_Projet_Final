@@ -39,7 +39,38 @@ class BoutonS: #classe pour gérer les boutons interactifs
             label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),font = ("Helvetica", 8)))
             label_pseudo[-1].place(x = 4, y = 75 + 20*len(score) +i*20)
 
-User_name = "Douxgasp"
+User_name = "Unknown"
+
+with open('Data/mots.txt', 'r') as file:
+    mots = file.read()
+    mots_interdits = mots.split("\n")
+
+def valider():
+    temp = entry.get().replace(" ", "_")
+    for elt in mots_interdits[:-1]:
+        if elt in temp:
+            print(mots_interdits, elt, temp)
+            alert.place(x = 50, y = 100)
+            return
+    User_name = temp
+    root_user.destroy()
+    root_user.quit()
+
+root_user = Tk()
+root_user.geometry("300x120")
+pseudo = StringVar()
+
+Label(root_user, text = "Entre un pseudo pour jouer").place(x = 100, y = 30)
+
+entry = Entry(root_user, textvariable = pseudo)
+entry.place(x = 25, y = 80)
+
+alert = Label(root_user, text = "Nom invalide", fg = "red")
+
+confirm = Button(root_user, text = "valider", command = valider)
+confirm.place(x = 225, y = 80)
+
+root_user.mainloop()
 
 root_main = Tk()
 root_main.geometry('1000x600')

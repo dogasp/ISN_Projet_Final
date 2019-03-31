@@ -38,11 +38,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     if command == "add":     #si la commande est add, on ajoute le score
 
         print("player {} scored {} in {}".format(list[1], list[3], list[2]))
-        try:
-            if players[list[1]][list[2]] < float(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
-                players[list[1]][list[2]] = float(list[3])
-        except:
-            players[list[1]] = {"Tete": 0}   #création d'un nouveau joueur et ajout du score
+        if players[list[1]][list[2]] < float(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
             players[list[1]][list[2]] = float(list[3])
         save()
         return b"ok" #le retour n'est pas important
@@ -67,6 +63,14 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
             total_score.append((player, players[player][list[1]]))
         total_score.sort(key = lambda list: list[1], reverse = True) #on trie la liste et on renvois les 10 premiers éléments
         return pickle.dumps(total_score[:10])
+
+        """##################----------------Envois du score d'un joueur------------------------#############################"""
+    elif command == "player_score":
+        try:
+            players[list[1]]["Tete"] < 0
+        except:
+            players[list[1]] = {"Tete": 0} #création d'un nouveau joueur
+        return pickle.dumps(players[list[1]])
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket

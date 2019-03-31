@@ -172,7 +172,7 @@ time_game = 0
 def time_num():
     global time_game
     time_game+=1
-    show_time['text'] = "Time: %s" %str(time_game)
+    show_time['text'] = "Temps: %s" %str(time_game)
     root_tete.after(1000,time_num)
 
 def next():
@@ -249,7 +249,7 @@ def restart():
     Button_start["state"] = "normal"
     time_game = box_placed = score_star = 0
     Table.bind("<Button-1>", click)
-    show_time['text'] = "Time: %s" %str(time_game)
+    show_time['text'] = "Temps: %s" %str(time_game)
     show_count['text'] = "Nombre de palettes: %s" %str(box_placed)
 
     for i in range(nbcases_width):
