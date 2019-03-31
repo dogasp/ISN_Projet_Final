@@ -178,7 +178,7 @@ def time_num():
 def next():
     global level, score
     score[-1] += ((10000/(box_placed*10 + time_game*0.2) + score_star) * level)
-    score.append(50)
+    score.append(50*(level+1))
     question.destroy()
     level += 1
     if level == len(Levels)+1:
