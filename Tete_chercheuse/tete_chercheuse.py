@@ -168,6 +168,7 @@ def restart_question():
 
 def restart_menu():
     question.destroy()
+    score[-1] -=50
     restart()
 
 box_placed = 0
@@ -248,7 +249,7 @@ def restart_button():
 def restart():
     global table, timer_start, time_game, box_placed, index_robot, score_star, score
     index_robot = 0
-    score[-1] -=10
+    score[-1] -=50
     Button_start["state"] = "normal"
     time_game = box_placed = score_star = 0
     Table.bind("<Button-1>", click)
