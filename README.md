@@ -38,6 +38,5 @@ Amélioration de la page des rêgles
 
 ## samedi 30 mars 2019:
 création de la classe scoreboard
-
 création d'une fonction pour avoir les 10 meilleurs joueurs dans un jeu spécifique
-
+création du classement Total dans la page principale

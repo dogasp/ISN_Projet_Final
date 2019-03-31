@@ -14,12 +14,32 @@ class BoutonS: #classe pour gérer les boutons interactifs
         self.run = run
 
     def command(self): #fonction executée lors du clique sur le boutton
+        global label_pseudo, label_score, score
         root_main.withdraw() #on masque l'interface principale
         result = self.run(User_name) #on execute le jeu
         push_score(User_name, self.jeux, result) #on envois au serveur le score de la partie
         root_main.deiconify() #on fait réapparaite la fenetre principale
 
-User_name = "Gwenilapeuf"
+        for label in label_score:
+            label.destroy()
+        for label in label_pseudo:
+            label.destroy()
+
+        score = get_score_list()
+
+        label_pseudo = []
+        label_score = []
+        for i in range(len(score)): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
+            label_pseudo.append(Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),font = ("Helvetica", 8)))
+            label_pseudo[-1].place(x = 4, y = 75 +i*20)
+            label_score.append(Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),font = ("Helvetica", 8)))
+            label_score[-1].place(x = 160, y = 75 +i*20)
+
+        for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
+            label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),font = ("Helvetica", 8)))
+            label_pseudo[-1].place(x = 4, y = 75 + 20*len(score) +i*20)
+
+User_name = "Douxgasp"
 
 root_main = Tk()
 root_main.geometry('1000x600')
@@ -54,13 +74,17 @@ Title_ranking.place(x = 27, y = 5)
 
 ################---------Création du Classement-----------------------------################################
 Label(Frame_ranking, text = "Rang" + " "*8 + "Nom" + " "*24 + "Score  " ,font = ("Helvetica",9), relief = GROOVE).place(x = 2, y = 50) #légende
-
+label_pseudo = []
+label_score = []
 for i in range(len(score)): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
-    Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),font = ("Helvetica", 8)).place(x = 4, y = 75 +i*20)
-    Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),font = ("Helvetica", 8)).place(x = 160, y = 75 +i*20)
+    label_pseudo.append(Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),font = ("Helvetica", 8)))
+    label_pseudo[-1].place(x = 4, y = 75 +i*20)
+    label_score.append(Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),font = ("Helvetica", 8)))
+    label_score[-1].place(x = 160, y = 75 +i*20)
 
 for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
-    Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),font = ("Helvetica", 8)).place(x = 4, y = 75 + 20*len(score) +i*20)
+    label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),font = ("Helvetica", 8)))
+    label_pseudo[-1].place(x = 4, y = 75 + 20*len(score) +i*20)
 
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################

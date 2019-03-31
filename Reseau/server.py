@@ -31,8 +31,6 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     #list[1] = nom du joueur
     #list[3] = score du joueur
     #list[2] = jeu auquel le joueur joue
-    #
-    #
     #########################
 
     """################--------------Condition pour l'ajout du nouveau meilleur score----------#############################"""
@@ -49,7 +47,6 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         save()
         return b"ok" #le retour n'est pas important
 
-
         """################--------------Condition pour l'ajout du Classement Total----------#############################"""
 
     elif command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
@@ -62,7 +59,6 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         total_score.sort(key = lambda list: list[1], reverse = True) #on trie la liste et on renvois les 10 premiers éléments
         return pickle.dumps(total_score[:10])
 
-
         """################--------------Condition pour l'ajout du Classement du jeu----------#############################"""
 
     elif command == "game_list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
@@ -71,10 +67,6 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
             total_score.append((player, players[player][list[1]]))
         total_score.sort(key = lambda list: list[1], reverse = True) #on trie la liste et on renvois les 10 premiers éléments
         return pickle.dumps(total_score[:10])
-
-
-
-
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
