@@ -37,6 +37,9 @@ Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
 Frame_main = Frame(root_main,bg = 'red',borderwidth=2, relief=GROOVE)
 Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
 
+Frame_ranking = Frame(Frame_left, width = 196 , height =280 , relief = GROOVE)
+Frame_ranking.place(x = 2, y = 70)
+
 
 score = get_score_list() #récupération du scoreboard
 print(score)
@@ -46,18 +49,18 @@ print(score)
 Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Berlin Sans FB", 45), relief = GROOVE)
 Title_main.place(x = 250, y = 10)
 
-Title_ranking = Label(Frame_left, text = 'Classements',font = ("Berlin Sans FB", 20), relief = GROOVE)
-Title_ranking.place(x = 27, y = 25)
+Title_ranking = Label(Frame_ranking, text = 'Classements',font = ("Berlin Sans FB", 20), relief = GROOVE)
+Title_ranking.place(x = 27, y = 5)
 
 ################---------Création du Classement-----------------------------################################
-Label(Frame_left, text = "Rang" + " "*8 + "Nom" + " "*20 + "Score    " ,font = ("Helvetica",9), relief = GROOVE).place(x = 2, y = 70) #légende
+Label(Frame_ranking, text = "Rang" + " "*8 + "Nom" + " "*24 + "Score  " ,font = ("Helvetica",9), relief = GROOVE).place(x = 2, y = 50) #légende
 
-for i in range(10): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
-    Label(Frame_left,text = "#{} :       {}".format(i+1, "gwendal"),font = ("Helvetica", 10)).place(x = 4, y = 95 +i*25)
-    Label(Frame_left, text = "{}".format("bite"),font = ("Helvetica", 9)).place(x = 150, y = 95 +i*25)
+for i in range(len(score)): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
+    Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),font = ("Helvetica", 8)).place(x = 4, y = 75 +i*20)
+    Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),font = ("Helvetica", 8)).place(x = 160, y = 75 +i*20)
 
-"""for i in range(10-len(players)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
-    Label(Frame_left,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 7)).place(x = 5, y = 90 + 25*len(players) +i*10)"""
+for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
+    Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),font = ("Helvetica", 8)).place(x = 4, y = 75 + 20*len(score) +i*20)
 
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################

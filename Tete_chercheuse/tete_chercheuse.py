@@ -43,30 +43,30 @@ def rules_game():
 #------------------1----------------------------------------------------------------
     Rules2 = Label(Frame_main2_wind2, text = "Le but est que le robot arrive au drapeau.\n\
      ", font = ("Berlin Sans FB", 12))
-    Frame_main2_wind2.after(1000, lambda: Rules2.place(x = 45, y = 70))
+    Frame_main2_wind2.after(500, lambda: Rules2.place(x = 45, y = 70))
 
     CANVAS1 = Canvas(Frame_main2_wind2, width = 150, height = 60)
-    Frame_main2_wind2.after(1500, lambda: CANVAS1.place(x = 380, y = 60 ))
+    Frame_main2_wind2.after(1000, lambda: CANVAS1.place(x = 380, y = 60 ))
     first_photo1 = PhotoImage(file = "Rules_tete_photo/first_photo.png")
     CANVAS1.create_image(75, 30,image = first_photo1)
 
 #------------------2-----------------------------------------------------------------
     Rules3 = Label(Frame_main2_wind2, text = 'Pour cela, tu as à disposition des caisses \n\
     qui te permettront de dévier le robot.',font = ("Berlin Sans FB", 12))
-    Frame_main2_wind2.after(2500, lambda: Rules3.place(x = 40, y = 150))
+    Frame_main2_wind2.after(2000, lambda: Rules3.place(x = 40, y = 150))
 
     CANVAS2 = Canvas(Frame_main2_wind2,  width = 130, height = 72)
-    Frame_main2_wind2.after(3000, lambda: CANVAS2.place(x = 390, y = 140 ))
+    Frame_main2_wind2.after(2500, lambda: CANVAS2.place(x = 390, y = 140 ))
     first_photo2 = PhotoImage(file = "Rules_tete_photo/second_photo.png")
     CANVAS2.create_image(65, 36,image = first_photo2)
 
 #------------------3------------------------------------------------------------------
     Rules4 = Label(Frame_main2_wind2, text = "A chaque fois que le robot rencontre un obstacle, \n\
     il tourne à droite sinon il va toujours tout droit.",font = ("Berlin Sans FB", 12))
-    Frame_main2_wind2.after(4000, lambda: Rules4.place(x = 20, y = 240))
+    Frame_main2_wind2.after(3500, lambda: Rules4.place(x = 20, y = 240))
 
     CANVAS3 = Canvas(Frame_main2_wind2, width = 190, height = 72)
-    Frame_main2_wind2.after(4500, lambda: CANVAS3.place(x = 350, y = 230 ))
+    Frame_main2_wind2.after(4000, lambda: CANVAS3.place(x = 350, y = 230 ))
     first_photo3 = PhotoImage(file = "Rules_tete_photo/third_photo.png")
     CANVAS3.create_image(95, 36,image = first_photo3)
 
@@ -74,10 +74,10 @@ def rules_game():
     Rules5 = Label(Frame_main2_wind2, text = "Enfin tu peux rencontrer des pièces rouges et \n\
     jaunes, en passant dessus tu gagneras des points. \n\
     Les rouges rapportent plus de points que les jaunes.",font = ("Berlin Sans FB", 12))
-    Frame_main2_wind2.after(5500, lambda: Rules5.place(x = 17, y = 320))
+    Frame_main2_wind2.after(5000, lambda: Rules5.place(x = 17, y = 320))
 
     CANVAS4 = Canvas(Frame_main2_wind2, width = 150, height = 86)
-    Frame_main2_wind2.after(6000, lambda: CANVAS4.place(x = 380, y = 320 ))
+    Frame_main2_wind2.after(5500, lambda: CANVAS4.place(x = 380, y = 320 ))
     first_photo4 = PhotoImage(file = "Rules_tete_photo/four_photo.png")
     CANVAS4.create_image(75, 43,image = first_photo4)
 
