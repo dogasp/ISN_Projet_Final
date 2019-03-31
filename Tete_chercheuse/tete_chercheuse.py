@@ -152,10 +152,19 @@ def end_game():
 
     question = Toplevel()
     question.geometry("300x125")
-    Label(question, text= "choose an action:").place(x = 100, y = 20)
-    Button(question, text = "Restart", command = restart_menu).place(x = 30, y = 75)
-    Button(question, text = "Main Menu", command = exit).place(x = 210, y = 75)
-    Button(question, text = "Next Level", command = next).place(x = 110, y = 75)
+    Button(question, text = "Restart", command = restart_question, font = ("Helvetica", 10)).place(x = 30, y = 45)
+    Button(question, text = "Main Menu", command = exit, font = ("Helvetica", 10)).place(x = 210, y = 45)
+    Button(question, text = "Next Level", command = next, font = ("Helvetica", 10)).place(x = 110, y = 45)
+
+def restart_question():
+    global question2, question
+    question.destroy()
+    question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras 50 points à chaque fois")
+    if question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+        restart()
+    else:
+        end_game()
+
 
 def restart_menu():
     question.destroy()
@@ -194,7 +203,7 @@ def start():
     reminder = {} #pour vérifier le nombre de fois qu'on est passé a un meme endroit
     run = True
     while run == True:
-        sleep(0.5)
+        sleep(0.1)
         table[pos[0]][pos[1]] = "0"
         x = pos[0] + dir[0]
         y = pos[1] - dir[1]
