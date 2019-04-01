@@ -290,21 +290,29 @@ def Tete(user):
     User_name = user
     rules_game()
 
-    score = [50]
-    root_tete = Toplevel()
 
+    root_tete = Toplevel()
     root_tete.geometry('700x550')
-    
+    #############------------variables----------########################
+    score = [50]
+    index_robot = 0 #la ou il regarde
+    nbcases_width = nbcases_height = 10
+    rayon = 7
+    cell_width = 500/nbcases_width
+    cell_height = 500/nbcases_height
+    score_star = 0
+
+    table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
+    level = 1
 
     ########---------Import Photos------------------###############################################
     robot = [PhotoImage(file = "Tete_chercheuse/robot_right.png"), PhotoImage(file = "Tete_chercheuse/robot_front.png"), PhotoImage(file = "Tete_chercheuse/robot_left.png"), PhotoImage(file = "Tete_chercheuse/robot_back.png")]
-    index_robot = 0
+
     Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
     Caisse = PhotoImage(file = "Tete_chercheuse/caisse.png")
     Wall = PhotoImage(file = "Tete_chercheuse/mur.ppm")
     Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
-
     Yellow_Coin = PhotoImage(file = "Tete_chercheuse/yellow_coin.ppm")
     Red_Coin = PhotoImage(file = "Tete_chercheuse/red_coin.ppm")
 
@@ -348,19 +356,7 @@ def Tete(user):
     show_score = Label(Frame2, text = "Score: %s" %str(sum(score)), relief = GROOVE)
     show_score.place(x = 65, y = 100)
 
-    nbcases_width = nbcases_height = 10
-    rayon = 7
-
-    cell_width = 500/nbcases_width
-    cell_height = 500/nbcases_height
-
-    score_star = 0
-
-    #################################################################################
-    #generation du terrain
-    table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
-    level = 1
-
+    ###############-----------Lancement des fonctions-------------######################
     time_num()
     restart()
     update()
@@ -368,6 +364,5 @@ def Tete(user):
     ################################################################################
 
     root_tete.mainloop()
-
 
     return sum(score)
