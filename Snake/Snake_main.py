@@ -62,8 +62,8 @@ class snake:
     def sweet(self):
         verite = True
         while verite:
-            x = randint(0, 20)
-            y = randint(0, 20)
+            x = randint(0, 19)
+            y = randint(0, 19)
 
             if self.grid[x][y] == 0:
                 verite = False
@@ -88,7 +88,6 @@ class snake:
         self.root.quit()
 
 def Snake(User):
-    global jeux
     jeux = snake(User)
 
 if __name__ == "__main__":
