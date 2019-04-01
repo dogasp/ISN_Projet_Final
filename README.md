@@ -3,7 +3,7 @@ Répertoire avec le projet d'ISN de fin d'année
 
 plein de mini-jeux
 -> morpion, snake, puissance 4, pac man, tetris, robot tete chercheuse, qui-est-ce?, space invaders,
-pendu, pong
+pendu, pong, demineur
 
 ## mardi 26 mars 2019:  
 début du projet et assemblage des idées
