@@ -50,3 +50,6 @@ Bug: non réactulisation de la variable (score) lors du restart, c'est a dire qu
 Ajout de la demande du pseudo au départ
 
 serveur: ajout d'une fonction pour récupérer le score d'un joueur en particulier
+
+## Lundi 1 Avril 2019:
+Début de Snake!
