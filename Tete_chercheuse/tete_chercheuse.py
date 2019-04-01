@@ -83,7 +83,7 @@ def rules_game():
     CANVAS4.create_image(75, 43,image = first_photo4)
 
 #--------------5------------------------------------
-    Bouton_skip = Button(Frame_main2_wind2, text = '-Skip-',font = ("Helvetica", 10), relief = GROOVE,command = quit_rules)
+    Bouton_skip = Button(Frame_main2_wind2, text = '-Skip-',font = ("Helvetica", 10),cursor ='hand2', relief = GROOVE,command = warning)
     Bouton_skip.place(x = 200, y = 390)
 
     show_rules.mainloop()
@@ -95,6 +95,15 @@ def quit_ranking():
 def quit_rules():
     Frame_main2_wind2.destroy()
     score = Scoreboard(Frame_main1_wind2, show_rules, "Tete", User_name)
+
+def warning():
+    showwarning("Attention", "Attention !! La prtie commencera quand tu \n appuyeras sur le bouton 'Continuer'")
+    quit_rules()
+
+
+
+
+
 
 
 """######################------------------Début du Jeu---------------------------########################################"""
@@ -156,14 +165,14 @@ def end_game():
 
     question = Toplevel()
     question.geometry("300x125")
-    Button(question, text = "Restart", command = restart_question, font = ("Helvetica", 10)).place(x = 30, y = 45)
-    Button(question, text = "Main Menu", command = exit_menu, font = ("Helvetica", 10)).place(x = 210, y = 45)
-    Button(question, text = "Next Level", command = next, font = ("Helvetica", 10)).place(x = 110, y = 45)
+    Button(question, text = "Restart", command = restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
+    Button(question, text = "Main Menu", command = exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+    Button(question, text = "Next Level", command = next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
 
 def restart_question():
     global question2, question
     question.destroy()
-    question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras 50 points à chaque fois")
+    question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras à chaque fois 50 points multiplié par le niveau où tu es")
     if question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
         restart()
     else:
@@ -324,10 +333,10 @@ def Tete(user):
 
     #########------------Labels et autres-----------##################################
 
-    Button_start = Button(Frame1, text = "START" ,relief = GROOVE, activeforeground = 'red',font = ("Helvetica", 20),pady = 10, padx = 10,command = start)
+    Button_start = Button(Frame1, text = "START" ,relief = GROOVE,cursor ='hand2', activeforeground = 'red',font = ("Helvetica", 20),pady = 10, padx = 10,command = start)
     Button_start.place(x = 35, y = 50)
 
-    Button_restart = Button(Frame_top, text = "RESTART", relief = GROOVE, font = ("Helvetica", 10),command = restart_button)
+    Button_restart = Button(Frame_top, text = "RESTART", relief = GROOVE,cursor ='hand2', font = ("Helvetica", 10),command = restart_button)
     Button_restart.place(x = 600, y = 19)
 
     show_time = Label(Frame1, text = "Time: %s" %str(0), relief =GROOVE)

@@ -112,3 +112,5 @@ for client in client_list: #fin des connections
     client.close()
 s.close()
 save()
+print(players.keys())
+print(players[player].values())

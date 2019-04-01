@@ -25,7 +25,7 @@ class Scoreboard:
         User_score = get_player_score(User_name)
 
         Label(TopFrame, text = "Votre Score: {}".format(str(int(User_score[jeux]))) ,font = ("Helvetica",15), relief = GROOVE).place(x = 50, y = 390)
-        Bouton_continue = Button(TopFrame, text = 'Continuer...-->',font = ("Berlin Sans FB", 15), command = self.quit_ranking)
+        Bouton_continue = Button(TopFrame, text = 'Continuer...-->',font = ("Berlin Sans FB", 15), cursor ='hand2' , command = self.quit_ranking)
         TopFrame.after(1000, lambda: Bouton_continue.place(x = 350,y = 380))
 
 
