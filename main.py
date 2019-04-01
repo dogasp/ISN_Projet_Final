@@ -10,7 +10,7 @@ from Snake.Snake_main import *
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
         self.image = PhotoImage(file = "thumbnail/" + jeux + ".png") #on charge l'immage correspondante au jeu
-        self.button = Button(Frame_main, image = self.image,cursor ='hand2',  command = self.command) #création du boutton
+        self.button = Button(Frame_main, image = self.image, cursor ='hand2',  command = self.command) #création du boutton
         self.button.grid(row = x, column = y)
         self.jeux = jeux
         self.run = run
