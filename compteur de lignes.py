@@ -8,7 +8,7 @@ total = 0
 for file in fichiers:
     if isfile(join(path, file)):
         if file.split(".")[1] == "py" and file != "compteur de lignes.py":
-            with open(path+"\\\\" + file, "r") as fichier:
+            with open(join(path,file), "r") as fichier:
                 temp = fichier.readlines()
                 for i in temp:
                     lignes += 1
