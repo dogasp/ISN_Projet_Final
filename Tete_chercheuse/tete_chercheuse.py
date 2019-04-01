@@ -201,7 +201,8 @@ def next():
 
 def start():
     global table, index_robot, score_star, run
-    Table.unbind("<Button-1>")
+    Table.unbind("<
+    -1>")
     Button_start["state"] = "disabled"
     dir = [1, 0] #matrice de mouvement
     for i in range(nbcases_width):
