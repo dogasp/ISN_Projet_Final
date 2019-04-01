@@ -8,7 +8,8 @@ from Scoreboard.scoreboard import *
 
 class snake:
     def __init__(self):
-        pass
+        self.root = Tk()
+        self.root.geometry("600x700")
 
 def Snake():
     jeux = snake()
