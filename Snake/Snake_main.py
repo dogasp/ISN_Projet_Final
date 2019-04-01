@@ -20,7 +20,6 @@ class snake:
         #Scoreboard(Frame, root, "Snake", user)
 
         self.start()
-        return self.length_max * 40
 
     def start(self):
         global test
@@ -76,7 +75,7 @@ class snake:
                     self.grille.create_oval(i*25, j*25, (i+1)*25, (j+1)*25, fill = "yellow")
 
                 elif self.grid[i][j][0] == self.length_max:
-                    self.grille.create_image(i*25, j*25, (i+1)*25, (j+1)*25, image = test) #self.Head_Image[self.grid[i][j][1]]) unknown option 300 or unknown option 275
+                    #self.grille.create_image(i*25, j*25, (i+1)*25, (j+1)*25, image = test) #self.Head_Image[self.grid[i][j][1]]) unknown option 300 or unknown option 275
                     self.grille.create_oval(i*25, j*25, (i+1)*25, (j+1)*25, fill = "green")
                 else:
                     self.grille.create_oval(i*25, j*25, (i+1)*25, (j+1)*25, fill = "blue")
@@ -152,6 +151,7 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
 
 def Snake(User):
     jeux = snake(User)
+    return jeux.length_max * 40
 
 if __name__ == "__main__":
     Snake("Test_Purpose")
