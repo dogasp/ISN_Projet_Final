@@ -97,7 +97,7 @@ def quit_rules():
     score = Scoreboard(Frame_main1_wind2, show_rules, "Tete", User_name)
 
 def warning():
-    showwarning("Attention", "Attention !! La prtie commencera quand tu \n appuyeras sur le bouton 'Continuer'")
+    showwarning("Attention", "Attention !! La prtie commencera quand tu \n appuyeras sur le bouton 'Continuer' \n et le temps est compté donc prépare-toi")
     quit_rules()
 
 
