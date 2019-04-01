@@ -23,7 +23,7 @@ class snake:
         self.grid[9][10] = 1
         self.grid[10][10] = 2
 
-        self.root = Tk()
+        self.root = Toplevel()
         self.root.geometry("702x552")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.grille = Canvas(self.root, width = 500, height = 500, bg = "white")
@@ -34,9 +34,7 @@ class snake:
         self.root.mainloop()
 
     def update(self):
-        global Fruit
-
-        Fruit = PhotoImage(file = "Snake/images/Fruit.png")
+        self.Fruit_Image = PhotoImage(file = "Snake/images/Fruit.png")
         self.grille.delete("all")
 
         for i in range(0, 500, 25):
@@ -59,7 +57,7 @@ class snake:
 
         self.grille.create_rectangle(2,2,500,500)
 
-        self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = Fruit)
+        self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
 
     def sweet(self):
         verite = True
@@ -90,6 +88,7 @@ class snake:
         self.root.quit()
 
 def Snake(User):
+    global jeux
     jeux = snake(User)
 
 if __name__ == "__main__":
