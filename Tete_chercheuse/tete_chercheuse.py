@@ -294,7 +294,7 @@ def Tete(user):
     root_tete = Toplevel()
 
     root_tete.geometry('700x550')
-    root_tete.protocol("WM_DELETE_WINDOW", exit)
+    
 
     ########---------Import Photos------------------###############################################
     robot = [PhotoImage(file = "Tete_chercheuse/robot_right.png"), PhotoImage(file = "Tete_chercheuse/robot_front.png"), PhotoImage(file = "Tete_chercheuse/robot_left.png"), PhotoImage(file = "Tete_chercheuse/robot_back.png")]
@@ -369,6 +369,5 @@ def Tete(user):
 
     root_tete.mainloop()
 
-    """#si l'on veut restart, on prévient qu on va lui enlever des points"""
 
     return sum(score)

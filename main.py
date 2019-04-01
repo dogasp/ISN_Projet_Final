@@ -1,14 +1,16 @@
 from tkinter import *
-from Tete_chercheuse.tete_chercheuse import *
 from Reseau.client import *
 from tkinter import font
 sys.path.append('../')
 from Reseau.client import *
 
+from Tete_chercheuse.tete_chercheuse import *
+from Snake.Snake_main import *
+
 class BoutonS: #classe pour gérer les boutons interactifs
-    def __init__(self, x, y, jeux, run): # a besoin de cligne, colone, ne nom du jeux et la commande our executer le jeu
+    def __init__(self, x, y, jeux, run): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
         self.image = PhotoImage(file = "thumbnail/" + jeux + ".png") #on charge l'immage correspondante au jeu
-        self.button = Button(Frame_main, image = self.image,cursor ='hand2',  command = self.command) #création du boutton
+        self.button = Button(Frame_main, image = self.image,  command = self.command) #création du boutton
         self.button.grid(row = x, column = y)
         self.jeux = jeux
         self.run = run
@@ -48,7 +50,7 @@ with open('Data/mots.txt', 'r') as file:
 def valider(event = None):
     global User_name
     temp = entry.get().replace(" ", "_")
-    if temp == "":
+    if temp == "" or len(temp) > 20:
         alert.place(x = 50, y = 100)
         return
     for elt in mots_interdits[:-1]:
@@ -72,7 +74,7 @@ entry.focus()
 
 alert = Label(root_user, text = "Nom invalide", fg = "red")
 
-confirm = Button(root_user, text = "valider",cursor ='hand2', command = valider)
+confirm = Button(root_user, text = "valider", command = valider)
 confirm.place(x = 225, y = 80)
 
 root_user.mainloop()
@@ -125,7 +127,7 @@ for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on af
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
-nom_de_jeux = ["Tête Chercheuse", "Pong", "Space Invaders", "Snake", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8"]
+nom_de_jeux = ["Tête Chercheuse", "Snake", "Pong", "Space Invaders", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8"]
 
 for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
@@ -150,9 +152,8 @@ Label_list6.grid(row = 4, column = 5)
 Label_list7.grid(row = 4, column = 7)
 
 
-
-
-
 bouton_0 = BoutonS(2, 1, "Tete", Tete)
+
+bouton_0 = BoutonS(2, 3, "Snake", Snake)
 
 root_main.mainloop()
