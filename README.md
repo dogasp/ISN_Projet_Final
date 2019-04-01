@@ -52,4 +52,6 @@ Ajout de la demande du pseudo au départ
 serveur: ajout d'une fonction pour récupérer le score d'un joueur en particulier
 
 ## Lundi 1 Avril 2019:
-Début de Snake!
+Finalisation des détails de tete chercheuse, il ne rest plus qu'à créer une jolie interface graphique
+Début de Snake: création du jeu a l'aide d'une classe englobant tout le jeux
+Recherche et découpage des images du serpent ainsi que de la pomme
