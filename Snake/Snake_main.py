@@ -103,7 +103,7 @@ class snake:
 
         self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
         if self.pause == False:
-            self.root.after(200, self.update)
+            self.root.after(150, self.update)
 
 
     def sweet(self):
