@@ -60,5 +60,3 @@ Tete chercheuse fini
 
 Snake fonctionnel avec gestion du score et mort
 
-## Mercredi 3 avril 209:
-Optimisation des fonctions update dans Tete chercheuse et Fantome avec le canv.move et canv.update
