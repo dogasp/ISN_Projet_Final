@@ -84,7 +84,9 @@ class snake:
         self.Pause_Button.place(x = 50, y = 100)
 
         self.start_button = Button(self.root, image = self.Start_image,  command = self.play)
-        self.start_button.pack()
+        self.start_button["bg"] = "white"
+        self.start_button["border"] = "0"
+        self.start_button.place(x = 50, y = 200)
 
         self.Score = Label(self.root, text = "Score : 0")
         self.Score.place(x = 50, y = 150)
@@ -106,46 +108,48 @@ class snake:
             self.update()
 
     def update(self):
-        if self.pause == False:
-            newX = self.pos[0] + self.dir[0]
-            newY = self.pos[1] + self.dir[1]
-            self.grid[self.pos[0]][self.pos[1]] = [self.length_max, convert_dir(self.dir, True), self.next_Rotation]
+          if self.pause == False:
+              newX = self.pos[0] + self.dir[0]
+              newY = self.pos[1] + self.dir[1]
+              self.grid[self.pos[0]][self.pos[1]] = [self.length_max, convert_dir(self.dir, True), self.next_Rotation]
 
-            if self.verif(newX, newY) == True:
-                self.pos = [newX, newY]
-                for i in range(20):
-                    for j in range(20):
-                        if self.grid[i][j][0] != 0:
-                            self.grid[i][j][0] -= 1
+              if self.verif(newX, newY) == True:
+                  self.pos = [newX, newY]
+                  for i in range(20):
+                      for j in range(20):
+                          if self.grid[i][j][0] != 0:
+                              self.grid[i][j][0] -= 1
 
-                if self.next_Rotation != convert_dir(self.dir, True):
-                    self.next_Rotation = convert_dir(self.dir, True)
-                self.grid[newX][newY] = [self.length_max, convert_dir(self.dir, True), convert_dir(self.dir, True)]
-            else:
-                self.dead()
-        if self.pause == False:
-            self.grille.delete("all")
+                  if self.next_Rotation != convert_dir(self.dir, True):
+                      self.next_Rotation = convert_dir(self.dir, True)
+                  self.grid[newX][newY] = [self.length_max, convert_dir(self.dir, True), convert_dir(self.dir, True)]
+              else:
+                  self.dead()
+          if self.pause == False:
+              self.grille.delete("all")
 
-            for i in range(20):
-                for j in range(20):
-                    if self.grid[i][j][0] == 0:
-                        self.grille.create_rectangle(i*25, j*25, (i+1)*25, (j+1)*25, outline ='#1a1a1a',fill = '#1a1a1a' )
+              for i in range(20):
+                  for j in range(20):
+                      if self.grid[i][j][0] == 0:
+                          self.grille.create_rectangle(i*25, j*25, (i+1)*25, (j+1)*25, outline ='#1a1a1a',fill = '#1a1a1a' )
 
-                    elif self.grid[i][j][0] == 1:
-                        self.grille.create_image(i*25+13, j*25+13, image = self.Queue_Image[self.grid[i][j][1]])
+                      elif self.grid[i][j][0] == 1:
+                          self.grille.create_image(i*25+13, j*25+13, image = self.Queue_Image[self.grid[i][j][1]])
 
-                    elif self.grid[i][j][0] == self.length_max:
-                        self.grille.create_image(i*25+13, j*25+13, image = self.Head_Image[self.grid[i][j][1]])
+                      elif self.grid[i][j][0] == self.length_max:
+                          self.grille.create_image(i*25+13, j*25+13, image = self.Head_Image[self.grid[i][j][1]])
 
-                    else:
-                        self.grille.create_image(i*25+13, j*25+13, image = self.Body_Image[self.grid[i][j][2]])
+                      else:
+                          self.grille.create_image(i*25+13, j*25+13, image = self.Body_Image[self.grid[i][j][2]])
 
 
-            self.grille.create_rectangle(0,0,500,500)
+              self.grille.create_rectangle(0,0,500,500)
 
-            self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
-            
-            self.root.after(150, self.update)
+              self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
+
+              self.root.after(150, self.update)
+
+
 
     def sweet(self):
         verite = True
@@ -160,6 +164,7 @@ class snake:
 
     def verif(self, x, y):
         if x < 0 or x > 19 or y < 0 or y > 19 or self.grid[x][y][0] != 0:
+            #self.dead()
             return False
         elif x == self.fruit[0] and y == self.fruit[1]:
             for i in range(20):
@@ -202,16 +207,17 @@ class snake:
                     self.next_Rotation = 7
                 self.dir = convert_dir(dir)
 
-    def dead(self):
-        self.pause = True
-        if (self.length_max-2)*40 > self.Best_Score:
-                self.Best_Score = (self.length_max-2)*40
-        question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
-        if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-            self.root.destroy()
-            self.start()
-        else:
-            self.exit()
+                  def dead(self):
+                      self.pause = True
+                      if (self.length_max-2)*40 > self.Best_Score:
+                              self.Best_Score = (self.length_max-2)*40
+                      question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
+                      if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+                          self.root.destroy()
+                          self.start()
+                      else:
+                          self.exit()
+
 
 def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est une matrice qui est entrée
     if mat == True:
@@ -234,6 +240,5 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
             return [0, -1]
 
 def Snake(User):
-    jeux = snake(User)
-    print(jeux.Best_Score)
-    return jeux.Best_Score
+  jeux = snake(User)
+  return jeux.Best_Score
