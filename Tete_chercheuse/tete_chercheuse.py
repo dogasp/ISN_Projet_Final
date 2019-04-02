@@ -307,7 +307,7 @@ def Tete(user):
 
     ########---------Import Photos------------------###############################################
     robot = [PhotoImage(file = "Tete_chercheuse/robot_right.png"), PhotoImage(file = "Tete_chercheuse/robot_front.png"), PhotoImage(file = "Tete_chercheuse/robot_left.png"), PhotoImage(file = "Tete_chercheuse/robot_back.png")]
-
+    restart_button_image = PhotoImage(file = "Tete_chercheuse/start.png")
     Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
     End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
     Caisse = PhotoImage(file = "Tete_chercheuse/caisse.png")
@@ -315,6 +315,9 @@ def Tete(user):
     Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
     Yellow_Coin = PhotoImage(file = "Tete_chercheuse/yellow_coin.ppm")
     Red_Coin = PhotoImage(file = "Tete_chercheuse/red_coin.ppm")
+    Guide_tete = PhotoImage(file = "Tete_chercheuse/brain.png")
+    Bulle_image = PhotoImage(file = "Tete_chercheuse/bulle.png")
+
 
     ########------------Frames Pricipaux-------------########################################
     Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')
@@ -322,11 +325,13 @@ def Tete(user):
     Frame_left = Frame(root_tete, width = 200, height = 500, bg = 'red')
 
     ########-----------Frames Secondaires-----------######################################
-    Frame1 = Frame(Frame_left, width = 200, height =250, bg = 'green')
-    Frame2 = Frame(Frame_left, width = 200, height =250, bg = 'yellow')
+    Frame1 = Frame(Frame_left, width = 200, height =200, bg = 'green')
+    Frame2 = Frame(Frame_left, width = 200, height =300, bg = 'black')
 
     Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
     Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
+
+    Canvas_dessine = Canvas(Frame2, bg = 'white',width = 186, height =290)
 
     #######-----------Package des Frames-------------##################################
     Frame_top.pack(side = TOP)
@@ -335,14 +340,15 @@ def Tete(user):
 
     Frame1.pack(side = TOP)
     Frame2.pack(side = BOTTOM)
+    Canvas_dessine.place(x = 3, y =4)
 
     Table.pack(fill = BOTH)
-    Title_level.place(x = 315, y = 10)
+    Title_level.place(x = 315, y = 0)
 
     #########------------Labels et autres-----------##################################
 
-    Button_start = Button(Frame1, text = "START" ,relief = GROOVE,cursor ='hand2', activeforeground = 'red',font = ("Helvetica", 20),pady = 10, padx = 10,command = start)
-    Button_start.place(x = 35, y = 50)
+    Button_start = Button(Frame1,relief = GROOVE,activebackground = 'black' ,bg = 'black', cursor ='hand2', image = restart_button_image,command = start)
+    Button_start.place(x = 30, y = 50)
 
     Button_restart = Button(Frame_top, text = "RESTART", relief = GROOVE,cursor ='hand2', font = ("Helvetica", 10),command = restart_button)
     Button_restart.place(x = 600, y = 19)
@@ -351,10 +357,20 @@ def Tete(user):
     show_time.place(x = 65, y = 180)
 
     show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), relief = GROOVE)
-    show_count.place(x = 65, y = 220)
+    show_count.place(x = 5, y = 120)
 
-    show_score = Label(Frame2, text = "Score: %s" %str(sum(score)), relief = GROOVE)
-    show_score.place(x = 65, y = 100)
+    show_score = Label(Frame1, text = "Score: %s" %str(sum(score)), relief = GROOVE)
+    show_score.place(x = 65, y = 120)
+
+    Canvas_dessine.create_image(86,215 ,image = Guide_tete)
+    Canvas_dessine.create_image(100,68, image= Bulle_image)
+
+    show_conseils = Label(Canvas_dessine, text = "Conseil: Je te propose \n d'être sûr de ton trajet \n avant de commencer",bg = 'white', font = ("Helvetica", 9))
+    show_conseils.place(x = 32, y =38 )
+
+
+
+
 
     ###############-----------Lancement des fonctions-------------######################
     time_num()
