@@ -59,7 +59,7 @@ class snake:
         self.fruit = [-1, -1]
         self.dir = [1, 0]
         self.next_Rotation = 0
-        self.pos = [10, 10]
+        self.pos = [0, 10]
         self.grid[10][10] = [2, 0, 0]
         self.pause = False
 
