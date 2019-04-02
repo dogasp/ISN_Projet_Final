@@ -3,7 +3,7 @@ Répertoire avec le projet d'ISN de fin d'année
 
 plein de mini-jeux
 -> morpion, snake, puissance 4, pac man, tetris, robot tete chercheuse, qui-est-ce?, space invaders,
-pendu, pong, demineur
+pendu, pong, demineur, phantôme
 
 ## mardi 26 mars 2019:  
 début du projet et assemblage des idées
@@ -57,4 +57,4 @@ Début de Snake: création du jeu a l'aide d'une classe englobant tout le jeux
 Recherche et découpage des images du serpent ainsi que de la pomme.
 
 ## Mardi 2 avril 2019:
-a faire: ajouter un jeux a un joueur si il essaye de push un score mais qu'il n'a pas init le jeux
+Snake: affichage des images fin de la mécanique de jeux
