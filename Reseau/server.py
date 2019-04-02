@@ -3,7 +3,8 @@ import select
 import pickle
 import os
 
-###################--------------Initialisation du serveur---------------###################################
+"""###################--------------Initialisation du serveur---------------###################################"""
+
 Host = "192.168.1.30" #ip locale sinon "90.91.3.228"
 Port = 1243
 
@@ -14,19 +15,18 @@ else:
     players = {} #dictionnaire des joueurs
 
 
-#########################-----------Fonction Save-------------------####################################
+"""#########################-----------Fonction Save-------------------####################################"""
+
 def save(): #fonction pour sauvegarder les scores des joueurs dans le fichier
     with open("data", "wb") as f:
         pickle.dump(players, f)
 
-####################----------------Fonction Process--------------------------###################################
+"""####################----------------Fonction Process--------------------------###################################"""
 
 def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     global players
     list = msg.split(" ") #on split
     command = list[0] #la commande est le premier mot, on le stocke pour plus de simplicité
-
-    """################--------------Condition pour l'ajout du nouveau meilleur score----------#############################"""
     ##########################
     #list[1] = nom du joueur
     #list[3] = score du joueur
