@@ -154,7 +154,6 @@ Label_list7.grid(row = 4, column = 7)
 
 
 bouton_0 = BoutonS(2, 1, "Tete", Tete)
-
-bouton_0 = BoutonS(2, 3, "Snake", Snake)
+bouton_1 = BoutonS(2, 3, "Snake", Snake)
 
 root_main.mainloop()

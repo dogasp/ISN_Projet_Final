@@ -100,12 +100,6 @@ def warning():
     showwarning("Attention", "Attention !! La partie commencera quand tu \n appuyeras sur le bouton 'Continuer' \n et le temps est compté donc prépare-toi.")
     quit_rules()
 
-
-
-
-
-
-
 """######################------------------Début du Jeu---------------------------########################################"""
 
 def click(event):

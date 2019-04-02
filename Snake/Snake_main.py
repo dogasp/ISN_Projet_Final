@@ -45,7 +45,7 @@ class snake:
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
-        Scoreboard(self.show_rules, self.show_rules, "Snake", self.User_name)
+        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Snake", self.User_name)
 
     def quit_ranking(self):
         self.show_rules.destroy()
