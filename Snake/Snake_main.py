@@ -30,6 +30,7 @@ class snake:
         self.next_Rotation = 0
         self.pos = [10, 10]
         self.grid[10][10] = [2, 0, 0]
+        self.pause = False
 
         self.root = Toplevel()
         self.root.geometry("702x552")
@@ -48,9 +49,22 @@ class snake:
         self.grille = Canvas(self.root, width = 500, height = 500, bg = "#1a1a1a")
         self.grille.place(x = 200, y = 50)
 
+        self.Pause_Button = Button(self.root, text = "Pause", command = self.pause_command)
+        self.Pause_Button.place(x = 50, y = 100)
+
+        self.Score = Label(self.root, text = "Score : 0")
+        self.Score.place(x = 50, y = 150)
+
         self.sweet()
         self.update()
         self.root.mainloop()
+    
+    def pause_command(self):
+        if self.pause == False:
+            self.pause = True
+        else:
+            self.pause = False
+            self.update()
 
     def update(self):
         newX = self.pos[0] + self.dir[0]
@@ -88,8 +102,8 @@ class snake:
         self.grille.create_rectangle(0,0,500,500)
 
         self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
-
-        self.root.after(200, self.update)
+        if self.pause == False:
+            self.root.after(200, self.update)
 
 
     def sweet(self):
@@ -113,6 +127,7 @@ class snake:
                     if self.grid[i][j][0] != 0:
                         self.grid[i][j][0] += 1
             self.length_max += 1
+            self.Score["text"] = "Score : {}".format((self.length_max-2)*40)
             self.sweet()
         return True
 
@@ -168,7 +183,4 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
 
 def Snake(User):
     jeux = snake(User)
-    return jeux.length_max * 40
-
-if __name__ == "__main__":
-    Snake("Test_Purpose")
+    return (jeux.length_max - 2) * 40
