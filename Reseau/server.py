@@ -38,7 +38,10 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     if command == "add":     #si la commande est add, on ajoute le score
 
         print("player {} scored {} in {}".format(list[1], list[3], list[2]))
-        if players[list[1]][list[2]] < float(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
+        try:
+            if players[list[1]][list[2]] < float(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
+                players[list[1]][list[2]] = float(list[3])
+        except:
             players[list[1]][list[2]] = float(list[3])
         save()
         return b"ok" #le retour n'est pas important
