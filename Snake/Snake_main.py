@@ -71,35 +71,23 @@ class snake:
                     self.grille.create_rectangle(i*25, j*25, (i+1)*25, (j+1)*25, outline ='#1a1a1a',fill = '#1a1a1a' )
 
                 elif self.grid[i][j][0] == 1:
-                    #self.grille.create_image(i*25, j*25, (i+1)*25, (j+1)*25, image = self.Queue_Image[self.grid[i][j][1]])
-                    self.grille.create_oval(i*25, j*25, (i+1)*25, (j+1)*25, fill = "yellow")
+                    self.grille.create_image(i*25+13, j*25+13, image = self.Queue_Image[self.grid[i][j][1]])
+
+
 
                 elif self.grid[i][j][0] == self.length_max:
-                    #self.grille.create_image(i*25, j*25, (i+1)*25, (j+1)*25, image = test) #self.Head_Image[self.grid[i][j][1]]) unknown option 300 or unknown option 275
-                    self.grille.create_oval(i*25, j*25, (i+1)*25, (j+1)*25, fill = "green")
+                    self.grille.create_image(i*25+13, j*25+13, image = self.Head_Image[self.grid[i][j][1]]) #self.Head_Image[self.grid[i][j][1]]) unknown option 300 or unknown option 275
+                    #self.grille.create_oval(i*25, j*25, (i+1)*25, (j+1)*25, fill = "green")
                 else:
-                    self.grille.create_oval(i*25, j*25, (i+1)*25, (j+1)*25, fill = "blue")
+                    self.grille.create_image(i*25+13, j*25+13, image = self.Body_Image[self.grid[i][j][1]]) #self.Head_Image[self.grid[i][j][1]]) unknown option 300 or unknown option 275
 
 
-        self.grille.create_rectangle(2,2,500,500)
+        self.grille.create_rectangle(0,0,500,500)
 
         self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
 
-        self.root.after(300, self.update)
+        self.root.after(200, self.update)
 
-    def rotate(self, event = None):
-        symb = event.keysym
-        dir = -1
-        if symb == "Right":
-            dir = 0
-        elif symb == "Down":
-            dir = 1
-        elif symb == "Left":
-            dir = 2
-        elif symb == "Up":
-            dir = 3
-        if dir != -1:
-            self.dir = convert_dir(dir)
 
     def sweet(self):
         verite = True
@@ -128,6 +116,20 @@ class snake:
     def exit(self):
         self.root.destroy()
         self.root.quit()
+
+    def rotate(self, event = None):
+        symb = event.keysym
+        dir = -1
+        if symb == "Right":
+            dir = 0
+        elif symb == "Down":
+            dir = 1
+        elif symb == "Left":
+            dir = 2
+        elif symb == "Up":
+            dir = 3
+        if dir != -1:
+            self.dir = convert_dir(dir)
 
 def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est une matrice qui est entrée
     if mat == True:
