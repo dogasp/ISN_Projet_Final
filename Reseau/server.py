@@ -72,7 +72,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         try:
             players[list[1]]["Tete"] < 0
         except:
-            players[list[1]] = {"Tete": 0, "Snake": 0} #création d'un nouveau joueur
+            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0} #création d'un nouveau joueur
         return pickle.dumps(players[list[1]])
 
 

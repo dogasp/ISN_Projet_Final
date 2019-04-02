@@ -55,8 +55,9 @@ Recherche et découpage des images du serpent ainsi que de la pomme.
 
 ## Mardi 2 avril 2019:
 Snake: affichage des images fin de la mécanique de jeux
-
 Tete chercheuse fini
-
 Snake fonctionnel avec gestion du score et mort
+Début de Fantome, mise en place de la grille et du niveau (Bug le liste)??
 
+## Mercredi 3 avril 2019:
+Continuer Fantome et finir Snake
