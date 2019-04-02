@@ -202,6 +202,7 @@ class snake:
                 self.dir = convert_dir(dir)
 
     def dead(self):
+        self.Pause_Button["state"] = "disabled"
         self.pause = True
         if (self.length_max-2)*40 > self.Best_Score:
             self.Best_Score = (self.length_max-2)*40
@@ -235,5 +236,4 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
 
 def Snake(User):
   jeux = snake(User)
-  print(jeux.Best_Score)
   return jeux.Best_Score
