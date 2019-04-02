@@ -20,7 +20,6 @@ class BoutonS: #classe pour gérer les boutons interactifs
         root_main.withdraw() #on masque l'interface principale
         result = self.run(User_name) #on execute le jeu
         push_score(User_name, self.jeux, result) #on envois au serveur le score de la partie
-        print("push")
         root_main.deiconify() #on fait réapparaite la fenetre principale
 
         for label in label_score:
