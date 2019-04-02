@@ -16,10 +16,30 @@ from random import randint
 class snake:
     def __init__(self, user):
         self.User_name = user
-        #rules
-        #Scoreboard(Frame, root, "Snake", user)
+        self.show_rules = Tk()
+
+        self.show_rules.title('Règles')
+        self.show_rules.geometry('700x500')
+        self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_rank)
+        self.explanation = Label(self.show_rules, text = "Règles du Snake\n\n\
+            Le serpent va en ligne droite, on peut le dévier en utilisant\n\
+            les flèches sur le clavier.\n\n\
+            Si le sepent mange un fruit, il grandit et cela rapporte des points\n\n\
+            Si le serpent touche un bord ou qu'il se mange lui-même, il meurt.")
+        self.explanation.place(x = 50, y = 20)
+        self.Button_Skip = Button(self.show_rules, text = "-Skip-", command = self.show_scoreboard)
+        self.Button_Skip.place(x = 50, y = 300)
+        self.show_rules.mainloop()
 
         self.start()
+    def show_scoreboard(self):
+        self.explanation.destroy()
+        self.Button_Skip.destroy()
+        
+        Scoreboard(self.show_rules, self.show_rules, "Snake", self.User_name)
+    def quit_rank(self):
+        self.show_rules.destroy()
+        self.show_rules.quit()
 
     def start(self):
         global test
@@ -132,6 +152,7 @@ class snake:
         return True
 
     def exit(self):
+        self.pause = True
         self.root.destroy()
         self.root.quit()
 
