@@ -44,9 +44,6 @@ création d'une fonction pour avoir les 10 meilleurs joueurs dans un jeu spécif
 ## Dimanche 31 mars 2019:
 création du classement Total dans la page principale
 
-Bug: Départ à (-10)
-Bug: non réactulisation de la variable (score) lors du restart, c'est a dire que la variable garde l'ancienne valeur et lui ajoute la nouvelle. Il devrait juste sauvegarder la nouvelle.
-
 Ajout de la demande du pseudo au départ
 
 serveur: ajout d'une fonction pour récupérer le score d'un joueur en particulier
@@ -58,3 +55,7 @@ Recherche et découpage des images du serpent ainsi que de la pomme.
 
 ## Mardi 2 avril 2019:
 Snake: affichage des images fin de la mécanique de jeux
+
+Tete chercheuse fini
+
+Snake fonctionnel avec gestion du score
