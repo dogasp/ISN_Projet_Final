@@ -53,7 +53,6 @@ class snake:
         self.show_rules.quit()
 
     def start(self):
-        global test
         self.grid = [[(0, 0, 0) for i in range(20)] for j in range(20)] #pour chaque élément de la grille, on a le temps de vie et la direction de la partie du serpent
         self.length_max = 2
         self.fruit = [-1, -1]
@@ -69,7 +68,6 @@ class snake:
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
 
-        test = PhotoImage(file = "Snake/images/Head_Right.png")
         self.Start_image = PhotoImage(file = "Snake/images/play.png")
         self.Fruit_Image = PhotoImage(file = "Snake/images/Fruit.png")
         self.Head_Image = [PhotoImage(file = "Snake/images/Head_Right.png"),PhotoImage(file = "Snake/images/Head_Down.png"), PhotoImage(file = "Snake/images/Head_Left.png"), PhotoImage(file = "Snake/images/Head_Up.png")]
