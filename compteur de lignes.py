@@ -12,7 +12,7 @@ for file in fichiers:
                 temp = fichier.readlines()
                 for i in temp:
                     lignes += 1
-                print(file,  lignes)
+                print(file,  lignes) 
                 total += lignes
                 lignes = 0
     else:
