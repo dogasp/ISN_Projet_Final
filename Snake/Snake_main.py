@@ -16,6 +16,7 @@ from random import randint
 class snake:
     def __init__(self, user):
         self.User_name = user
+        self.Best_Score = 0
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
@@ -97,42 +98,45 @@ class snake:
             self.update()
 
     def update(self):
-        newX = self.pos[0] + self.dir[0]
-        newY = self.pos[1] + self.dir[1]
-        self.grid[self.pos[0]][self.pos[1]] = [self.length_max, convert_dir(self.dir, True), self.next_Rotation]
+        if self.pause == False:
+            newX = self.pos[0] + self.dir[0]
+            newY = self.pos[1] + self.dir[1]
+            self.grid[self.pos[0]][self.pos[1]] = [self.length_max, convert_dir(self.dir, True), self.next_Rotation]
 
-        if self.verif(newX, newY) == True:
-            self.pos = [newX, newY]
+            if self.verif(newX, newY) == True:
+                self.pos = [newX, newY]
+                for i in range(20):
+                    for j in range(20):
+                        if self.grid[i][j][0] != 0:
+                            self.grid[i][j][0] -= 1
+
+                if self.next_Rotation != convert_dir(self.dir, True):
+                    self.next_Rotation = convert_dir(self.dir, True)
+                self.grid[newX][newY] = [self.length_max, convert_dir(self.dir, True), convert_dir(self.dir, True)]
+            else:
+                self.dead()
+        if self.pause == False:
+            self.grille.delete("all")
+
             for i in range(20):
                 for j in range(20):
-                    if self.grid[i][j][0] != 0:
-                        self.grid[i][j][0] -= 1
+                    if self.grid[i][j][0] == 0:
+                        self.grille.create_rectangle(i*25, j*25, (i+1)*25, (j+1)*25, outline ='#1a1a1a',fill = '#1a1a1a' )
 
-            if self.next_Rotation != convert_dir(self.dir, True):
-                self.next_Rotation = convert_dir(self.dir, True)
-            self.grid[newX][newY] = [self.length_max, convert_dir(self.dir, True), convert_dir(self.dir, True)]
+                    elif self.grid[i][j][0] == 1:
+                        self.grille.create_image(i*25+13, j*25+13, image = self.Queue_Image[self.grid[i][j][1]])
 
-        self.grille.delete("all")
+                    elif self.grid[i][j][0] == self.length_max:
+                        self.grille.create_image(i*25+13, j*25+13, image = self.Head_Image[self.grid[i][j][1]])
 
-        for i in range(20):
-            for j in range(20):
-                if self.grid[i][j][0] == 0:
-                    self.grille.create_rectangle(i*25, j*25, (i+1)*25, (j+1)*25, outline ='#1a1a1a',fill = '#1a1a1a' )
-
-                elif self.grid[i][j][0] == 1:
-                    self.grille.create_image(i*25+13, j*25+13, image = self.Queue_Image[self.grid[i][j][1]])
-
-                elif self.grid[i][j][0] == self.length_max:
-                    self.grille.create_image(i*25+13, j*25+13, image = self.Head_Image[self.grid[i][j][1]])
-
-                else:
-                    self.grille.create_image(i*25+13, j*25+13, image = self.Body_Image[self.grid[i][j][2]])
+                    else:
+                        self.grille.create_image(i*25+13, j*25+13, image = self.Body_Image[self.grid[i][j][2]])
 
 
-        self.grille.create_rectangle(0,0,500,500)
+            self.grille.create_rectangle(0,0,500,500)
 
-        self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
-        if self.pause == False:
+            self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
+            
             self.root.after(150, self.update)
 
 
@@ -149,7 +153,6 @@ class snake:
 
     def verif(self, x, y):
         if x < 0 or x > 19 or y < 0 or y > 19 or self.grid[x][y][0] != 0:
-            #self.dead()
             return False
         elif x == self.fruit[0] and y == self.fruit[1]:
             for i in range(20):
@@ -191,6 +194,16 @@ class snake:
                 elif (dir == 2 and old == 1) or (dir == 3 and old == 0):
                     self.next_Rotation = 7
                 self.dir = convert_dir(dir)
+    def dead(self):
+        self.pause = True
+        question = askquestion("RESTART", "Veux-tu recommencer")
+        if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+            self.exit()
+            if (self.length_max-2)*40 > self.Best_Score:
+                self.Best_Score = (self.length_max-2)*40
+            self.start()
+        else:
+            self.exit()
 
 def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est une matrice qui est entrée
     if mat == True:
@@ -214,4 +227,4 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
 
 def Snake(User):
     jeux = snake(User)
-    return (jeux.length_max - 2) * 40
+    return jeux.Best_Score
