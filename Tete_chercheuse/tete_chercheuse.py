@@ -28,7 +28,7 @@ def rules_game():
     show_rules.protocol("WM_DELETE_WINDOW", quit_ranking)
 
 ################-----------Création des Frames de la fenetre secondaire----------##############
-    Frame_main1_wind2 = Canvas(show_rules, bg = 'red', relief = GROOVE)
+    Frame_main1_wind2 = Canvas(show_rules, relief = GROOVE)
     Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
 
     Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")

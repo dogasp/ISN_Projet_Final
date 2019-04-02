@@ -16,28 +16,38 @@ from random import randint
 class snake:
     def __init__(self, user):
         self.User_name = user
-        self.show_rules = Tk()
-
+        self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
-        self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_rank)
-        self.explanation = Label(self.show_rules, text = "Règles du Snake\n\n\
-            Le serpent va en ligne droite, on peut le dévier en utilisant\n\
+        self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
+
+        self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
+        self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
+        #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
+        #self.Frame_main1_wind2.create_image(335,265,image =Fond_Frame_main1_wind2)
+        self.Frame_main2_wind2 = Frame(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE)
+        self.Frame_main2_wind2.place(x = 60, y = 45)
+        self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
+        self.Rules.place(x = 200, y =5)
+
+
+        self.explanation = Label(self.Frame_main2_wind2, text = "Le serpent va en ligne droite, on peut le dévier en utilisant\n\
             les flèches sur le clavier.\n\n\
             Si le sepent mange un fruit, il grandit et cela rapporte des points\n\n\
             Si le serpent touche un bord ou qu'il se mange lui-même, il meurt.")
-        self.explanation.place(x = 50, y = 20)
-        self.Button_Skip = Button(self.show_rules, text = "-Skip-", command = self.show_scoreboard)
+        self.explanation.place(x = 50, y = 30)
+        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
         self.Button_Skip.place(x = 50, y = 300)
         self.show_rules.mainloop()
 
         self.start()
-    def show_scoreboard(self):
-        self.explanation.destroy()
-        self.Button_Skip.destroy()
-        
+
+
+    def quit_rules(self):
+        self.Frame_main2_wind2.destroy()
         Scoreboard(self.show_rules, self.show_rules, "Snake", self.User_name)
-    def quit_rank(self):
+
+    def quit_ranking(self):
         self.show_rules.destroy()
         self.show_rules.quit()
 
@@ -78,7 +88,7 @@ class snake:
         self.sweet()
         self.update()
         self.root.mainloop()
-    
+
     def pause_command(self):
         if self.pause == False:
             self.pause = True
@@ -97,7 +107,7 @@ class snake:
                 for j in range(20):
                     if self.grid[i][j][0] != 0:
                         self.grid[i][j][0] -= 1
-            
+
             if self.next_Rotation != convert_dir(self.dir, True):
                 self.next_Rotation = convert_dir(self.dir, True)
             self.grid[newX][newY] = [self.length_max, convert_dir(self.dir, True), convert_dir(self.dir, True)]
@@ -113,10 +123,10 @@ class snake:
                     self.grille.create_image(i*25+13, j*25+13, image = self.Queue_Image[self.grid[i][j][1]])
 
                 elif self.grid[i][j][0] == self.length_max:
-                    self.grille.create_image(i*25+13, j*25+13, image = self.Head_Image[self.grid[i][j][1]]) 
+                    self.grille.create_image(i*25+13, j*25+13, image = self.Head_Image[self.grid[i][j][1]])
 
                 else:
-                    self.grille.create_image(i*25+13, j*25+13, image = self.Body_Image[self.grid[i][j][2]]) 
+                    self.grille.create_image(i*25+13, j*25+13, image = self.Body_Image[self.grid[i][j][2]])
 
 
         self.grille.create_rectangle(0,0,500,500)
