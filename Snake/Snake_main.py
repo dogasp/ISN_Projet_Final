@@ -139,7 +139,6 @@ class snake:
             
             self.root.after(150, self.update)
 
-
     def sweet(self):
         verite = True
         while verite:
