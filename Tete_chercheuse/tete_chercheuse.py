@@ -97,7 +97,7 @@ def quit_rules():
     score = Scoreboard(Frame_main1_wind2, show_rules, "Tete", User_name)
 
 def warning():
-    showwarning("Attention", "Attention !! La prtie commencera quand tu \n appuyeras sur le bouton 'Continuer' \n et le temps est compté donc prépare-toi")
+    showwarning("Attention", "Attention !! La partie commencera quand tu \n appuyeras sur le bouton 'Continuer' \n et le temps est compté donc prépare-toi.")
     quit_rules()
 
 
@@ -320,12 +320,12 @@ def Tete(user):
 
 
     ########------------Frames Pricipaux-------------########################################
-    Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'pink')
+    Frame_top = Frame(root_tete, width = 700, height = 50, bg = 'lightgrey')
     Frame_right = Frame(root_tete, width = 500, height = 500)
     Frame_left = Frame(root_tete, width = 200, height = 500, bg = 'red')
 
     ########-----------Frames Secondaires-----------######################################
-    Frame1 = Frame(Frame_left, width = 200, height =200, bg = 'green')
+    Frame1 = Frame(Frame_left, width = 200, height =200, bg = 'gold')
     Frame2 = Frame(Frame_left, width = 200, height =300, bg = 'black')
 
     Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
@@ -343,34 +343,30 @@ def Tete(user):
     Canvas_dessine.place(x = 3, y =4)
 
     Table.pack(fill = BOTH)
-    Title_level.place(x = 315, y = 0)
+    Title_level.place(x = 315, y = 5)
 
     #########------------Labels et autres-----------##################################
 
     Button_start = Button(Frame1,relief = GROOVE,activebackground = 'black' ,bg = 'black', cursor ='hand2', image = restart_button_image,command = start)
-    Button_start.place(x = 30, y = 50)
+    Button_start.place(x = 20, y = 27)
 
     Button_restart = Button(Frame_top, text = "RESTART", relief = GROOVE,cursor ='hand2', font = ("Helvetica", 10),command = restart_button)
     Button_restart.place(x = 600, y = 19)
 
-    show_time = Label(Frame1, text = "Time: %s" %str(0), relief =GROOVE)
-    show_time.place(x = 65, y = 180)
+    show_time = Label(Frame1, text = "Time: %s" %str(0), font = ("Helvetica", 10), relief =GROOVE)
+    show_time.place(x = 110, y = 170)
 
-    show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), relief = GROOVE)
-    show_count.place(x = 5, y = 120)
+    show_score = Label(Frame1, text = "Score: %s" %str(sum(score)), font = ("Helvetica", 10), relief = GROOVE)
+    show_score.place(x = 25, y = 170)
 
-    show_score = Label(Frame1, text = "Score: %s" %str(sum(score)), relief = GROOVE)
-    show_score.place(x = 65, y = 120)
+    show_count = Label(Frame1, text = "Nombre de palettes: %s" %str(0), font = ("Helvetica", 10), relief = GROOVE)
+    show_count.place(x = 31, y = 130)
 
     Canvas_dessine.create_image(86,215 ,image = Guide_tete)
     Canvas_dessine.create_image(100,68, image= Bulle_image)
 
     show_conseils = Label(Canvas_dessine, text = "Conseil: Je te propose \n d'être sûr de ton trajet \n avant de commencer",bg = 'white', font = ("Helvetica", 9))
     show_conseils.place(x = 32, y =38 )
-
-
-
-
 
     ###############-----------Lancement des fonctions-------------######################
     time_num()
