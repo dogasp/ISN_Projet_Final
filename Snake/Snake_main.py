@@ -69,7 +69,7 @@ class snake:
         self.root.focus_force()
 
         test = PhotoImage(file = "Snake/images/Head_Right.png")
-
+        self.Start_image = PhotoImage(file = "Snake/images/play.png")
         self.Fruit_Image = PhotoImage(file = "Snake/images/Fruit.png")
         self.Head_Image = [PhotoImage(file = "Snake/images/Head_Right.png"),PhotoImage(file = "Snake/images/Head_Down.png"), PhotoImage(file = "Snake/images/Head_Left.png"), PhotoImage(file = "Snake/images/Head_Up.png")]
         self.Body_Image = [PhotoImage(file = "Snake/images/Horizontal.png"), PhotoImage(file = "Snake/images/Vertical.png"), PhotoImage(file = "Snake/images/Horizontal.png"), PhotoImage(file = "Snake/images/Vertical.png"),\
@@ -82,12 +82,20 @@ class snake:
         self.Pause_Button = Button(self.root, text = "Pause", command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 100)
 
+        self.start_button = Button(self.root, image = self.Start_image,  command = self.play)
+        self.start_button.pack()
+
         self.Score = Label(self.root, text = "Score : 0")
         self.Score.place(x = 50, y = 150)
 
         self.sweet()
         self.update()
         self.root.mainloop()
+
+    def play(self):
+        pass
+
+
 
     def pause_command(self):
         if self.pause == False:
