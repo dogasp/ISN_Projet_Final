@@ -59,3 +59,5 @@ Snake: affichage des images fin de la mécanique de jeux
 Tete chercheuse fini
 
 Snake fonctionnel avec gestion du score
+
+changer miniature snake
