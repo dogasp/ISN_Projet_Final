@@ -193,13 +193,14 @@ class snake:
                 elif (dir == 2 and old == 1) or (dir == 3 and old == 0):
                     self.next_Rotation = 7
                 self.dir = convert_dir(dir)
+
     def dead(self):
         self.pause = True
-        question = askquestion("RESTART", "Veux-tu recommencer")
-        if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-            self.exit()
-            if (self.length_max-2)*40 > self.Best_Score:
+        if (self.length_max-2)*40 > self.Best_Score:
                 self.Best_Score = (self.length_max-2)*40
+        question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
+        if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+            self.root.destroy()
             self.start()
         else:
             self.exit()
@@ -226,4 +227,5 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
 
 def Snake(User):
     jeux = snake(User)
+    print(jeux.Best_Score)
     return jeux.Best_Score
