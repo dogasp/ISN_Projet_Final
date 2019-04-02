@@ -81,7 +81,7 @@ class snake:
         self.Pause_Button = Button(self.root, text = "Pause", command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 100)
 
-        self.start_button = Button(self.root, image = self.Start_image,  command = self.play)
+        self.start_button = Button(self.root, image = self.Start_image,  command = self.update)
         self.start_button["bg"] = "white"
         self.start_button["border"] = "0"
         self.start_button.place(x = 50, y = 200)
@@ -90,13 +90,7 @@ class snake:
         self.Score.place(x = 50, y = 150)
 
         self.sweet()
-        self.update()
         self.root.mainloop()
-
-    def play(self):
-        pass
-
-
 
     def pause_command(self):
         if self.pause == False:
