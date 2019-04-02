@@ -207,16 +207,16 @@ class snake:
                     self.next_Rotation = 7
                 self.dir = convert_dir(dir)
 
-                  def dead(self):
-                      self.pause = True
-                      if (self.length_max-2)*40 > self.Best_Score:
-                              self.Best_Score = (self.length_max-2)*40
-                      question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
-                      if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-                          self.root.destroy()
-                          self.start()
-                      else:
-                          self.exit()
+    def dead(self):
+        self.pause = True
+        if (self.length_max-2)*40 > self.Best_Score:
+            self.Best_Score = (self.length_max-2)*40
+        question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
+        if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+            self.root.destroy()
+            self.start()
+        else:
+            self.exit()
 
 
 def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est une matrice qui est entrée
