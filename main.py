@@ -100,7 +100,6 @@ Frame_ranking.place(x = 2, y = 70)
 
 
 score = get_score_list() #récupération du scoreboard
-print(score)
 
 #############---------Création des labels et autres au contour du Frame_main-------#########################
 

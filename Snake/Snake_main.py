@@ -41,7 +41,14 @@ class snake:
         self.Button_Skip.place(x = 50, y = 300)
         self.show_rules.mainloop()
 
+        self.root = Toplevel()
+        self.root.geometry("702x552")
+        self.root.bind("<Key>", self.rotate)
+        self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.focus_force()
+
         self.start()
+        self.root.mainloop()
 
 
     def quit_rules(self):
@@ -59,14 +66,12 @@ class snake:
         self.dir = [1, 0]
         self.next_Rotation = 0
         self.pos = [0, 10]
-        self.grid[10][10] = [2, 0, 0]
+        self.grid[0][10] = [2, 0, 0]
         self.pause = False
 
-        self.root = Toplevel()
-        self.root.geometry("702x552")
-        self.root.bind("<Key>", self.rotate)
-        self.root.protocol("WM_DELETE_WINDOW", self.exit)
-        self.root.focus_force()
+
+        self.GigaFrame = Frame(self.root, width = 702, height = 552)
+        self.GigaFrame.place(x = 0, y = 0)
 
         self.Start_image = PhotoImage(file = "Snake/images/play.png")
         self.Fruit_Image = PhotoImage(file = "Snake/images/Fruit.png")
@@ -75,22 +80,22 @@ class snake:
         PhotoImage(file = "Snake/images/Angle_Right_Top.png"),PhotoImage(file = "Snake/images/Angle_Right_Down.png"),PhotoImage(file = "Snake/images/Angle_Left_Down.png"),PhotoImage(file = "Snake/images/Angle_Left_Top.png")]
         self.Queue_Image = [PhotoImage(file = "Snake/images/Queue_Right.png"), PhotoImage(file = "Snake/images/Queue_Down.png"), PhotoImage(file = "Snake/images/Queue_Left.png"), PhotoImage(file = "Snake/images/Queue_Up.png")]
 
-        self.grille = Canvas(self.root, width = 500, height = 500, bg = "#1a1a1a")
+        self.grille = Canvas(self.GigaFrame, width = 500, height = 500, bg = "#1a1a1a")
         self.grille.place(x = 200, y = 50)
 
-        self.Pause_Button = Button(self.root, text = "Pause", command = self.pause_command)
+        self.Pause_Button = Button(self.GigaFrame, text = "Pause", command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 100)
 
-        self.start_button = Button(self.root, image = self.Start_image,  command = self.update)
+        self.start_button = Button(self.GigaFrame, image = self.Start_image,  command = self.update)
         self.start_button["bg"] = "white"
         self.start_button["border"] = "0"
         self.start_button.place(x = 50, y = 200)
 
-        self.Score = Label(self.root, text = "Score : 0")
+        self.Score = Label(self.GigaFrame, text = "Score : 0")
         self.Score.place(x = 50, y = 150)
 
         self.sweet()
-        self.root.mainloop()
+        
 
     def pause_command(self):
         if self.pause == False:
@@ -141,8 +146,6 @@ class snake:
 
               self.root.after(150, self.update)
 
-
-
     def sweet(self):
         verite = True
         while verite:
@@ -156,7 +159,6 @@ class snake:
 
     def verif(self, x, y):
         if x < 0 or x > 19 or y < 0 or y > 19 or self.grid[x][y][0] != 0:
-            #self.dead()
             return False
         elif x == self.fruit[0] and y == self.fruit[1]:
             for i in range(20):
@@ -205,7 +207,7 @@ class snake:
             self.Best_Score = (self.length_max-2)*40
         question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
         if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-            self.root.destroy()
+            self.GigaFrame.destroy()
             self.start()
         else:
             self.exit()
@@ -233,4 +235,5 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
 
 def Snake(User):
   jeux = snake(User)
+  print(jeux.Best_Score)
   return jeux.Best_Score
