@@ -300,17 +300,17 @@ def Tete(user):
     level = 1
 
     ########---------Import Photos------------------###############################################
-    robot = [PhotoImage(file = "Tete_chercheuse/robot_right.png"), PhotoImage(file = "Tete_chercheuse/robot_front.png"), PhotoImage(file = "Tete_chercheuse/robot_left.png"), PhotoImage(file = "Tete_chercheuse/robot_back.png")]
-    restart_button_image = PhotoImage(file = "Tete_chercheuse/start.png")
-    Flag = PhotoImage(file = "Tete_chercheuse/flag.png")
-    End = PhotoImage(file = "Tete_chercheuse/robot_flag.png")
-    Caisse = PhotoImage(file = "Tete_chercheuse/caisse.png")
-    Wall = PhotoImage(file = "Tete_chercheuse/mur.ppm")
+    robot = [PhotoImage(file = "Tete_chercheuse/image/robot_right.png"), PhotoImage(file = "Tete_chercheuse/image/robot_front.png"), PhotoImage(file = "Tete_chercheuse/image/robot_left.png"), PhotoImage(file = "Tete_chercheuse/image/robot_back.png")]
+    restart_button_image = PhotoImage(file = "Tete_chercheuse/image/start.png")
+    Flag = PhotoImage(file = "Tete_chercheuse/image/flag.png")
+    End = PhotoImage(file = "Tete_chercheuse/image/robot_flag.png")
+    Caisse = PhotoImage(file = "Tete_chercheuse/image/caisse.png")
+    Wall = PhotoImage(file = "Tete_chercheuse/image/mur.ppm")
     Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
-    Yellow_Coin = PhotoImage(file = "Tete_chercheuse/yellow_coin.ppm")
-    Red_Coin = PhotoImage(file = "Tete_chercheuse/red_coin.ppm")
-    Guide_tete = PhotoImage(file = "Tete_chercheuse/brain.png")
-    Bulle_image = PhotoImage(file = "Tete_chercheuse/bulle.png")
+    Yellow_Coin = PhotoImage(file = "Tete_chercheuse/image/yellow_coin.ppm")
+    Red_Coin = PhotoImage(file = "Tete_chercheuse/image/red_coin.ppm")
+    Guide_tete = PhotoImage(file = "Tete_chercheuse/image/brain.png")
+    Bulle_image = PhotoImage(file = "Tete_chercheuse/image/bulle.png")
 
 
     ########------------Frames Pricipaux-------------########################################
