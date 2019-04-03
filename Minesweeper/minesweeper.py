@@ -138,19 +138,21 @@ class demineur:
                 while len(process) != 0:
                     next_process = []
                     for x,y in process:
-                        done.append((x,y))
                         if self.dims[0] > x >-1 and self.dims[1] > y >= 0:
                             value = self.grid[x][y]
                             self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
                             if value == 0:
                                 for xb,yb in around(x, y):
+                                    inside = False
                                     if (xb, yb) not in done:
+                                        done.append((xb,yb))
                                         next_process.append((xb, yb))
                     process = next_process
             
         elif event.num == 3: #clique droit
             self.canvas.itemconfigure(self.list_images[x][y], image = self.Flag_Image)
             self.grid[x][y] = -2
+        self.canvas.update()
 
 def Minesweeper(user):
     jeux = demineur(user)
