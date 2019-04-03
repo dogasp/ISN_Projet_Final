@@ -5,7 +5,10 @@ sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
 from Scoreboard.scoreboard import *
+from random import choice
 #difficultés: 9x9: 10, 16x16: 40, 16x30: 99
+
+around = lambda x, y: [(x-1, y-1), (x-1, y), (x-1, y+1), (x,y+1), (x,y-1), (x+1, y-1), (x+1, y), (x+1, y+1)]
 
 class demineur:
     def __init__(self, user):
@@ -69,10 +72,23 @@ class demineur:
             self.dims = (16,16)
             self.mine_Count = 40
         else:
-            self.dims = (16, 30)
+            self.dims = (30, 16)
             self.mine_Count = 99
-        self.root.geometry("%sx%s" % (self.dims[0]*self.border))
+        self.root.geometry("%sx%s" % (self.dims[0]*self.border, self.dims[1]*self.border))
+        self.grid = [[0 for i in range(self.dims[0])] for j in range(self.dims[1])]
+
+        index = [i for i in range(self.dims[0]*self.dims[1])]
+        for _ in range(self.mine_Count):
+            temp = choice(index)
+            index.remove(temp)
+            self.grid[temp//self.border][temp%self.border] = -1
         
+        for x in range(self.dims[0]):
+            for y in range(self.dims[1]):
+                if self.grid[x][y] == -1:
+                    for xp, yp in around(x, y):
+                        if self.grid[xp][yp]!=-1:
+                            self.grid[xp][yp] += 1
 
     def exit(self):
         self.root.destroy()
@@ -83,7 +99,7 @@ class demineur:
             pass
         elif event.num == 3: #clique droit
             pass
-            
+
 def Minesweeper(user):
     jeux = demineur(user)
     return jeux.score
