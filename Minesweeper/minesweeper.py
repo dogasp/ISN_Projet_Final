@@ -8,9 +8,10 @@ from Scoreboard.scoreboard import *
 #difficultés: 9x9: 10, 16x16: 40, 16x30: 99
 
 class demineur:
-    def __init__(self), user:
+    def __init__(self, user):
         self.User = user
         self.level = 0
+        self.border = 50 #taille d'une cellule
 
         self.Number_Image = []
 
@@ -49,7 +50,7 @@ class demineur:
 
     def quit_rules():
         self.Frame_main2_wind2.destroy()
-        Scoreboard(Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
+        #Scoreboard(Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
     
     def difficulty(self):
         root_difficulty = Toplevel()
@@ -70,7 +71,7 @@ class demineur:
         else:
             self.dims = (16, 30)
             self.mine_Count = 99
-        self.root.geometry("%sx%s" % (self.dims[0]*))
+        self.root.geometry("%sx%s" % (self.dims[0]*self.border))
         
 
     def exit(self):
@@ -79,9 +80,10 @@ class demineur:
 
     def click(self, event):
         if event.num == 1: #clique gauche
-
+            pass
         elif event.num == 3: #clique droit
-
+            pass
+            
 def Minesweeper(user):
     jeux = demineur(user)
     return jeux.score
