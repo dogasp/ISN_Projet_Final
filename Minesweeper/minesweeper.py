@@ -96,7 +96,7 @@ class demineur:
         for _ in range(self.mine_Count):
             temp = choice(index)
             index.remove(temp)
-            self.grid[temp%self.dims[0]][temp%self.dims[1]] = -1
+            self.grid[temp%self.dims[0]][temp%self.dims[1]] = -1 #problème
         
         for x in range(self.dims[0]):
             for y in range(self.dims[1]):
