@@ -16,7 +16,7 @@ class ghost:
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
-        """self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
+        self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
@@ -30,32 +30,44 @@ class ghost:
         #Labels à mettre pour les règles
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
-        self.Button_Skip.place(x = 50, y = 300)"""
+        self.Button_Skip.place(x = 50, y = 300)
         self.start()
         self.show_rules.mainloop()
 
+    def quit_rules(self):
+        self.Frame_main2_wind2.destroy()
+        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Ghost", self.User_name)
 
+    def quit_ranking(self):
+        self.show_rules.destroy()
+        self.show_rules.quit()
+
+    def exit(self):
+        self.root.destroy()
+        self.root.quit()
 
 
     def start(self):
         self.level = 1
         self.nbcases = (8, 6, 10)
         self.length = 500/self.nbcases[self.level - 1]
-
-
         self.fantome = []
+        self.Best_Score = 0
 
 
         self.grid = [[(0) for i in range(self.nbcases[self.level - 1])] for j in range((self.nbcases[self.level - 1]))]
         self.root = Toplevel()
         self.root.geometry("702x552")
         self.root.bind("<Key>", self.move_Jerry)
-        #self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.protocol("WM_DELETE_WINDOW", self.exit)
 
         #########-----------Import des photos-------------#################################
         self.Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Jerry.png")
         self.Tom_image_left = PhotoImage(file = "Fantome/Ressources/Images/Tom_left.png")
         self.Tom_image_right = PhotoImage(file = "Fantome/Ressources/Images/Tom_right.png")
+        self.Fromage_image = PhotoImage(file = "Fantome/Ressources/Images/fromage.png")
+        self.Fromage_Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Fromage_Jerry.png")
+        self.Tom_right_image = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry.png")
         ########------------Frames Pricipaux-------------########################################
         self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'lightgrey')
         self.Frame_right = Frame(self.root, width = 500, height = 500)
@@ -86,10 +98,10 @@ class ghost:
                 elif self.grid[i][j] == 'R':
                     self.robot = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Jerry_image)
                 elif self.grid[i][j] == 'F':
-                    Tom = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Tom_image_left)
-                    self.fantome.append(Tom)
+                    self.Tom = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Tom_image_left)
+                    self.fantome.append(self.Tom)
                 elif self.grid[i][j] == 'D':
-                    self.table.create_rectangle(self.length* i, self.length* j,self.length* (i+1), self.length*(j+1), fill = 'brown')
+                    self.Drapeau = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Fromage_image)
 
         print(self.table.coords(self.robot))
 
@@ -116,7 +128,23 @@ class ghost:
             if self.grid[self.new_grid_x_Jerry][self.new_grid_y_Jerry] != 'X':
                 self.table.move(self.robot, self.dir_Jerry[0]*self.length, self.dir_Jerry[1]*self.length)
                 self.move_Tom(pos_x + self.dir_Jerry[0]*self.length, pos_y + self.dir_Jerry[1]*self.length)
+
+
         self.table.update()
+
+    def verif(self,next_jerry_x, next_jerry_y,next_tom_x, next_tom_y):
+        if self.grid[next_jerry_x][next_jerry_y] == "D":
+            self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image)
+            self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image)
+
+        elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
+            self.table.itemconfigure(self.Tom, image = self.Tom_right_image)
+            self.table.itemconfigure(self.robot,  image = self.Tom_right_image)
+
+
+
+
+
 
     def move_Tom(self, last_x, last_y):
         for elt in range(len(self.fantome)):
@@ -139,23 +167,16 @@ class ghost:
             list = [j[1] for j in distance]
             print(list)
 
-            
+
             self.newpos_x_Tom = self.pos_x_tom +list[0][0]*self.length
             self.newpos_y_Tom = self.pos_y_tom + list[0][1]*self.length
             self.new_grid_x_Tom = int(self.newpos_x_Tom//self.length)
             self.new_grid_y_Tom = int(self.newpos_y_Tom//self.length)
             print(self.newpos_x_Tom, self.newpos_y_Tom)
             self.table.move(self.fantome[elt], list[0][0]*self.length, list[0][1]*self.length)
-            
 
 
-
-
-
-
-
-
-
+            self.verif(self.new_grid_x_Jerry,self.new_grid_y_Jerry,self.new_grid_x_Tom,self.new_grid_y_Tom)
 
             self.table.update()
             #self.table.itemconfigure(Tom, image = PhotoImage(file= "Fantome/Ressources/Images/Tom_left.png"))
