@@ -67,10 +67,10 @@ class ghost:
         for j in range(self.nbcases[self.level - 1]):
             self.grille.create_line(0,(self.length)*j,500,(self.length)*j)
 
-        for i in range(self.nbcases[self.level - 1]):
-            for j in range(self.nbcases[self.level - 1]):
-                #self.grid[i][j] = level_map[self.level - 1][(j*self.nbcases[self.level - 1])+i]
-                print(level_map[self.level - 1][(j*self.nbcases[self.level - 1])+i])
+        for j in range(self.nbcases[self.level - 1]):
+            for i in range(self.nbcases[self.level - 1]):
+                self.grid[i][j] = level_map[self.level - 1][(j*self.nbcases[self.level - 1])+i]
+
                 if self.grid[i][j] == 'X':
                     self.grille.create_rectangle(self.length* i, self.length* j,self.length* (i+1), self.length*(j+1), fill = 'red')
                 elif self.grid[i][j] == 'R':
@@ -79,6 +79,7 @@ class ghost:
                     self.grille.create_rectangle(self.length* i, self.length* j,self.length* (i+1), self.length*(j+1), fill = 'green')
                 elif self.grid[i][j] == 'D':
                     self.grille.create_rectangle(self.length* i, self.length* j,self.length* (i+1), self.length*(j+1), fill = 'brown')
+
 
 
     def update(self):
