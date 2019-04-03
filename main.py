@@ -156,6 +156,6 @@ Label_list7.grid(row = 4, column = 7)
 bouton_0 = BoutonS(2, 1, "Tete", Tete)
 bouton_1 = BoutonS(2, 3, "Snake", Snake)
 bouton_2 = BoutonS(5, 3, "Ghost", Ghost)
-bouton_3 = BoutonS(7, 3, "Minesweeper", Minesweeper)
+bouton_3 = BoutonS(5, 5, "Minesweeper", Minesweeper)
 
 root_main.mainloop()
