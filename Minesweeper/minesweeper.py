@@ -12,7 +12,7 @@ class demineur:
         self.User = user
         self.level = 0
 
-        self.
+        self.Number_Image = []
 
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
@@ -46,6 +46,10 @@ class demineur:
 
         self.difficulty()
         self.root.mainloop()
+
+    def quit_rules():
+        self.Frame_main2_wind2.destroy()
+        Scoreboard(Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
     
     def difficulty(self):
         root_difficulty = Toplevel()

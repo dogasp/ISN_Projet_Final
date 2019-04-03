@@ -127,7 +127,7 @@ for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on af
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
-nom_de_jeux = ["Tête Chercheuse", "Snake", "Pong", "Space Invaders", "Tetris", "Jeu 6", "Jeu 7", "Jeu 8"]
+nom_de_jeux = ["Tête Chercheuse", "Snake", "Pong", "Space Invaders", "Tetris", "Jeu 6", "Demineur", "Jeu 8"]
 
 for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
@@ -155,5 +155,6 @@ Label_list7.grid(row = 4, column = 7)
 bouton_0 = BoutonS(2, 1, "Tete", Tete)
 bouton_1 = BoutonS(2, 3, "Snake", Snake)
 bouton_2 = BoutonS(5, 3, "Ghost", Ghost)
+bouton_3 = BoutonS(7, 3, "Demineur", Minesweeper)
 
 root_main.mainloop()
