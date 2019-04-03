@@ -62,3 +62,4 @@ Début de Fantome, mise en place de la grille et du niveau (Bug le liste)??
 ## Mercredi 3 avril 2019:
 Continuer Fantome et finir Snake
 Gros Bug d'algo de fantome, commencement du démineur.
+Faire l'inversement de Tom(image)
