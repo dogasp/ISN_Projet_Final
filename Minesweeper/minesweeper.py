@@ -12,11 +12,17 @@ around = lambda x, y: [(x-1, y-1), (x-1, y), (x-1, y+1), (x,y+1), (x,y-1), (x+1,
 
 class demineur:
     def __init__(self, user):
+        self.score = 0
         self.User = user
         self.level = 0
-        self.border = 50 #taille d'une cellule
+        self.border = 25 #taille d'une cellule
 
-        self.Number_Image = []
+        self.Number_Image = [PhotoImage(file = "Minesweeper/Images/0.png").subsample(8), PhotoImage(file = "Minesweeper/Images/1.png").subsample(8), PhotoImage(file = "Minesweeper/Images/2.png").subsample(8),\
+            PhotoImage(file = "Minesweeper/Images/3.png").subsample(8), PhotoImage(file = "Minesweeper/Images/4.png").subsample(8), PhotoImage(file = "Minesweeper/Images/5.png").subsample(8),\
+            PhotoImage(file = "Minesweeper/Images/6.png").subsample(8), PhotoImage(file = "Minesweeper/Images/7.png").subsample(8), PhotoImage(file = "Minesweeper/Images/8.png").subsample(8)]
+        self.bomb_Image = PhotoImage(file = "Minesweeper/Images/bomb.png").subsample(8)
+        self.Normal_Image = PhotoImage(file = "Minesweeper/Images/facingDown.png").subsample(8)
+        self.Flag_Image = PhotoImage(file = "Minesweeper/Images/flagged.png").subsample(8)
 
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
@@ -38,32 +44,39 @@ class demineur:
             ils indiquerons le nombre de bombes voisines. Si une cellule est succeptible d'être une bombe,\n\
             un clique droit marquera la case avec un drapeau.\n\n\
             Il y a trois difficultés, la taille de la grille ainsi que le nombre de mines change entre les niveaux.")
-        self.explanation.place(x = 50, y = 100)
+        self.explanation.place(x = 20, y = 100)
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
-        self.Button_Skip.place(x = 50, y = 400)
+        self.Button_Skip.place(x = 50, y = 350)
         self.show_rules.mainloop()
 
         self.root = Toplevel()
-        self.root.bind("<Button>", self.click)
+        self.root.title("Minesweeper")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
-        self.root.focus_force()
+        self.root.withdraw()
 
         self.difficulty()
         self.root.mainloop()
+        
+    def quit_ranking(self):
+        self.show_rules.destroy()
+        self.show_rules.quit()
 
-    def quit_rules():
+    def quit_rules(self):
         self.Frame_main2_wind2.destroy()
         #Scoreboard(Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
     
     def difficulty(self):
-        root_difficulty = Toplevel()
-        root_difficulty.title("Selectionne une difficulté")
-        root_difficulty.geometry("300x125")
-        Button(root_difficulty, text = "Facile", command = lambda : self.start(0)).place(x = 50, y = 70)
-        Button(root_difficulty, text = "Moyen", command = lambda : self.start(1)).place(x = 150, y = 70)
-        Button(root_difficulty, text = "Difficile", command = lambda : self.start(2)).place(x = 250, y = 70)
+        self.root_difficulty = Toplevel()
+        self.root_difficulty.title("Selectionne une difficulté")
+        self.root_difficulty.geometry("300x125")
+        Button(self.root_difficulty, text = "Facile", command = lambda : self.start(0)).place(x = 15, y = 70)
+        Button(self.root_difficulty, text = "Moyen", command = lambda : self.start(1)).place(x = 115, y = 70)
+        Button(self.root_difficulty, text = "Difficile", command = lambda : self.start(2)).place(x = 215, y = 70)
+        self.root_difficulty.mainloop()
     
     def start(self, level):
+        self.root_difficulty.destroy()
+        self.root_difficulty.quit()
         self.level = level
         if level == 0:
             self.dims = (9,9)
@@ -74,31 +87,70 @@ class demineur:
         else:
             self.dims = (30, 16)
             self.mine_Count = 99
-        self.root.geometry("%sx%s" % (self.dims[0]*self.border, self.dims[1]*self.border))
-        self.grid = [[0 for i in range(self.dims[0])] for j in range(self.dims[1])]
+        self.root.deiconify()
+        self.root.focus_force()
+        self.root.geometry("%sx%s" % (200 + self.dims[0]*self.border, self.dims[1]*self.border))
+        self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])]
 
         index = [i for i in range(self.dims[0]*self.dims[1])]
         for _ in range(self.mine_Count):
             temp = choice(index)
             index.remove(temp)
-            self.grid[temp//self.border][temp%self.border] = -1
+            self.grid[temp%self.dims[0]][temp%self.dims[1]] = -1
         
         for x in range(self.dims[0]):
             for y in range(self.dims[1]):
                 if self.grid[x][y] == -1:
                     for xp, yp in around(x, y):
-                        if self.grid[xp][yp]!=-1:
+                        if self.dims[0] > xp >-1 and self.dims[1] > yp >= 0 and self.grid[xp][yp]!=-1:
                             self.grid[xp][yp] += 1
+
+        self.canvas = Canvas(self.root, width = self.dims[0]*self.border, height = self.dims[1]*self.border)
+        self.canvas.bind("<Button>", self.click)
+        self.canvas.place(x = 200, y = 0)
+
+        self.list_images = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])]
+        for i in range(self.dims[0]):
+            for j in range(self.dims[1]):
+                self.list_images[i][j] = self.canvas.create_image(i*self.border + self.border/2, j*self.border + self.border/2, image = self.Normal_Image)
 
     def exit(self):
         self.root.destroy()
         self.root.quit()
 
     def click(self, event):
-        if event.num == 1: #clique gauche
-            pass
+        x = event.x//self.border
+        y = event.y//self.border
+        if event.num == 1 and self.canvas.itemconfigure(self.list_images[x][y])["image"][0] != self.Normal_Image: #clique gauche
+            value = self.grid[x][y]
+            if value == -1:
+                pass
+                #self.dead()
+            elif value > 0:
+                self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
+            elif value == -2:
+                self.grid[x][y] = 0
+                self.click(event)
+            elif value == 0:
+                self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
+                process = around(x, y)
+                done = process.copy()
+                while len(process) != 0:
+                    next_process = []
+                    for x,y in process:
+                        done.append((x,y))
+                        if self.dims[0] > x >-1 and self.dims[1] > y >= 0:
+                            value = self.grid[x][y]
+                            self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
+                            if value == 0:
+                                for xb,yb in around(x, y):
+                                    if (xb, yb) not in done:
+                                        next_process.append((xb, yb))
+                    process = next_process
+            
         elif event.num == 3: #clique droit
-            pass
+            self.canvas.itemconfigure(self.list_images[x][y], image = self.Flag_Image)
+            self.grid[x][y] = -2
 
 def Minesweeper(user):
     jeux = demineur(user)

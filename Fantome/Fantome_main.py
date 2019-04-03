@@ -123,36 +123,30 @@ class ghost:
             self.newpos_x = last_x
             self.newpos_y = last_y
             self.dir_Tom = [0,0]
-            list_dir = [[0, -1],[-1, -1],[-1, 0],[-1, 1],[0, 1],[1, 1],[1, 0],[1, -1]]
+            list_dir = [[0, -1],[-1, -1],[-1, 0],[-1, 1],[0, 1],[1, 1],[1, 0],[1, -1], [0,0]]
             distance =[]
             list =[]
 
             self.pos_x_tom, self.pos_y_tom = self.table.coords(self.fantome[elt])
             print(self.pos_x_tom,self.pos_y_tom)
-            for i in range(len(list_dir)):
-                distance.append((sqrt (((self.pos_x_tom + list_dir[i][0]*self.length-self.newpos_x)**2)+ ((self.pos_y_tom+list_dir[i][1]*self.length- self.newpos_y)**2)) , i))
+            for i in list_dir:
+                if 0 <= self.pos_x_tom + i[0]*self.length < 500 and 0 <= self.pos_y_tom+i[1]*self.length <= 500 and self.grid[int(self.pos_x_tom//self.length + i[0])][int(self.pos_y_tom//self.length + i[1])] == "0":
+                    distance.append((sqrt (((self.pos_x_tom + i[0]*self.length-self.newpos_x)**2)+ ((self.pos_y_tom+i[1]*self.length- self.newpos_y)**2)) , i))
 
             distance.sort(key = lambda list: list[0])
             print(distance)
 
-            for i in range(8):
-                list.append(distance[i][1])
-
+            list = [j[1] for j in distance]
             print(list)
 
-            for i in range(8):
-                self.newpos_x_Tom = self.pos_x_tom +list_dir[list[i]][0]*self.length
-                self.newpos_y_Tom = self.pos_y_tom + list_dir[list[i]][1]*self.length
-                self.new_grid_x_Tom = int(self.newpos_x_Tom//self.length)
-                self.new_grid_y_Tom = int(self.newpos_y_Tom//self.length)
-                print(self.newpos_x_Tom, self.newpos_y_Tom)
-
-
-                if 0 <= self.newpos_x_Tom <= 500 and 0 <= self.newpos_y_Tom <= 500:
-                    if self.grid[self.new_grid_x_Tom][self.new_grid_y_Tom] != 'X' and self.grid[self.new_grid_x_Tom][self.new_grid_y_Tom] != 'D':
-                        if sqrt (((self.pos_x_tom + list_dir[i][0]*self.length-self.newpos_x)**2)+ ((self.pos_y_tom+list_dir[i][1]*self.length- self.newpos_y)**2)) - sqrt(((self.newpos_x_Tom +list_dir[i][0]*self.length - self.newpos_x)**2)+ ((self.newpos_y_Tom+list_dir[i][1]*self.length- self.newpos_x_Tom)**2)) >= 0:
-                            self.table.move(self.fantome[elt], list_dir[i][0]*self.length, list_dir[i][1]*self.length)
-                            break
+            
+            self.newpos_x_Tom = self.pos_x_tom +list[0][0]*self.length
+            self.newpos_y_Tom = self.pos_y_tom + list[0][1]*self.length
+            self.new_grid_x_Tom = int(self.newpos_x_Tom//self.length)
+            self.new_grid_y_Tom = int(self.newpos_y_Tom//self.length)
+            print(self.newpos_x_Tom, self.newpos_y_Tom)
+            self.table.move(self.fantome[elt], list[0][0]*self.length, list[0][1]*self.length)
+            
 
 
 
