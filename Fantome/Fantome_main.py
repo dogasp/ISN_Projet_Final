@@ -7,6 +7,7 @@ sys.path.append('../Scoreboard')
 from Scoreboard.scoreboard import *
 from random import randint
 from Fantome.Ressources.data.map_ghost import*
+from math import*
 
 
 class ghost:
@@ -118,37 +119,52 @@ class ghost:
         self.table.update()
 
     def move_Tom(self, last_x, last_y):
-        self.newpos_x = last_x
-        self.newpos_y = last_y
-        self.dir_Tom = [0,0]
+        for elt in range(len(self.fantome)):
+            self.newpos_x = last_x
+            self.newpos_y = last_y
+            self.dir_Tom = [0,0]
+            list_dir = [[0, -1],[-1, -1],[-1, 0],[-1, 1],[0, 1],[1, 1],[1, 0],[1, -1]]
+            distance =[]
+            list =[]
 
-        for i in range(len(self.fantome)):
-            self.pos_x_tom, self.pos_y_tom = self.table.coords(self.fantome[i])
-            print(self.pos_x_tom, self.pos_y_tom)
-            print(self.newpos_x, self.newpos_y)
-            if self.pos_x_tom < self.newpos_x:
-                self.dir_Tom[0] = 1
-            elif self.pos_x_tom > self.newpos_x:
-                self.dir_Tom[0] = -1
-            elif self.pos_y_tom < self.newpos_y:
-                self.dir_Tom[1] = 1
-            elif self.pos_y_tom > self.newpos_y:
-                self.dir_Tom[1] = -1
+            self.pos_x_tom, self.pos_y_tom = self.table.coords(self.fantome[elt])
+            print(self.pos_x_tom,self.pos_y_tom)
+            for i in range(len(list_dir)):
+                distance.append((sqrt (((self.pos_x_tom + list_dir[i][0]*self.length-self.newpos_x)**2)+ ((self.pos_y_tom+list_dir[i][1]*self.length- self.newpos_y)**2)) , i))
 
-        for i in range(len(self.fantome)):
-            self.newpos_x_Tom = self.pos_x_tom + self.dir_Tom[0]*self.length
-            self.newpos_y_Tom = self.pos_y_tom + self.dir_Tom[1]*self.length
+            distance.sort(key = lambda list: list[0])
+            print(distance)
 
-            self.new_grid_x_Tom = int(self.newpos_x_Tom//self.length)
-            self.new_grid_y_Tom = int(self.newpos_y_Tom//self.length)
+            for i in range(8):
+                list.append(distance[i][1])
 
-            print(self.grid[self.new_grid_x_Tom][self.new_grid_y_Tom])
-            if 0 <= self.newpos_x_Tom <= 500 and 0 <= self.newpos_y_Tom <= 500:
-                if self.grid[self.new_grid_x_Tom][self.new_grid_y_Tom] != 'X' and self.grid[self.new_grid_x_Tom][self.new_grid_y_Tom] != 'D':
-                    self.table.move(self.fantome[i], self.dir_Tom[0]*self.length, self.dir_Tom[1]*self.length)
+            print(list)
 
-        self.table.update()
-        #self.table.itemconfigure(Tom, image = PhotoImage(file= "Fantome/Ressources/Images/Tom_left.png"))
+            for i in range(8):
+                self.newpos_x_Tom = self.pos_x_tom +list_dir[list[i]][0]*self.length
+                self.newpos_y_Tom = self.pos_y_tom + list_dir[list[i]][1]*self.length
+                self.new_grid_x_Tom = int(self.newpos_x_Tom//self.length)
+                self.new_grid_y_Tom = int(self.newpos_y_Tom//self.length)
+                print(self.newpos_x_Tom, self.newpos_y_Tom)
+
+
+                if 0 <= self.newpos_x_Tom <= 500 and 0 <= self.newpos_y_Tom <= 500:
+                    if self.grid[self.new_grid_x_Tom][self.new_grid_y_Tom] != 'X' and self.grid[self.new_grid_x_Tom][self.new_grid_y_Tom] != 'D':
+                        if sqrt (((self.pos_x_tom + list_dir[i][0]*self.length-self.newpos_x)**2)+ ((self.pos_y_tom+list_dir[i][1]*self.length- self.newpos_y)**2)) - sqrt(((self.newpos_x_Tom +list_dir[i][0]*self.length - self.newpos_x)**2)+ ((self.newpos_y_Tom+list_dir[i][1]*self.length- self.newpos_x_Tom)**2)) >= 0:
+                            self.table.move(self.fantome[elt], list_dir[i][0]*self.length, list_dir[i][1]*self.length)
+                            break
+
+
+
+
+
+
+
+
+
+
+            self.table.update()
+            #self.table.itemconfigure(Tom, image = PhotoImage(file= "Fantome/Ressources/Images/Tom_left.png"))
 
 
 
