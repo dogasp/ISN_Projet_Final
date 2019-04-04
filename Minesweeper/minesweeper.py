@@ -63,7 +63,7 @@ class demineur:
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
-        Scoreboard(Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
+        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
     
     def difficulty(self):
         self.root_difficulty = Toplevel()
@@ -123,14 +123,13 @@ class demineur:
         y = event.y//self.border
         if event.num == 1: #clique gauche
             value = self.grid[x][y]
-            if self.list_images[x][y] == self.Flag_Image:
+            if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Flag_Image):
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Normal_Image)
-                self.click(event)
             elif value == -1:
                 count = 0
                 for i in range(self.dims[0]):
                     for j in range(self.dims[1]):
-                        if self.list_images[i][j] == self.Flag_Image and self.grid[i][j] == -1:
+                        if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == str(self.Flag_Image) and self.grid[i][j] == -1:
                             count += 1
                 self.end(False, count)
             elif value > 0:
@@ -158,7 +157,7 @@ class demineur:
         for i in range(self.dims[0]):
             for j in range(self.dims[1]):
                 try:
-                    if self.list_images[i][j] == self.Flag_Image and self.grid[i][j] == -1:
+                    if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == str(self.Flag_Image) and self.grid[i][j] == -1:
                         print("buh")
                         count += 1
                 except: pass
