@@ -69,13 +69,7 @@ class snake:
         self.mort_snake = PhotoImage(file = "Snake/images/mort_snake.png")
         self.CANVAS3.create_image(45, 31,image = self.mur_snake)
         self.CANVAS4.create_image(45,31, image = self.mort_snake)
-
-
-
-
-
-
-
+    #------------------Skip------------------------------------------------------------------
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
         self.Button_Skip.place(x = 200, y = 390)
         self.show_rules.mainloop()
@@ -85,6 +79,9 @@ class snake:
         self.root.bind("<Key>", self.rotate)
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
+
+
+
 
         self.start()
         self.root.mainloop()
@@ -108,10 +105,6 @@ class snake:
         self.grid[0][10] = [2, 0, 0]
         self.pause = False
 
-
-        self.GigaFrame = Frame(self.root, width = 702, height = 552)
-        self.GigaFrame.place(x = 0, y = 0)
-
         self.Start_image = PhotoImage(file = "Snake/images/play.png")
         self.Fruit_Image = PhotoImage(file = "Snake/images/Fruit.png")
         self.Head_Image = [PhotoImage(file = "Snake/images/Head_Right.png"),PhotoImage(file = "Snake/images/Head_Down.png"), PhotoImage(file = "Snake/images/Head_Left.png"), PhotoImage(file = "Snake/images/Head_Up.png")]
@@ -119,18 +112,40 @@ class snake:
         PhotoImage(file = "Snake/images/Angle_Right_Top.png"),PhotoImage(file = "Snake/images/Angle_Right_Down.png"),PhotoImage(file = "Snake/images/Angle_Left_Down.png"),PhotoImage(file = "Snake/images/Angle_Left_Top.png")]
         self.Queue_Image = [PhotoImage(file = "Snake/images/Queue_Right.png"), PhotoImage(file = "Snake/images/Queue_Down.png"), PhotoImage(file = "Snake/images/Queue_Left.png"), PhotoImage(file = "Snake/images/Queue_Up.png")]
 
-        self.grille = Canvas(self.GigaFrame, width = 500, height = 500, bg = "#1a1a1a")
-        self.grille.place(x = 200, y = 50)
+        ########------------Frames Pricipaux-------------########################################
+        self.Frame_top = Frame(self.root, width = 702, height = 50, bg = 'lightgrey')
+        self.Frame_right = Frame(self.root, width = 502, height = 502)
+        self.Frame_left = Frame(self.root, width = 200, height = 502, bg = 'red')
 
-        self.Pause_Button = Button(self.GigaFrame, text = "Pause", command = self.pause_command)
+        ########-----------Frames Secondaires-----------######################################
+        self.Frame1 = Frame(self.Frame_left, width = 200, height =200, bg = 'gold')
+        self.Frame2 = Frame(self.Frame_left, width = 200, height =300, bg = 'black')
+
+        #######-----------Package des Frames-------------##################################
+
+        self.Frame_top.pack(side = TOP)
+        self.Frame_right.pack(side = RIGHT)
+        self.Frame_left.pack(side = LEFT)
+        self.Frame1.pack(side = TOP)
+        self.Frame2.pack(side = BOTTOM)
+
+        #########------------Labels et autres-----------##################################
+
+        self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
+        self.grille.place(x = 1, y = 1)
+
+        self.Title_level = Label(self.Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
+        self.Title_level.place(x = 315, y = 5)
+
+        self.Pause_Button = Button(self.Frame2, text = "Pause", command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 100)
 
-        self.start_button = Button(self.GigaFrame, image = self.Start_image,  command = self.update)
+        self.start_button = Button(self.Frame2, image = self.Start_image,  command = self.update)
         self.start_button["bg"] = "white"
         self.start_button["border"] = "0"
         self.start_button.place(x = 50, y = 200)
 
-        self.Score = Label(self.GigaFrame, text = "Score : 0")
+        self.Score = Label(self.Frame1, text = "Score : 0")
         self.Score.place(x = 50, y = 150)
 
         self.sweet()
@@ -247,7 +262,7 @@ class snake:
             self.Best_Score = (self.length_max-2)*40
         question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
         if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-            self.GigaFrame.destroy()
+            self.Frame_right.destroy()
             self.start()
         else:
             self.exit()
