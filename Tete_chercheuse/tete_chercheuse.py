@@ -287,6 +287,7 @@ def Tete(user):
 
     root_tete = Toplevel()
     root_tete.geometry('700x550')
+    root_tete.protocol("WM_DELETE_WINDOW",exit)
     #############------------variables----------########################
     score = [50]
     index_robot = 0 #la ou il regarde
