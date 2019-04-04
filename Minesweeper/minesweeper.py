@@ -121,16 +121,16 @@ class demineur:
     def click(self, event):
         x = event.x//self.border
         y = event.y//self.border
-        if event.num == 1 and self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] != self.Normal_Image: #clique gauche
+        if event.num == 1: #clique gauche
             value = self.grid[x][y]
-            if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == self.Flag_Image:
+            if self.list_images[x][y] == self.Flag_Image:
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Normal_Image)
                 self.click(event)
             elif value == -1:
                 count = 0
                 for i in range(self.dims[0]):
                     for j in range(self.dims[1]):
-                        if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == self.Flag_Image and self.grid[i][j] == -1:
+                        if self.list_images[i][j] == self.Flag_Image and self.grid[i][j] == -1:
                             count += 1
                 self.end(False, count)
             elif value > 0:
@@ -147,7 +147,6 @@ class demineur:
                             self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
                             if value == 0:
                                 for xb,yb in around(x, y):
-                                    inside = False
                                     if (xb, yb) not in done:
                                         done.append((xb,yb))
                                         next_process.append((xb, yb))
@@ -158,9 +157,8 @@ class demineur:
         count = 0
         for i in range(self.dims[0]):
             for j in range(self.dims[1]):
-                print(self.canvas.itemconfigure(self.list_images[i][j])["image"][-1], self.Flag_Image, self.grid[i][j])
                 try:
-                    if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == self.Flag_Image and self.grid[i][j] == -1:
+                    if self.list_images[i][j] == self.Flag_Image and self.grid[i][j] == -1:
                         print("buh")
                         count += 1
                 except: pass
