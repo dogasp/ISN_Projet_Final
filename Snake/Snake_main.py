@@ -8,15 +8,19 @@ from Scoreboard.scoreboard import *
 from random import randint
 
 """--------------------------------Directions-------------------------"""
-#0 = droite
-#1 = bas
-#2 = gauche
-#3 = haut
+# 0 = droite
+# 1 = bas
+# 2 = gauche
+# 3 = haut
+# 4 = haut vers droite
+# 5 = bas vers droite
+# 6 = bas vers gauche
+# 7 = haut vers gauche
 
 class snake:
     def __init__(self, user):
-        self.User_name = user
-        self.Best_Score = 0
+        self.User_name = user  # pseudo du joueur actuel
+        self.Best_Score = 0    # meilleur score de la session
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
@@ -31,12 +35,7 @@ class snake:
         self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
         self.Rules.place(x = 200, y =5)
 
-
-        """self.explanation = Label(self.Frame_main2_wind2, text = "Le serpent va en ligne droite, on peut le dévier en utilisant\n\
-            les flèches sur le clavier.\n\n\
-            Si le sepent mange un fruit, il grandit et cela rapporte des points\n\n\
-            Si le serpent touche un bord ou qu'il se mange lui-même, il meurt.")
-        self.explanation.place(x = 50, y = 40)"""
+        #détail des rêgles
 
         self.Rules2 = Label(self.Frame_main2_wind2, text = "Le but est que le serpent mange des pommes \n pour qu'il puisse grandir et gagner la partie ", font = ("Berlin Sans FB", 12))
         self.Frame_main2_wind2.after(500, lambda: self.Rules2.place(x = 45, y = 70))
@@ -79,7 +78,8 @@ class snake:
         self.root.bind("<Key>", self.rotate)
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
-
+        
+        #import de toutes les images du jeu
 
         self.Start_image = PhotoImage(file = "Snake/images/play.png")
         self.Fruit_Image = PhotoImage(file = "Snake/images/Fruit.png")
@@ -89,27 +89,29 @@ class snake:
         self.Queue_Image = [PhotoImage(file = "Snake/images/Queue_Right.png"), PhotoImage(file = "Snake/images/Queue_Down.png"), PhotoImage(file = "Snake/images/Queue_Left.png"), PhotoImage(file = "Snake/images/Queue_Up.png")]
 
 
-        self.start()
+        self.start() #fonction pour initialiser l'interface
         self.root.mainloop()
 
 
-    def quit_rules(self):
+    def quit_rules(self): #fonction pour quiter les rêgles et passer au classement
         self.Frame_main2_wind2.destroy()
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Snake", self.User_name)
 
-    def quit_ranking(self):
+    def quit_ranking(self): #fonction pour quiter l'interface avec les regles et les scoreboards
         self.show_rules.destroy()
         self.show_rules.quit()
 
-    def start(self):
-        self.grid = [[(0, 0, 0) for i in range(20)] for j in range(20)] #pour chaque élément de la grille, on a le temps de vie et la direction de la partie du serpent
-        self.length_max = 2
-        self.fruit = [-1, -1]
-        self.dir = [1, 0]
-        self.next_Rotation = 0
-        self.pos = [0, 10]
-        self.grid[0][10] = [2, 0, 0]
-        self.pause = True
+    def start(self): #fonction d'initialisation
+        self.grid = [[[0, 0, 0] for i in range(20)] for j in range(20)] 
+        #pour chaque élément de la grille, on a le temps de vie et la direction de la partie du serpent;
+        #le troisième élément de la liste est utilisé pour les angles
+        self.length_max = 2           # longeur du serpent
+        self.fruit = [-1, -1]         # position du fruit
+        self.dir = [1, 0]             # direction du serpent initialisée à droite
+        self.next_Rotation = 0        # prochaine rotation, sélectionnée à droite aussi
+        self.pos = [0, 10]            # position actuelle du serpent
+        self.grid[0][10] = [2, 0, 0]  # valeur de la grille à l'emplacement du serpent
+        self.pause = True             # valeur de la pause
 
 
         ########------------Frames Pricipaux-------------########################################
@@ -145,40 +147,41 @@ class snake:
         self.Score = Label(self.Frame1, text = "Score : 0")
         self.Score.place(x = 50, y = 150)
 
-        self.sweet()
+        self.sweet() #fonction pour placer le fruit
     
-    def start_game(self):
-        self.pause = False
-        self.update()
+    def start_game(self): #fonction appelée par le bouton commencer
+        self.pause = False  # pause est enlevée
+        self.update()       # le serpent bouge
 
 
-    def pause_command(self):
-        if self.pause == False:
+    def pause_command(self):      # fonction pour mettre le bouton en pause
+        if self.pause == False:   # si le jeu n'est pas en pause, on le pause
             self.pause = True
-        else:
+        else:                     #sinon, on le relance avec la fonction update
             self.pause = False
             self.update()
 
-    def update(self):
-          if self.pause == False:
-              newX = self.pos[0] + self.dir[0]
+    def update(self): #fonciton pour actualiser la position du serpent
+          if self.pause == False: #si la pause n'est pas enclenchée
+              newX = self.pos[0] + self.dir[0] #on prends les coordonées du peochain point
               newY = self.pos[1] + self.dir[1]
               self.grid[self.pos[0]][self.pos[1]] = [self.length_max, convert_dir(self.dir, True), self.next_Rotation]
+              #définition de la pièce du corps juste après la tête pour lui appliquer une rotation
 
-              if self.verif(newX, newY) == True:
-                  self.pos = [newX, newY]
+              if self.verif(newX, newY) == True:      # si la vérification renvois True
+                  self.pos = [newX, newY]             # on assigne la prochaine position au serpent
                   for i in range(20):
                       for j in range(20):
-                          if self.grid[i][j][0] != 0:
+                          if self.grid[i][j][0] != 0: # chaque partie du serpent perds de la vie
                               self.grid[i][j][0] -= 1
-
-                  if self.next_Rotation != convert_dir(self.dir, True):
+                  #si la prochaine rotation est différente de la direction actuelle, on lui atribue la direction actuelle
+                  if self.next_Rotation != convert_dir(self.dir, True): 
                       self.next_Rotation = convert_dir(self.dir, True)
                   self.grid[newX][newY] = [self.length_max, convert_dir(self.dir, True), convert_dir(self.dir, True)]
               else:
-                  self.dead()
-          if self.pause == False:
-              self.grille.delete("all")
+                  self.dead()                         # la la vérification renvois False, le joueur a perdu
+          if self.pause == False:       # revérification car la fonction prends trop de temps à s'executer
+              self.grille.delete("all") # on régénère la grille en détruisant tout et en recréant tout
 
               for i in range(20):
                   for j in range(20):
@@ -199,41 +202,43 @@ class snake:
 
               self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
 
-              self.root.after(150, self.update)
+              self.root.after(150, self.update) #la fonction update s'éxécute toues les 150 ms soit 6.6 Fps
 
-    def sweet(self):
+    def sweet(self): # fonction pour placer un fruit
         verite = True
-        while verite:
+        while verite: # tant qu'on a pas une position valide, on tire des emplacements
             x = randint(0, 19)
             y = randint(0, 19)
+            # les conditions sont: pas à l'emplacement du joueur ni au même endroit que précédement
             if self.grid[x][y][0] == 0 and x != self.fruit[0] and y != self.fruit[1]:
                 verite = False
                 self.fruit = (x, y)
             #pick a random cords
             #while cords isn't a snake part
 
-    def verif(self, x, y):
+    def verif(self, x, y): #fonction de vérification si des coordonées sont valides
+        #il faut que x et x soient compris dans les dimensions du tableau et qu'il n' ait pas de partie du serpent à cet endroit la
         if x < 0 or x > 19 or y < 0 or y > 19 or self.grid[x][y][0] != 0:
-            return False
-        elif x == self.fruit[0] and y == self.fruit[1]:
+            return False #si les conditions ne sont pas respectées, on revois False
+        elif x == self.fruit[0] and y == self.fruit[1]: #si on arrive sur les coordonées du fruit
             for i in range(20):
                 for j in range(20):
-                    if self.grid[i][j][0] != 0:
+                    if self.grid[i][j][0] != 0: #on incrémente la vie de chaque parties de 1
                         self.grid[i][j][0] += 1
-            self.length_max += 1
-            self.Score["text"] = "Score : {}".format((self.length_max-2)*40)
-            self.sweet()
-        return True
+            self.length_max += 1 #on augmente la taille du serpent de 1
+            self.Score["text"] = "Score : {}".format((self.length_max-2)*40) #actualisation du score
+            self.sweet() #on replace un fruit
+        return True #revois de True si la case ne possède rien ou si le joueur a mangé un fruit
 
-    def exit(self):
-        self.pause = True
-        self.root.destroy()
+    def exit(self):            # si on décide de quiter la fenètre
+        self.pause = True      # on pause le jeu pour stopper la fonction update
+        self.root.destroy()    # et on quite la fenetre principale
         self.root.quit()
 
-    def rotate(self, event = None):
+    def rotate(self, event = None): #fonction appelée par appuis d'une touche
         symb = event.keysym
-        dir = -1
-        if symb == "Right":
+        dir = -1 #initialisation de la direction à une valeur implosible
+        if symb == "Right": # série de if pour déterminer la direction suivant la touche pressée
             dir = 0
         elif symb == "Down":
             dir = 1
@@ -241,11 +246,12 @@ class snake:
             dir = 2
         elif symb == "Up":
             dir = 3
-        if dir != -1:
-            old = convert_dir(self.dir, True)
-            if dir == old or dir == (old+2)%4:
+        if dir != -1: #si la direction a été changée
+            old = convert_dir(self.dir, True) # on convertis l'ancienne direction
+            if dir == old or dir == (old+2)%4: 
+                #si l'ancienne rotation est la même que la nouvelle à pi près, on finis la fonction car pas de changement
                 return False
-            else:
+            else: #sinon, calcul de l'index de la coudée
                 if (dir == 0 and old == 1) or (dir == 3 and old == 2):
                     self.next_Rotation = 4
                 elif (dir == 0 and old == 3) or (dir == 1 and old == 2):
@@ -254,25 +260,25 @@ class snake:
                     self.next_Rotation = 6
                 elif (dir == 2 and old == 1) or (dir == 3 and old == 0):
                     self.next_Rotation = 7
-                self.dir = convert_dir(dir)
+                self.dir = convert_dir(dir) #conversion de la nouvelle direction en matrice
 
-    def dead(self):
-        self.Pause_Button["state"] = "disabled"
-        self.pause = True
-        if (self.length_max-2)*40 > self.Best_Score:
+    def dead(self):                                  # si le joueur est mort
+        self.Pause_Button["state"] = "disabled"      # on désactive le bouton de la pause
+        self.pause = True                            # on arrête la boucle du update
+        if (self.length_max-2)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.length_max-2)*40
         question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
-        if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-            self.Frame_right.destroy()
+        if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
+            self.Frame_right.destroy()               # destruction des frames
             self.Frame_left.destroy()
             self.Frame_top.destroy()
-            self.start()
+            self.start()                             # reconstruction de la fenètre
         else:
-            self.exit()
+            self.exit()                              #sinon, on quitte l'application
 
 
-def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est une matrice qui est entrée
-    if mat == True:
+def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est une matrice ou non qui est entrée
+    if mat == True: #série de ifs pour faire la conversion
         if dir == [1, 0]:
             return 0
         elif dir == [0, 1]:
@@ -291,6 +297,6 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
         elif dir == 3:
             return [0, -1]
 
-def Snake(User):
-  jeux = snake(User)
-  return jeux.Best_Score
+def Snake(User):           # fonction pour commencer le jeu
+  jeux = snake(User)       # création de l'instance
+  return jeux.Best_Score   #renvois du meilleur score
