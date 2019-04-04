@@ -63,7 +63,7 @@ class demineur:
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
-        #Scoreboard(Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
+        Scoreboard(Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
     
     def difficulty(self):
         self.root_difficulty = Toplevel()
@@ -123,14 +123,18 @@ class demineur:
         y = event.y//self.border
         if event.num == 1 and self.canvas.itemconfigure(self.list_images[x][y])["image"][0] != self.Normal_Image: #clique gauche
             value = self.grid[x][y]
-            if value == -1:
-                pass
-                #self.dead()
+            if self.canvas.itemconfigure(self.list_images[x][y])["image"][0] == self.Flag_Image:
+                self.canvas.itemconfigure(self.list_images[x][y], image = self.Normal_Image)
+                self.click(event)
+            elif value == -1:
+                count = 0
+                for i in range(self.dims[0]):
+                    for j in range(self.dims[1]):
+                        if self.canvas.itemconfigure(self.list_images[i][j])["image"][0] == self.Flag_Image and self.grid[i][j] == -1:
+                            count += 1
+                self.end(False, count)
             elif value > 0:
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
-            elif value == -2:
-                self.grid[x][y] = 0
-                self.click(event)
             elif value == 0:
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
                 process = around(x, y)
@@ -151,8 +155,24 @@ class demineur:
             
         elif event.num == 3: #clique droit
             self.canvas.itemconfigure(self.list_images[x][y], image = self.Flag_Image)
-            self.grid[x][y] = -2
+        count = 0
+        for i in range(self.dims[0]):
+            for j in range(self.dims[1]):
+                if self.canvas.itemconfigure(self.list_images[i][j])["image"][0] == self.Flag_Image and self.grid[i][j] == -1:
+                    count += 1
+        if count == self.mine_Count:
+            self.end(True, count)
         self.canvas.update()
+
+    def end(self, win, count = 0):
+        self.score = count* 50 #ajouter le temps
+        question = askquestion("Restart", "Veux-tu recommencer?")
+        if question == "yes":
+            self.root.withdraw()
+            self.difficulty()
+        else:
+            self.exit()
+        
 
 def Minesweeper(user):
     jeux = demineur(user)
