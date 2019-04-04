@@ -158,7 +158,7 @@ class demineur:
         count = 0
         for i in range(self.dims[0]):
             for j in range(self.dims[1]):
-                print(self.canvas.itemconfigure(self.list_images[i][j])["image"][-1])
+                print(self.canvas.itemconfigure(self.list_images[i][j])["image"][-1], self.Flag_Image, self.grid[i][j])
                 try:
                     if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == self.Flag_Image and self.grid[i][j] == -1:
                         print("buh")
