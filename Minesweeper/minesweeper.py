@@ -5,7 +5,7 @@ sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
 from Scoreboard.scoreboard import *
-from random import choice
+from random import randint
 #difficultés: 9x9: 10, 16x16: 40, 16x30: 99
 
 around = lambda x, y: [(x-1, y-1), (x-1, y), (x-1, y+1), (x,y+1), (x,y-1), (x+1, y-1), (x+1, y), (x+1, y+1)]
@@ -92,11 +92,13 @@ class demineur:
         self.root.geometry("%sx%s" % (200 + self.dims[0]*self.border, self.dims[1]*self.border))
         self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])]
 
-        index = [i for i in range(self.dims[0]*self.dims[1])]
         for _ in range(self.mine_Count):
-            temp = choice(index)
-            index.remove(temp)
-            self.grid[temp//self.dims[0]][temp%self.dims[0]] = -1
+            turn = True
+            while turn == True:
+                temp = (randint(0, self.dims[0]-1), randint(0, self.dims[1]-1))
+                if self.grid[temp[0]][temp[1]] != -1:
+                    self.grid[temp[0]][temp[1]] = -1
+                    turn = False
         
         for x in range(self.dims[0]):
             for y in range(self.dims[1]):
@@ -158,10 +160,8 @@ class demineur:
             for j in range(self.dims[1]):
                 try:
                     if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == str(self.Flag_Image) and self.grid[i][j] == -1:
-                        print("buh")
                         count += 1
                 except: pass
-        print(count, self.mine_Count)
         if count == self.mine_Count:
             self.end(True, count)
         self.canvas.update()
@@ -172,7 +172,8 @@ class demineur:
                 for y in range(self.dims[1]):
                     if self.grid[x][y] == -1:
                         self.canvas.itemconfigure(self.list_images[x][y], image = self.bomb_Image)
-        self.score = count* 50 #ajouter le temps
+        if count * 50 > self.score:
+            self.score = count* 50 #ajouter le temps
         question = askquestion("Restart", "Partie finie.\nVeux-tu recommencer?")
         if question == "yes":
             self.root.withdraw()
