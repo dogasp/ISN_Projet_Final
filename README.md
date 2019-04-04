@@ -63,3 +63,7 @@ Début de Fantome, mise en place de la grille et du niveau (Bug le liste)??
 Continuer Fantome et finir Snake
 Gros Bug d'algo de fantome, commencement du démineur.
 Faire l'inversement de Tom(image)
+
+## Jeudi 4 avril 2019
+Penser à la bombe du snake en dessous de 50 de longueur/Faire peut etre une fin au cas où on gagnerait la partie/ penser a pouvoir changer les touches
+Graphique du snake en devellopement
