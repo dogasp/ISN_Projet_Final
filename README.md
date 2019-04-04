@@ -26,7 +26,7 @@ Bug sur le timer
 
 Ajout de textures pour le jeux tête chercheuse et ajout pièces pour avoir un bonus de point
 
-hébergement du serveur sur raspberry: le serveur est acessible en permanence
+### hébergement du serveur sur raspberry: le serveur est acessible en permanence
 
 
 ## Vendredi 29 mars 2019:
@@ -55,7 +55,8 @@ Recherche et découpage des images du serpent ainsi que de la pomme.
 
 ## Mardi 2 avril 2019:
 Snake: affichage des images fin de la mécanique de jeux
-Tete chercheuse fini
+
+### Tete chercheuse fini
 Snake fonctionnel avec gestion du score et mort
 Début de Fantome, mise en place de la grille et du niveau (Bug le liste)??
 
@@ -69,6 +70,6 @@ Penser à la bombe du snake en dessous de 50 de longueur/Faire peut etre une fin
 
 Graphique du snake en devellopement
 
-# Fin des règles du snake
+Fin des règles du snake
 
 fin du système de jeux du démineur
