@@ -69,6 +69,6 @@ Penser à la bombe du snake en dessous de 50 de longueur/Faire peut etre une fin
 
 Graphique du snake en devellopement
 
-#Fin des règles du snake
+# Fin des règles du snake
 
 fin du système de jeux du démineur
