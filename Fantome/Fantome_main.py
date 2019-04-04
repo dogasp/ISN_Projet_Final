@@ -31,12 +31,22 @@ class ghost:
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
         self.Button_Skip.place(x = 50, y = 300)
-        self.start()
         self.show_rules.mainloop()
+
+        self.root = Toplevel()
+        self.root.geometry("702x552")
+        self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.bind("<Key>", self.move_Jerry)
+
+        self.start()
+        self.root.mainloop()
+
+
+
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
-        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Ghost", self.User_name)
+        #Scoreboard(self.Frame_main1_wind2, self.show_rules, "Ghost", self.User_name)
 
     def quit_ranking(self):
         self.show_rules.destroy()
@@ -56,11 +66,7 @@ class ghost:
 
 
         self.grid = [[(0) for i in range(self.nbcases[self.level - 1])] for j in range((self.nbcases[self.level - 1]))]
-        self.root = Toplevel()
-        self.root.geometry("702x552")
-        self.root.bind("<Key>", self.move_Jerry)
-        self.root.protocol("WM_DELETE_WINDOW", self.exit)
-
+        
         #########-----------Import des photos-------------#################################
         self.Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Jerry.png")
         self.Tom_image_left = PhotoImage(file = "Fantome/Ressources/Images/Tom_left.png")
