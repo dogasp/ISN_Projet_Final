@@ -66,7 +66,7 @@ class ghost:
 
 
         self.grid = [[(0) for i in range(self.nbcases[self.level - 1])] for j in range((self.nbcases[self.level - 1]))]
-        
+
         #########-----------Import des photos-------------#################################
         self.Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Jerry.png")
         self.Tom_image_left = PhotoImage(file = "Fantome/Ressources/Images/Tom_left.png")
@@ -109,7 +109,8 @@ class ghost:
                 elif self.grid[i][j] == 'D':
                     self.Drapeau = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Fromage_image)
 
-        print(self.table.coords(self.robot))
+
+
 
 
 
@@ -162,30 +163,26 @@ class ghost:
             list =[]
 
             self.pos_x_tom, self.pos_y_tom = self.table.coords(self.fantome[elt])
-            print(self.pos_x_tom,self.pos_y_tom)
             for i in list_dir:
                 if 0 <= self.pos_x_tom + i[0]*self.length < 500 and 0 <= self.pos_y_tom+i[1]*self.length <= 500 and self.grid[int(self.pos_x_tom//self.length + i[0])][int(self.pos_y_tom//self.length + i[1])] == "0":
                     distance.append((sqrt (((self.pos_x_tom + i[0]*self.length-self.newpos_x)**2)+ ((self.pos_y_tom+i[1]*self.length- self.newpos_y)**2)) , i))
 
             distance.sort(key = lambda list: list[0])
-            print(distance)
-
             list = [j[1] for j in distance]
-            print(list)
-
 
             self.newpos_x_Tom = self.pos_x_tom +list[0][0]*self.length
             self.newpos_y_Tom = self.pos_y_tom + list[0][1]*self.length
             self.new_grid_x_Tom = int(self.newpos_x_Tom//self.length)
             self.new_grid_y_Tom = int(self.newpos_y_Tom//self.length)
-            print(self.newpos_x_Tom, self.newpos_y_Tom)
+            if list[0][0] == 1:
+                self.table.itemconfigure(self.Tom, image = self.Tom_image_right)
+            else:
+                self.table.itemconfigure(self.Tom, image = self.Tom_image_left)
+
+
             self.table.move(self.fantome[elt], list[0][0]*self.length, list[0][1]*self.length)
-
-
             self.verif(self.new_grid_x_Jerry,self.new_grid_y_Jerry,self.new_grid_x_Tom,self.new_grid_y_Tom)
-
             self.table.update()
-            #self.table.itemconfigure(Tom, image = PhotoImage(file= "Fantome/Ressources/Images/Tom_left.png"))
 
 
 

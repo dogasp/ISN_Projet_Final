@@ -3,7 +3,6 @@ from Reseau.client import *
 from tkinter import font
 sys.path.append('../')
 from Reseau.client import *
-
 from Tete_chercheuse.tete_chercheuse import *
 from Snake.Snake_main import *
 from Fantome.Fantome_main import *

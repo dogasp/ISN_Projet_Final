@@ -95,7 +95,7 @@ class snake:
         self.Score.place(x = 50, y = 150)
 
         self.sweet()
-        
+
 
     def pause_command(self):
         if self.pause == False:
