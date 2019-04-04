@@ -32,11 +32,44 @@ class snake:
         self.Rules.place(x = 200, y =5)
 
 
-        self.explanation = Label(self.Frame_main2_wind2, text = "Le serpent va en ligne droite, on peut le dévier en utilisant\n\
+        """self.explanation = Label(self.Frame_main2_wind2, text = "Le serpent va en ligne droite, on peut le dévier en utilisant\n\
             les flèches sur le clavier.\n\n\
             Si le sepent mange un fruit, il grandit et cela rapporte des points\n\n\
             Si le serpent touche un bord ou qu'il se mange lui-même, il meurt.")
-        self.explanation.place(x = 50, y = 30)
+        self.explanation.place(x = 50, y = 40)"""
+
+        self.Rules2 = Label(self.Frame_main2_wind2, text = "Le but est que le serpent mange des pommes pour qu'il puisse grandir et gagner la partie ", font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(500, lambda: self.Rules2.place(x = 45, y = 70))
+
+        self.CANVAS1 = Canvas(self.Frame_main2_wind2, width = 150, height = 60)
+        self.Frame_main2_wind2.after(1000, lambda: self.CANVAS1.place(x = 380, y = 60 ))
+        self.snake_ex_image = PhotoImage(file = "Snake/images/snake_ex_image.png")
+        self.CANVAS1.create_image(75, 30,image = self.snake_ex_image)
+
+    #------------------2-----------------------------------------------------------------
+        self.Rules3 = Label(self.Frame_main2_wind2, text = 'Pour cela, tu as à disposition les flèches qui te permettront de dépacer.',font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(2000, lambda: self.Rules3.place(x = 40, y = 150))
+
+        self.CANVAS2 = Canvas(self.Frame_main2_wind2,  width = 150, height = 104)
+        self.Frame_main2_wind2.after(2500, lambda: self.CANVAS2.place(x = 390, y = 140 ))
+        self.keyboard_snake = PhotoImage(file = "Snake/images/keyboard_snake.png")
+        self.CANVAS2.create_image(75, 52,image = self.keyboard_snake)
+
+    #------------------3------------------------------------------------------------------
+        self.Rules4 = Label(self.Frame_main2_wind2, text = "A chaque fois que le robot rencontre un obstacle, \n\
+        il tourne à droite sinon il va toujours tout droit.",font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(3500, lambda: self.Rules4.place(x = 20, y = 240))
+
+        self.CANVAS3 = Canvas(self.Frame_main2_wind2, width = 190, height = 72)
+        self.Frame_main2_wind2.after(4000, lambda: self.CANVAS3.place(x = 350, y = 230 ))
+        self.mur_snake = PhotoImage(file = "Snake/images/mur_snake.png")
+        self.CANVAS3.create_image(95, 36,image = self.mur_snake)
+
+
+
+
+
+
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
         self.Button_Skip.place(x = 50, y = 300)
         self.show_rules.mainloop()
