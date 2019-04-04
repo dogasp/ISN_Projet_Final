@@ -81,6 +81,12 @@ class snake:
         self.root.focus_force()
 
 
+        self.Start_image = PhotoImage(file = "Snake/images/play.png")
+        self.Fruit_Image = PhotoImage(file = "Snake/images/Fruit.png")
+        self.Head_Image = [PhotoImage(file = "Snake/images/Head_Right.png"),PhotoImage(file = "Snake/images/Head_Down.png"), PhotoImage(file = "Snake/images/Head_Left.png"), PhotoImage(file = "Snake/images/Head_Up.png")]
+        self.Body_Image = [PhotoImage(file = "Snake/images/Horizontal.png"), PhotoImage(file = "Snake/images/Vertical.png"), PhotoImage(file = "Snake/images/Horizontal.png"), PhotoImage(file = "Snake/images/Vertical.png"),\
+        PhotoImage(file = "Snake/images/Angle_Right_Top.png"),PhotoImage(file = "Snake/images/Angle_Right_Down.png"),PhotoImage(file = "Snake/images/Angle_Left_Down.png"),PhotoImage(file = "Snake/images/Angle_Left_Top.png")]
+        self.Queue_Image = [PhotoImage(file = "Snake/images/Queue_Right.png"), PhotoImage(file = "Snake/images/Queue_Down.png"), PhotoImage(file = "Snake/images/Queue_Left.png"), PhotoImage(file = "Snake/images/Queue_Up.png")]
 
 
         self.start()
@@ -103,14 +109,8 @@ class snake:
         self.next_Rotation = 0
         self.pos = [0, 10]
         self.grid[0][10] = [2, 0, 0]
-        self.pause = False
+        self.pause = True
 
-        self.Start_image = PhotoImage(file = "Snake/images/play.png")
-        self.Fruit_Image = PhotoImage(file = "Snake/images/Fruit.png")
-        self.Head_Image = [PhotoImage(file = "Snake/images/Head_Right.png"),PhotoImage(file = "Snake/images/Head_Down.png"), PhotoImage(file = "Snake/images/Head_Left.png"), PhotoImage(file = "Snake/images/Head_Up.png")]
-        self.Body_Image = [PhotoImage(file = "Snake/images/Horizontal.png"), PhotoImage(file = "Snake/images/Vertical.png"), PhotoImage(file = "Snake/images/Horizontal.png"), PhotoImage(file = "Snake/images/Vertical.png"),\
-        PhotoImage(file = "Snake/images/Angle_Right_Top.png"),PhotoImage(file = "Snake/images/Angle_Right_Down.png"),PhotoImage(file = "Snake/images/Angle_Left_Down.png"),PhotoImage(file = "Snake/images/Angle_Left_Top.png")]
-        self.Queue_Image = [PhotoImage(file = "Snake/images/Queue_Right.png"), PhotoImage(file = "Snake/images/Queue_Down.png"), PhotoImage(file = "Snake/images/Queue_Left.png"), PhotoImage(file = "Snake/images/Queue_Up.png")]
 
         ########------------Frames Pricipaux-------------########################################
         self.Frame_top = Frame(self.root, width = 702, height = 50, bg = 'lightgrey')
@@ -134,21 +134,22 @@ class snake:
         self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
         self.grille.place(x = 1, y = 1)
 
-        self.Title_level = Label(self.Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
-        self.Title_level.place(x = 315, y = 5)
-
         self.Pause_Button = Button(self.Frame2, text = "Pause", command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 100)
 
-        self.start_button = Button(self.Frame2, image = self.Start_image,  command = self.update)
+        self.start_button = Button(self.Frame2, image = self.Start_image,  command = self.start_game)
         self.start_button["bg"] = "white"
         self.start_button["border"] = "0"
-        self.start_button.place(x = 50, y = 200)
+        self.start_button.place(x = 50, y = 150)
 
         self.Score = Label(self.Frame1, text = "Score : 0")
         self.Score.place(x = 50, y = 150)
 
         self.sweet()
+    
+    def start_game(self):
+        self.pause = False
+        self.update()
 
 
     def pause_command(self):
@@ -263,6 +264,8 @@ class snake:
         question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
         if question == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
             self.Frame_right.destroy()
+            self.Frame_left.destroy()
+            self.Frame_top.destroy()
             self.start()
         else:
             self.exit()
