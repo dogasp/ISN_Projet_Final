@@ -105,7 +105,7 @@ class demineur:
                         if self.dims[0] > xp >-1 and self.dims[1] > yp >= 0 and self.grid[xp][yp]!=-1:
                             self.grid[xp][yp] += 1
 
-        self.canvas = Canvas(self.root, width = self.dims[0]*self.border, height = self.dims[1]*self.border)
+        self.canvas = Canvas(self.root, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "red")
         self.canvas.bind("<Button>", self.click)
         self.canvas.place(x = 200, y = 0)
 
@@ -165,8 +165,13 @@ class demineur:
         self.canvas.update()
 
     def end(self, win, count = 0):
+        if win == False:
+            for x in range(self.dims[0]):
+                for y in range(self.dims[1]):
+                    if self.grid[x][y] == -1:
+                        self.canvas.itemconfigure(self.list_images[x][y], image = self.bomb_Image)
         self.score = count* 50 #ajouter le temps
-        question = askquestion("Restart", "Veux-tu recommencer?")
+        question = askquestion("Restart", "Partie finie.\nVeux-tu recommencer?")
         if question == "yes":
             self.root.withdraw()
             self.difficulty()

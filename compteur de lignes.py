@@ -17,7 +17,7 @@ for file in fichiers:
                 lignes = 0
     else:
         for under in listdir(join(path,file)):
-            if len(under.split(".")) > 1 and under.split(".")[1] == "py" and under != "morpion.py":
+            if len(under.split(".")) > 1 and under.split(".")[1] == "py":
                 with open(join(path,file,under), "r") as fichier:
                     temp = fichier.readlines()
                     for i in temp:
