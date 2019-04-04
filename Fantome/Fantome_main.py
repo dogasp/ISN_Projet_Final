@@ -36,6 +36,7 @@ class ghost:
         self.root = Toplevel()
         self.root.geometry("702x552")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.focus_force()
         self.root.bind("<Key>", self.move_Jerry)
 
         self.start()
