@@ -96,7 +96,7 @@ class demineur:
         for _ in range(self.mine_Count):
             temp = choice(index)
             index.remove(temp)
-            self.grid[temp//self.dims[0]][temp%self.dims[0]] = -1 #problème
+            self.grid[temp//self.dims[0]][temp%self.dims[0]] = -1
         
         for x in range(self.dims[0]):
             for y in range(self.dims[1]):
@@ -121,16 +121,16 @@ class demineur:
     def click(self, event):
         x = event.x//self.border
         y = event.y//self.border
-        if event.num == 1 and self.canvas.itemconfigure(self.list_images[x][y])["image"][0] != self.Normal_Image: #clique gauche
+        if event.num == 1 and self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] != self.Normal_Image: #clique gauche
             value = self.grid[x][y]
-            if self.canvas.itemconfigure(self.list_images[x][y])["image"][0] == self.Flag_Image:
+            if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == self.Flag_Image:
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Normal_Image)
                 self.click(event)
             elif value == -1:
                 count = 0
                 for i in range(self.dims[0]):
                     for j in range(self.dims[1]):
-                        if self.canvas.itemconfigure(self.list_images[i][j])["image"][0] == self.Flag_Image and self.grid[i][j] == -1:
+                        if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == self.Flag_Image and self.grid[i][j] == -1:
                             count += 1
                 self.end(False, count)
             elif value > 0:
@@ -158,8 +158,13 @@ class demineur:
         count = 0
         for i in range(self.dims[0]):
             for j in range(self.dims[1]):
-                if self.canvas.itemconfigure(self.list_images[i][j])["image"][0] == self.Flag_Image and self.grid[i][j] == -1:
-                    count += 1
+                print(self.canvas.itemconfigure(self.list_images[i][j])["image"][-1])
+                try:
+                    if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == self.Flag_Image and self.grid[i][j] == -1:
+                        print("buh")
+                        count += 1
+                except: pass
+        print(count, self.mine_Count)
         if count == self.mine_Count:
             self.end(True, count)
         self.canvas.update()
