@@ -8,15 +8,17 @@ from Scoreboard.scoreboard import *
 from random import randint
 #difficultés: 9x9: 10, 16x16: 40, 16x30: 99
 
+#fonction pour renvoyer toutes les cellules adjascentes
 around = lambda x, y: [(x-1, y-1), (x-1, y), (x-1, y+1), (x,y+1), (x,y-1), (x+1, y-1), (x+1, y), (x+1, y+1)]
 
 class demineur:
     def __init__(self, user):
-        self.score = 0
-        self.User = user
-        self.level = 0
-        self.border = 25 #taille d'une cellule
+        self.score = 0    #record de la session
+        self.User = user  #utilisateur qui joue au jeux
+        self.level = 0    #difficulté
+        self.border = 25  #taille d'une cellule
 
+        #import des images
         self.Number_Image = [PhotoImage(file = "Minesweeper/Images/0.png").subsample(8), PhotoImage(file = "Minesweeper/Images/1.png").subsample(8), PhotoImage(file = "Minesweeper/Images/2.png").subsample(8),\
             PhotoImage(file = "Minesweeper/Images/3.png").subsample(8), PhotoImage(file = "Minesweeper/Images/4.png").subsample(8), PhotoImage(file = "Minesweeper/Images/5.png").subsample(8),\
             PhotoImage(file = "Minesweeper/Images/6.png").subsample(8), PhotoImage(file = "Minesweeper/Images/7.png").subsample(8), PhotoImage(file = "Minesweeper/Images/8.png").subsample(8)]
@@ -24,16 +26,17 @@ class demineur:
         self.Normal_Image = PhotoImage(file = "Minesweeper/Images/facingDown.png").subsample(8)
         self.Flag_Image = PhotoImage(file = "Minesweeper/Images/flagged.png").subsample(8)
 
+        #interface pour afficher les regles
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
-        self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
+        self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking) #protocole pour controler la fermeture d ela fenetre
 
-        self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
+        self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE) #premier frame, celui en dessous
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
         #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
         #self.Frame_main1_wind2.create_image(335,265,image =Fond_Frame_main1_wind2)
-        self.Frame_main2_wind2 = Frame(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE)
+        self.Frame_main2_wind2 = Frame(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE) #second frame, au dessus
         self.Frame_main2_wind2.place(x = 60, y = 45)
         self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
         self.Rules.place(x = 200, y =5)
@@ -49,36 +52,37 @@ class demineur:
         self.Button_Skip.place(x = 50, y = 350)
         self.show_rules.mainloop()
 
-        self.root = Toplevel()
+        self.root = Toplevel() #fenetre principale
         self.root.title("Minesweeper")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
-        self.root.withdraw()
+        self.root.withdraw() #on masque la fenetre principale le temps de la sélection de la difficulté
 
-        self.difficulty()
+        self.difficulty() #on charge la difficulté
         self.root.mainloop()
         
-    def quit_ranking(self):
+    def quit_ranking(self): #fonction utilisée pour quitter l'interface des classements 
         self.show_rules.destroy()
         self.show_rules.quit()
 
-    def quit_rules(self):
+    def quit_rules(self): #fonction pour passer des regles au classement
         self.Frame_main2_wind2.destroy()
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
     
-    def difficulty(self):
+    def difficulty(self): #fonction de sélection de la difficulté
         self.root_difficulty = Toplevel()
         self.root_difficulty.title("Selectionne une difficulté")
         self.root_difficulty.geometry("300x125")
+        #boutons avec les différentes difficultés
         Button(self.root_difficulty, text = "Facile", command = lambda : self.start(0)).place(x = 15, y = 70)
         Button(self.root_difficulty, text = "Moyen", command = lambda : self.start(1)).place(x = 115, y = 70)
         Button(self.root_difficulty, text = "Difficile", command = lambda : self.start(2)).place(x = 215, y = 70)
         self.root_difficulty.mainloop()
     
-    def start(self, level):
-        self.root_difficulty.destroy()
+    def start(self, level): #fontion appelée après la sélection de la difficulté avec level en paramètre
+        self.root_difficulty.destroy() #destruction de la fenetre de la difficulté
         self.root_difficulty.quit()
         self.level = level
-        if level == 0:
+        if level == 0: #sélection des dimensions et du nombre de mines suivant le niveau sélectionné
             self.dims = (9,9)
             self.mine_Count = 10
         elif level == 1:
@@ -87,23 +91,26 @@ class demineur:
         else:
             self.dims = (30, 16)
             self.mine_Count = 99
-        self.root.deiconify()
-        self.root.focus_force()
+        self.root.deiconify()   # affichage de la fenetre principale
+        self.root.focus_force() # on force le focus
+        #on détermine la taille de la fenetre principale suivant le niveau
         self.root.geometry("%sx%s" % (200 + self.dims[0]*self.border, self.dims[1]*self.border))
-        self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])]
+        self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #création de la grille contenant l'état des cellules
 
-        for _ in range(self.mine_Count):
+        for _ in range(self.mine_Count): #loop pour placer les bombes
             turn = True
+            #boucle pour choisir des coordonées tant qu'on a pas sélectionné un emplacement libre
             while turn == True:
                 temp = (randint(0, self.dims[0]-1), randint(0, self.dims[1]-1))
                 if self.grid[temp[0]][temp[1]] != -1:
                     self.grid[temp[0]][temp[1]] = -1
                     turn = False
         
+        #détermination du nombre de bombes voisines par cases
         for x in range(self.dims[0]):
             for y in range(self.dims[1]):
-                if self.grid[x][y] == -1:
-                    for xp, yp in around(x, y):
+                if self.grid[x][y] == -1: #on boucle dans les cases
+                    for xp, yp in around(x, y): #si c'est une bombe, on ajoute 1 à chaque case autours
                         if self.dims[0] > xp >-1 and self.dims[1] > yp >= 0 and self.grid[xp][yp]!=-1:
                             self.grid[xp][yp] += 1
 
@@ -111,77 +118,87 @@ class demineur:
         self.canvas.bind("<Button>", self.click)
         self.canvas.place(x = 200, y = 0)
 
-        self.list_images = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])]
+        self.list_images = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #liste contenant les images de la grille
         for i in range(self.dims[0]):
-            for j in range(self.dims[1]):
+            for j in range(self.dims[1]): #on initialise la grille avec des images de bouton
                 self.list_images[i][j] = self.canvas.create_image(i*self.border + self.border/2, j*self.border + self.border/2, image = self.Normal_Image)
 
-    def exit(self):
+    def exit(self): #fonction appelée pour quiter l'application
         self.root.destroy()
         self.root.quit()
 
-    def click(self, event):
-        x = event.x//self.border
+    def click(self, event): #fonction déclanchée avec un clique de la souris sur le canvas
+        x = event.x//self.border #on détermine l'emplacement dans le tableau de la case cliquée
         y = event.y//self.border
-        if event.num == 1: #clique gauche
-            value = self.grid[x][y]
+        if event.num == 1: # si clique gauche
+            value = self.grid[x][y] #valeur de la grille à l'amplacement cliqué
+            #si l'image est un drapeau, on l'enlève
             if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Flag_Image):
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Normal_Image)
-            elif value == -1:
-                count = 0
+            elif value == -1: # si il y a une bombe
+                count = 0 #on compte le nombre de cases bien identifiées comme étant des bombes
                 for i in range(self.dims[0]):
                     for j in range(self.dims[1]):
+                        #si il y a une image de drapeau et qu'il y a une bombe à l'emplacement
                         if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == str(self.Flag_Image) and self.grid[i][j] == -1:
                             count += 1
-                self.end(False, count)
-            elif value > 0:
+                self.end(False, count) #appel de la fonction end de la classe
+            elif value > 0: #si on a cliqué sur une case contenant au moins une bombe voisine, on affiche le nombre de voisins
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
-            elif value == 0:
+            elif value == 0: #si il n'y a pas de voisins
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
-                process = around(x, y)
-                done = process.copy()
-                while len(process) != 0:
-                    next_process = []
-                    for x,y in process:
-                        if self.dims[0] > x >-1 and self.dims[1] > y >= 0:
-                            value = self.grid[x][y]
+                process = around(x, y) #on crée une liste contenant tous les voisins
+                done = process.copy() #liste pour éviter de faire trop de calculs
+                while len(process) != 0: # tant qu'il y a des cases à process
+                    next_process = []    # liste des prochaines cases à process
+                    for x,y in process:  #pour chaque cases de la liste
+                        if self.dims[0] > x >-1 and self.dims[1] > y >= 0: #on vérifie que les index appartiennent à la grille
+                            value = self.grid[x][y] #récupération de la valeur de la case
                             self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
-                            if value == 0:
-                                for xb,yb in around(x, y):
+                            if value == 0: #si la valeur est encore 0
+                                for xb,yb in around(x, y): #on ajoute les voisins de cette case à la liste à process
                                     if (xb, yb) not in done:
                                         done.append((xb,yb))
                                         next_process.append((xb, yb))
-                    process = next_process
+                    process = next_process #process prend la valeur des cases à vérifier
             
         elif event.num == 3: #clique droit
-            self.canvas.itemconfigure(self.list_images[x][y], image = self.Flag_Image)
-        count = 0
+            #lors d'un clique droit, on vérifie si l'utilisateur n'a pas déjà posé un drapeau:
+            #si oui, on change par un bouton normal; si non, on met un drapeau dans la liste
+            if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Flag_Image):
+                self.canvas.itemconfigure(self.list_images[x][y], image = self.Normal_Image)
+            else:
+                self.canvas.itemconfigure(self.list_images[x][y], image = self.Flag_Image)
+        count = 0 #compte des bombes recouvertes par un drapeau (voir plus haut)
         for i in range(self.dims[0]):
             for j in range(self.dims[1]):
                 try:
                     if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == str(self.Flag_Image) and self.grid[i][j] == -1:
                         count += 1
                 except: pass
-        if count == self.mine_Count:
+        if count == self.mine_Count: #si toutes les cases sont recouvertes, le joueur à gagné
             self.end(True, count)
         self.canvas.update()
 
-    def end(self, win, count = 0):
-        if win == False:
+    def end(self, win, count = 0): #fonction appelée à la fin de la partie
+        self.canvas.unbind("<Button>")
+        if win == False: #si le joueur a perdus, on affiche toutes les bombes
             for x in range(self.dims[0]):
                 for y in range(self.dims[1]):
                     if self.grid[x][y] == -1:
                         self.canvas.itemconfigure(self.list_images[x][y], image = self.bomb_Image)
-        if count * 50 > self.score:
+        if count * 50 > self.score: # si le score est supérieur au précédent recors, 
+                                    # on lui atribue la valeur du nouveau score
             self.score = count* 50 #ajouter le temps
+        #on demande au joueur si il vaut recomencer
         question = askquestion("Restart", "Partie finie.\nVeux-tu recommencer?")
-        if question == "yes":
+        if question == "yes": #si oui, on cache la fenete et on redemande la difficulté
             self.root.withdraw()
             self.difficulty()
         else:
-            self.exit()
+            self.exit() #sinon on quite le jeu
         
 
-def Minesweeper(user):
-    jeux = demineur(user)
-    return jeux.score
+def Minesweeper(user):    # fonction appelée pour lancer le jeu
+    jeux = demineur(user) # création de la classe
+    return jeux.score     # retour du meilleur score de la session
