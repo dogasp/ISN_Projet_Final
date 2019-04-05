@@ -12,6 +12,7 @@ from math import*
 
 class ghost:
     def __init__(self, user):
+
         self.User_name = user
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
@@ -39,6 +40,8 @@ class ghost:
 
 
         self.start()
+        self.time_num()
+
         self.root.mainloop()
 
 
@@ -65,6 +68,7 @@ class ghost:
         self.length = 500/self.nbcases[self.level - 1]
         self.fantome = []
         self.Best_Score = 0
+        self.time_game = 0
 
 
         self.grid = [[(0) for i in range(self.nbcases[self.level - 1])] for j in range((self.nbcases[self.level - 1]))]
@@ -88,6 +92,8 @@ class ghost:
         self.Frame_left.pack(side = LEFT)
 
         ######-----------Elements du jeu-----------------##########################################
+        self.show_time = Label(self.Frame_left, text = "Temps: %s" %str(0),font = ("Berlin Sans FB", 12))
+        self.show_time.place(x = 45, y = 70)
 
         self.table = Canvas(self.Frame_right, width = 500, height = 500, bg = "#1a1a1a")
         self.table.pack(fill = BOTH)
@@ -110,10 +116,6 @@ class ghost:
                     self.fantome.append(self.Tom)
                 elif self.grid[i][j] == 'D':
                     self.Drapeau = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Fromage_image)
-
-
-
-
 
 
     def move_Jerry(self, event = None):
@@ -140,52 +142,6 @@ class ghost:
 
 
         self.table.update()
-
-    def verif(self,next_jerry_x, next_jerry_y,next_tom_x, next_tom_y):
-        if self.grid[next_jerry_x][next_jerry_y] == "D":
-            self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image)
-            self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image)
-            self.root.unbind("<Key>")
-            self.win()
-
-        elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
-            self.table.itemconfigure(self.Tom, image = self.Tom_right_image)
-            self.table.itemconfigure(self.robot,  image = self.Tom_right_image)
-            self.root.unbind("<Key>")
-
-
-    def win(self):
-        self.question = Toplevel()
-        self.question.geometry("300x125")
-        Button(self.question, text = "Restart", command = self.restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
-        Button(self.question, text = "Main Menu", command = self.exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
-        Button(self.question, text = "Next Level", command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
-
-    def restart_question(self):
-        self.question.destroy()
-        self.question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras à chaque fois 50 points multiplié par le niveau où tu es")
-        if self.question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-            self.update()
-        else:
-            self.win()
-
-    def exit_menu(self):
-        pass
-
-    def next(self):
-        pass
-    def update(self):
-        self.Frame_right.destroy()               # destruction des frames
-        self.Frame_left.destroy()
-        self.Frame_top.destroy()
-        self.start()
-
-
-
-
-
-
-
 
 
     def move_Tom(self, last_x, last_y):
@@ -219,6 +175,58 @@ class ghost:
             self.verif(self.new_grid_x_Jerry,self.new_grid_y_Jerry,self.new_grid_x_Tom,self.new_grid_y_Tom)
             self.table.update()
 
+
+    def verif(self,next_jerry_x, next_jerry_y,next_tom_x, next_tom_y):
+        if self.grid[next_jerry_x][next_jerry_y] == "D":
+            self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image)
+            self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image)
+            self.root.unbind("<Key>")
+            self.win()
+
+        elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
+            self.table.itemconfigure(self.Tom, image = self.Tom_right_image)
+            self.table.itemconfigure(self.robot,  image = self.Tom_right_image)
+            self.root.unbind("<Key>")
+            self.dead()
+
+    def time_num(self):
+        self.time_game+=1
+        self.root.after(1000,self.time_num)
+        self.show_time['text'] = "Temps: %s" %str(self.time_game)
+
+
+    def win(self):
+        self.question = Toplevel()
+        self.question.geometry("300x125")
+        Button(self.question, text = "Restart", command = self.restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
+        Button(self.question, text = "Main Menu", command = self.exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+        Button(self.question, text = "Next Level", command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
+
+    def dead(self):
+        self.Frame_right.destroy()               # destruction des frames
+        self.Frame_left.destroy()
+        self.Frame_top.destroy()
+        self.start()
+
+
+    def restart_question(self):
+        self.question.destroy()
+        self.question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras à chaque fois 50 points multiplié par le niveau où tu es")
+        if self.question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+            self.update()
+        else:
+            self.win()
+
+    def exit_menu(self):
+        pass
+
+    def next(self):
+        pass
+    def update(self):
+        self.Frame_right.destroy()               # destruction des frames
+        self.Frame_left.destroy()
+        self.Frame_top.destroy()
+        self.start()
 
 
 
