@@ -159,6 +159,7 @@ def end_game():
 
     question = Toplevel()
     question.geometry("300x125")
+    question.protocol("WM_DELETE_WINDOW", exit_menu)
     Button(question, text = "Restart", command = restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
     Button(question, text = "Main Menu", command = exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
     Button(question, text = "Next Level", command = next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
