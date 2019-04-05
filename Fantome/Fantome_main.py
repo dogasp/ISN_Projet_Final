@@ -18,6 +18,7 @@ class ghost:
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
+        self.level = 1
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
@@ -63,8 +64,8 @@ class ghost:
     def start(self):
         self.root.focus_force()
         self.root.bind("<Key>", self.move_Jerry)
-        self.level = 1
-        self.nbcases = (8, 6, 10)
+
+        self.nbcases = (7, 8, 10)
         self.length = 500/self.nbcases[self.level - 1]
         self.fantome = []
         self.Best_Score = 0
@@ -218,10 +219,16 @@ class ghost:
             self.win()
 
     def exit_menu(self):
-        pass
+        self.exit()
 
     def next(self):
-        pass
+        self.question.destroy()
+        self.level += 1
+        self.Frame_right.destroy()               # destruction des frames
+        self.Frame_left.destroy()
+        self.Frame_top.destroy()
+        self.start()
+
     def update(self):
         self.Frame_right.destroy()               # destruction des frames
         self.Frame_left.destroy()
