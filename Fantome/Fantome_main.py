@@ -204,7 +204,7 @@ class ghost:
         self.show_time['text'] = "Temps: %s" %str(self.time_game)
 
     def win(self):
-        self.score_temp = (10000/(self.move*10 + self.time_game*0.4)) * self.level
+        self.score_temp = (10000/(self.move*0.8 + self.time_game*0.2)) * self.level
         self.score += self.score_temp
         self.show_score["text"] = "Score: %s"%str(int(self.score))
         self.question = Toplevel()
@@ -253,4 +253,4 @@ class ghost:
 
 def Ghost(User):
   jeux = ghost(User)
-  return jeux.Best_Score
+  return jeux.score
