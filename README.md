@@ -65,7 +65,7 @@ Continuer Fantome et finir Snake
 Gros Bug d'algo de fantome, commencement du démineur.
 Faire l'inversement de Tom(image)
 
-## Jeudi 4 avril 2019
+## Jeudi 4 avril 2019:
 Penser à la bombe du snake en dessous de 50 de longueur/Faire peut etre une fin au cas où on gagnerait la partie/ penser a pouvoir changer les touches
 
 Graphique du snake en devellopement
@@ -73,3 +73,6 @@ Graphique du snake en devellopement
 Fin des règles du snake
 
 fin du système de jeux du démineur
+
+## Vendredi 5 avril 2019:
+débug serveur, début de Pendu, interface de Snake et Fantome, ajout de la liste de mots français
