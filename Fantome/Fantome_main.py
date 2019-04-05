@@ -236,7 +236,7 @@ class ghost:
             self.table.itemconfigure(self.Tom, image = self.Tom_right_image)
             self.table.itemconfigure(self.robot,  image = self.Tom_right_image)
             self.root.unbind("<Key>")
-            #self.dead()
+            self.dead()
 
     def time_num(self):
         self.time_game+=1
