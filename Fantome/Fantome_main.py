@@ -33,15 +33,50 @@ class ghost:
         self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
         self.Rules.place(x = 200, y =5)
 
-        #Labels à mettre pour les règles
+        #détail des rêgles
+
+        self.Rules2 = Label(self.Frame_main2_wind2, text = "Le but est que le serpent mange des pommes \n pour qu'il puisse grandir et gagner la partie ", font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(500, lambda: self.Rules2.place(x = 45, y = 70))
+
+        self.CANVAS1 = Canvas(self.Frame_main2_wind2, width = 150, height = 60)
+        self.Frame_main2_wind2.after(1000, lambda: self.CANVAS1.place(x = 375, y = 60 ))
+        self.snake_ex_image = PhotoImage(file = "Snake/images/snake_ex_image.png")
+        self.CANVAS1.create_image(75, 30,image = self.snake_ex_image)
+
+    #------------------2-----------------------------------------------------------------
+        self.Rules3 = Label(self.Frame_main2_wind2, text = 'Pour cela, tu as à disposition les flèches \n du clavier qui te permettront de déplacer.',font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(2000, lambda: self.Rules3.place(x = 35, y = 170))
+
+        self.CANVAS2 = Canvas(self.Frame_main2_wind2,  width = 150, height = 104)
+        self.Frame_main2_wind2.after(2500, lambda: self.CANVAS2.place(x = 375, y = 150 ))
+        self.keyboard_snake = PhotoImage(file = "Snake/images/keyboard_snake.png")
+        self.CANVAS2.create_image(73, 51,image = self.keyboard_snake)
+        self.CANVAS2.create_rectangle(2,2,148,102, outline='black')
+
+    #------------------3------------------------------------------------------------------
+        self.Rules4 = Label(self.Frame_main2_wind2, text = "Cependant attention tu peux mourir en rencontrant \n\
+        en mourir, ou en te retournant sur toi même.",font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(3500, lambda: self.Rules4.place(x = 20, y = 300))
+
+        self.CANVAS3 = Canvas(self.Frame_main2_wind2, width = 90, height = 62)
+        self.CANVAS4 = Canvas(self.Frame_main2_wind2, width = 90, height = 62)
+        self.Frame_main2_wind2.after(4000, lambda: self.CANVAS3.place(x = 402, y = 267 ))
+        self.Frame_main2_wind2.after(4000, lambda: self.CANVAS4.place(x = 402, y = 332 ))
+        self.mur_snake = PhotoImage(file = "Snake/images/mur_snake.png")
+        self.mort_snake = PhotoImage(file = "Snake/images/mort_snake.png")
+        self.CANVAS3.create_image(45, 31,image = self.mur_snake)
+        self.CANVAS4.create_image(45,31, image = self.mort_snake)
+    #------------------Skip------------------------------------------------------------------
+
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
-        self.Button_Skip.place(x = 50, y = 300)
+        self.Button_Skip.place(x = 200, y = 390)
         self.show_rules.mainloop()
 
         self.root = Toplevel()
         self.root.geometry("702x552")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.focus_force()
 
 
         self.start()
@@ -91,7 +126,6 @@ class ghost:
         self.Frame_right = Frame(self.root, width = 500, height = 500)
         self.Frame_left = Frame(self.root, width = 200, height = 500, bg = 'red')
 
-
         #######-----------Package des Frames-------------####################################
         self.Frame_top.pack(side = TOP)
         self.Frame_right.pack(side = RIGHT)
@@ -125,7 +159,6 @@ class ghost:
                     self.fantome.append(self.Tom)
                 elif self.grid[i][j] == 'D':
                     self.Drapeau = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Fromage_image)
-
 
     def move_Jerry(self, event = None):
         self.move += 1
@@ -246,11 +279,6 @@ class ghost:
         self.Frame_left.destroy()
         self.Frame_top.destroy()
         self.start()
-
-
-
-
-
 
 def Ghost(User):
   jeux = ghost(User)
