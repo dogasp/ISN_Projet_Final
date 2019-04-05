@@ -36,8 +36,7 @@ class ghost:
         self.root = Toplevel()
         self.root.geometry("702x552")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
-        self.root.focus_force()
-        self.root.bind("<Key>", self.move_Jerry)
+
 
         self.start()
         self.root.mainloop()
@@ -59,6 +58,8 @@ class ghost:
 
 
     def start(self):
+        self.root.focus_force()
+        self.root.bind("<Key>", self.move_Jerry)
         self.level = 1
         self.nbcases = (8, 6, 10)
         self.length = 500/self.nbcases[self.level - 1]
@@ -144,10 +145,43 @@ class ghost:
         if self.grid[next_jerry_x][next_jerry_y] == "D":
             self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image)
             self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image)
+            self.root.unbind("<Key>")
+            self.win()
 
         elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
             self.table.itemconfigure(self.Tom, image = self.Tom_right_image)
             self.table.itemconfigure(self.robot,  image = self.Tom_right_image)
+            self.root.unbind("<Key>")
+
+
+    def win(self):
+        self.question = Toplevel()
+        self.question.geometry("300x125")
+        Button(self.question, text = "Restart", command = self.restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
+        Button(self.question, text = "Main Menu", command = self.exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+        Button(self.question, text = "Next Level", command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
+
+    def restart_question(self):
+        self.question.destroy()
+        self.question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras à chaque fois 50 points multiplié par le niveau où tu es")
+        if self.question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+            self.update()
+        else:
+            self.win()
+
+    def exit_menu(self):
+        pass
+
+    def next(self):
+        pass
+    def update(self):
+        self.Frame_right.destroy()               # destruction des frames
+        self.Frame_left.destroy()
+        self.Frame_top.destroy()
+        self.start()
+
+
+
 
 
 
