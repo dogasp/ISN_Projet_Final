@@ -127,6 +127,17 @@ class ghost:
         self.Fromage_image = PhotoImage(file = "Fantome/Ressources/Images/fromage.png")
         self.Fromage_Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Fromage_Jerry.png")
         self.Tom_right_image = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry.png")
+        #######-----------Images en Mini-----------------####################################
+        self.Jerry_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Jerry_mini.png")
+        self.Tom_image_left_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_left_mini.png")
+        self.Tom_image_right_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_right_mini.png")
+        self.Fromage_image_mini = PhotoImage(file = "Fantome/Ressources/Images/fromage_mini.png")
+        self.Fromage_Jerry_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Fromage_Jerry_mini.png")
+        self.Tom_right_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry_mini.png")
+
+
+
+
         ########------------Frames Pricipaux-------------########################################
         self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'lightgrey')
         self.Frame_right = Frame(self.root, width = 500, height = 500)
@@ -187,7 +198,8 @@ class ghost:
         if 0 <= self.newpos_x_Jerry <= 500 and 0 <= self.newpos_y_Jerry <= 500:
             if self.grid[self.new_grid_x_Jerry][self.new_grid_y_Jerry] != 'X':
                 self.table.move(self.robot, self.dir_Jerry[0]*self.length, self.dir_Jerry[1]*self.length)
-                self.move_Tom(pos_x + self.dir_Jerry[0]*self.length, pos_y + self.dir_Jerry[1]*self.length)
+        if symb == "Right" or symb == "Down" or symb == "Left" or symb == "Up":
+            self.move_Tom(pos_x + self.dir_Jerry[0]*self.length, pos_y + self.dir_Jerry[1]*self.length)
 
         self.table.update()
 
@@ -270,6 +282,7 @@ class ghost:
             self.win()
 
     def exit_menu(self):
+        self.question.destroy()
         self.exit()
 
     def next(self):
