@@ -110,7 +110,7 @@ class ghost:
         self.root.focus_force()
         self.root.bind("<Key>", self.move_Jerry)
 
-        self.nbcases = (7, 8, 10)
+        self.nbcases = (13,7, 8, 10)
         self.length = 500/self.nbcases[self.level - 1]
         self.fantome = []
         self.Best_Score = 0
@@ -167,15 +167,28 @@ class ghost:
             for i in range(self.nbcases[self.level - 1]):
                 self.grid[i][j] = level_map[self.level - 1][(j*self.nbcases[self.level - 1])+i]
 
-                if self.grid[i][j] == 'X':
-                    self.table.create_rectangle(self.length* i, self.length* j,self.length* (i+1), self.length*(j+1), fill = 'red')
-                elif self.grid[i][j] == 'R':
-                    self.robot = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Jerry_image)
-                elif self.grid[i][j] == 'F':
-                    self.Tom = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Tom_image_left)
-                    self.fantome.append(self.Tom)
-                elif self.grid[i][j] == 'D':
-                    self.Drapeau = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Fromage_image)
+                if self.nbcases[self.level - 1] <= 10:
+                    if self.grid[i][j] == 'X':
+                        self.table.create_rectangle(self.length* i, self.length* j,self.length* (i+1), self.length*(j+1), fill = 'red')
+                    elif self.grid[i][j] == 'R':
+                        self.robot = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Jerry_image)
+                    elif self.grid[i][j] == 'F':
+                        self.Tom = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Tom_image_left)
+                        self.fantome.append(self.Tom)
+                    elif self.grid[i][j] == 'D':
+                        self.Drapeau = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Fromage_image)
+                elif self.nbcases[self.level - 1] > 10:
+                    if self.grid[i][j] == 'X':
+                        self.table.create_rectangle(self.length* i, self.length* j,self.length* (i+1), self.length*(j+1), fill = 'red')
+                    elif self.grid[i][j] == 'R':
+                        self.robot = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Jerry_image_mini)
+                    elif self.grid[i][j] == 'F':
+                        self.Tom = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Tom_image_left_mini)
+                        self.fantome.append(self.Tom)
+                    elif self.grid[i][j] == 'D':
+                        self.Drapeau = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Fromage_image_mini)
+
+
 
     def move_Jerry(self, event = None):
         self.move += 1
@@ -226,10 +239,17 @@ class ghost:
             self.newpos_y_Tom = self.pos_y_tom + list[0][1]*self.length
             self.new_grid_x_Tom = int(self.newpos_x_Tom//self.length)
             self.new_grid_y_Tom = int(self.newpos_y_Tom//self.length)
-            if list[0][0] == 1:
-                self.table.itemconfigure(self.Tom, image = self.Tom_image_right)
-            else:
-                self.table.itemconfigure(self.Tom, image = self.Tom_image_left)
+
+            if self.nbcases[self.level - 1] <= 10:
+                if list[0][0] == 1:
+                    self.table.itemconfigure(self.Tom, image = self.Tom_image_right)
+                else:
+                    self.table.itemconfigure(self.Tom, image = self.Tom_image_left)
+            elif self.nbcases[self.level - 1] > 10:
+                if list[0][0] == 1:
+                    self.table.itemconfigure(self.Tom, image = self.Tom_image_right_mini)
+                else:
+                    self.table.itemconfigure(self.Tom, image = self.Tom_image_left_mini)
 
 
             self.table.move(self.fantome[elt], list[0][0]*self.length, list[0][1]*self.length)
@@ -238,17 +258,31 @@ class ghost:
 
 
     def verif(self,next_jerry_x, next_jerry_y,next_tom_x, next_tom_y):
-        if self.grid[next_jerry_x][next_jerry_y] == "D":
-            self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image)
-            self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image)
-            self.root.unbind("<Key>")
-            self.win()
+        if self.nbcases[self.level - 1] <= 10:
+            if self.grid[next_jerry_x][next_jerry_y] == "D":
+                self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image)
+                self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image)
+                self.root.unbind("<Key>")
+                self.win()
+            elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
+                self.table.itemconfigure(self.Tom, image = self.Tom_right_image)
+                self.table.itemconfigure(self.robot,  image = self.Tom_right_image)
+                self.root.unbind("<Key>")
+                self.dead()
+        elif self.nbcases[self.level - 1] > 10:
+            if self.grid[next_jerry_x][next_jerry_y] == "D":
+                self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image_mini)
+                self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image_mini)
+                self.root.unbind("<Key>")
+                self.win()
+            elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
+                self.table.itemconfigure(self.Tom, image = self.Tom_right_image_mini)
+                self.table.itemconfigure(self.robot,  image = self.Tom_right_image_mini)
+                self.root.unbind("<Key>")
+                self.dead()
 
-        elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
-            self.table.itemconfigure(self.Tom, image = self.Tom_right_image)
-            self.table.itemconfigure(self.robot,  image = self.Tom_right_image)
-            self.root.unbind("<Key>")
-            self.dead()
+
+
 
     def time_num(self):
         self.time_game+=1
