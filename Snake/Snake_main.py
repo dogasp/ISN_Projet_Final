@@ -113,6 +113,10 @@ class snake:
         self.grid[0][10] = [2, 0, 0]  # valeur de la grille à l'emplacement du serpent
         self.pause = True             # valeur de la pause
 
+        #######-------------Import des photos------------####################################
+        self.Snake_python = PhotoImage(file = "Snake/images/Snake_python.png")
+        self.bulle = PhotoImage(file = "Snake/images/bulle.png")
+
 
         ########------------Frames Pricipaux-------------########################################
         self.Frame_top = Frame(self.root, width = 702, height = 50, bg = 'lightgrey')
@@ -122,6 +126,7 @@ class snake:
         ########-----------Frames Secondaires-----------######################################
         self.Frame1 = Frame(self.Frame_left, width = 200, height =200, bg = 'gold')
         self.Frame2 = Frame(self.Frame_left, width = 200, height =300, bg = 'black')
+        self.Canvas_Frame2 = Canvas(self.Frame2, width = 200, height =300, bg = 'white')
 
         #######-----------Package des Frames-------------##################################
 
@@ -130,19 +135,24 @@ class snake:
         self.Frame_left.pack(side = LEFT)
         self.Frame1.pack(side = TOP)
         self.Frame2.pack(side = BOTTOM)
+        self.Canvas_Frame2.place(x = 0, y = 0)
 
         #########------------Labels et autres-----------##################################
 
         self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
         self.grille.place(x = 1, y = 1)
 
-        self.Pause_Button = Button(self.Frame2, text = "Pause", cursor ='hand2', command = self.pause_command)
-        self.Pause_Button.place(x = 50, y = 100)
+        self.Canvas_Frame2.create_image(80,220, image = self.Snake_python)
+        self.Canvas_Frame2.create_image(110,55, image = self.bulle)
 
-        self.start_button = Button(self.Frame2, image = self.Start_image, cursor ='hand2',  command = self.start_game)
+
+        self.Pause_Button = Button(self.Frame1, text = "Pause", cursor ='hand2', command = self.pause_command)
+        self.Pause_Button.place(x = 50, y = 120)
+
+        self.start_button = Button(self.Frame1, image = self.Start_image, cursor ='hand2',  command = self.start_game)
         self.start_button["bg"] = "white"
         self.start_button["border"] = "0"
-        self.start_button.place(x = 50, y = 150)
+        self.start_button.place(x = 50, y = 5)
 
         self.Score = Label(self.Frame1, text = "Score : 0")
         self.Score.place(x = 50, y = 150)
