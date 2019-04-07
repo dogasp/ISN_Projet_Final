@@ -7,6 +7,7 @@ from Tete_chercheuse.tete_chercheuse import *
 from Snake.Snake_main import *
 from Fantome.Fantome_main import *
 from Minesweeper.minesweeper import *
+from Pendu.pendu import *
 
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
@@ -64,12 +65,11 @@ def valider(event = None):
 
 root_user = Tk()
 root_user.geometry("300x120")
-pseudo = StringVar()
 root_user.bind("<Return>", valider)
 
 Label(root_user, text = "Entre un pseudo pour jouer").place(x = 100, y = 30)
 
-entry = Entry(root_user, textvariable = pseudo)
+entry = Entry(root_user)
 entry.place(x = 25, y = 80)
 entry.focus()
 
@@ -127,7 +127,7 @@ for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on af
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
-nom_de_jeux = ["Tête Chercheuse", "Snake", "Pong", "Space Invaders", "Tetris", "Jeu 6", "Demineur", "Jeu 8"]
+nom_de_jeux = ["Tête Chercheuse", "Snake", "Pong", "Space Invaders", "Tetris", "Jeu 6", "Demineur", "Pendu"]
 
 for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
@@ -156,5 +156,6 @@ bouton_0 = BoutonS(2, 1, "Tete", Tete)
 bouton_1 = BoutonS(2, 3, "Snake", Snake)
 bouton_2 = BoutonS(5, 3, "Ghost", Ghost)
 bouton_3 = BoutonS(5, 5, "Minesweeper", Minesweeper)
+bouton_4 = BoutonS(5, 7, "Pendu", Pendu)
 
 root_main.mainloop()
