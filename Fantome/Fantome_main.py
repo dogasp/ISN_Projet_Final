@@ -99,7 +99,7 @@ class ghost:
         self.root.focus_force()
         self.root.bind("<Key>", self.move_Jerry)
 
-        self.nbcases = (7, 8, 13, 10)
+        self.nbcases = (7, 8, 10, 13)
         self.length = 500/self.nbcases[self.level - 1]
         self.fantome = []
         self.Best_Score = 0
