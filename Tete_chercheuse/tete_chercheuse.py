@@ -252,57 +252,56 @@ def restart_button(): #si on clique sur le bouton pour restart
     run = False #on arrete la boucle
     restart()   #restart de l'application
 
-def restart(): #fonction appelée pour redémarer
+def restart(): #fonction appelée pour redémarer la partie
     global table, timer_start, time_game, box_placed, index_robot, score_star, score
-    Button_restart["state"] = "normal"
-    index_robot = 0
-    score[-1] -= 50*level
-    Button_start["state"] = "normal"
-    time_game = box_placed = score_star = 0
-    Table.bind("<Button-1>", click)
-    show_time['text'] = "Temps: %s" %str(time_game)
+    Button_restart["state"] = "normal" #on réactive le bouton restart
+    index_robot = 0 #on repositionne le robot à droite
+    score[-1] -= 50*level #pénalité
+    Button_start["state"] = "normal" #réactivation du bouton start
+    time_game = box_placed = score_star = 0 #on réinitaialise des variables de jeu
+    Table.bind("<Button-1>", click) #rebind du clique droit
+    show_time['text'] = "Temps: %s" %str(time_game) #actualisation des affichages
     show_count['text'] = "Nombre de palettes: %s" %str(box_placed)
 
     for i in range(nbcases_width):
         for j in range(nbcases_height):
-            table[i][j] = Levels[level-1][(j*nbcases_width)+i]
+            table[i][j] = Levels[level-1][(j*nbcases_width)+i] #réinitialisation de la table
     update()
 
-def exit_menu():
+def exit_menu(): #fonction pour quiter le jeu à partir des questions
     global  score
-    score[-1] += score_temp
-    exit()
+    score[-1] += score_temp # on lui attribue le score gardé en mémoire
+    exit()                  # et on quitte l'application
 
-def exit():
+def exit(): #fonction pour quitter, elle se charge de détruire les fenètres lancées
     try:
         question.destroy()
     except: pass
     root_tete.quit()
     root_tete.destroy()
 
-def Tete(user):
+def Tete(user): #fonction principale
     global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin, show_score
-    global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, rayon, cell_width, cell_height, table, level, score, score_star, Button_start
+    global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, cell_width, cell_height, table, level, score, score_star, Button_start
     global User_name, Button_restart
     #preparation du jeu
-    User_name = user
-    rules_game()
+    User_name = user #nom d'utilisateur
+    rules_game() #on execute les rêgles du jeu et le scoreboard
 
 
-    root_tete = Toplevel()
+    root_tete = Toplevel() #fenetre principale
     root_tete.geometry('700x550')
     root_tete.protocol("WM_DELETE_WINDOW",exit)
     #############------------variables----------########################
-    score = [50]
-    index_robot = 0 #la ou il regarde
-    nbcases_width = nbcases_height = 10
-    rayon = 7
-    cell_width = 500/nbcases_width
+    score = [50] #initialisation de la liste des scores
+    index_robot = 0 #la ou le robot regarde
+    nbcases_width = nbcases_height = 10 #dimensions
+    cell_width = 500/nbcases_width #dimensions des cellules
     cell_height = 500/nbcases_height
-    score_star = 0
+    score_star = 0                  #bonnus des pièces
 
-    table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]
-    level = 1
+    table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]#tableau
+    level = 1 #niveau
 
     ########---------Import Photos------------------###############################################
     robot = [PhotoImage(file = "Tete_chercheuse/image/robot_right.png"), PhotoImage(file = "Tete_chercheuse/image/robot_front.png"), PhotoImage(file = "Tete_chercheuse/image/robot_left.png"), PhotoImage(file = "Tete_chercheuse/image/robot_back.png")]
@@ -376,4 +375,4 @@ def Tete(user):
 
     root_tete.mainloop()
 
-    return sum(score)
+    return sum(score) #retour du score total du joueur sur tout les niveaux joués
