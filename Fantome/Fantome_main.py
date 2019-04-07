@@ -94,12 +94,11 @@ class ghost:
         self.root.destroy()
         self.root.quit()
 
-
     def start(self):
         self.root.focus_force()
         self.root.bind("<Key>", self.move_Jerry)
 
-        self.nbcases = (7, 8, 13, 10)
+        self.nbcases = (7, 8, 10, 13)
         self.length = 500/self.nbcases[self.level - 1]
         self.fantome = []
         self.Best_Score = 0
@@ -226,14 +225,14 @@ class ghost:
 
             if self.nbcases[self.level - 1] <= 10:
                 if list[0][0] == 1:
-                    self.table.itemconfigure(self.Tom, image = self.Tom_image_right)
+                    self.table.itemconfigure(self.fantome[elt], image = self.Tom_image_right)
                 else:
-                    self.table.itemconfigure(self.Tom, image = self.Tom_image_left)
+                    self.table.itemconfigure(self.fantome[elt], image = self.Tom_image_left)
             elif self.nbcases[self.level - 1] > 10:
                 if list[0][0] == 1:
-                    self.table.itemconfigure(self.Tom, image = self.Tom_image_right_mini)
+                    self.table.itemconfigure(self.fantome[elt], image = self.Tom_image_right_mini)
                 else:
-                    self.table.itemconfigure(self.Tom, image = self.Tom_image_left_mini)
+                    self.table.itemconfigure(self.fantome[elt], image = self.Tom_image_left_mini)
 
 
             self.table.move(self.fantome[elt], list[0][0]*self.length, list[0][1]*self.length)
