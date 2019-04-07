@@ -211,7 +211,7 @@ class snake:
               self.grille.create_rectangle(0,0,500,500)
 
               self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
-
+              self.root.bind("<Key>", self.rotate)
               self.root.after(150, self.update) #la fonction update s'éxécute toues les 150 ms soit 6.6 Fps
 
     def sweet(self): # fonction pour placer un fruit
@@ -271,6 +271,7 @@ class snake:
                 elif (dir == 2 and old == 1) or (dir == 3 and old == 0):
                     self.next_Rotation = 7
                 self.dir = convert_dir(dir) #conversion de la nouvelle direction en matrice
+        self.root.unbind("<Key>")
 
     def dead(self):                                  # si le joueur est mort
         self.Pause_Button["state"] = "disabled"      # on désactive le bouton de la pause
