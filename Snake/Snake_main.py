@@ -161,7 +161,6 @@ class snake:
         self.pause = False  # pause est enlevée
         self.update()       # le serpent bouge
 
-
     def pause_command(self):      # fonction pour mettre le bouton en pause
         if self.pause == False:   # si le jeu n'est pas en pause, on le pause
             self.pause = True

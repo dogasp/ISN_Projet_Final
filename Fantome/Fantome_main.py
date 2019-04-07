@@ -107,6 +107,9 @@ class ghost:
         self.control_variable = 0
         self.grid = [[(0) for i in range(self.nbcases[self.level - 1])] for j in range((self.nbcases[self.level - 1]))]
 
+        ########---------Import Photos interface----------###########################
+        self.Tom_vs_Jerry = PhotoImage(file = "Fantome/Ressources/Images/Tom_vs_Jerry.png")
+
         #########-----------Import des photos-------------#################################
         self.Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Jerry.png")
         self.Tom_image_left = PhotoImage(file = "Fantome/Ressources/Images/Tom_left.png")
@@ -125,22 +128,36 @@ class ghost:
         ########------------Frames Pricipaux-------------########################################
         self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'lightgrey')
         self.Frame_right = Frame(self.root, width = 500, height = 500)
-        self.Frame_left = Frame(self.root, width = 200, height = 500, bg = 'red')
+        self.Frame_left = Frame(self.root, width = 200, height = 500, bg = 'white')
+
+        ########-----------Frames Secondaires------------#######################################
+        self.Frame1 = Frame(self.Frame_left, width = 200, height = 200)
+        self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'black')
+        self.Canvas_dessine = Canvas(self.Frame2, width = 188, height = 288, bg = 'white')
 
         #######-----------Package des Frames-------------####################################
         self.Frame_top.pack(side = TOP)
         self.Frame_right.pack(side = RIGHT)
         self.Frame_left.pack(side = LEFT)
+        self.Frame1.pack(side = TOP)
+        self.Frame2.pack(side = BOTTOM)
+        self.Canvas_dessine.place(x = 3, y = 4)
 
         ######-----------Elements du jeu-----------------##########################################
-        self.show_time = Label(self.Frame_left, text = "Temps: %s" %str(0),font = ("Berlin Sans FB", 12))
+        self.Canvas_dessine.create_image(100, 190, image = self.Tom_vs_Jerry)
+        self.sentence = Label(self.Frame2, text = "Attrape Moi \n Si Tu Peux !!!",font = ("Berlin Sans FB", 15), bg = 'white')
+        self.sentence.place(x = 45, y = 60)
+
+        self.show_time = Label(self.Frame1, text = "Temps: %s" %str(0),font = ("Berlin Sans FB", 12))
         self.show_time.place(x = 45, y = 70)
 
-        self.show_score = Label(self.Frame_left, text = "Score: %s" %str(int(self.score)), font = ("Helvetica", 10), relief = GROOVE)
+        self.show_score = Label(self.Frame1, text = "Score: %s" %str(int(self.score)), font = ("Helvetica", 10), relief = GROOVE)
         self.show_score.place(x = 25, y = 170)
 
         self.table = Canvas(self.Frame_right, width = 500, height = 500, bg = "#1a1a1a")
         self.table.pack(fill = BOTH)
+
+
 
         for i in range(self.nbcases[self.level - 1]):
             self.table.create_line((self.length)*i,0,(self.length)*i,500,fill = 'blue')
@@ -264,8 +281,6 @@ class ghost:
                 self.root.unbind("<Key>")
                 self.dead()
 
-
-
     def time_num(self):
         self.time_game+=1
         self.root.after(1000,self.time_num)
@@ -284,11 +299,15 @@ class ghost:
             Button(self.question, text = "Next Level", command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
 
     def dead(self):
-        self.score -= 50*(self.level)
-        self.Frame_right.destroy()               # destruction des frames
-        self.Frame_left.destroy()
-        self.Frame_top.destroy()
-        self.start()
+        question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
+        if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
+            self.score -= 50*(self.level)
+            self.Frame_right.destroy()               # destruction des frames
+            self.Frame_left.destroy()
+            self.Frame_top.destroy()
+            self.start()                             # reconstruction de la fenètre
+        else:
+            self.exit()
 
     def restart_question(self):
         self.question.destroy()
