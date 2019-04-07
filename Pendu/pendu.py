@@ -149,18 +149,25 @@ class pendu:
     def end(self, win):
         scored = (self.level+1)*50*win*2*(len(self.entred)-self.error_Count)/(1+self.error_Count)
         if scored > self.score:
-            print(scored)
             self.score = scored
         self.entry.unbind("<Return>")
-        question = askquestion("Restart", "Partie finie.\nVeux-tu recommencer?")
+
+        mess = "\nVeux-tu recommencer ?"
+        if win == False:
+            mess = "Perdus !, le mot était {}".format(self.word) + mess
+        else:
+            mess = "Gagné" + mess
+        question = askquestion("Restart", mess)
         if question == "yes": #si oui, on cache la fenete et on redemande la difficulté
             self.restart()
         else:
             self.exit() #sinon on quite le jeu
 
     def restart(self):
-        self.entry.bind("<Return>", self.check)
-        self.entry.focus()
+        self.root.withdraw()
+        for wg in self.root.winfo_children():
+            wg.destroy()
+        self.difficulty()
 
 def remove_accent(word):
     for i in range(len(accent)):
