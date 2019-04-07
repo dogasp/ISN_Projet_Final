@@ -101,6 +101,7 @@ class pendu:
             self.selection = [list[0] for list in self.data if list[1] > 5 and len(list[0]) > 3]
         self.word = choice(self.selection)
         self.word_accentless = remove_accent(self.word)
+        print(self.word)
 
         self.root.deiconify()
         self.root.focus_force()
@@ -152,15 +153,23 @@ class pendu:
             print(scored)
             self.score = scored
         self.entry.unbind("<Return>")
-        question = askquestion("Restart", "Partie finie.\nVeux-tu recommencer?")
+
+        mess = "\nVeux-tu recommencer ?"
+        if win == False:
+            mess = "Perdus !, le mot était {}".format(self.word) + mess
+        else:
+            mess = "Gagné" + mess
+        question = askquestion("Restart", mess)
         if question == "yes": #si oui, on cache la fenete et on redemande la difficulté
             self.restart()
         else:
             self.exit() #sinon on quite le jeu
 
     def restart(self):
-        self.entry.bind("<Return>", self.check)
-        self.entry.focus()
+        self.root.withdraw()
+        for wg in self.root.winfo_children():
+            wg.destroy()
+        self.difficulty()
 
 def remove_accent(word):
     for i in range(len(accent)):
