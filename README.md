@@ -79,3 +79,5 @@ débug serveur, début de Pendu, interface de Snake et Fantome, ajout de la list
 
 ## Dimanche 7 avril 2019:
 Fin du pendu, le jeu est totalement fonctionnel
+
+### Snake finis
