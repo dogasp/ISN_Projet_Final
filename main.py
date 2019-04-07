@@ -127,7 +127,7 @@ for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on af
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
-nom_de_jeux = ["Tête Chercheuse", "Snake", "Pong", "Space Invaders", "Tetris", "Jeu 6", "Demineur", "Pendu"]
+nom_de_jeux = ["Tête Chercheuse", "Snake", "Pong", "Space Invaders", "Tetris", "Tom & Jerry", "Demineur", "Pendu"]
 
 for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
