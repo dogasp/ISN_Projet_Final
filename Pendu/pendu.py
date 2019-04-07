@@ -151,7 +151,16 @@ class pendu:
         if scored > self.score:
             print(scored)
             self.score = scored
-        print("miaou", win)
+        self.entry.unbind("<Return>")
+        question = askquestion("Restart", "Partie finie.\nVeux-tu recommencer?")
+        if question == "yes": #si oui, on cache la fenete et on redemande la difficulté
+            self.restart()
+        else:
+            self.exit() #sinon on quite le jeu
+
+    def restart(self):
+        self.entry.bind("<Return>", self.check)
+        self.entry.focus()
 
 def remove_accent(word):
     for i in range(len(accent)):
