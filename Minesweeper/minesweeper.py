@@ -48,7 +48,7 @@ class demineur:
             un clique droit marquera la case avec un drapeau.\n\n\
             Il y a trois difficultés, la taille de la grille ainsi que le nombre de mines change entre les niveaux.")
         self.explanation.place(x = 20, y = 100)
-        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
+        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 50, y = 350)
         self.show_rules.mainloop()
 
@@ -59,25 +59,25 @@ class demineur:
 
         self.difficulty() #on charge la difficulté
         self.root.mainloop()
-        
-    def quit_ranking(self): #fonction utilisée pour quitter l'interface des classements 
+
+    def quit_ranking(self): #fonction utilisée pour quitter l'interface des classements
         self.show_rules.destroy()
         self.show_rules.quit()
 
     def quit_rules(self): #fonction pour passer des regles au classement
         self.Frame_main2_wind2.destroy()
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
-    
+
     def difficulty(self): #fonction de sélection de la difficulté
         self.root_difficulty = Toplevel()
         self.root_difficulty.title("Selectionne une difficulté")
         self.root_difficulty.geometry("300x125")
         #boutons avec les différentes difficultés
-        Button(self.root_difficulty, text = "Facile", command = lambda : self.start(0)).place(x = 15, y = 70)
-        Button(self.root_difficulty, text = "Moyen", command = lambda : self.start(1)).place(x = 115, y = 70)
-        Button(self.root_difficulty, text = "Difficile", command = lambda : self.start(2)).place(x = 215, y = 70)
+        Button(self.root_difficulty, text = "Facile", cursor ='hand2', command = lambda : self.start(0)).place(x = 15, y = 70)
+        Button(self.root_difficulty, text = "Moyen", cursor ='hand2', command = lambda : self.start(1)).place(x = 115, y = 70)
+        Button(self.root_difficulty, text = "Difficile", cursor ='hand2', command = lambda : self.start(2)).place(x = 215, y = 70)
         self.root_difficulty.mainloop()
-    
+
     def start(self, level): #fontion appelée après la sélection de la difficulté avec level en paramètre
         self.root_difficulty.destroy() #destruction de la fenetre de la difficulté
         self.root_difficulty.quit()
@@ -105,7 +105,7 @@ class demineur:
                 if self.grid[temp[0]][temp[1]] != -1:
                     self.grid[temp[0]][temp[1]] = -1
                     turn = False
-        
+
         #détermination du nombre de bombes voisines par cases
         for x in range(self.dims[0]):
             for y in range(self.dims[1]):
@@ -161,7 +161,7 @@ class demineur:
                                         done.append((xb,yb))
                                         next_process.append((xb, yb))
                     process = next_process #process prend la valeur des cases à vérifier
-            
+
         elif event.num == 3: #clique droit
             #lors d'un clique droit, on vérifie si l'utilisateur n'a pas déjà posé un drapeau:
             #si oui, on change par un bouton normal; si non, on met un drapeau dans la liste
@@ -187,7 +187,7 @@ class demineur:
                 for y in range(self.dims[1]):
                     if self.grid[x][y] == -1:
                         self.canvas.itemconfigure(self.list_images[x][y], image = self.bomb_Image)
-        if count * 50 > self.score: # si le score est supérieur au précédent recors, 
+        if count * 50 > self.score: # si le score est supérieur au précédent recors,
                                     # on lui atribue la valeur du nouveau score
             self.score = count* 50 #ajouter le temps
         #on demande au joueur si il vaut recomencer
@@ -197,7 +197,7 @@ class demineur:
             self.difficulty()
         else:
             self.exit() #sinon on quite le jeu
-        
+
 
 def Minesweeper(user):    # fonction appelée pour lancer le jeu
     jeux = demineur(user) # création de la classe

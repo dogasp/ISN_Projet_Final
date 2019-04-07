@@ -69,7 +69,7 @@ class snake:
         self.CANVAS3.create_image(45, 31,image = self.mur_snake)
         self.CANVAS4.create_image(45,31, image = self.mort_snake)
     #------------------Skip------------------------------------------------------------------
-        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
+        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 200, y = 390)
         self.show_rules.mainloop()
 
@@ -78,7 +78,7 @@ class snake:
         self.root.bind("<Key>", self.rotate)
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
-        
+
         #import de toutes les images du jeu
 
         self.Start_image = PhotoImage(file = "Snake/images/play.png")
@@ -102,7 +102,7 @@ class snake:
         self.show_rules.quit()
 
     def start(self): #fonction d'initialisation
-        self.grid = [[[0, 0, 0] for i in range(20)] for j in range(20)] 
+        self.grid = [[[0, 0, 0] for i in range(20)] for j in range(20)]
         #pour chaque élément de la grille, on a le temps de vie et la direction de la partie du serpent;
         #le troisième élément de la liste est utilisé pour les angles
         self.length_max = 2           # longeur du serpent
@@ -136,10 +136,10 @@ class snake:
         self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
         self.grille.place(x = 1, y = 1)
 
-        self.Pause_Button = Button(self.Frame2, text = "Pause", command = self.pause_command)
+        self.Pause_Button = Button(self.Frame2, text = "Pause", cursor ='hand2', command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 100)
 
-        self.start_button = Button(self.Frame2, image = self.Start_image,  command = self.start_game)
+        self.start_button = Button(self.Frame2, image = self.Start_image, cursor ='hand2',  command = self.start_game)
         self.start_button["bg"] = "white"
         self.start_button["border"] = "0"
         self.start_button.place(x = 50, y = 150)
@@ -148,7 +148,7 @@ class snake:
         self.Score.place(x = 50, y = 150)
 
         self.sweet() #fonction pour placer le fruit
-    
+
     def start_game(self): #fonction appelée par le bouton commencer
         self.pause = False  # pause est enlevée
         self.update()       # le serpent bouge
@@ -175,7 +175,7 @@ class snake:
                           if self.grid[i][j][0] != 0: # chaque partie du serpent perds de la vie
                               self.grid[i][j][0] -= 1
                   #si la prochaine rotation est différente de la direction actuelle, on lui atribue la direction actuelle
-                  if self.next_Rotation != convert_dir(self.dir, True): 
+                  if self.next_Rotation != convert_dir(self.dir, True):
                       self.next_Rotation = convert_dir(self.dir, True)
                   self.grid[newX][newY] = [self.length_max, convert_dir(self.dir, True), convert_dir(self.dir, True)]
               else:
@@ -248,7 +248,7 @@ class snake:
             dir = 3
         if dir != -1: #si la direction a été changée
             old = convert_dir(self.dir, True) # on convertis l'ancienne direction
-            if dir == old or dir == (old+2)%4: 
+            if dir == old or dir == (old+2)%4:
                 #si l'ancienne rotation est la même que la nouvelle à pi près, on finis la fonction car pas de changement
                 return False
             else: #sinon, calcul de l'index de la coudée

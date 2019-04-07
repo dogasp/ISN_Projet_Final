@@ -68,7 +68,7 @@ class ghost:
         self.CANVAS4.create_image(65, 47,image = self.Jerry_2)
 
     #------------------Skip------------------------------------------------------------------
-        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
+        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 200, y = 390)
         self.show_rules.mainloop()
 
@@ -264,7 +264,6 @@ class ghost:
                 self.table.itemconfigure(self.robot,  image = self.Tom_right_image_mini)
                 self.root.unbind("<Key>")
                 self.dead()
-
 
 
 

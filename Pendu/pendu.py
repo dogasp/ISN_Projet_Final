@@ -53,7 +53,7 @@ class pendu:
         self.explanation = Label(self.Frame_main2_wind2, text = "Le but du jeu est de découvrir quel est  le mot mystère\n\
         fleime d'écrire la suite")
         self.explanation.place(x = 20, y = 100)
-        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
+        self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 50, y = 350)
         self.show_rules.mainloop()
 
@@ -83,9 +83,9 @@ class pendu:
         self.root_difficulty.title("Selectionne une difficulté")
         self.root_difficulty.geometry("300x125")
         #boutons avec les différentes difficultés
-        Button(self.root_difficulty, text = "Facile", command = lambda : self.start(0)).place(x = 15, y = 70)
-        Button(self.root_difficulty, text = "Moyen", command = lambda : self.start(1)).place(x = 115, y = 70)
-        Button(self.root_difficulty, text = "Difficile", command = lambda : self.start(2)).place(x = 215, y = 70)
+        Button(self.root_difficulty, text = "Facile", cursor ='hand2', command = lambda : self.start(0)).place(x = 15, y = 70)
+        Button(self.root_difficulty, text = "Moyen", cursor ='hand2', command = lambda : self.start(1)).place(x = 115, y = 70)
+        Button(self.root_difficulty, text = "Difficile", cursor ='hand2', command = lambda : self.start(2)).place(x = 215, y = 70)
         self.root_difficulty.mainloop()
 
     def start(self, level): #fontion appelée après la sélection de la difficulté avec level en paramètre
@@ -122,7 +122,7 @@ class pendu:
         self.entry.bind("<Return>", self.check)
         self.entry.focus()
         self.message = Label(self.root, text = "entrée déjà saisie ou trop longue", fg = "red")
-        Button(self.root, text = "Valider", command = self.check).place(x = 160, y = 195)
+        Button(self.root, text = "Valider", cursor ='hand2', command = self.check).place(x = 160, y = 195)
 
     def check(self, event = None):
         lettre = self.entry.get().lower()
