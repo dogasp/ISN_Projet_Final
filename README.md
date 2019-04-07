@@ -76,3 +76,6 @@ fin du système de jeux du démineur
 
 ## Vendredi 5 avril 2019:
 débug serveur, début de Pendu, interface de Snake et Fantome, ajout de la liste de mots français
+
+## Dimanche 7 avril 2019:
+Fin du pendu, le jeu est totalement fonctionnel
