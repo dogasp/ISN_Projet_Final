@@ -101,7 +101,6 @@ class pendu:
             self.selection = [list[0] for list in self.data if list[1] > 5 and len(list[0]) > 3]
         self.word = choice(self.selection)
         self.word_accentless = remove_accent(self.word)
-        print(self.word)
 
         self.root.deiconify()
         self.root.focus_force()
@@ -150,7 +149,6 @@ class pendu:
     def end(self, win):
         scored = (self.level+1)*50*win*2*(len(self.entred)-self.error_Count)/(1+self.error_Count)
         if scored > self.score:
-            print(scored)
             self.score = scored
         self.entry.unbind("<Return>")
 
