@@ -24,6 +24,15 @@ class ghost:
         self.level = 1
         self.score = 0
 
+
+        self.Jerry_1 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_1.png")
+        self.keyboard_fantome = PhotoImage(file = "Fantome/Ressources/Images/keyboard_fantome.png")
+        self.Jerry_3 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_3.png")
+        self.Jerry_2 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_2.png")
+
+
+
+
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
         #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
@@ -35,40 +44,37 @@ class ghost:
 
         #détail des rêgles
 
-        self.Rules2 = Label(self.Frame_main2_wind2, text = "Le but est que le serpent mange des pommes \n pour qu'il puisse grandir et gagner la partie ", font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(500, lambda: self.Rules2.place(x = 45, y = 70))
+        self.Rules2 = Label(self.Frame_main2_wind2, text = "Le but est que Jerry puisse arriver \n\
+        au fromage sans que Tom l'attrape. \n Pour cela tu pourras utiliser les flèches \n du keyboard afin de déplacer Jerry", font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(500, lambda: self.Rules2.place(x = 40, y = 70))
 
-        self.CANVAS1 = Canvas(self.Frame_main2_wind2, width = 150, height = 60)
-        self.Frame_main2_wind2.after(1000, lambda: self.CANVAS1.place(x = 375, y = 60 ))
-        self.snake_ex_image = PhotoImage(file = "Snake/images/snake_ex_image.png")
-        self.CANVAS1.create_image(75, 30,image = self.snake_ex_image)
+        self.CANVAS1 = Canvas(self.Frame_main2_wind2, width = 120, height = 70)
+        self.CANVAS2 = Canvas(self.Frame_main2_wind2, width = 100, height = 70)
+        self.Frame_main2_wind2.after(1000, lambda: self.CANVAS1.place(x = 388, y = 35))
+        self.Frame_main2_wind2.after(1000, lambda: self.CANVAS2.place(x = 400, y = 106))
+        self.CANVAS1.create_image(60, 35,image = self.Jerry_1)
+        self.CANVAS2.create_image(50, 35,image = self.keyboard_fantome)
+        self.CANVAS2.create_rectangle(2,2,98,68, outline='black')
 
     #------------------2-----------------------------------------------------------------
-        self.Rules3 = Label(self.Frame_main2_wind2, text = 'Pour cela, tu as à disposition les flèches \n du clavier qui te permettront de déplacer.',font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(2000, lambda: self.Rules3.place(x = 35, y = 170))
+        self.Rules3 = Label(self.Frame_main2_wind2, text = "Mais Attention !! Tom va plus vite que toi car il peut \n\
+        se déplacer en diagonale. Tom se déplace par \n rapport à Jerry et fait tout pour se rapprocher." ,font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(2000, lambda: self.Rules3.place(x = 30, y = 202))
 
-        self.CANVAS2 = Canvas(self.Frame_main2_wind2,  width = 150, height = 104)
-        self.Frame_main2_wind2.after(2500, lambda: self.CANVAS2.place(x = 375, y = 150 ))
-        self.keyboard_snake = PhotoImage(file = "Snake/images/keyboard_snake.png")
-        self.CANVAS2.create_image(73, 51,image = self.keyboard_snake)
-        self.CANVAS2.create_rectangle(2,2,148,102, outline='black')
+        self.CANVAS3 = Canvas(self.Frame_main2_wind2,  width = 100, height = 100)
+        self.Frame_main2_wind2.after(2500, lambda: self.CANVAS3.place(x = 400, y = 183 ))
+        self.CANVAS3.create_image(50,50, image = self.Jerry_3)
 
     #------------------3------------------------------------------------------------------
-        self.Rules4 = Label(self.Frame_main2_wind2, text = "Cependant attention tu peux mourir en rencontrant \n\
-        en mourir, ou en te retournant sur toi même.",font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(3500, lambda: self.Rules4.place(x = 20, y = 300))
+        self.Rules4 = Label(self.Frame_main2_wind2, text = "L'astuce est alors de bloquer le robot grâce\n\
+        aux bloques disposés sur la carte",font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(3500, lambda: self.Rules4.place(x = 40, y = 315))
+#
+        self.CANVAS4 = Canvas(self.Frame_main2_wind2, width = 130, height = 95)
+        self.Frame_main2_wind2.after(4000, lambda: self.CANVAS4.place(x = 388, y = 293 ))
+        self.CANVAS4.create_image(65, 47,image = self.Jerry_2)
 
-        self.CANVAS3 = Canvas(self.Frame_main2_wind2, width = 90, height = 62)
-        self.CANVAS4 = Canvas(self.Frame_main2_wind2, width = 90, height = 62)
-        self.Frame_main2_wind2.after(4000, lambda: self.CANVAS3.place(x = 402, y = 267 ))
-        self.Frame_main2_wind2.after(4000, lambda: self.CANVAS4.place(x = 402, y = 332 ))
-        self.mur_snake = PhotoImage(file = "Snake/images/mur_snake.png")
-        self.mort_snake = PhotoImage(file = "Snake/images/mort_snake.png")
-        self.CANVAS3.create_image(45, 31,image = self.mur_snake)
-        self.CANVAS4.create_image(45,31, image = self.mort_snake)
     #------------------Skip------------------------------------------------------------------
-
-
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", command = self.quit_rules)
         self.Button_Skip.place(x = 200, y = 390)
         self.show_rules.mainloop()
@@ -142,9 +148,9 @@ class ghost:
         self.table.pack(fill = BOTH)
 
         for i in range(self.nbcases[self.level - 1]):
-            self.table.create_line((self.length)*i,0,(self.length)*i,500)
+            self.table.create_line((self.length)*i,0,(self.length)*i,500,fill = 'blue')
         for j in range(self.nbcases[self.level - 1]):
-            self.table.create_line(0,(self.length)*j,500,(self.length)*j)
+            self.table.create_line(0,(self.length)*j,500,(self.length)*j, fill = 'blue')
 
         for j in range(self.nbcases[self.level - 1]):
             for i in range(self.nbcases[self.level - 1]):
