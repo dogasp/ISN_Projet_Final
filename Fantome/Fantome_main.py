@@ -10,9 +10,6 @@ from Fantome.Ressources.data.map_ghost import*
 from math import*
 
 
-
-
-
 class ghost:
     def __init__(self, user):
 
@@ -24,14 +21,10 @@ class ghost:
         self.level = 1
         self.score = 0
 
-
         self.Jerry_1 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_1.png")
         self.keyboard_fantome = PhotoImage(file = "Fantome/Ressources/Images/keyboard_fantome.png")
         self.Jerry_3 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_3.png")
         self.Jerry_2 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_2.png")
-
-
-
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
@@ -84,14 +77,10 @@ class ghost:
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
 
-
         self.start()
         self.time_num()
 
         self.root.mainloop()
-
-
-
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
@@ -110,14 +99,13 @@ class ghost:
         self.root.focus_force()
         self.root.bind("<Key>", self.move_Jerry)
 
-        self.nbcases = (13,7, 8, 10)
+        self.nbcases = (7, 8, 13, 10)
         self.length = 500/self.nbcases[self.level - 1]
         self.fantome = []
         self.Best_Score = 0
         self.time_game = 0
         self.move = 0
-
-
+        self.control_variable = 0
         self.grid = [[(0) for i in range(self.nbcases[self.level - 1])] for j in range((self.nbcases[self.level - 1]))]
 
         #########-----------Import des photos-------------#################################
@@ -134,9 +122,6 @@ class ghost:
         self.Fromage_image_mini = PhotoImage(file = "Fantome/Ressources/Images/fromage_mini.png")
         self.Fromage_Jerry_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Fromage_Jerry_mini.png")
         self.Tom_right_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry_mini.png")
-
-
-
 
         ########------------Frames Pricipaux-------------########################################
         self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'lightgrey')
@@ -191,7 +176,6 @@ class ghost:
 
 
     def move_Jerry(self, event = None):
-        self.move += 1
         pos_x, pos_y = self.table.coords(self.robot)
         symb = event.keysym
         self.dir_Jerry = [0,0]
@@ -211,9 +195,9 @@ class ghost:
         if 0 <= self.newpos_x_Jerry <= 500 and 0 <= self.newpos_y_Jerry <= 500:
             if self.grid[self.new_grid_x_Jerry][self.new_grid_y_Jerry] != 'X':
                 self.table.move(self.robot, self.dir_Jerry[0]*self.length, self.dir_Jerry[1]*self.length)
-        if symb == "Right" or symb == "Down" or symb == "Left" or symb == "Up":
-            self.move_Tom(pos_x + self.dir_Jerry[0]*self.length, pos_y + self.dir_Jerry[1]*self.length)
-
+                if symb == "Right" or symb == "Down" or symb == "Left" or symb == "Up":
+                    self.move_Tom(pos_x + self.dir_Jerry[0]*self.length, pos_y + self.dir_Jerry[1]*self.length)
+                    self.move += 1
         self.table.update()
 
 
@@ -254,7 +238,7 @@ class ghost:
 
             self.table.move(self.fantome[elt], list[0][0]*self.length, list[0][1]*self.length)
             self.verif(self.new_grid_x_Jerry,self.new_grid_y_Jerry,self.new_grid_x_Tom,self.new_grid_y_Tom)
-            self.table.update()
+        self.table.update()
 
 
     def verif(self,next_jerry_x, next_jerry_y,next_tom_x, next_tom_y):
@@ -290,14 +274,16 @@ class ghost:
         self.show_time['text'] = "Temps: %s" %str(self.time_game)
 
     def win(self):
-        self.score_temp = (10000/(self.move*0.8 + self.time_game*0.2)) * self.level
-        self.score += self.score_temp
-        self.show_score["text"] = "Score: %s"%str(int(self.score))
-        self.question = Toplevel()
-        self.question.geometry("300x125")
-        Button(self.question, text = "Restart", command = self.restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
-        Button(self.question, text = "Main Menu", command = self.exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
-        Button(self.question, text = "Next Level", command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
+        self.control_variable +=1
+        if self.control_variable == 1:
+            self.score_temp = (10000/(self.move*0.8 + self.time_game*0.2)) * self.level
+            self.score += self.score_temp
+            self.show_score["text"] = "Score: %s"%str(int(self.score))
+            self.question = Toplevel()
+            self.question.geometry("300x125")
+            Button(self.question, text = "Restart", command = self.restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
+            Button(self.question, text = "Main Menu", command = self.exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+            Button(self.question, text = "Next Level", command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
 
     def dead(self):
         self.score -= 50*(self.level)
@@ -310,11 +296,10 @@ class ghost:
         self.question.destroy()
         self.question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras à chaque fois 50 points multiplié par le niveau où tu es")
         if self.question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-            self.score -= 50*(self.level)
+            self.score -= 50*(self.level) + self.score_temp
             self.update()
         else:
             self.win()
-
     def exit_menu(self):
         self.question.destroy()
         self.exit()
