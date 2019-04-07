@@ -117,7 +117,6 @@ class snake:
         self.Snake_python = PhotoImage(file = "Snake/images/Snake_python.png")
         self.bulle = PhotoImage(file = "Snake/images/bulle.png")
 
-
         ########------------Frames Pricipaux-------------########################################
         self.Frame_top = Frame(self.root, width = 702, height = 50, bg = 'lightgrey')
         self.Frame_right = Frame(self.root, width = 502, height = 502)
@@ -144,7 +143,6 @@ class snake:
 
         self.Canvas_Frame2.create_image(80,220, image = self.Snake_python)
         self.Canvas_Frame2.create_image(110,55, image = self.bulle)
-
 
         self.Pause_Button = Button(self.Frame1, text = "Pause", cursor ='hand2', command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 120)
