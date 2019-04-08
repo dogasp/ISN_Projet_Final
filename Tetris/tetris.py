@@ -44,7 +44,7 @@ class Tile:
             while j < 22:
                 row = True
                 for i in range(10):
-                    if parent.grid[i][j] != "#":
+                    if parent.grid[i][j] == "":
                         row = False
                 if row == True:
                     rowCount +=1
@@ -52,22 +52,24 @@ class Tile:
                         parent.grid[k][j] = ""
                     for k in range(j, 0, -1):
                         for i in range(10):
-                            parent.grid[i][k] = grid[i][k-1]
+                            parent.grid[i][k] = parent.grid[i][k-1]
                     j -= 1
                 j += 1
             if rowCount == 1:
-                parent.score += 40*(parent.speed//2 + 1)
+                parent.score += 4*(parent.speed//2 + 1)
             elif rowCount == 2:
-                parent.score += 100*(parent.speed//2 + 1)
+                parent.score += 10*(parent.speed//2 + 1)
             elif rowCount == 3:
-                score += 300*(parent.speed//2 + 1)
+                parent.score += 30*(parent.speed//2 + 1)
             elif rowCount == 4:
-                score += 1200*(parent.speed//2 + 1)
+                parent.score += 120*(parent.speed//2 + 1)
             if parent.score > parent.Best_score:
                 parent.Best_score = parent.score
             parent.Total_Row += rowCount
             if rowCount != 0 and parent.Total_Row%10 == 0:
                 parent.speed += 2
+            parent.aff_level["text"] = "Level = {}".format(parent.speed/2 + 1)
+            parent.aff_score["text"] = "Score = {}".format(parent.score)
             parent.current = parent.next
             parent.next = Tile(choice([(L, "L"), (J, "J"), (I, "I"), (O, "O"), (Z, "Z"), (S, "S"), (T, "T")]))
             parent.next_Canvas.delete("all")
@@ -122,6 +124,8 @@ class tetris:
 
         self.root = Toplevel()
         self.root.geometry("420x420")
+        self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.focus_force()
         self.image_tiles = {"I": PhotoImage(file = "Tetris/Images/I.png"), "L": PhotoImage(file = "Tetris/Images/L.png"), "O": PhotoImage(file = "Tetris/Images/O.png"),\
             "J": PhotoImage(file = "Tetris/Images/J.png"), "Z": PhotoImage(file = "Tetris/Images/Z.png"), "S": PhotoImage(file = "Tetris/Images/S.png"), "T": PhotoImage(file = "Tetris/Images/T.png")}
 
