@@ -348,8 +348,8 @@ def Tete(user): #fonction principale
     Button_start = Button(Frame1,relief = GROOVE,activebackground = 'black' ,bg = 'black', cursor ='hand2', image = restart_button_image,command = start)
     Button_start.place(x = 20, y = 27)
 
-    Button_quit = Button(Frame_top, text = 'Quit' ,relief = GROOVE , cursor ='hand2',command = exit_menu)
-    Button_quit.place(x = 570, y = 19)
+    Button_quit = Button(Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = exit)
+    Button_quit.place(x = 550, y = 19)
 
     Button_restart = Button(Frame_top, text = "RESTART", relief = GROOVE,cursor ='hand2', font = ("Helvetica", 10),command = restart_button)
     Button_restart.place(x = 600, y = 19)

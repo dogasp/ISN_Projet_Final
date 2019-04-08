@@ -98,12 +98,15 @@ class ghost:
 
         ######-----------Elements du jeu-----------------##########################################
         self.Canvas_dessine.create_image(100, 190, image = self.Tom_vs_Jerry)
+
         self.sentence = Label(self.Frame2, text = "Attrape Moi \n Si Tu Peux !!!",font = ("Berlin Sans FB", 15), bg = 'white')
         self.sentence.place(x = 45, y = 60)
 
         self.show_time = Label(self.Frame1, text = "Temps: %s" %str(0),font = ("Berlin Sans FB", 12))
         self.show_time.place(x = 45, y = 70)
 
+        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
+        self.Button_quit.place(x = 550, y = 19)
 
         self.start()
         self.time_num()
@@ -330,8 +333,6 @@ class ghost:
 
     def update(self):
         self.Frame_right.destroy()               # destruction des frames
-        self.Frame_left.destroy()
-        self.Frame_top.destroy()
         self.start()
 
 def Ghost(User):

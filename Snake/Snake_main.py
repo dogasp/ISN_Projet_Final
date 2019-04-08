@@ -141,6 +141,9 @@ class snake:
 
         #########------------Labels et autres-----------##################################
 
+        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
+        self.Button_quit.place(x = 550, y = 19)
+        
         self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
         self.grille.place(x = 1, y = 1)
 

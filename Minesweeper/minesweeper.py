@@ -95,6 +95,23 @@ class demineur:
         self.root.focus_force() # on force le focus
         #on détermine la taille de la fenetre principale suivant le niveau
         self.root.geometry("%sx%s" % (200 + self.dims[0]*self.border, self.dims[1]*self.border))
+
+        self.Frame_right = Frame(self.root, width = self.dims[0]*self.border , height = self.dims[1]*self.border, bg = 'white')
+        self.Frame_left = Frame(self.root, width = 200  , height = self.dims[1]*self.border  , bg = 'white')
+        self.Frame_top = Frame(self.root, width = 200 + self.dims[0]*self.border , height = 50, bg = 'lightgrey')
+
+        self.Frame1 = Frame(self.Frame_left, width = 200, height = 200)
+        self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'black')
+
+        self.Frame_top.pack(side = TOP)
+        self.Frame_left.pack(side = LEFT)
+        self.Frame_right.pack(side = RIGHT)
+        self.Frame1.pack(side = TOP)
+        self.Frame2.pack(side = BOTTOM)
+
+        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
+        self.Button_quit.place(x = 550, y = 19)
+
         self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #création de la grille contenant l'état des cellules
 
         for _ in range(self.mine_Count): #loop pour placer les bombes
@@ -114,9 +131,9 @@ class demineur:
                         if self.dims[0] > xp >-1 and self.dims[1] > yp >= 0 and self.grid[xp][yp]!=-1:
                             self.grid[xp][yp] += 1
 
-        self.canvas = Canvas(self.root, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "red")
+        self.canvas = Canvas(self.Frame_right, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "red")
         self.canvas.bind("<Button>", self.click)
-        self.canvas.place(x = 200, y = 0)
+        self.canvas.place(x = 0, y = 0)
 
         self.list_images = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #liste contenant les images de la grille
         for i in range(self.dims[0]):
