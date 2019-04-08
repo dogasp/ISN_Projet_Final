@@ -15,6 +15,7 @@ class Tile:
         self.pattern = pattern[0]
         self.letter = pattern[1]
         self.index = 0
+        self.lifetime = 0
 
     def update(self, state, parent):
         for i in range(4):
@@ -30,6 +31,7 @@ class Tile:
                         parent.next_Canvas.create_image(i*parent.width/10 + parent.width/20, j*parent.height/22 + parent.height/44, image = parent.image_tiles[self.letter])
         if state == 0:
             self.pos[1] += 1
+            self.lifetime += 1
 
     def verify(self, x, y, parent):
         testX = x + int(self.pos[0])
@@ -68,11 +70,15 @@ class Tile:
             parent.Total_Row += rowCount
             if rowCount != 0 and parent.Total_Row%10 == 0:
                 parent.speed += 2
-            parent.aff_level["text"] = "Level = {}".format(parent.speed/2 + 1)
+            parent.aff_level["text"] = "Level = {}".format(int(parent.speed/2 + 1))
             parent.aff_score["text"] = "Score = {}".format(parent.score)
             parent.current = parent.next
             parent.next = Tile(choice([(L, "L"), (J, "J"), (I, "I"), (O, "O"), (Z, "Z"), (S, "S"), (T, "T")]))
             parent.next_Canvas.delete("all")
+
+            if self.lifetime == 0:
+                parent.run = False
+                parent.end()
             return True
         return False
 
@@ -170,11 +176,11 @@ class tetris:
         self.update()
 
     def update(self):
-        self.frame_count += 1
-        if self.frame_count % (35-self.speed) == 0:
-            self.current.update(0, self)
-        self.canvas.delete("all")
         if self.run == True:
+            self.frame_count += 1
+            if self.frame_count % (35-self.speed) == 0:
+                self.current.update(0, self)
+            self.canvas.delete("all")
             for i in range(len(self.grid)):
                 for j in range(len(self.grid[i])):
                     if self.grid[i][j] != "":
@@ -206,6 +212,15 @@ class tetris:
             elif keyCode == "Up":
                 if self.current.check() == True:
                     self.current.index = (self.current.index +1)%len(self.current.pattern)
+    def end(self):
+        self.root.unbind("<Key>")
+        question = askquestion("RESTART", "La partie est finie\n veux-tu recommencer?")
+        if question == "yes":
+            self.canvas.destroy()
+            self.next_Canvas.destroy()
+            self.start()
+        else:
+            self.exit()
 
 def Tetris(user):
     jeux = tetris(user)
