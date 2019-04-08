@@ -8,6 +8,7 @@ from Snake.Snake_main import *
 from Fantome.Fantome_main import *
 from Minesweeper.minesweeper import *
 from Pendu.pendu import *
+from Tetris.tetris import *
 
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
@@ -157,5 +158,6 @@ bouton_1 = BoutonS(2, 3, "Snake", Snake)
 bouton_2 = BoutonS(5, 3, "Ghost", Ghost)
 bouton_3 = BoutonS(5, 5, "Minesweeper", Minesweeper)
 bouton_4 = BoutonS(5, 7, "Pendu", Pendu)
+bouton_5 = BoutonS(5, 1, "Tetris", Tetris)
 
 root_main.mainloop()
