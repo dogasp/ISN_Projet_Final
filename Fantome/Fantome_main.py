@@ -108,6 +108,7 @@ class ghost:
         self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
         self.Button_quit.place(x = 550, y = 19)
 
+
         self.start()
         self.time_num()
 
@@ -161,6 +162,10 @@ class ghost:
         ######-----------Elements du jeu-----------------##########################################
         self.show_score = Label(self.Frame1, text = "Score: %s" %str(int(self.score)), font = ("Helvetica", 10), relief = GROOVE)
         self.show_score.place(x = 25, y = 170)
+
+        self.Title_level = Label(self.Frame_top, text = "Level %s" %str(self.level), font=("Helvetica", 20), relief = GROOVE)
+        self.Title_level.place(x = 315, y = 5)
+
 
         self.table = Canvas(self.Frame_right, width = 500, height = 500, bg = "#1a1a1a")
         self.table.pack(fill = BOTH)

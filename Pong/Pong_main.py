@@ -66,7 +66,7 @@ class pong:
 
         """#################----------------- début du jeu ----------------#################### """
         self.root = Toplevel()
-        self.root.geometry("702x552")
+        self.root.geometry("902x552")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
 
@@ -85,3 +85,46 @@ class pong:
         self.Frame2.pack(side = BOTTOM)
 
         self.root.mainloop()
+
+
+class Table:
+    def __init__(self):
+        self.root.focus_force()
+        self.root.bind("<Key>", self.move)
+        self.rayon = 15
+
+        self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'white')
+        self.Frame_right.pack(side = RIGHT)
+
+        self.Canvas_dessine = Canvas(self.Frame_right, width = 700, height = 500)
+        self.Canvas_dessine.place(x = 0, y = 0)
+
+        self.Canvas_dessine.create_rectangle(2,2,698,498, fill = 'black')
+        self.Canvas_dessine.create_line(349,0,349,498, fill = 'black')
+        self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon, fill = 'black')
+
+
+    def move():
+        symb = event.keysym
+        if symb == "Down":
+            self.position_y += 4
+        elif symb == "Up":
+            self.position_y -= 4
+
+
+
+class Board:
+    def __init__(self, x):
+        if x < 250:
+            self.vecteur = -1
+        else:
+            self.vecteur = 1
+        self.position
+
+
+
+
+
+class Ball:
+    def __init__(self):
+        pass

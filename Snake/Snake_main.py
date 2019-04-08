@@ -74,7 +74,7 @@ class snake:
         self.show_rules.mainloop()
 
         self.root = Toplevel()
-        self.root.geometry("702x552")
+        self.root.geometry("702x577")
         self.root.bind("<space>", self.pause_command)
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
@@ -119,16 +119,17 @@ class snake:
         #######-------------Import des photos------------####################################
         self.Snake_python = PhotoImage(file = "Snake/images/Snake_python.png")
         self.bulle = PhotoImage(file = "Snake/images/bulle.png")
+        self.name_snake = PhotoImage(file = "Snake/images/name_snake.png")
 
         ########------------Frames Pricipaux-------------########################################
-        self.Frame_top = Frame(self.root, width = 702, height = 50, bg = 'lightgrey')
-        self.Frame_right = Frame(self.root, width = 502, height = 502)
+        self.Frame_top = Frame(self.root, width = 702, height = 75, bg = 'lightgrey')
+        self.Frame_right = Frame(self.root, width = 502, height = 502, bg = 'black')
         self.Frame_left = Frame(self.root, width = 200, height = 502, bg = 'red')
 
         ########-----------Frames Secondaires-----------######################################
-        self.Frame1 = Frame(self.Frame_left, width = 200, height =200, bg = 'gold')
-        self.Frame2 = Frame(self.Frame_left, width = 200, height =300, bg = 'black')
-        self.Canvas_Frame2 = Canvas(self.Frame2, width = 200, height =300, bg = 'white')
+        self.Frame1 = Frame(self.Frame_left, width = 200, height = 175, bg = 'gold')
+        self.Frame2 = Frame(self.Frame_left, width = 200, height = 325, bg = 'black')
+        self.Canvas_Frame2 = Canvas(self.Frame2, width = 190, height =316, bg = 'white')
 
         #######-----------Package des Frames-------------##################################
 
@@ -137,18 +138,24 @@ class snake:
         self.Frame_left.pack(side = LEFT)
         self.Frame1.pack(side = TOP)
         self.Frame2.pack(side = BOTTOM)
-        self.Canvas_Frame2.place(x = 0, y = 0)
+        self.Canvas_Frame2.place(x = 3, y = 2)
 
         #########------------Labels et autres-----------##################################
 
-        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
+        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,foreground = 'green2', bg = 'black', font = ("Helvetica", 15), cursor ='hand2',command = self.exit)
         self.Button_quit.place(x = 550, y = 19)
-        
-        self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
-        self.grille.place(x = 1, y = 1)
 
-        self.Canvas_Frame2.create_image(80,220, image = self.Snake_python)
-        self.Canvas_Frame2.create_image(110,55, image = self.bulle)
+        self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
+        self.grille.place(x = 0, y = 0)
+
+        self.Title_level = Label(self.Frame_top, font=("Helvetica", 20), relief = GROOVE, bg = 'black', image = self.name_snake)
+        self.Title_level.place(x = 220, y = 0)
+
+        self.Canvas_Frame2.create_image(80,240, image = self.Snake_python)
+        self.Canvas_Frame2.create_image(103,83, image = self.bulle)
+
+        self.show_conseils = Label(self.Canvas_Frame2, text = "Why do pythons live \n on land?   Because it's\n above C level.",bg = 'white', font = ("Helvetica", 9))
+        self.show_conseils.place(x = 39, y = 50 )
 
         self.Pause_Button = Button(self.Frame1, text = "Pause", cursor ='hand2', command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 120)
