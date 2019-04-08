@@ -81,3 +81,8 @@ débug serveur, début de Pendu, interface de Snake et Fantome, ajout de la list
 Fin du pendu, le jeu est totalement fonctionnel
 
 ### Snake finis
+
+## Lundi 8 avril 2019:
+début et fin des mécaniques de snake
+
+explication du fonctionnement de pong et création des fichiers
