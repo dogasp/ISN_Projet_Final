@@ -9,45 +9,45 @@ from Scoreboard.scoreboard import *
 from Tetris.tiles import *
 from random import choice, randint
 
-class Tile:
+class Tile: #classe utilisée pour gérer les formes géométrique
     def __init__(self, pattern):
-        self.pos = [3, 0]
-        self.pattern = pattern[0]
-        self.letter = pattern[1]
-        self.index = 0
-        self.lifetime = 0
+        self.pos = [3, 0]           # position de la pièce, initiée au centre de la grille
+        self.pattern = pattern[0]   # grille correspondant au placement des éléments
+        self.letter = pattern[1]    # lettre correspondant à la forme
+        self.index = 0              # index de la rotation
+        self.lifetime = 0           # détaction de la fin du jeu
 
-    def update(self, state, parent):
+    def update(self, state, parent):# fonction pour afficher la pièce à chaque mise à jour
         for i in range(4):
             for j in range(4):
-                if self.pattern[self.index][i][j] != "_":
-                    if state == 0:
+                if self.pattern[self.index][i][j] != "_": # on boucle dans le pattern et si on trouve autre chose que du vide (symbolisé par "_")
+                    if state == 0: #si on veut faire bouger la pièce, on l'actualise
                         parent.canvas.create_image((i+self.pos[0])*(parent.width/10) + parent.width/20, (j+self.pos[1])*(parent.height/22) + parent.height/44, image = parent.image_tiles[self.letter])
-                        if self.verify(i, j, parent) == True:
-                            return 0
-                    elif state == 2:
+                        if self.verify(i, j, parent) == True: #et on vérifie si elle peut desscendre
+                            return 0 #si elle ne peut pas, on arrete la fonction
+                    elif state == 2: #si on veut seulement l'afficher
                         parent.canvas.create_image((i+self.pos[0])*(parent.width/10) + parent.width/20, (j+self.pos[1])*(parent.height/22) + parent.height/44, image = parent.image_tiles[self.letter])
-                    else:
+                    else: #si on veut l'afficher sur le côté, pour la prochaine pièce
                         parent.next_Canvas.create_image(i*parent.width/10 + parent.width/20, j*parent.height/22 + parent.height/44, image = parent.image_tiles[self.letter])
-        if state == 0:
-            self.pos[1] += 1
-            self.lifetime += 1
+        if state == 0: #si on veut le déplacer
+            self.pos[1] += 1    # on le fait déscendre
+            self.lifetime += 1  # on incrémente sa durée de vie, le joueur n'a pas perdus
 
-    def verify(self, x, y, parent):
-        testX = x + int(self.pos[0])
+    def verify(self, x, y, parent): #fonction de vérification si on vient de compléter une ligne
+        testX = x + int(self.pos[0]) #calcul des coordonées à tester pour la prochaine chute
         testY = y + int(self.pos[1]) + 1
-        if  testX == 10 or testY == 22 or parent.grid[testX][testY] != "":
+        if testY == 22 or parent.grid[testX][testY] != "": #si on atteind le bas de la fenetre ou que la prochaine case n'est pas vide
             for i in range(4):
                 for j in range(4):
-                    if self.pattern[self.index][i][j] != "_":
-                        parent.grid[int(i+self.pos[0])][int(self.pos[1]+j)] = self.pattern[self.index][i][j]
-            rowCount = 0
+                    if self.pattern[self.index][i][j] != "_": #pour chaque cases du pattern si cette case n'est pas vide
+                        parent.grid[int(i+self.pos[0])][int(self.pos[1]+j)] = self.pattern[self.index][i][j] #on atribue à la grid les cases du pattern
+            rowCount = 0 #variable pour compter le nombre de lignes completées
             j = 0
-            while j < 22:
-                row = True
-                for i in range(10):
+            while j < 22: #on boucle dans chaque ligne
+                row = True #on initialise à vrai
+                for i in range(10): #pour chaque cases de la liste on vérifie si il n'est pas vide
                     if parent.grid[i][j] == "":
-                        row = False
+                        row = False #si il est vide, on passe row à False
                 if row == True:
                     rowCount +=1
                     for k in range(10):
@@ -67,6 +67,7 @@ class Tile:
                 parent.score += 120*(parent.speed//2 + 1)
             if parent.score > parent.Best_score:
                 parent.Best_score = parent.score
+
             parent.Total_Row += rowCount
             if rowCount != 0 and parent.Total_Row%10 == 0:
                 parent.speed += 2
