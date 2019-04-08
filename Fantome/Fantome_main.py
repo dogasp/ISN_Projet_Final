@@ -326,8 +326,6 @@ class ghost:
         self.question.destroy()
         self.level += 1
         self.Frame_right.destroy()               # destruction des frames
-        self.Frame_left.destroy()
-        self.Frame_top.destroy()
         self.start()
 
     def update(self):
