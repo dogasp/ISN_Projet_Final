@@ -210,6 +210,9 @@ class demineur:
         #on demande au joueur si il vaut recomencer
         question = askquestion("Restart", "Partie finie.\nVeux-tu recommencer?")
         if question == "yes": #si oui, on cache la fenete et on redemande la difficulté
+            self.Frame_right.destroy()
+            self.Frame_left.destroy()
+            self.Frame_top.destroy()
             self.root.withdraw()
             self.difficulty()
         else:
