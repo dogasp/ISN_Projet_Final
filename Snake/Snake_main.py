@@ -75,7 +75,7 @@ class snake:
 
         self.root = Toplevel()
         self.root.geometry("702x552")
-        self.root.bind("<Key>", self.rotate)
+        self.root.bind("<space>", self.pause_command)
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
 
@@ -102,6 +102,9 @@ class snake:
         self.show_rules.quit()
 
     def start(self): #fonction d'initialisation
+        self.root.bind("<Return>", self.start_game)
+        self.root.bind("<Key>", self.rotate)
+        self.root.focus_force()
         self.grid = [[[0, 0, 0] for i in range(20)] for j in range(20)]
         #pour chaque élément de la grille, on a le temps de vie et la direction de la partie du serpent;
         #le troisième élément de la liste est utilisé pour les angles
@@ -147,7 +150,7 @@ class snake:
         self.Pause_Button = Button(self.Frame1, text = "Pause", cursor ='hand2', command = self.pause_command)
         self.Pause_Button.place(x = 50, y = 120)
 
-        self.start_button = Button(self.Frame1, image = self.Start_image, cursor ='hand2',  command = self.start_game)
+        self.start_button = Button(self.Frame1, image = self.Start_image, cursor ='hand2',activebackground = 'black',  command = self.start_game)
         self.start_button["bg"] = "white"
         self.start_button["border"] = "0"
         self.start_button.place(x = 50, y = 5)
@@ -157,12 +160,16 @@ class snake:
 
         self.sweet() #fonction pour placer le fruit
 
-    def start_game(self): #fonction appelée par le bouton commencer
+    def start_game(self, event = None): #fonction appelée par le bouton commencer
+        self.start_button["state"] = "disabled"
         self.pause = False  # pause est enlevée
+        if  self.pause == False:
+            self.root.unbind("<Return>")
         self.update()       # le serpent bouge
 
-    def pause_command(self):      # fonction pour mettre le bouton en pause
-        if self.pause == False:   # si le jeu n'est pas en pause, on le pause
+    def pause_command(self, event = None):      # fonction pour mettre le bouton en pause
+        if self.pause == False:                 # si le jeu n'est pas en pause, on le pause
+            self.root.unbind("<Key>")
             self.pause = True
         else:                     #sinon, on le relance avec la fonction update
             self.pause = False
@@ -270,7 +277,10 @@ class snake:
                 self.dir = convert_dir(dir) #conversion de la nouvelle direction en matrice
         self.root.unbind("<Key>")
 
-    def dead(self):                                  # si le joueur est mort
+
+
+    def dead(self):
+        self.start_button["state"] = "disabled"                                  # si le joueur est mort
         self.Pause_Button["state"] = "disabled"      # on désactive le bouton de la pause
         self.pause = True                            # on arrête la boucle du update
         if (self.length_max-2)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
