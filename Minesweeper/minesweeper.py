@@ -94,14 +94,14 @@ class demineur:
         self.root.deiconify()   # affichage de la fenetre principale
         self.root.focus_force() # on force le focus
         #on détermine la taille de la fenetre principale suivant le niveau
-        self.root.geometry("%sx%s" % (200 + self.dims[0]*self.border, self.dims[1]*self.border))
+        self.root.geometry("%sx%s" % (200 + self.dims[0]*self.border, self.dims[1]*self.border + 50))
 
         self.Frame_right = Frame(self.root, width = self.dims[0]*self.border , height = self.dims[1]*self.border, bg = 'white')
         self.Frame_left = Frame(self.root, width = 200  , height = self.dims[1]*self.border  , bg = 'white')
         self.Frame_top = Frame(self.root, width = 200 + self.dims[0]*self.border , height = 50, bg = 'lightgrey')
 
-        self.Frame1 = Frame(self.Frame_left, width = 200, height = 200)
-        self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'black')
+        self.Frame1 = Frame(self.Frame_left, width = 200, height = 2*self.dims[1]*self.border/5)
+        self.Frame2 = Frame(self.Frame_left, width = 200, height = 3*self.dims[1]*self.border/5, bg = 'black')
 
         self.Frame_top.pack(side = TOP)
         self.Frame_left.pack(side = LEFT)
