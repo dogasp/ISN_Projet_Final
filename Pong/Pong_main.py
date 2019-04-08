@@ -84,13 +84,6 @@ class pong:
         self.Frame1.pack(side = TOP)
         self.Frame2.pack(side = BOTTOM)
 
-        self.root.mainloop()
-
-
-class Table:
-    def __init__(self):
-        self.root.focus_force()
-        self.root.bind("<Key>", self.move)
         self.rayon = 15
 
         self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'white')
@@ -98,18 +91,30 @@ class Table:
 
         self.Canvas_dessine = Canvas(self.Frame_right, width = 700, height = 500)
         self.Canvas_dessine.place(x = 0, y = 0)
+        self.width = 700
+        self.height = 500
 
+        self.start()
+
+        self.root.mainloop()
+
+    def start(self):
+        self.root.bind("<Key>", self.move)
+        self.Canvas_dessine.delete("all")
         self.Canvas_dessine.create_rectangle(2,2,698,498, fill = 'black')
         self.Canvas_dessine.create_line(349,0,349,498, fill = 'black')
         self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon, fill = 'black')
 
+        self.player = Board(0)
+        self.bot = Board(self.width-10)
+        self.ball = Ball()
 
-    def move():
-        symb = event.keysym
-        if symb == "Down":
-            self.position_y += 4
-        elif symb == "Up":
-            self.position_y -= 4
+    def keyPressed(self, event):
+        keyCode = event.keysym
+        if self.player1.pos[1] + 50 < self.height and keyCode == "Down":
+            self.player1.pos[1] += 5
+        elif self.player1.pos[1]-50 > 0 and keyCode == "Up":
+            self.player1.pos[1] -= 5
 
 
 
@@ -120,6 +125,7 @@ class Board:
         else:
             self.vecteur = 1
         self.position
+
 
 
 

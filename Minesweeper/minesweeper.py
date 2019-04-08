@@ -189,7 +189,7 @@ class demineur:
         count = 0 #compte des bombes recouvertes par un drapeau (voir plus haut)
         for i in range(self.dims[0]):
             for j in range(self.dims[1]):
-                try:
+                try: 
                     if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == str(self.Flag_Image) and self.grid[i][j] == -1:
                         count += 1
                 except: pass
