@@ -15,6 +15,7 @@ class pong:
         self.user = user
         self.show_rules = Toplevel()
         self.score = [0, 0]
+        self.launch = -1
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
@@ -49,7 +50,7 @@ class pong:
 
         self.CANVAS3 = Canvas(self.Frame_main2_wind2,  width = 100, height = 100)
         self.Frame_main2_wind2.after(2500, lambda: self.CANVAS3.place(x = 400, y = 183 ))
-        self.CANVAS3.create_image(50,50, image = self.Jerry_3)
+        #self.CANVAS3.create_image(50,50, image = self.Jerry_3)
 
         #------------------3------------------------------------------------------------------
         self.Rules4 = Label(self.Frame_main2_wind2, text = "L'astuce est alors de bloquer le robot grâce\n\
@@ -58,7 +59,7 @@ class pong:
 
         self.CANVAS4 = Canvas(self.Frame_main2_wind2, width = 130, height = 95)
         self.Frame_main2_wind2.after(4000, lambda: self.CANVAS4.place(x = 388, y = 293 ))
-        self.CANVAS4.create_image(65, 47,image = self.Jerry_2)
+        #self.CANVAS4.create_image(65, 47,image = self.Jerry_2)
 
         #------------------Skip------------------------------------------------------------------
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
@@ -102,18 +103,19 @@ class pong:
     def start(self):
         self.root.bind("<Key>", self.move)
         self.Canvas_dessine.delete("all")
-        self.Canvas_dessine.create_rectangle(2,2,698,498, fill = 'black')
-        self.Canvas_dessine.create_line(349,0,349,498, fill = 'black')
-        self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon, fill = 'black')
+        self.Canvas_dessine.create_rectangle(2,2,698,498)
+        self.Canvas_dessine.create_line(349,0,349,498)
+        self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon, fill = 'white')
         self.run = True
-        self.score = 0
+        self.score = [0, 0]
         self.speed = 0
 
         self.player = Board(10, self)
         self.bot = Board(self.width-10, self)
         self.ball = Ball(self)
+        self.update()
 
-    def keyPressed(self, event):
+    def move(self, event):
         keyCode = event.keysym
         if self.player.pos.y + 50 < self.height and keyCode == "Down":
             self.player.pos.y += 5
@@ -134,10 +136,21 @@ class pong:
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Pong", self.user)
 
     def update(self):
-        self.player.update()
-        self.bot.update()
+        self.Canvas_dessine.delete("all")
+        self.Canvas_dessine.create_rectangle(2,2,698,498)
+        self.Canvas_dessine.create_line(349,0,349,498)
+        self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon, fill = 'white')
+
+
+        if self.launch != 0:
+            self.ball.launch(self.launch)
+        self.player.show()
+        self.bot.show()
         self.ball.update()
-        self.root.after(100, self.update)
+        self.root.after(50, self.update)
+    
+    def dead(self, looser):
+        print(looser)
 
 #100x20
 class Vector:
@@ -169,7 +182,7 @@ class Vector:
         self.x *= n
         self.y *= n
     
-    def rotate(self, angle):
+    def rotate(self, angle, dir):
         self.x += cos(angle)
         self.y += dir*sin(angle)
 
@@ -184,7 +197,7 @@ class Board:
             gap = self.parent.ball.pos.y - self.pos.y
             if self.pos.y + gap/2 + 50 <= self.parent.height and self.pos.y + gap/2 - 50 >= 0:
                 self.pos.y += gap
-        self.parent.Canvas_dessine.create_rectangle(self.pos.x-10, self.pos.y-self.pos.x+10, self.pos.y+50)
+        self.parent.Canvas_dessine.create_rectangle(self.pos.x-10, self.pos.y-50, self.pos.x+10, self.pos.y+50, fill = "white")
 
 
 class Ball:
@@ -192,11 +205,12 @@ class Ball:
         self.pos = Vector(parent.width/2, parent.height/2)
         self.parent = parent
 
-    def launch(self, dir):
+    def launch(self, direction):
+        self.parent.launch = 0
         self.pos = Vector(self.parent.width/2, self.parent.height/2)
-        self.vitesse = Vector(dir, 0)
+        self.vitesse = Vector(direction, 0)
         theta = randrange(-100,100)
-        self.vitesse.rotate(theta)
+        self.vitesse.rotate(theta/100, direction)
 
     def update(self):
         if self.pos.y + 12 > self.parent.height:
@@ -238,11 +252,11 @@ class Ball:
                 self.vitesse.setMag(20)
                     
         self.pos.add(self.vitesse)
-        self.parent.Canvas_dessine.create_oval(self.pos.x-25, self.pos.y-25, self.pos.x+25, self.pos.y+25)
+        self.parent.Canvas_dessine.create_oval(self.pos.x-20, self.pos.y-20, self.pos.x+20, self.pos.y+20, fill = "white")
 
 def mapping(value, istart, iend, ostart, oend):
     return ostart + (oend - ostart) * ((value - istart)/(iend - istart))
 
 def Pong(user):
-    game = Pong(user)
+    game = pong(user)
     return game.score[0]*100
