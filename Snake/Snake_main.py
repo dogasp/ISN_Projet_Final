@@ -122,12 +122,12 @@ class snake:
         self.name_snake = PhotoImage(file = "Snake/images/name_snake.png")
 
         ########------------Frames Pricipaux-------------########################################
-        self.Frame_top = Frame(self.root, width = 702, height = 75, bg = 'lightgrey')
+        self.Frame_top = Frame(self.root, width = 702, height = 80, bg = 'black')
         self.Frame_right = Frame(self.root, width = 502, height = 502, bg = 'black')
-        self.Frame_left = Frame(self.root, width = 200, height = 502, bg = 'red')
+        self.Frame_left = Frame(self.root, width = 200, height = 502, bg = 'black')
 
         ########-----------Frames Secondaires-----------######################################
-        self.Frame1 = Frame(self.Frame_left, width = 200, height = 175, bg = 'black')
+        self.Frame1 = Frame(self.Frame_left, width = 200, height = 177, bg = 'black')
         self.Frame2 = Frame(self.Frame_left, width = 200, height = 325, bg = 'black')
         self.Canvas_Frame2 = Canvas(self.Frame2, width = 190, height =316, bg = 'white')
 
@@ -148,23 +148,23 @@ class snake:
         self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
         self.grille.place(x = 0, y = 0)
 
-        self.Title_level = Label(self.Frame_top, relief = GROOVE, bg = 'black', image = self.name_snake)
+        self.Title_level = Label(self.Frame_top, bg = 'black', image = self.name_snake)
         self.Title_level.place(x = 220, y = 0)
 
         self.Canvas_Frame2.create_image(80,240, image = self.Snake_python)
         self.Canvas_Frame2.create_image(103,83, image = self.bulle)
 
-        self.show_conseils = Label(self.Canvas_Frame2, text = "Why do pythons live \n on land?   Because it's\n above C level.",bg = 'white', font = ("Helvetica", 9))
-        self.show_conseils.place(x = 39, y = 50 )
+        self.show_conseils = Label(self.Canvas_Frame2, text = "Why do pythons live \n on land?  Because it's\n above C level.",bg = 'white', font = ("Helvetica", 10))
+        self.show_conseils.place(x = 38, y = 50 )
 
         self.Pause_Button = Button(self.Frame_top, text = "PAUSE",activebackground = 'green2',foreground = 'green2', bg = 'black', font = ("Helvetica", 15), cursor ='hand2', command = self.pause_command)
         self.Pause_Button.place(x = 510, y = 19)
 
         self.start_button = Button(self.Frame1, image = self.Start_image, cursor ='hand2', bg = 'green2',activebackground = 'black',  command = self.start_game)
-        self.start_button.place(x = 50, y = 20)
+        self.start_button.place(x = 50, y = 15)
 
         self.Score = Label(self.Frame1, text = "Score : 0", foreground = 'green2', background = 'black', relief = GROOVE, font=("Berlin Sans FB", 20))
-        self.Score.place(x = 50, y = 130)
+        self.Score.place(x = 45, y = 130)
 
         self.sweet() #fonction pour placer le fruit
 

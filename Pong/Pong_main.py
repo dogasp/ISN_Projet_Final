@@ -104,9 +104,12 @@ class pong:
         self.Canvas_dessine.create_rectangle(2,2,698,498, fill = 'black')
         self.Canvas_dessine.create_line(349,0,349,498, fill = 'black')
         self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon, fill = 'black')
+        self.run = True
+        self.score = 0
+        self.speed = 0
 
-        self.player = Board(0)
-        self.bot = Board(self.width-10)
+        self.player = Board(10, self)
+        self.bot = Board(self.width-10, self)
         self.ball = Ball()
 
     def keyPressed(self, event):
@@ -116,21 +119,24 @@ class pong:
         elif self.player1.pos[1]-50 > 0 and keyCode == "Up":
             self.player1.pos[1] -= 5
 
+    def update(self):
+        pass
 
+#100x20
 
 class Board:
-    def __init__(self, x):
-        if x < 250:
-            self.vecteur = -1
-        else:
-            self.vecteur = 1
-        self.position
+    def __init__(self, x, parent):
+        self.parent = parent
+        self.pos = [x, parent.height/2]
 
-
-
-
+    def show(self):
+        if self.pos[0] > self.parent.width/2:
+            gap = self.parent.ball.pos[1] - self.pos[1]
+            if self.pos[1] + gap/2 + 50 <= self.parent.height and self.pos[1] + gap/2 - 50 >= 0:
+                self.pos[1] += gap
+        self.parent.Canvas_dessine.create_rectangle(self.pos[0]-10, self.pos[1]-self.pos[0]+10, self.pos[1]+50)
 
 
 class Ball:
-    def __init__(self):
-        pass
+    def __init__(self, parent):
+        self.pos = []
