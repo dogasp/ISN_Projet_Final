@@ -91,11 +91,11 @@ class Tile: #classe utilisée pour gérer les formes géométrique
                         return False
         return True
 
-    def check(self):
+    def check(self, parent):
         toTry = (self.index + 1)%len(self.pattern)
         for i in range(4):
             for j in range(4):
-                if self.pattern[toTry][i][j] != "_" and (self.pos[0] + i == 10 or self.pos[0] == -1):
+                if self.pattern[toTry][i][j] != "_" and ((self.pos[0] + i == 10 or self.pos[0] == -1) or parent.grid[self.pos[0] + i][self.pos[1] + j] != ""):
                     return False
         return True
 
@@ -179,7 +179,7 @@ class tetris:
     def update(self):
         if self.run == True:
             self.frame_count += 1
-            if self.frame_count % (35-self.speed) == 0:
+            if self.frame_count % ((35-self.speed)/4) == 0:
                 self.current.update(0, self)
             self.canvas.delete("all")
             for i in range(len(self.grid)):
@@ -211,7 +211,7 @@ class tetris:
                     self.current.pos[0] -= 1
 
             elif keyCode == "Up":
-                if self.current.check() == True:
+                if self.current.check(self) == True:
                     self.current.index = (self.current.index +1)%len(self.current.pattern)
     def end(self):
         self.root.unbind("<Key>")
