@@ -110,14 +110,14 @@ class pong:
 
         self.player = Board(10, self)
         self.bot = Board(self.width-10, self)
-        self.ball = Ball()
+        self.ball = Ball(self)
 
     def keyPressed(self, event):
         keyCode = event.keysym
-        if self.player1.pos[1] + 50 < self.height and keyCode == "Down":
-            self.player1.pos[1] += 5
-        elif self.player1.pos[1]-50 > 0 and keyCode == "Up":
-            self.player1.pos[1] -= 5
+        if self.player.pos[1] + 50 < self.height and keyCode == "Down":
+            self.player.pos[1] += 5
+        elif self.player.pos[1]-50 > 0 and keyCode == "Up":
+            self.player.pos[1] -= 5
 
     def update(self):
         pass
@@ -139,4 +139,12 @@ class Board:
 
 class Ball:
     def __init__(self, parent):
-        self.pos = []
+        self.pos = [parent.width/2, parent.height/2]
+        self.parent = parent
+
+    def launch(self, dir):
+        self.pos = [self.width/2, self.height/2]
+        self.vitesse = [dir, 0]
+        theta = randrange(-100,100)
+        self.vitesse[0] += cos(theta)
+        self.vitesse[1] += dir*sin(theta)
