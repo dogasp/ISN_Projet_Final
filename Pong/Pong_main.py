@@ -17,6 +17,8 @@ class pong:
         self.launch = -1
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
+        self.show_rules.resizable(False,False)
+        self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
@@ -69,6 +71,8 @@ class pong:
         self.root = Toplevel()
         self.root.geometry("902x552")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.resizable(False,False)
+        self.root.title('Pong')
         self.root.focus_force()
 
         ########-----------Frames Principaux------------#######################################

@@ -38,6 +38,8 @@ class pendu:
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
+        self.show_rules.resizable(False,False)
+        self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking) #protocole pour controler la fermeture d ela fenetre
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE) #premier frame, celui en dessous
@@ -58,9 +60,11 @@ class pendu:
         self.show_rules.mainloop()
 
         self.root = Toplevel() #fenetre principale
-        self.root.title("Pendu")
         self.root.geometry("600x500")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.resizable(False,False)
+        self.root.title("Pendu")
+        self.root.focus_force()
         self.root.withdraw() #on masque la fenetre principale le temps de la sélection de la difficulté
 
         self.difficulty() #on charge la difficulté
@@ -80,6 +84,8 @@ class pendu:
 
     def difficulty(self): #fonction de sélection de la difficulté
         self.root_difficulty = Toplevel()
+        self.root_difficulty.resizable(False,False)
+        self.root_difficulty.focus_force()
         self.root_difficulty.title("Selectionne une difficulté")
         self.root_difficulty.geometry("300x125")
         #boutons avec les différentes difficultés

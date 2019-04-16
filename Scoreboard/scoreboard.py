@@ -6,6 +6,8 @@ class Scoreboard:
     def __init__(self, parent, root, jeux, User_name):
         self.parent = parent
         self.root = root
+        self.root.title('Classement')
+        self.root.focus_force()
 
         TopFrame = Frame(parent, width = 550, height = 425, relief = GROOVE) #frame contenant le scoreboard
         TopFrame.place(x = 60, y = 45)

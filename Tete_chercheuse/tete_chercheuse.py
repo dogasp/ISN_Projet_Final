@@ -26,6 +26,8 @@ def rules_game(): #fonction pour afficher les regles du jeu
     show_rules.title('Règles')
     show_rules.geometry('670x530')
     show_rules.protocol("WM_DELETE_WINDOW", quit_ranking)
+    show_rules.focus_force()
+    show_rules.resizable(False,False)
 
 ################-----------Création des Frames de la fenetre secondaire----------##############
     Frame_main1_wind2 = Canvas(show_rules, relief = GROOVE)
@@ -161,6 +163,8 @@ def end_game(): #fonction appelée quand la partie se termine
     question = Toplevel()
     question.geometry("300x125")
     question.protocol("WM_DELETE_WINDOW", exit_menu) #on demande les actions a faire
+    question.focus_force()
+    question.resizable(False,False)
     Button(question, text = "Restart", command = restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
     Button(question, text = "Main Menu", command = exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
     Button(question, text = "Next Level", command = next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
@@ -292,6 +296,9 @@ def Tete(user): #fonction principale
     root_tete = Toplevel() #fenetre principale
     root_tete.geometry('700x550')
     root_tete.protocol("WM_DELETE_WINDOW",exit)
+    root_tete.title("Tete Chercheuse")
+    root_tete.resizable(False,False)
+    root_tete.focus_force()
     #############------------variables----------########################
     score = [50] #initialisation de la liste des scores
     index_robot = 0 #la ou le robot regarde

@@ -17,6 +17,8 @@ class ghost:
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
+        self.show_rules.resizable(False,False)
+        self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
         self.level = 1
         self.score = 0
@@ -76,6 +78,8 @@ class ghost:
         self.root = Toplevel()
         self.root.geometry("702x552")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.resizable(False,False)
+        self.root.title('Tom vs Jerry')
         self.root.focus_force()
         ########---------Import Photos interface----------###########################
         self.Tom_vs_Jerry = PhotoImage(file = "Fantome/Ressources/Images/Tom_vs_Jerry.png")

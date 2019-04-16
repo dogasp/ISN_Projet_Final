@@ -110,7 +110,9 @@ class tetris:
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
+        self.show_rules.resizable(False,False)
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking) #protocole pour controler la fermeture d ela fenetre
+        self.show_rules.focus_force()
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE) #premier frame, celui en dessous
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
@@ -132,6 +134,8 @@ class tetris:
         self.root = Toplevel()
         self.root.geometry("420x420")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.title('Tetris')
+        self.root.resizable(False,False)
         self.root.focus_force()
         self.image_tiles = {"I": PhotoImage(file = "Tetris/Images/I.png"), "L": PhotoImage(file = "Tetris/Images/L.png"), "O": PhotoImage(file = "Tetris/Images/O.png"),\
             "J": PhotoImage(file = "Tetris/Images/J.png"), "Z": PhotoImage(file = "Tetris/Images/Z.png"), "S": PhotoImage(file = "Tetris/Images/S.png"), "T": PhotoImage(file = "Tetris/Images/T.png")}

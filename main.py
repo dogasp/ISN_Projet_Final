@@ -68,6 +68,7 @@ def valider(event = None):
 root_user = Tk()
 root_user.geometry("300x120")
 root_user.bind("<Return>", valider)
+root_user.focus_force()
 
 Label(root_user, text = "Entre un pseudo pour jouer").place(x = 100, y = 30)
 
@@ -85,6 +86,7 @@ root_user.mainloop()
 root_main = Tk()
 root_main.geometry('1000x600')
 root_main.title("Menu")
+root_main.focus_force()
 #########################-----Création de la forme de la page----------------------#######################################
 Frame_top = Frame(root_main, bg ='pink') #création des pannels
 Frame_top.pack(ipadx = 1000, ipady =50, side = TOP)

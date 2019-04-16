@@ -30,6 +30,8 @@ class demineur:
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
+        self.show_rules.resizable(False,False)
+        self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking) #protocole pour controler la fermeture d ela fenetre
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE) #premier frame, celui en dessous
@@ -55,6 +57,8 @@ class demineur:
         self.root = Toplevel() #fenetre principale
         self.root.title("Minesweeper")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.resizable(False,False)
+        self.root.focus_force()
         self.root.withdraw() #on masque la fenetre principale le temps de la sélection de la difficulté
 
         self.difficulty() #on charge la difficulté
@@ -70,8 +74,11 @@ class demineur:
 
     def difficulty(self): #fonction de sélection de la difficulté
         self.root_difficulty = Toplevel()
-        self.root_difficulty.title("Selectionne une difficulté")
+        self.root_difficulty.title("difficulté")
+        self.root_difficulty.resizable(False,False)
+        self.root_difficulty.focus_force()
         self.root_difficulty.geometry("300x125")
+        self.root_difficulty.protocol("WM_DELETE_WINDOW", self.exit)
         #boutons avec les différentes difficultés
         Button(self.root_difficulty, text = "Facile", cursor ='hand2', command = lambda : self.start(0)).place(x = 15, y = 70)
         Button(self.root_difficulty, text = "Moyen", cursor ='hand2', command = lambda : self.start(1)).place(x = 115, y = 70)
@@ -141,8 +148,19 @@ class demineur:
                 self.list_images[i][j] = self.canvas.create_image(i*self.border + self.border/2, j*self.border + self.border/2, image = self.Normal_Image)
 
     def exit(self): #fonction appelée pour quiter l'application
+        try:
+            self.root_difficulty.destroy()
+            self.root_difficulty.quit()
+            self.root.deiconify()
+        except: pass
+
         self.root.destroy()
         self.root.quit()
+
+    def exit_difficulty(self):
+        self.root_difficulty.destroy()
+        self.root_difficulty.quit()
+
 
     def click(self, event): #fonction déclanchée avec un clique de la souris sur le canvas
         x = event.x//self.border #on détermine l'emplacement dans le tableau de la case cliquée
@@ -160,6 +178,7 @@ class demineur:
                         if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == str(self.Flag_Image) and self.grid[i][j] == -1:
                             count += 1
                 self.end(False, count) #appel de la fonction end de la classe
+                return
             elif value > 0: #si on a cliqué sur une case contenant au moins une bombe voisine, on affiche le nombre de voisins
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
             elif value == 0: #si il n'y a pas de voisins

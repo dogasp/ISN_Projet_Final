@@ -24,6 +24,8 @@ class snake:
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('700x500')
+        self.show_rules.resizable(False,False)
+        self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
@@ -77,6 +79,8 @@ class snake:
         self.root.geometry("702x577")
         self.root.bind("<space>", self.pause_command)
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.resizable(False,False)
+        self.root.title('Snake')
         self.root.focus_force()
 
         #import de toutes les images du jeu
