@@ -9,6 +9,7 @@ from Fantome.Fantome_main import *
 from Minesweeper.minesweeper import *
 from Pendu.pendu import *
 from Tetris.tetris import *
+from Pong.Pong_main import*
 
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
