@@ -26,6 +26,10 @@ class demineur:
         self.Normal_Image = PhotoImage(file = "Minesweeper/Images/facingDown.png").subsample(8)
         self.Flag_Image = PhotoImage(file = "Minesweeper/Images/flagged.png").subsample(8)
 
+        self.level_easy = PhotoImage(file = "Minesweeper/Images/level_easy.png")
+        self.level_medium = PhotoImage(file = "Minesweeper/Images/level_medium.png")
+        self.level_hard = PhotoImage(file = "Minesweeper/Images/level_hard.png")
+
         #interface pour afficher les regles
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
@@ -73,16 +77,17 @@ class demineur:
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
 
     def difficulty(self): #fonction de sélection de la difficulté
+
         self.root_difficulty = Toplevel()
         self.root_difficulty.title("difficulté")
         self.root_difficulty.resizable(False,False)
         self.root_difficulty.focus_force()
         self.root_difficulty.geometry("300x125")
-        self.root_difficulty.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root_difficulty.protocol("WM_DELETE_WINDOW", print)
         #boutons avec les différentes difficultés
-        Button(self.root_difficulty, text = "Facile", cursor ='hand2', command = lambda : self.start(0)).place(x = 15, y = 70)
-        Button(self.root_difficulty, text = "Moyen", cursor ='hand2', command = lambda : self.start(1)).place(x = 115, y = 70)
-        Button(self.root_difficulty, text = "Difficile", cursor ='hand2', command = lambda : self.start(2)).place(x = 215, y = 70)
+        Button(self.root_difficulty,image = self.level_easy , cursor ='hand2', command = lambda : self.start(0)).place(x = 15, y = 27)
+        Button(self.root_difficulty,image = self.level_medium , cursor ='hand2', command = lambda : self.start(1)).place(x = 115, y = 27)
+        Button(self.root_difficulty,image = self.level_hard , cursor ='hand2', command = lambda : self.start(2)).place(x = 215, y = 27)
         self.root_difficulty.mainloop()
 
     def start(self, level): #fontion appelée après la sélection de la difficulté avec level en paramètre
@@ -149,17 +154,17 @@ class demineur:
 
     def exit(self): #fonction appelée pour quiter l'application
         try:
-            self.root_difficulty.destroy()
-            self.root_difficulty.quit()
-            self.root.deiconify()
+            self.exit_difficulty()
         except: pass
-
+        print("bite2")
         self.root.destroy()
         self.root.quit()
+        print("bite3")
 
     def exit_difficulty(self):
         self.root_difficulty.destroy()
         self.root_difficulty.quit()
+        print("bite")
 
 
     def click(self, event): #fonction déclanchée avec un clique de la souris sur le canvas
@@ -238,4 +243,5 @@ class demineur:
 
 def Minesweeper(user):    # fonction appelée pour lancer le jeu
     jeux = demineur(user) # création de la classe
+    print("bite4")
     return jeux.score     # retour du meilleur score de la session
