@@ -51,7 +51,7 @@ def rules_game(): #fonction pour afficher les regles du jeu
 
     CANVAS1 = Canvas(Frame_main2_wind2, width = 150, height = 60) #canvas pour afficher l'image
     Frame_main2_wind2.after(1000, lambda: CANVAS1.place(x = 380, y = 60 )) #placement du canvas
-    first_photo1 = PhotoImage(file = "Rules_tete_photo/first_photo.png") #import de l'image
+    first_photo1 = PhotoImage(file = "Tete_chercheuse/image/first_photo.png") #import de l'image
     CANVAS1.create_image(75, 30,image = first_photo1) #création de l'image
 
 #------------------2-----------------------------------------------------------------
@@ -61,7 +61,7 @@ def rules_game(): #fonction pour afficher les regles du jeu
 
     CANVAS2 = Canvas(Frame_main2_wind2,  width = 130, height = 72)
     Frame_main2_wind2.after(2500, lambda: CANVAS2.place(x = 390, y = 140 ))
-    first_photo2 = PhotoImage(file = "Rules_tete_photo/second_photo.png")
+    first_photo2 = PhotoImage(file = "Tete_chercheuse/image/second_photo.png")
     CANVAS2.create_image(65, 36,image = first_photo2)
 
 #------------------3------------------------------------------------------------------
@@ -71,7 +71,7 @@ def rules_game(): #fonction pour afficher les regles du jeu
 
     CANVAS3 = Canvas(Frame_main2_wind2, width = 190, height = 72)
     Frame_main2_wind2.after(4000, lambda: CANVAS3.place(x = 350, y = 230 ))
-    first_photo3 = PhotoImage(file = "Rules_tete_photo/third_photo.png")
+    first_photo3 = PhotoImage(file = "Tete_chercheuse/image/third_photo.png")
     CANVAS3.create_image(95, 36,image = first_photo3)
 
 #------------------4-------------------------------------------------------------------
@@ -82,7 +82,7 @@ def rules_game(): #fonction pour afficher les regles du jeu
 
     CANVAS4 = Canvas(Frame_main2_wind2, width = 150, height = 86)
     Frame_main2_wind2.after(5500, lambda: CANVAS4.place(x = 380, y = 320 ))
-    first_photo4 = PhotoImage(file = "Rules_tete_photo/four_photo.png")
+    first_photo4 = PhotoImage(file = "Tete_chercheuse/image/four_photo.png")
     CANVAS4.create_image(75, 43,image = first_photo4)
 
 #--------------5------------------------------------
