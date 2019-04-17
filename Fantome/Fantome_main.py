@@ -76,7 +76,7 @@ class ghost:
 
         """#################----------------- début du jeu ----------------#################### """
         self.root = Toplevel()
-        self.root.geometry("702x552")
+        self.root.geometry("700x550")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.resizable(False,False)
         self.root.title('Tom vs Jerry')
@@ -91,14 +91,14 @@ class ghost:
         ########-----------Frames Secondaires------------#######################################
         self.Frame1 = Frame(self.Frame_left, width = 200, height = 200, bg = 'black')
         self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'black')
-        self.Canvas_dessine = Canvas(self.Frame2, width = 188, height = 288, bg = 'white')
+        self.Canvas_dessine = Canvas(self.Frame2, width = 190, height = 288, bg = 'white',highlightthickness=0)
 
         #######-----------Package des Frames-------------####################################
         self.Frame_top.pack(side = TOP)
         self.Frame_left.pack(side = LEFT)
         self.Frame1.pack(side = TOP)
         self.Frame2.pack(side = BOTTOM)
-        self.Canvas_dessine.place(x = 3, y = 4)
+        self.Canvas_dessine.place(x = 5, y = 5)
 
         ######-----------Elements du jeu-----------------##########################################
         self.Canvas_dessine.create_image(100, 190, image = self.Tom_vs_Jerry)
@@ -106,10 +106,10 @@ class ghost:
         self.sentence = Label(self.Frame2, text = "Attrape Moi \n Si Tu Peux !!!",font = ("Berlin Sans FB", 15), bg = 'white')
         self.sentence.place(x = 45, y = 60)
 
-        self.canvas_show_time = Canvas(self.Frame1, bg = 'red')
-        self.canvas_show_time.place(x = 45, y = 70)
-        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue', bg = 'black',font = ("Berlin Sans FB", 12))
-        self.show_time.pack( padx= 4, pady = 4)
+        self.canvas_show_time = Canvas(self.Frame1, bg = 'red',highlightthickness=0)
+        self.canvas_show_time.place(x = 45, y = 60)
+        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue', bg = 'black',font = ("Berlin Sans FB", 20))
+        self.show_time.pack(padx= 3, pady = 3)
 
 
         self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
@@ -163,20 +163,20 @@ class ghost:
         self.Tom_right_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry_mini.png")
 
         ########------------Frames Pricipaux-------------########################################
-        self.Frame_right = Frame(self.root, width = 500, height = 500)
+        self.Frame_right = Frame(self.root, width = 500, height = 500, bg = 'black')
         #######-----------Package des Frames-------------####################################
         self.Frame_right.pack(side = RIGHT)
         ######-----------Elements du jeu-----------------##########################################
         self.canvas_show_score = Canvas(self.Frame1, bg = 'blue', highlightthickness=0)
-        self.canvas_show_score.place(x = 45, y = 170)
-        self.show_score = Label(self.canvas_show_score, text = "Score: %s" %str(int(self.score)), font = ("Helvetica", 10), foreground = 'red')
-        self.show_score.pack(padx = 4, pady = 4)
+        self.canvas_show_score.place(x = 45, y = 150)
+        self.show_score = Label(self.canvas_show_score, text = "Score: %s" %str(int(self.score)), bg = 'black', font = ("Berlin Sans FB", 20), foreground = 'red')
+        self.show_score.pack(padx = 3, pady = 3)
 
         self.Title_level = Label(self.Frame_top, text = "Level %s" %str(self.level), font=("Helvetica", 20), relief = GROOVE)
         self.Title_level.place(x = 315, y = 5)
 
 
-        self.table = Canvas(self.Frame_right, width = 500, height = 500, bg = "#1a1a1a")
+        self.table = Canvas(self.Frame_right, width = 500, height = 500, bg = "#1a1a1a",highlightthickness=0)
         self.table.pack(fill = BOTH)
 
         for i in range(self.nbcases[self.level - 1]):

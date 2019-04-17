@@ -42,6 +42,10 @@ class pendu:
         self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking) #protocole pour controler la fermeture d ela fenetre
 
+        self.level_easy = PhotoImage(file = "Minesweeper/Images/level_easy.png")
+        self.level_medium = PhotoImage(file = "Minesweeper/Images/level_medium.png")
+        self.level_hard = PhotoImage(file = "Minesweeper/Images/level_hard.png")
+
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE) #premier frame, celui en dessous
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
         #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
@@ -89,9 +93,9 @@ class pendu:
         self.root_difficulty.title("Selectionne une difficulté")
         self.root_difficulty.geometry("300x125")
         #boutons avec les différentes difficultés
-        Button(self.root_difficulty, text = "Facile", cursor ='hand2', command = lambda : self.start(0)).place(x = 15, y = 70)
-        Button(self.root_difficulty, text = "Moyen", cursor ='hand2', command = lambda : self.start(1)).place(x = 115, y = 70)
-        Button(self.root_difficulty, text = "Difficile", cursor ='hand2', command = lambda : self.start(2)).place(x = 215, y = 70)
+        Button(self.root_difficulty,image = self.level_easy , cursor ='hand2', command = lambda : self.start(0)).place(x = 15, y = 27)
+        Button(self.root_difficulty,image = self.level_medium , cursor ='hand2', command = lambda : self.start(1)).place(x = 115, y = 27)
+        Button(self.root_difficulty,image = self.level_hard , cursor ='hand2', command = lambda : self.start(2)).place(x = 215, y = 27)
         self.root_difficulty.mainloop()
 
     def start(self, level): #fontion appelée après la sélection de la difficulté avec level en paramètre
