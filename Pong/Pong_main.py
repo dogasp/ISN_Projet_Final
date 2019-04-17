@@ -16,7 +16,7 @@ class pong:
         self.score = 0
         self.launch = -1
         self.show_rules.title('Règles')
-        self.show_rules.geometry('700x500')
+        self.show_rules.geometry('670x530')
         self.show_rules.resizable(False,False)
         self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)

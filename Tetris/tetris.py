@@ -109,7 +109,7 @@ class tetris:
 
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
-        self.show_rules.geometry('700x500')
+        self.show_rules.geometry('670x530')
         self.show_rules.resizable(False,False)
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking) #protocole pour controler la fermeture d ela fenetre
         self.show_rules.focus_force()
