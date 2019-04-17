@@ -94,7 +94,7 @@ class pong:
         self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'white')
         self.Frame_right.pack(side = RIGHT)
 
-        self.Canvas_dessine = Canvas(self.Frame_right, width = 700, height = 500, bg = "black")
+        self.Canvas_dessine = Canvas(self.Frame_right, width = 700, height = 500, bg = "black", highlightthickness=0)
         self.Canvas_dessine.place(x = 0, y = 0)
         self.width = 700
         self.height = 500

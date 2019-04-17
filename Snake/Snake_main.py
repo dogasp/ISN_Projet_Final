@@ -151,7 +151,7 @@ class snake:
         self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,activebackground = 'green2', foreground = 'green2', bg = 'black', font = ("Helvetica", 15), cursor ='hand2',command = self.exit)
         self.Button_quit.place(x = 610, y = 19)
 
-        self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a")
+        self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a", highlightthickness=0)
         self.grille.place(x = 0, y = 0)
 
         self.Title_level = Label(self.Frame_top, bg = 'black', image = self.name_snake)
@@ -175,6 +175,7 @@ class snake:
         self.sweet() #fonction pour placer le fruit
 
     def start_game(self, event = None): #fonction appelée par le bouton commencer
+        self.Frame_right.config(cursor='none')
         self.start_button["state"] = "disabled"
         self.pause = False  # pause est enlevée
         if  self.pause == False:
@@ -185,8 +186,10 @@ class snake:
         if self.pause == False:                 # si le jeu n'est pas en pause, on le pause
             self.root.unbind("<Key>")
             self.pause = True
+            self.Frame_right.config(cursor='arrow')
         else:                     #sinon, on le relance avec la fonction update
             self.pause = False
+            self.Frame_right.config(cursor='none')
             self.update()
 
     def update(self): #fonciton pour actualiser la position du serpent

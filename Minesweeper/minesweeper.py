@@ -143,7 +143,7 @@ class demineur:
                         if self.dims[0] > xp >-1 and self.dims[1] > yp >= 0 and self.grid[xp][yp]!=-1:
                             self.grid[xp][yp] += 1
 
-        self.canvas = Canvas(self.Frame_right, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "red")
+        self.canvas = Canvas(self.Frame_right, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "red", highlightthickness=0)
         self.canvas.bind("<Button>", self.click)
         self.canvas.place(x = 0, y = 0)
 

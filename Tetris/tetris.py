@@ -166,7 +166,7 @@ class tetris:
 
     def start(self):
         self.root.bind("<Key>", self.KeyPressed)
-        self.canvas = Canvas(self.root, width = 220, height = 420, bg = "grey")
+        self.canvas = Canvas(self.root, width = 220, height = 420, bg = "grey", highlightthickness=0)
         self.next_Canvas = Canvas(self.root, width = 4*self.width/10, height = 4*self.height/22, bg = "lightgrey")
         self.next_Canvas.place(x = 270, y = 230)
         self.canvas.place(x=0, y=0)

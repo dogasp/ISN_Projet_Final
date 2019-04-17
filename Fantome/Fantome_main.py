@@ -89,7 +89,7 @@ class ghost:
         self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'lightgrey')
 
         ########-----------Frames Secondaires------------#######################################
-        self.Frame1 = Frame(self.Frame_left, width = 200, height = 200)
+        self.Frame1 = Frame(self.Frame_left, width = 200, height = 200, bg = 'black')
         self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'black')
         self.Canvas_dessine = Canvas(self.Frame2, width = 188, height = 288, bg = 'white')
 
@@ -106,8 +106,11 @@ class ghost:
         self.sentence = Label(self.Frame2, text = "Attrape Moi \n Si Tu Peux !!!",font = ("Berlin Sans FB", 15), bg = 'white')
         self.sentence.place(x = 45, y = 60)
 
-        self.show_time = Label(self.Frame1, text = "Temps: %s" %str(0),font = ("Berlin Sans FB", 12))
-        self.show_time.place(x = 45, y = 70)
+        self.canvas_show_time = Canvas(self.Frame1, bg = 'red')
+        self.canvas_show_time.place(x = 45, y = 70)
+        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue', bg = 'black',font = ("Berlin Sans FB", 12))
+        self.show_time.pack( padx= 4, pady = 4)
+
 
         self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
         self.Button_quit.place(x = 550, y = 19)
@@ -164,8 +167,10 @@ class ghost:
         #######-----------Package des Frames-------------####################################
         self.Frame_right.pack(side = RIGHT)
         ######-----------Elements du jeu-----------------##########################################
-        self.show_score = Label(self.Frame1, text = "Score: %s" %str(int(self.score)), font = ("Helvetica", 10), relief = GROOVE)
-        self.show_score.place(x = 25, y = 170)
+        self.canvas_show_score = Canvas(self.Frame1, bg = 'blue', highlightthickness=0)
+        self.canvas_show_score.place(x = 45, y = 170)
+        self.show_score = Label(self.canvas_show_score, text = "Score: %s" %str(int(self.score)), font = ("Helvetica", 10), foreground = 'red')
+        self.show_score.pack(padx = 4, pady = 4)
 
         self.Title_level = Label(self.Frame_top, text = "Level %s" %str(self.level), font=("Helvetica", 20), relief = GROOVE)
         self.Title_level.place(x = 315, y = 5)

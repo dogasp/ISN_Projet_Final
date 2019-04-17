@@ -334,7 +334,7 @@ def Tete(user): #fonction principale
     Frame2 = Frame(Frame_left, width = 200, height =300, bg = 'black')
 
     Title_level = Label(Frame_top, text = "Level 1", font=("Helvetica", 20), relief = GROOVE)
-    Table = Canvas(Frame_right,width = 500, height = 500, bg ='white')
+    Table = Canvas(Frame_right,width = 500, height = 500, bg ='white', highlightthickness=0)
 
     Canvas_dessine = Canvas(Frame2, bg = 'white',width = 186, height =290)
 

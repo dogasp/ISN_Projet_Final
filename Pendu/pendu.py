@@ -112,7 +112,7 @@ class pendu:
         self.root.focus_force()
 
         self.error_Count = 0
-        self.canvas = Canvas(self.root, width = 400, height = 400)
+        self.canvas = Canvas(self.root, width = 400, height = 400,highlightthickness=0)
         self.canvas.place(x = 200, y = 100)
         start = ""
         for char in self.word:
