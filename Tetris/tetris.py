@@ -147,6 +147,10 @@ class tetris:
         self.aff_level = Label(self.root, text = "Level = 1", font =Font(size = 20))
         self.aff_level.place(x = 245, y = 90)
 
+        bestplayer = get_game_score_list("Tetris")[0]
+        self.best_label = Label(self.root, text = "Meilleur joueur:\n{} avec {} points".format(bestplayer[0], int(bestplayer[1]))) #je te laisse la mise en forme
+        self.best_label.place(x = 245, y = 350)
+
         self.start()
 
         self.root.mainloop()

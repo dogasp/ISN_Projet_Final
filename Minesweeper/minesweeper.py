@@ -156,16 +156,12 @@ class demineur:
         try:
             self.exit_difficulty()
         except: pass
-        print("bite2")
         self.root.destroy()
         self.root.quit()
-        print("bite3")
 
     def exit_difficulty(self):
         self.root_difficulty.destroy()
         self.root_difficulty.quit()
-        print("bite")
-
 
     def click(self, event): #fonction déclanchée avec un clique de la souris sur le canvas
         x = event.x//self.border #on détermine l'emplacement dans le tableau de la case cliquée
@@ -243,5 +239,4 @@ class demineur:
 
 def Minesweeper(user):    # fonction appelée pour lancer le jeu
     jeux = demineur(user) # création de la classe
-    print("bite4")
     return jeux.score     # retour du meilleur score de la session

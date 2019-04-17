@@ -266,5 +266,4 @@ def mapping(value, istart, iend, ostart, oend):
 
 def Pong(user):
     game = pong(user)
-    print(game.score)
     return game.score*50

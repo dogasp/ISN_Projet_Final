@@ -172,6 +172,10 @@ class snake:
         self.Score = Label(self.Frame1, text = "Score : 0", foreground = 'green2', background = 'black', relief = GROOVE, font=("Berlin Sans FB", 20))
         self.Score.place(x = 45, y = 130)
 
+        bestplayer = get_game_score_list("Snake")[0]
+        self.best_label = Label(self.Frame_top, text = "Meilleur joueur:\n{} avec {} points".format(bestplayer[0], int(bestplayer[1])), bg = "black") #je te laisse la mise en forme
+        self.best_label.place(x = 30, y = 15)
+
         self.sweet() #fonction pour placer le fruit
 
     def start_game(self, event = None): #fonction appelée par le bouton commencer

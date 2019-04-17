@@ -46,7 +46,7 @@ class BoutonS: #classe pour gérer les boutons interactifs
             label_pseudo[-1].place(x = 4, y = 75 + 20*len(score) +i*20)
 
 User_name = "Unknown"
-print("hey")
+
 with open('Data/mots.txt', 'r') as file:
     mots = file.read()
     mots_interdits = mots.split("\n")
