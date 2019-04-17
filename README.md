@@ -86,3 +86,9 @@ Fin du pendu, le jeu est totalement fonctionnel
 début et fin des mécaniques de snake
 
 explication du fonctionnement de pong et création des fichiers
+
+## Mercredi 18 Avril
+reprise du projet
+ajout des meilleurs joueurs pour le snake et le tetris
+
+partie graphique améliorée
