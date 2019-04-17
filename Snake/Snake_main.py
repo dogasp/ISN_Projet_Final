@@ -101,7 +101,7 @@ class snake:
 
     def quit_rules(self): #fonction pour quiter les rêgles et passer au classement
         self.Frame_main2_wind2.destroy()
-        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Snake", self.User_name)
+        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Snake", self.User_name, 60, 58)
 
     def quit_ranking(self): #fonction pour quiter l'interface avec les regles et les scoreboards
         self.show_rules.destroy()

@@ -3,14 +3,14 @@ sys.path.append('../')
 from Reseau.client import *
 
 class Scoreboard:
-    def __init__(self, parent, root, jeux, User_name):
+    def __init__(self, parent, root, jeux, User_name, posx = 60, posy = 45):
         self.parent = parent
         self.root = root
         self.root.title('Classement')
         self.root.focus_force()
 
         TopFrame = Frame(parent, width = 550, height = 425, relief = GROOVE) #frame contenant le scoreboard
-        TopFrame.place(x = 60, y = 45)
+        TopFrame.place(x = posx, y = posy)
 
         TopFrame.after(0,lambda: ranking_game.place(x = 100, y= 20 ))
         ranking_game = Label(TopFrame, text = 'Classement du jeu', font = ("Berlin Sans FB", 35), relief = GROOVE) #titre
