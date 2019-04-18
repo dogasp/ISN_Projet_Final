@@ -13,6 +13,7 @@ class pong:
     def __init__(self, user):
         self.user = user
         self.show_rules = Toplevel()
+        self.pressing = False
         self.score = 0
         self.launch = -1
         self.show_rules.title('Règles')
@@ -104,7 +105,8 @@ class pong:
         self.root.mainloop()
 
     def start(self):
-        self.root.bind("<Key>", self.move)
+        self.root.bind("<KeyPress>", self.start_move)
+        self.root.bind("<KeyRelease>", self.stop_move)
         self.Canvas_dessine.delete("all")
         self.Canvas_dessine.create_rectangle(2,2,698,498)
         self.Canvas_dessine.create_line(349,0,349,498)
@@ -117,6 +119,11 @@ class pong:
         self.bot = Board(self.width-10, self)
         self.ball = Ball(self)
         self.update()
+    
+    def start_move(self, event):
+        if self.pressing != True:
+            self.pressing = True
+            self.move(event)
 
     def move(self, event):
         keyCode = event.keysym
@@ -124,6 +131,11 @@ class pong:
             self.player.pos.y += 15
         elif self.player.pos.y-50 > 0 and keyCode == "Up":
             self.player.pos.y -= 15
+        if self.pressing == True:
+            self.root.after(100, lambda: self.move(event))
+
+    def stop_move(self, event):
+        self.pressing = False
 
     def exit(self): #fonction appelée pour quiter l'application
         self.run = False
