@@ -86,7 +86,7 @@ class ghost:
 
         ########-----------Frames Principaux------------#######################################
         self.Frame_left = Frame(self.root, width = 200, height = 500, bg = 'white')
-        self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'lightgrey')
+        self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'black')
 
         ########-----------Frames Secondaires------------#######################################
         self.Frame1 = Frame(self.Frame_left, width = 200, height = 200, bg = 'black')
@@ -106,14 +106,14 @@ class ghost:
         self.sentence = Label(self.Frame2, text = "Attrape Moi \n Si Tu Peux !!!",font = ("Berlin Sans FB", 15), bg = 'white')
         self.sentence.place(x = 45, y = 60)
 
-        self.canvas_show_time = Canvas(self.Frame1, bg = 'red',highlightthickness=0)
-        self.canvas_show_time.place(x = 45, y = 60)
-        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue', bg = 'black',font = ("Berlin Sans FB", 20))
+        self.canvas_show_time = Canvas(self.Frame1, bg = 'black',highlightthickness=0)
+        self.canvas_show_time.place(x = 30, y = 30)
+        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
         self.show_time.pack(padx= 3, pady = 3)
 
 
-        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
-        self.Button_quit.place(x = 550, y = 19)
+        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,foreground = 'red2',activebackground = 'red2',bg = 'black' ,font=("Berlin Sans FB", 15), cursor ='hand2',command = self.exit)
+        self.Button_quit.place(x = 600, y = 5)
 
 
         self.start()
@@ -167,18 +167,17 @@ class ghost:
         #######-----------Package des Frames-------------####################################
         self.Frame_right.pack(side = RIGHT)
         ######-----------Elements du jeu-----------------##########################################
-        self.canvas_show_score = Canvas(self.Frame1, bg = 'blue', highlightthickness=0)
-        self.canvas_show_score.place(x = 45, y = 150)
-        self.show_score = Label(self.canvas_show_score, text = "Score: %s" %str(int(self.score)), bg = 'black', font = ("Berlin Sans FB", 20), foreground = 'red')
+        self.canvas_show_score = Canvas(self.Frame1, bg = 'black', highlightthickness=0)
+        self.canvas_show_score.place(x = 30, y = 110)
+        self.show_score = Label(self.canvas_show_score, text = "Score: %s" %str(int(self.score)), bg = 'black', font = ("Berlin Sans FB", 24), foreground = 'red2')
         self.show_score.pack(padx = 3, pady = 3)
 
-        self.Title_level = Label(self.Frame_top, text = "Level %s" %str(self.level), font=("Helvetica", 20), relief = GROOVE)
-        self.Title_level.place(x = 315, y = 5)
+        self.Title_level = Label(self.Frame_top, text = "Level %s" %str(self.level), foreground = 'white', bg= 'black', font=("Berlin Sans FB", 26))
+        self.Title_level.place(x = 315, y = 4)
 
 
         self.table = Canvas(self.Frame_right, width = 500, height = 500, bg = "#1a1a1a",highlightthickness=0)
         self.table.pack(fill = BOTH)
-
         for i in range(self.nbcases[self.level - 1]):
             self.table.create_line((self.length)*i,0,(self.length)*i,500,fill = 'blue')
         for j in range(self.nbcases[self.level - 1]):
