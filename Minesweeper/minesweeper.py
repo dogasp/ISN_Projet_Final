@@ -124,6 +124,10 @@ class demineur:
         self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
         self.Button_quit.place(x = 550, y = 19)
 
+        self.flag_count = 0 #nombre de drapeaux cliqués
+        self.label_flag = Label(self.Frame1, text = "Drapeaux restants: {}".format(self.mine_Count))
+        self.label_flag.place(x = 20, y = 10)
+
         self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #création de la grille contenant l'état des cellules
 
         for _ in range(self.mine_Count): #loop pour placer les bombes
@@ -204,8 +208,11 @@ class demineur:
             #si oui, on change par un bouton normal; si non, on met un drapeau dans la liste
             if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Flag_Image):
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Normal_Image)
-            elif self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Normal_Image):
+                self.flag_count -= 1
+            elif self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Normal_Image) and self.flag_count < self.mine_Count:
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Flag_Image)
+                self.flag_count += 1
+            self.label_flag["text"] = "Drapeaux restants: {}".format(self.mine_Count - self.flag_count)        
         count = 0 #compte des bombes recouvertes par un drapeau (voir plus haut)
         for i in range(self.dims[0]):
             for j in range(self.dims[1]):
