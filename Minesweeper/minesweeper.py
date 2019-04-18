@@ -204,7 +204,7 @@ class demineur:
             #si oui, on change par un bouton normal; si non, on met un drapeau dans la liste
             if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Flag_Image):
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Normal_Image)
-            else:
+            elif self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Normal_Image):
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Flag_Image)
         count = 0 #compte des bombes recouvertes par un drapeau (voir plus haut)
         for i in range(self.dims[0]):
