@@ -97,8 +97,12 @@ Frame_left.pack(ipadx = 100, ipady =500,side = LEFT)
 Frame_down = Frame(root_main, bg ='black')
 Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
 
-Frame_main = Frame(root_main,bg = 'red',borderwidth=2, relief=GROOVE)
+image_de_fond = PhotoImage(file = "thumbnail/image_de_fond.png")
+
+Frame_main = Canvas(root_main,borderwidth=2, relief=GROOVE)
 Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
+Frame_main.create_image(450,265, image = image_de_fond)
+
 
 Frame_ranking = Frame(Frame_left, width = 196 , height =280 , relief = GROOVE)
 Frame_ranking.place(x = 2, y = 70)

@@ -107,7 +107,7 @@ class ghost:
         self.sentence.place(x = 45, y = 60)
 
         self.canvas_show_time = Canvas(self.Frame1, bg = 'black',highlightthickness=0)
-        self.canvas_show_time.place(x = 30, y = 30)
+        self.canvas_show_time.place(x = 10, y = 30)
         self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
         self.show_time.pack(padx= 3, pady = 3)
 
@@ -168,7 +168,7 @@ class ghost:
         self.Frame_right.pack(side = RIGHT)
         ######-----------Elements du jeu-----------------##########################################
         self.canvas_show_score = Canvas(self.Frame1, bg = 'black', highlightthickness=0)
-        self.canvas_show_score.place(x = 30, y = 110)
+        self.canvas_show_score.place(x = 10, y = 110)
         self.show_score = Label(self.canvas_show_score, text = "Score: %s" %str(int(self.score)), bg = 'black', font = ("Berlin Sans FB", 24), foreground = 'red2')
         self.show_score.pack(padx = 3, pady = 3)
 
