@@ -84,17 +84,20 @@ confirm.place(x = 225, y = 80)
 root_user.mainloop()
 
 root_main = Tk()
-root_main.geometry('1000x600')
+root_main.geometry('1020x600')
 root_main.title("Menu")
 root_main.focus_force()
 #########################-----Création de la forme de la page----------------------#######################################
-Frame_top = Frame(root_main, bg ='pink') #création des pannels
+Frame_top = Frame(root_main, bg ='#111111') #création des pannels
 Frame_top.pack(ipadx = 1000, ipady =50, side = TOP)
 
-Frame_left = Frame(root_main, bg ='yellow')
+Frame_left = Frame(root_main, bg ='#111111')
 Frame_left.pack(ipadx = 100, ipady =500,side = LEFT)
 
-Frame_down = Frame(root_main, bg ='black')
+Frame_right = Frame(root_main, bg ='#111111')
+Frame_right.pack(ipadx = 20, ipady = 600,side = RIGHT)
+
+Frame_down = Frame(root_main, bg ='#111111')
 Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
 
 image_de_fond = PhotoImage(file = "thumbnail/image_de_fond.png")
@@ -104,7 +107,9 @@ Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
 Frame_main.create_image(450,265, image = image_de_fond)
 
 
-Frame_ranking = Frame(Frame_left, width = 196 , height =280 , relief = GROOVE)
+
+
+Frame_ranking = Frame(Frame_left, width = 196 , height =280 , bg = '#111111', relief = GROOVE)
 Frame_ranking.place(x = 2, y = 70)
 
 
@@ -112,24 +117,24 @@ score = get_score_list() #récupération du scoreboard
 
 #############---------Création des labels et autres au contour du Frame_main-------#########################
 
-Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Berlin Sans FB", 45), relief = GROOVE)
+Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Berlin Sans FB", 45), bg ='#111111', foreground = 'green2', relief = GROOVE)
 Title_main.place(x = 250, y = 10)
 
-Title_ranking = Label(Frame_ranking, text = 'Classements',font = ("Berlin Sans FB", 20), relief = GROOVE)
+Title_ranking = Label(Frame_ranking, text = 'Classements',font = ("Berlin Sans FB", 20), bg = '#111111', foreground = 'green2', relief = GROOVE)
 Title_ranking.place(x = 27, y = 5)
 
 ################---------Création du Classement-----------------------------################################
-Label(Frame_ranking, text = "Rang" + " "*8 + "Nom" + " "*24 + "Score  " ,font = ("Helvetica",9), relief = GROOVE).place(x = 2, y = 50) #légende
+Label(Frame_ranking, text = "Rang" + " "*8 + "Nom" + " "*24 + "Score  " ,font = ("Helvetica",9), bg = '#111111', foreground = 'green2', relief = GROOVE).place(x = 2, y = 50) #légende
 label_pseudo = []
 label_score = []
 for i in range(len(score)): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
-    label_pseudo.append(Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),font = ("Helvetica", 8)))
+    label_pseudo.append(Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
     label_pseudo[-1].place(x = 4, y = 75 +i*20)
-    label_score.append(Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),font = ("Helvetica", 8)))
+    label_score.append(Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
     label_score[-1].place(x = 160, y = 75 +i*20)
 
 for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
-    label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),font = ("Helvetica", 8)))
+    label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
     label_pseudo[-1].place(x = 4, y = 75 + 20*len(score) +i*20)
 
 
