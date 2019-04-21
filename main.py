@@ -36,13 +36,13 @@ class BoutonS: #classe pour gérer les boutons interactifs
         label_pseudo = []
         label_score = []
         for i in range(len(score)): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
-            label_pseudo.append(Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),font = ("Helvetica", 8)))
+            label_pseudo.append(Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
             label_pseudo[-1].place(x = 4, y = 75 +i*20)
-            label_score.append(Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),font = ("Helvetica", 8)))
+            label_score.append(Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
             label_score[-1].place(x = 160, y = 75 +i*20)
 
         for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
-            label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),font = ("Helvetica", 8)))
+            label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
             label_pseudo[-1].place(x = 4, y = 75 + 20*len(score) +i*20)
 
 User_name = "Unknown"
@@ -118,7 +118,7 @@ score = get_score_list() #récupération du scoreboard
 #############---------Création des labels et autres au contour du Frame_main-------#########################
 
 Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Berlin Sans FB", 45), bg ='#111111', foreground = 'green2', relief = GROOVE)
-Title_main.place(x = 250, y = 10)
+Title_main.place(x = 300, y = 10)
 
 Title_ranking = Label(Frame_ranking, text = 'Classements',font = ("Berlin Sans FB", 20), bg = '#111111', foreground = 'green2', relief = GROOVE)
 Title_ranking.place(x = 27, y = 5)
