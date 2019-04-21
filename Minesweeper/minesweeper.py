@@ -103,6 +103,8 @@ class demineur:
         else:
             self.dims = (30, 16)
             self.mine_Count = 99
+
+        self.first = False
         self.root.deiconify()   # affichage de la fenetre principale
         self.root.focus_force() # on force le focus
         #on détermine la taille de la fenetre principale suivant le niveau
@@ -130,23 +132,6 @@ class demineur:
 
         self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #création de la grille contenant l'état des cellules
 
-        for _ in range(self.mine_Count): #loop pour placer les bombes
-            turn = True
-            #boucle pour choisir des coordonées tant qu'on a pas sélectionné un emplacement libre
-            while turn == True:
-                temp = (randint(0, self.dims[0]-1), randint(0, self.dims[1]-1))
-                if self.grid[temp[0]][temp[1]] != -1:
-                    self.grid[temp[0]][temp[1]] = -1
-                    turn = False
-
-        #détermination du nombre de bombes voisines par cases
-        for x in range(self.dims[0]):
-            for y in range(self.dims[1]):
-                if self.grid[x][y] == -1: #on boucle dans les cases
-                    for xp, yp in around(x, y): #si c'est une bombe, on ajoute 1 à chaque case autours
-                        if self.dims[0] > xp >-1 and self.dims[1] > yp >= 0 and self.grid[xp][yp]!=-1:
-                            self.grid[xp][yp] += 1
-
         self.canvas = Canvas(self.Frame_right, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "red", highlightthickness=0)
         self.canvas.bind("<Button>", self.click)
         self.canvas.place(x = 0, y = 0)
@@ -170,6 +155,24 @@ class demineur:
     def click(self, event): #fonction déclanchée avec un clique de la souris sur le canvas
         x = event.x//self.border #on détermine l'emplacement dans le tableau de la case cliquée
         y = event.y//self.border
+        if self.first == False:
+            self.first = True
+            for _ in range(self.mine_Count): #loop pour placer les bombes
+                turn = True
+                #boucle pour choisir des coordonées tant qu'on a pas sélectionné un emplacement libre
+                while turn == True:
+                    temp = (randint(0, self.dims[0]-1), randint(0, self.dims[1]-1))
+                    if self.grid[temp[0]][temp[1]] != -1 and ((temp[0] < x-1 or temp[0] > x+1) and (temp[1] < y-1 or temp[1] > y+1)):
+                        self.grid[temp[0]][temp[1]] = -1
+                        turn = False
+
+            #détermination du nombre de bombes voisines par cases
+            for i in range(self.dims[0]):
+                for j in range(self.dims[1]):
+                    if self.grid[i][j] == -1: #on boucle dans les cases
+                        for ip, jp in around(i, j): #si c'est une bombe, on ajoute 1 à chaque case autours
+                            if self.dims[0] > ip >-1 and self.dims[1] > jp >= 0 and self.grid[ip][jp]!=-1:
+                                self.grid[ip][jp] += 1
         if event.num == 1: # si clique gauche
             value = self.grid[x][y] #valeur de la grille à l'amplacement cliqué
             #si l'image est un drapeau, on l'enlève
@@ -212,7 +215,7 @@ class demineur:
             elif self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Normal_Image) and self.flag_count < self.mine_Count:
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Flag_Image)
                 self.flag_count += 1
-            self.label_flag["text"] = "Drapeaux restants: {}".format(self.mine_Count - self.flag_count)        
+            self.label_flag["text"] = "Drapeaux restants: {}".format(self.mine_Count - self.flag_count)
         count = 0 #compte des bombes recouvertes par un drapeau (voir plus haut)
         for i in range(self.dims[0]):
             for j in range(self.dims[1]):
