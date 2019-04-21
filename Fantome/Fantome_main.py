@@ -341,6 +341,9 @@ class ghost:
     def next(self):
         self.question.destroy()
         self.level += 1
+        if self.level == len(level_map)+1:  # si le joueur a atteint la fin de la liste des niveaux
+            self.exit()
+            return
         self.Frame_right.destroy()               # destruction des frames
         self.start()
 
