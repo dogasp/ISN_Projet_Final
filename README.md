@@ -92,3 +92,9 @@ reprise du projet
 ajout des meilleurs joueurs pour le snake et le tetris
 
 partie graphique améliorée
+
+## Dimanche 21 Avril 2019
+
+amélioration de l'algorithme de placement des bombes démineur
+
+### Fantome finis
