@@ -29,9 +29,9 @@ class ghost:
         self.Jerry_2 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_2.png")
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
-        self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
-        #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
-        #self.Frame_main1_wind2.create_image(335,265,image =Fond_Frame_main1_wind2)
+        self.Frame_main1_wind2.pack(ipadx = 670, ipady = 526)
+        self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Ghost2.png")
+        self.Frame_main1_wind2.create_image(335,263,image =self.Fond_Frame_main1_wind2)
         self.Frame_main2_wind2 = Frame(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE)
         self.Frame_main2_wind2.place(x = 60, y = 45)
         self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
