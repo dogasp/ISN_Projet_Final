@@ -148,7 +148,7 @@ class snake:
 
         #########------------Labels et autres-----------##################################
 
-        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,activebackground = 'green2', foreground = 'green2', bg = 'black', font = ("Helvetica", 15), cursor ='hand2',command = self.exit)
+        self.Button_quit = Button(self.Frame_top, text = 'QUIT',activebackground = '#00cc00', foreground = '#00cc00', bg = 'black', font = ("Helvetica", 15), cursor ='hand2',command = self.exit)
         self.Button_quit.place(x = 610, y = 19)
 
         self.grille = Canvas(self.Frame_right, width = 501, height = 501, bg = "#1a1a1a", highlightthickness=0)
@@ -163,10 +163,10 @@ class snake:
         self.show_conseils = Label(self.Canvas_Frame2, text = "Why do pythons live \n on land?  Because it's\n above C level.",bg = 'white', font = ("Helvetica", 10))
         self.show_conseils.place(x = 38, y = 50 )
 
-        self.Pause_Button = Button(self.Frame_top, text = "PAUSE",activebackground = 'green2',foreground = 'green2', bg = 'black', font = ("Helvetica", 15), cursor ='hand2', command = self.pause_command)
+        self.Pause_Button = Button(self.Frame_top, text = "PAUSE",activebackground = '#00cc00',foreground = '#00cc00', bg = 'black', font = ("Helvetica", 15), cursor ='hand2', command = self.pause_command)
         self.Pause_Button.place(x = 510, y = 19)
 
-        self.start_button = Button(self.Frame1, image = self.Start_image, cursor ='hand2', bg = 'green2',activebackground = 'black',  command = self.start_game)
+        self.start_button = Button(self.Frame1, image = self.Start_image, cursor ='hand2', bg = '#00cc00',activebackground = 'black',  command = self.start_game)
         self.start_button.place(x = 50, y = 15)
 
         self.Score = Label(self.Frame1, text = "Score : 0", foreground = 'green2', background = 'black', relief = GROOVE, font=("Berlin Sans FB", 20))

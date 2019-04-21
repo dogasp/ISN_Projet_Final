@@ -102,7 +102,7 @@ Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
 
 image_de_fond = PhotoImage(file = "thumbnail/image_de_fond.png")
 
-Frame_main = Canvas(root_main,borderwidth=2, relief=GROOVE)
+Frame_main = Canvas(root_main,highlightthickness=0, borderwidth = 2, bg = '#111111', relief=GROOVE)
 Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
 Frame_main.create_image(450,265, image = image_de_fond)
 
@@ -117,24 +117,24 @@ score = get_score_list() #récupération du scoreboard
 
 #############---------Création des labels et autres au contour du Frame_main-------#########################
 
-Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Berlin Sans FB", 45), bg ='#111111', foreground = 'green2', relief = GROOVE)
+Title_main = Label(Frame_top, text = 'La Caverne Aux Jeux',font = ("Berlin Sans FB", 45), bg ='#111111', foreground = '#00e600', relief = GROOVE)
 Title_main.place(x = 300, y = 10)
 
-Title_ranking = Label(Frame_ranking, text = 'Classements',font = ("Berlin Sans FB", 20), bg = '#111111', foreground = 'green2', relief = GROOVE)
+Title_ranking = Label(Frame_ranking, text = 'Classements',font = ("Berlin Sans FB", 20), bg = '#111111', foreground = '#00e600', relief = GROOVE)
 Title_ranking.place(x = 27, y = 5)
 
 ################---------Création du Classement-----------------------------################################
-Label(Frame_ranking, text = "Rang" + " "*8 + "Nom" + " "*24 + "Score  " ,font = ("Helvetica",9), bg = '#111111', foreground = 'green2', relief = GROOVE).place(x = 2, y = 50) #légende
+Label(Frame_ranking, text = "Rang" + " "*8 + "Nom" + " "*24 + "Score  " ,font = ("Helvetica",9), bg = '#111111', foreground = '#00e600', relief = GROOVE).place(x = 2, y = 50) #légende
 label_pseudo = []
 label_score = []
 for i in range(len(score)): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
-    label_pseudo.append(Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
+    label_pseudo.append(Label(Frame_ranking,text = "#{} :       {}".format(i+1, score[i][0]),bg = '#111111', foreground = '#00e600',font = ("Helvetica", 8)))
     label_pseudo[-1].place(x = 4, y = 75 +i*20)
-    label_score.append(Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
+    label_score.append(Label(Frame_ranking, text = "{}".format(str(int(score[i][1]))),bg = '#111111', foreground = '#00e600',font = ("Helvetica", 8)))
     label_score[-1].place(x = 160, y = 75 +i*20)
 
 for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
-    label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),bg = '#111111', foreground = 'green2',font = ("Helvetica", 8)))
+    label_pseudo.append(Label(Frame_ranking,text = "#{} :".format(i+1+len(score)),bg = '#111111', foreground = '#00e600',font = ("Helvetica", 8)))
     label_pseudo[-1].place(x = 4, y = 75 + 20*len(score) +i*20)
 
 
@@ -146,14 +146,14 @@ for i in range(9):
     Frame_main.rowconfigure(i, weight = 1)
     Frame_main.columnconfigure(i ,weight =1)
 
-Label_list0= Label(Frame_main, text = nom_de_jeux[0],font = ("Berlin Sans FB", 14), relief = GROOVE) #labels
-Label_list1= Label(Frame_main, text = nom_de_jeux[1],font = ("Berlin Sans FB", 14), relief = GROOVE)
-Label_list2= Label(Frame_main, text = nom_de_jeux[2],font = ("Berlin Sans FB", 14), relief = GROOVE)
-Label_list3= Label(Frame_main, text = nom_de_jeux[3],font = ("Berlin Sans FB", 14), relief = GROOVE)
-Label_list4= Label(Frame_main, text = nom_de_jeux[4],font = ("Berlin Sans FB", 14), relief = GROOVE)
-Label_list5= Label(Frame_main, text = nom_de_jeux[5],font = ("Berlin Sans FB", 14), relief = GROOVE)
-Label_list6= Label(Frame_main, text = nom_de_jeux[6],font = ("Berlin Sans FB", 14), relief = GROOVE)
-Label_list7= Label(Frame_main, text = nom_de_jeux[7],font = ("Berlin Sans FB", 14), relief = GROOVE)
+Label_list0= Label(Frame_main, text = nom_de_jeux[0],bg = 'white', foreground = 'black',font = ("Berlin Sans FB", 14), relief = RIDGE, borderwidth = 2) #labels
+Label_list1= Label(Frame_main, text = nom_de_jeux[1],bg = 'white', foreground = 'black',font = ("Berlin Sans FB", 14), relief = RIDGE, borderwidth = 2)
+Label_list2= Label(Frame_main, text = nom_de_jeux[2],bg = 'white', foreground = 'black',font = ("Berlin Sans FB", 14), relief = RIDGE, borderwidth = 2)
+Label_list3= Label(Frame_main, text = nom_de_jeux[3],bg = 'white', foreground = 'black',font = ("Berlin Sans FB", 14), relief = RIDGE, borderwidth = 2)
+Label_list4= Label(Frame_main, text = nom_de_jeux[4],bg = 'white', foreground = 'black',font = ("Berlin Sans FB", 14), relief = RIDGE, borderwidth = 2)
+Label_list5= Label(Frame_main, text = nom_de_jeux[5],bg = 'white', foreground = 'black',font = ("Berlin Sans FB", 14), relief = RIDGE, borderwidth = 2)
+Label_list6= Label(Frame_main, text = nom_de_jeux[6],bg = 'white', foreground = 'black',font = ("Berlin Sans FB", 14), relief = RIDGE, borderwidth = 2)
+Label_list7= Label(Frame_main, text = nom_de_jeux[7],bg = 'white', foreground = 'black',font = ("Berlin Sans FB", 14), relief = RIDGE, borderwidth = 2)
 
 Label_list0.grid(row = 1, column = 1)
 Label_list1.grid(row = 1, column = 3)

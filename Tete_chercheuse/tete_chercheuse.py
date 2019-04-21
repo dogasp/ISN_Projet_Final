@@ -106,7 +106,7 @@ def warning(): #warning appelé au moment du clique sur le bouton skip au niveau
 """######################------------------Début du Jeu---------------------------########################################"""
 
 def click(event): #fonction appelée lors du clique de la souris sur le canvas
-    global box_placed
+    global box_placed, nbx
     x = event.x #on récupère la position de la souris sur l'écran
     y = event.y
 
@@ -121,9 +121,24 @@ def click(event): #fonction appelée lors du clique de la souris sur le canvas
         table[i][j] = "0"    # on l'enlève
         box_placed-=1        # on décrémente le compteur en actualisant l'affichage
         show_count['text'] = "Nombre de palettes: %s" %str(box_placed)
+    elif table[i][j] == "P":
+        nbx +=1
+    update()
+
+def click2(event):
+    global nbl
+    x = event.x #on récupère la position de la souris sur l'écran
+    y = event.y
+
+    i = int(x//cell_width) #on convertit la position de la souris en indice pour le tableau
+    j = int(y//cell_height)
+    if table[i][j] == "R":
+        nbl +=1
+        print(nbl)
     update()
 
 def update(Print_Score = True): #fonction pour regénérer l'affichage
+    global score
     Table.delete("all") #on supprime tout ce qu'il y a sur le canvas
 
     for i in range(nbcases_width): #recréation des lignes
@@ -153,9 +168,15 @@ def update(Print_Score = True): #fonction pour regénérer l'affichage
     if Print_Score == True: #on peut appeler la fonction update sans actualiser le score
         show_score["text"] = "Score: %s" %str(int(sum(score))) #actualisation du score
 
+
+
+
 def end_game(): #fonction appelée quand la partie se termine
     global question, box_placed, score_temp
-    score_temp = (10000/(box_placed*10 + time_game*0.2) + score_star) * level #calcul du score
+    if nbx == 3 and nbl == 2:
+        score_temp = 10000 + (10000/(box_placed*10 + time_game*0.2) + score_star) * level
+    else:
+        score_temp = (10000/(box_placed*10 + time_game*0.2) + score_star) * level #calcul du score
     show_score["text"] = "Score: %s"%str(int(sum(score + [score_temp]))) #on actualise l'affichage
     Button_restart["state"] = "disabled" #désactivation du bouton restart
     update(False)
@@ -257,13 +278,16 @@ def restart_button(): #si on clique sur le bouton pour restart
     restart()   #restart de l'application
 
 def restart(): #fonction appelée pour redémarer la partie
-    global table, timer_start, time_game, box_placed, index_robot, score_star, score
+    global table, timer_start, time_game, box_placed, index_robot, score_star, score, nbx, nbl
     Button_restart["state"] = "normal" #on réactive le bouton restart
+    nbl = 0
+    nbx = 0
     index_robot = 0 #on repositionne le robot à droite
     score[-1] -= 50*level #pénalité
     Button_start["state"] = "normal" #réactivation du bouton start
     time_game = box_placed = score_star = 0 #on réinitaialise des variables de jeu
-    Table.bind("<Button-1>", click) #rebind du clique droit
+    Table.bind("<Button-1>", click)  #rebind du clique droit
+    Table.bind("<Button-2>", click2)
     show_time['text'] = "Temps: %s" %str(time_game) #actualisation des affichages
     show_count['text'] = "Nombre de palettes: %s" %str(box_placed)
 
@@ -287,7 +311,7 @@ def exit(): #fonction pour quitter, elle se charge de détruire les fenètres la
 def Tete(user): #fonction principale
     global root_tete, robot, index_robot, Flag, End, Frame_top, Frame_right, Frame_left, Frame_down, Table, Frame1, Caisse, Wall, Red_Coin, Yellow_Coin, show_score
     global Frame2, Title_level, show_time, show_count, nbcases_width, nbcases_height, cell_width, cell_height, table, level, score, score_star, Button_start
-    global User_name, Button_restart
+    global User_name, Button_restart, nbx, nbl
     #preparation du jeu
     User_name = user #nom d'utilisateur
     rules_game() #on execute les rêgles du jeu et le scoreboard
@@ -305,7 +329,9 @@ def Tete(user): #fonction principale
     nbcases_width = nbcases_height = 10 #dimensions
     cell_width = 500/nbcases_width #dimensions des cellules
     cell_height = 500/nbcases_height
-    score_star = 0                  #bonnus des pièces
+    score_star = 0            #bonnus des pièces
+    nbx = 0
+    nbl = 0
 
     table = [[0 for i in range(nbcases_width)] for j in range(nbcases_height)]#tableau
     level = 1 #niveau

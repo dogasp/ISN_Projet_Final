@@ -90,7 +90,7 @@ class pong:
         self.Frame1.pack(side = TOP)
         self.Frame2.pack(side = BOTTOM)
 
-        self.rayon = 15
+        self.rayon = 75
 
         self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'white')
         self.Frame_right.pack(side = RIGHT)
@@ -108,9 +108,6 @@ class pong:
         self.root.bind("<KeyPress>", self.start_move)
         self.root.bind("<KeyRelease>", self.stop_move)
         self.Canvas_dessine.delete("all")
-        self.Canvas_dessine.create_rectangle(2,2,698,498)
-        self.Canvas_dessine.create_line(349,0,349,498)
-        self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon, fill = 'darkgrey')
         self.run = True
         self.touch = 0
         self.speed = 0
@@ -119,7 +116,7 @@ class pong:
         self.bot = Board(self.width-10, self)
         self.ball = Ball(self)
         self.update()
-    
+
     def start_move(self, event):
         if self.pressing != True:
             self.pressing = True
@@ -154,7 +151,7 @@ class pong:
         self.Canvas_dessine.delete("all")
         self.Canvas_dessine.create_rectangle(2,2,698,498, outline = "white")
         self.Canvas_dessine.create_line(349,0,349,498, fill = "white", dash = (10,10))
-        #self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon, fill = 'white')
+        self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon,outline = 'white')
         if self.launch != 0:
             self.ball.launch(self.launch)
 
