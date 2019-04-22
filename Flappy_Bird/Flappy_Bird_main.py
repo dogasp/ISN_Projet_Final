@@ -59,7 +59,7 @@ class bird:
         self.Rules4 = Label(self.Frame_main2_wind2, text = "L'astuce est alors de bloquer le robot grâce\n\
         aux bloques disposés sur la carte",font = ("Berlin Sans FB", 12))
         self.Frame_main2_wind2.after(3500, lambda: self.Rules4.place(x = 40, y = 315))
-#
+
         self.CANVAS4 = Canvas(self.Frame_main2_wind2, width = 130, height = 95)
         self.Frame_main2_wind2.after(4000, lambda: self.CANVAS4.place(x = 388, y = 293 ))
         self.CANVAS4.create_image(65, 47,image = self.Jerry_2)
@@ -71,7 +71,7 @@ class bird:
 
         """#################----------------- début du jeu ----------------#################### """
         self.root = Toplevel()
-        self.root.geometry("700x550")
+        self.root.geometry("900x550")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.resizable(False,False)
         self.root.title('Flappy Bird')
@@ -79,7 +79,7 @@ class bird:
 
         ########-----------Frames Principaux------------#######################################
         self.Frame_left = Frame(self.root, width = 200, height = 500, bg = 'white')
-        self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'grey')
+        self.Frame_top = Frame(self.root, width = 900, height = 50, bg = 'grey')
 
         ########-----------Frames Secondaires------------#######################################
         self.Frame1 = Frame(self.Frame_left, width = 200, height = 200, bg = 'yellow')
@@ -105,7 +105,7 @@ class bird:
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
-        #Scoreboard(self.Frame_main1_wind2, self.show_rules, "Ghost", self.User_name)
+        #Scoreboard(self.Frame_main1_wind2, self.show_rules, "Flappy_Bird", self.User_name)
         self.show_rules.destroy()
         self.show_rules.quit()
 
@@ -120,11 +120,64 @@ class bird:
 
     def start(self):
         self.root.focus_force()
-        self.root.bind("<space>", self.up)
-        self.root.bind("<Return>", self.up)
+        self.root.bind("<space>", self.bird_up)
+        self.root.bind("<Return>", self.tuyau)
 
-        self.Canvas_world = Canvas(self.Frame_right, highlightthickness=0)
-        self.Canvas_world.place(0,0)
+        self.rayon = 15
+        self.x = 0
+        self.y = -80
+        self.dx = -0.2
+        self.dy = 0.2
+        self.vitesse = 0
+
+
+
+        self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'black')
+        self.Frame_right.pack(side = RIGHT)
+
+        self.Canvas_world = Canvas(self.Frame_right, width = 700, height = 500, highlightthickness=0)
+        self.Canvas_world.place(x = 0, y = 0)
+
+        self.rond =  self.Canvas_world.create_oval(100-self.rayon, 100-self.rayon, 100+self.rayon, 100+self.rayon)
+        self.trait = self.Canvas_world.create_line(250,0,250,500)
+
+
+
+        self.bird_down()
+
+    def bird_up(self, event = None):
+        self.vitesse = 0
+        [xmin,ymin,xmax,ymax] = self.Canvas_world.coords(self.rond)
+        self.Canvas_world.move(self.rond, self.x,self.y)
+        if ymin +self.y+10 < 0:
+            self.dead()
+
+
+
+
+    def bird_down(self):
+        self.vitesse +=1
+        [xmin,ymin,xmax,ymax] = self.Canvas_world.coords(self.rond)
+        self.Canvas_world.move(self.rond, self.x,self.vitesse)
+        self.root.after(50,self.bird_down)
+        if ymin -self.y-10 > 500:
+            self.dead()
+
+
+
+    def tuyau(self,  event = None):
+
+        self.Canvas_world.move(self.trait, self.dx,0)
+        self.root.after(5,self.tuyau)
+
+
+
+
+    def dead(self):
+        self.root.destroy()
+        self.root.quit()
+
+
 
 
 def Flappy_Bird(User):           # fonction pour commencer le jeu

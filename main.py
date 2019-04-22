@@ -159,7 +159,7 @@ Label_list7= Label(Frame_main, text = nom_de_jeux[7],bg = 'white', foreground = 
 Label_list0.grid(row = 1, column = 1)
 Label_list1.grid(row = 1, column = 3)
 Label_list2.grid(row = 1, column = 5)
-Label_list3.grid(row = 1, column = 7)
+Label_list3.grid(row = 1, column = 7)  
 Label_list4.grid(row = 4, column = 1)
 Label_list5.grid(row = 4, column = 3)
 Label_list6.grid(row = 4, column = 5)
