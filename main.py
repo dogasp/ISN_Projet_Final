@@ -10,6 +10,7 @@ from Minesweeper.minesweeper import *
 from Pendu.pendu import *
 from Tetris.tetris import *
 from Pong.Pong_main import*
+from Flappy_Bird.Flappy_Bird_main import*
 
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
@@ -172,5 +173,6 @@ bouton_3 = BoutonS(5, 5, "Minesweeper", Minesweeper)
 bouton_4 = BoutonS(5, 7, "Pendu", Pendu)
 bouton_5 = BoutonS(5, 1, "Tetris", Tetris)
 bouton_6 = BoutonS(2, 5, "Pong", Pong)
+bouton_7 = BoutonS(2, 7, "Pong", Flappy_Bird)
 
 root_main.mainloop()
