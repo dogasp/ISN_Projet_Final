@@ -162,7 +162,7 @@ class demineur:
                 #boucle pour choisir des coordonées tant qu'on a pas sélectionné un emplacement libre
                 while turn == True:
                     temp = (randint(0, self.dims[0]-1), randint(0, self.dims[1]-1))
-                    if self.grid[temp[0]][temp[1]] != -1 and ((temp[0] < x-1 or temp[0] > x+1) and (temp[1] < y-1 or temp[1] > y+1)):
+                    if self.grid[temp[0]][temp[1]] != -1 and not (x+1 >= temp[0] >= x-1 and y+1 >= temp[1] >= y-1):
                         self.grid[temp[0]][temp[1]] = -1
                         turn = False
 
