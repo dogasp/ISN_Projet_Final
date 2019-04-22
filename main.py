@@ -18,7 +18,7 @@ class BoutonS: #classe pour gérer les boutons interactifs
         Frame_main.create_text(y*(450/5) + 20, x*(265/4)- 90, text = name, font = ("Berlin Sans FB", 20), fill = "white")
         #self.created = Frame_main.create_image(y*(450/5) + 20, x*(265/4), image = self.image)
         #Frame_main.tag_bind(self.created, "<Button-1>", self.command)
-        self.button = Button(Frame_main, image = self.image, cursor ='hand2',  command = self.command) #création du boutton
+        self.button = Button(Frame_main, image = self.image, cursor ='hand2',  command = self.command, highlightthickness = 0, borderwidth = 0) #création du boutton
         self.button.grid(row = x, column = y)
         self.jeux = jeux
         self.run = run
