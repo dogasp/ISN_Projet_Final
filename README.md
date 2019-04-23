@@ -98,3 +98,11 @@ partie graphique améliorée
 amélioration de l'algorithme de placement des bombes démineur
 
 ### Fantome finis
+
+## Lundi 22 Avril 2019:
+
+début de travail sur Flappy bird
+
+correction algorithme démineur, correction niveaux Tetris
+
+ajout de la barre de scroll dans le menus principal pour faire défiler les jeux
