@@ -18,8 +18,6 @@ class BoutonS: #classe pour gérer les boutons interactifs
         Frame_main.create_text(y*(450/5) + 20, x*(265/4)- 90, text = name, font = ("Berlin Sans FB", 20), fill = "white")
         self.created = Frame_main.create_image(y*(450/5) + 20, x*(265/4), image = self.image)
         Frame_main.tag_bind(self.created, "<Button-1>", self.command)
-        #self.button = Button(Frame_main, image = self.image, cursor ='hand2',  command = self.command, highlightthickness = 0, borderwidth = 0) #création du boutton
-        #self.button.grid(row = x, column = y)
         self.jeux = jeux
         self.run = run
 
@@ -109,11 +107,11 @@ image_de_fond = PhotoImage(file = "thumbnail/image_de_fond.png")
 
 Frame_main = Canvas(root_main,highlightthickness=0, borderwidth = 2, bg = '#111111', relief=GROOVE, scrollregion = (0, 0, 250, 1000))
 Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
-Frame_main.create_image(450,265, image = image_de_fond)
-Frame_main.create_image(450,889, image = image_de_fond)
+Frame_main.create_image(380, 537, image = image_de_fond)
+#Frame_main.create_image(450,889, image = image_de_fond)
 
-scrollY = Scrollbar(root_main, orient = "vertical", command = Frame_main.yview)
-scrollY.place(x = 960, y = 102, height = 450)
+scrollY = Scrollbar(root_main, orient = "vertical", cursor = 'hand2', command = Frame_main.yview)
+scrollY.place(x = 962, y = 102, height = 456)
 
 Frame_main['yscrollcommand'] = scrollY.set
 Frame_main.bind("<MouseWheel>", lambda event: Frame_main.yview_scroll(int(-1*(event.delta/120)), "units"))
