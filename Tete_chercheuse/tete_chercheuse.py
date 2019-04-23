@@ -134,7 +134,6 @@ def click2(event):
     j = int(y//cell_height)
     if table[i][j] == "R":
         nbl +=1
-        print(nbl)
     update()
 
 def update(Print_Score = True): #fonction pour regénérer l'affichage
@@ -167,9 +166,6 @@ def update(Print_Score = True): #fonction pour regénérer l'affichage
 
     if Print_Score == True: #on peut appeler la fonction update sans actualiser le score
         show_score["text"] = "Score: %s" %str(int(sum(score))) #actualisation du score
-
-
-
 
 def end_game(): #fonction appelée quand la partie se termine
     global question, box_placed, score_temp

@@ -16,10 +16,10 @@ class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run, name): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
         self.image = PhotoImage(file = "thumbnail/" + jeux + ".png") #on charge l'immage correspondante au jeu
         Frame_main.create_text(y*(450/5) + 20, x*(265/4)- 90, text = name, font = ("Berlin Sans FB", 20), fill = "white")
-        #self.created = Frame_main.create_image(y*(450/5) + 20, x*(265/4), image = self.image)
-        #Frame_main.tag_bind(self.created, "<Button-1>", self.command)
-        self.button = Button(Frame_main, image = self.image, cursor ='hand2',  command = self.command, highlightthickness = 0, borderwidth = 0) #création du boutton
-        self.button.grid(row = x, column = y)
+        self.created = Frame_main.create_image(y*(450/5) + 20, x*(265/4), image = self.image)
+        Frame_main.tag_bind(self.created, "<Button-1>", self.command)
+        #self.button = Button(Frame_main, image = self.image, cursor ='hand2',  command = self.command, highlightthickness = 0, borderwidth = 0) #création du boutton
+        #self.button.grid(row = x, column = y)
         self.jeux = jeux
         self.run = run
 
@@ -29,6 +29,7 @@ class BoutonS: #classe pour gérer les boutons interactifs
         result = self.run(User_name) #on execute le jeu
         push_score(User_name, self.jeux, result) #on envois au serveur le score de la partie
         root_main.deiconify() #on fait réapparaite la fenetre principale
+        Frame_main['yscrollcommand'] = scrollY.set #rappel de la bare de scroll
 
         for label in label_score:
             label.destroy()
@@ -106,11 +107,16 @@ Frame_down.pack(ipadx = 900, ipady = 20,side = BOTTOM)
 
 image_de_fond = PhotoImage(file = "thumbnail/image_de_fond.png")
 
-Frame_main = Canvas(root_main,highlightthickness=0, borderwidth = 2, bg = '#111111', relief=GROOVE)
+Frame_main = Canvas(root_main,highlightthickness=0, borderwidth = 2, bg = '#111111', relief=GROOVE, scrollregion = (0, 0, 250, 1000))
 Frame_main.pack(ipadx = 900, ipady =530,side = BOTTOM)
 Frame_main.create_image(450,265, image = image_de_fond)
+Frame_main.create_image(450,889, image = image_de_fond)
 
+scrollY = Scrollbar(root_main, orient = "vertical", command = Frame_main.yview)
+scrollY.place(x = 960, y = 102, height = 450)
 
+Frame_main['yscrollcommand'] = scrollY.set
+Frame_main.bind("<MouseWheel>", lambda event: Frame_main.yview_scroll(int(-1*(event.delta/120)), "units"))
 
 
 Frame_ranking = Frame(Frame_left, width = 196 , height =280 , bg = '#111111', relief = GROOVE)
@@ -142,8 +148,8 @@ for i in range(10-len(score)): #si jamais la liste est plus petite que 10, on af
     label_pseudo[-1].place(x = 4, y = 75 + 20*len(score) +i*20)
 
 for i in range(9):
-    Frame_main.rowconfigure(i, weight = 1)
-    Frame_main.columnconfigure(i ,weight =1)
+    Frame_main.rowconfigure(i, minsize = 30, pad = 20)
+    Frame_main.columnconfigure(i, minsize = 25, pad = 10)
 
 #############----------Création du tableau et des Labels du Frame_main--------------#################################
 
@@ -151,9 +157,9 @@ bouton_0 = BoutonS(2, 1, "Tete", Tete, "Tête chercheuse")
 bouton_1 = BoutonS(2, 3, "Snake", Snake, "Snake")
 bouton_2 = BoutonS(5, 3, "Ghost", Ghost, "Tom & Jerry")
 bouton_3 = BoutonS(5, 5, "Minesweeper", Minesweeper, "Démineur")
-bouton_4 = BoutonS(5, 7, "Pendu", Pendu, "Pendu")
+bouton_4 = BoutonS(2, 5, "Pendu", Pendu, "Pendu")
 bouton_5 = BoutonS(5, 1, "Tetris", Tetris, "Tetris")
-bouton_6 = BoutonS(2, 5, "Pong", Pong, "Pong")
+bouton_6 = BoutonS(8, 5, "Pong", Pong, "Pong")
 bouton_7 = BoutonS(2, 7, "Pong", Flappy_Bird, "Flappy Bird")
 
 root_main.mainloop()

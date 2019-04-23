@@ -67,10 +67,12 @@ class Tile: #classe utilisée pour gérer les formes géométrique
                 parent.score += 120*(parent.speed//2 + 1)
             if parent.score > parent.Best_score:
                 parent.Best_score = parent.score
+            if rowCount != 0:
+                print(parent.Total_Row, rowCount, parent.Total_Row%10)
+            if rowCount != 0 and parent.Total_Row%10 + rowCount >= 10:
+                parent.speed += 2
 
             parent.Total_Row += rowCount
-            if rowCount != 0 and parent.Total_Row%10 == 0:
-                parent.speed += 2
             parent.aff_level["text"] = "Level = {}".format(int(parent.speed/2 + 1))
             parent.aff_score["text"] = "Score = {}".format(parent.score)
             parent.current = parent.next
