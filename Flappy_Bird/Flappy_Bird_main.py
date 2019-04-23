@@ -11,6 +11,7 @@ from math import*
 class bird:
     def __init__(self,user):
         self.User_name = user
+        self.Best_Score = 0
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('670x530')
@@ -105,7 +106,7 @@ class bird:
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
-        #Scoreboard(self.Frame_main1_wind2, self.show_rules, "Flappy_Bird", self.User_name)
+        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Flappy", self.User_name)
         self.show_rules.destroy()
         self.show_rules.quit()
 
