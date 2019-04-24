@@ -121,15 +121,8 @@ class bird:
 
     def start(self):
         self.root.focus_force()
-        self.root.bind("<space>", self.bird_up)
-        self.root.bind("<Return>", self.tuyau)
-
-        self.rayon = 15
-        self.x = 0
-        self.y = -80
-        self.dx = -0.2
-        self.dy = 0.2
-        self.vitesse = 0
+        self.tuyau1 = Pipe(self, 250,350)
+        self.Bird = Bird(self)
 
 
 
@@ -139,44 +132,62 @@ class bird:
         self.Canvas_world = Canvas(self.Frame_right, width = 700, height = 500, highlightthickness=0)
         self.Canvas_world.place(x = 0, y = 0)
 
-        self.rond =  self.Canvas_world.create_oval(100-self.rayon, 100-self.rayon, 100+self.rayon, 100+self.rayon)
         self.trait = self.Canvas_world.create_line(250,0,250,500)
 
+        self.tuyau1.create_pipe()
+        self.Bird.bird_down()
 
 
-        self.bird_down()
+
+class Bird:
+    def __init__(self, parent):
+        self.parent = parent
+        self.parent.root.bind("<space>", self.bird_up)
+        self.x = 0
+        self.y = -80
+        self.dx = -0.2
+        self.dy = 0.2
+        self.vitesse = 0
+        self.test2 = PhotoImage(file = 'Flappy_Bird/Ressources/test2.png')
+
 
     def bird_up(self, event = None):
-        self.vitesse = 0
-        [xmin,ymin,xmax,ymax] = self.Canvas_world.coords(self.rond)
-        self.Canvas_world.move(self.rond, self.x,self.y)
-        if ymin +self.y+10 < 0:
-            self.dead()
-
-
+        self.x_center_bird, self.y_center_bird=  self.parent.Canvas_world.coords(self.test2)
+        self.parent.Canvas_world.move(self.rond, self.x,self.y)
 
 
     def bird_down(self):
+        self.image_Bird = self.parent.Canvas_world.create_image(100,100,  image = self.test2)
         self.vitesse +=1
-        [xmin,ymin,xmax,ymax] = self.Canvas_world.coords(self.rond)
-        self.Canvas_world.move(self.rond, self.x,self.vitesse)
-        self.root.after(50,self.bird_down)
-        if ymin -self.y-10 > 500:
+        self.x_center_bird, self.y_center_bird =  self.parent.Canvas_world.coords(self.image_Bird)
+        self.parent.Canvas_world.move(self.test2, self.x,self.vitesse)
+        print(self.vitesse)
+        self.parent.root.after(50,self.bird_down)
+        if self.y_center_bird +self.vitesse + 10 > 500:
             self.dead()
 
 
+def dead(self):
+    self.root.destroy()
+    self.root.quit()
 
-    def tuyau(self,  event = None):
+class Pipe:
+    def __init__(self, parent, x_pipe = 0, y_pipe = randint(150,550)):
+        self.x_pipe = x_pipe
+        self.y_pipe = y_pipe
+        self.y_pipe_top = y_pipe - 75
+        self.y_pipe_down = y_pipe + 75
+        self.parent = parent
 
-        self.Canvas_world.move(self.trait, self.dx,0)
-        self.root.after(5,self.tuyau)
+
+        self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')
+
+    def create_pipe(self):
+        self.top_pipe =  self.parent.Canvas_world.create_image(self.x_pipe + 75, self.y_pipe_top/2,  image = self.test)
+        self.top_pipe =  self.parent.Canvas_world.create_image(self.x_pipe + 75, (self.y_pipe_top+700)/2,  image = self.test)
 
 
 
-
-    def dead(self):
-        self.root.destroy()
-        self.root.quit()
 
 
 
