@@ -101,6 +101,14 @@ class bird:
         self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
         self.show_time.pack(padx= 3, pady = 3)
 
+        self.root.bind("<space>", self.bird_up)
+        self.x = 0
+        self.y = -80
+        self.dx = -0.2
+        self.dy = 0.2
+        self.vitesse = 0
+        self.test2 = PhotoImage(file = 'Flappy_Bird/Ressources/test2.png')
+
         self.start()
         self.root.mainloop()
 
@@ -122,8 +130,6 @@ class bird:
     def start(self):
         self.root.focus_force()
         self.tuyau1 = Pipe(self, 250,350)
-        self.Bird = Bird(self)
-
 
 
         self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'black')
@@ -133,38 +139,24 @@ class bird:
         self.Canvas_world.place(x = 0, y = 0)
 
         self.trait = self.Canvas_world.create_line(250,0,250,500)
+        self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.test2)
 
         self.tuyau1.create_pipe()
-        self.Bird.bird_down()
-
-
-
-class Bird:
-    def __init__(self, parent):
-        self.parent = parent
-        self.parent.root.bind("<space>", self.bird_up)
-        self.x = 0
-        self.y = -80
-        self.dx = -0.2
-        self.dy = 0.2
-        self.vitesse = 0
-        self.test2 = PhotoImage(file = 'Flappy_Bird/Ressources/test2.png')
-
+        self.bird_down()
 
     def bird_up(self, event = None):
-        self.x_center_bird, self.y_center_bird=  self.parent.Canvas_world.coords(self.test2)
-        self.parent.Canvas_world.move(self.rond, self.x,self.y)
+        self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird)
+        self.Canvas_world.move(self.image_Bird, self.x,self.y)
 
 
     def bird_down(self):
-        self.image_Bird = self.parent.Canvas_world.create_image(100,100,  image = self.test2)
         self.vitesse +=1
-        self.x_center_bird, self.y_center_bird =  self.parent.Canvas_world.coords(self.image_Bird)
-        self.parent.Canvas_world.move(self.test2, self.x,self.vitesse)
-        print(self.vitesse)
-        self.parent.root.after(50,self.bird_down)
+        self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird)
+        self.Canvas_world.move(self.image_Bird, self.x,self.vitesse)
+        self.root.after(50,self.bird_down)
         if self.y_center_bird +self.vitesse + 10 > 500:
             self.dead()
+
 
 
 def dead(self):
