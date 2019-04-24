@@ -107,6 +107,7 @@ class bird:
         self.dx = -0.2
         self.dy = 0.2
         self.vitesse = 0
+        self.compte = 0
         self.test2 = PhotoImage(file = 'Flappy_Bird/Ressources/test2.png')
 
         self.start()
@@ -129,22 +130,36 @@ class bird:
 
     def start(self):
         self.root.focus_force()
-        self.tuyau1 = Pipe(self, 250,350)
+
+
+        self.tuyau0 = Pipe(self, 500,350)
+        self.tuyau1 = Pipe(self, 900, randint(150,550))
+        self.tuyau2 = Pipe(self, 1300, randint(150,550))
+        self.tuyau3 = Pipe(self, 1700, randint(150,550))
+        self.tuyau = [self.tuyau0,self.tuyau1,self.tuyau2,self.tuyau3]
 
 
         self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'black')
         self.Frame_right.pack(side = RIGHT)
 
-        self.Canvas_world = Canvas(self.Frame_right, width = 700, height = 500, highlightthickness=0)
+        self.Canvas_world = Canvas(self.Frame_right, width = 1700, height = 500, highlightthickness=0)
         self.Canvas_world.place(x = 0, y = 0)
 
         self.trait = self.Canvas_world.create_line(250,0,250,500)
         self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.test2)
 
+        self.tuyau0.create_pipe()
+        self.tuyau0.move_pipe()
         self.tuyau1.create_pipe()
+        self.tuyau1.move_pipe()
+        self.tuyau2.create_pipe()
+        self.tuyau2.move_pipe()
+        self.tuyau3.create_pipe()
+        self.tuyau3.move_pipe()
         self.bird_down()
 
     def bird_up(self, event = None):
+        self.vitesse = 0
         self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird)
         self.Canvas_world.move(self.image_Bird, self.x,self.y)
 
@@ -170,13 +185,46 @@ class Pipe:
         self.y_pipe_top = y_pipe - 75
         self.y_pipe_down = y_pipe + 75
         self.parent = parent
+        self.move_x = -8
+        self.compte = 0
+
+
 
 
         self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')
 
     def create_pipe(self):
         self.top_pipe =  self.parent.Canvas_world.create_image(self.x_pipe + 75, self.y_pipe_top/2,  image = self.test)
-        self.top_pipe =  self.parent.Canvas_world.create_image(self.x_pipe + 75, (self.y_pipe_top+700)/2,  image = self.test)
+        self.down_pipe =  self.parent.Canvas_world.create_image(self.x_pipe + 75, (self.y_pipe_top+700)/2,  image = self.test)
+
+    def move_pipe(self):
+        self.parent.Canvas_world.move(self.top_pipe, self.move_x,0)
+        self.parent.Canvas_world.move(self.down_pipe, self.move_x,0)
+        self.x_center_top_pipe, self.y_center_top_pipe =  self.parent.Canvas_world.coords(self.top_pipe)
+        self.x_center_down_pipe, self.y_center_down_pipe =  self.parent.Canvas_world.coords(self.down_pipe)
+        self.verif_pipe(self.x_center_top_pipe, self.y_center_top_pipe, self.x_center_down_pipe, self.y_center_down_pipe)
+
+    def verif_pipe(self, x_center_top_pipe, y_center_top_pipe, x_center_down_pipe, y_center_down_pipe):
+
+        if x_center_top_pipe + 75 < 0:
+            print(self.parent.compte)
+            self.parent.Canvas_world.delete(self.top_pipe)
+            self.parent.Canvas_world.delete(self.down_pipe)
+
+            self.parent.tuyau[self.compte].create_pipe()
+            self.parent.tuyau[self.compte].move_pipe()
+            self.parent.compte+=1
+            if self.parent.compte == 4:
+                self.parent.compte = 0
+        else:
+            self.parent.root.after(50,self.move_pipe)
+
+
+
+
+
+
+
 
 
 
