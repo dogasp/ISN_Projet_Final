@@ -164,7 +164,7 @@ class pendu:
 
         mess = "\nVeux-tu recommencer ?"
         if win == False:
-            mess = "Perdus !, le mot était {}".format(self.word) + mess
+            mess = "Perdus! le mot était {}".format(self.word) + mess
         else:
             mess = "Gagné" + mess
         question = askquestion("Restart", mess)
