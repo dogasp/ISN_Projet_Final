@@ -109,15 +109,13 @@ class bird:
         self.vitesse = 0
         self.compte = 0
         self.test2 = PhotoImage(file = 'Flappy_Bird/Ressources/test2.png')
-
         self.start()
         self.root.mainloop()
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Flappy", self.User_name)
-        self.show_rules.destroy()
-        self.show_rules.quit()
+        
 
 
     def quit_ranking(self):
@@ -132,11 +130,13 @@ class bird:
         self.root.focus_force()
 
 
-        self.tuyau0 = Pipe(self, 500,350)
-        self.tuyau1 = Pipe(self, 900, randint(150,550))
-        self.tuyau2 = Pipe(self, 1300, randint(150,550))
-        self.tuyau3 = Pipe(self, 1700, randint(150,550))
+        self.tuyau0 = Pipe(self)
+        self.tuyau1 = Pipe(self)
+        self.tuyau2 = Pipe(self)
+        self.tuyau3 = Pipe(self)
         self.tuyau = [self.tuyau0,self.tuyau1,self.tuyau2,self.tuyau3]
+
+
 
 
         self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'black')
@@ -148,15 +148,18 @@ class bird:
         self.trait = self.Canvas_world.create_line(250,0,250,500)
         self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.test2)
 
-        self.tuyau0.create_pipe()
+        self.tuyau0.create_pipe(500,350)
         self.tuyau0.move_pipe()
-        self.tuyau1.create_pipe()
+        self.tuyau1.create_pipe(900, randint(100,400))
         self.tuyau1.move_pipe()
-        self.tuyau2.create_pipe()
+        self.tuyau2.create_pipe(1300, randint(100,400))
         self.tuyau2.move_pipe()
-        self.tuyau3.create_pipe()
+        self.tuyau3.create_pipe(1700, randint(100,400))
         self.tuyau3.move_pipe()
         self.bird_down()
+
+
+
 
     def bird_up(self, event = None):
         self.vitesse = 0
@@ -172,52 +175,68 @@ class bird:
         if self.y_center_bird +self.vitesse + 10 > 500:
             self.dead()
 
+    def verif_bird(self, y_pipe_center_down, y_pipe_center_top):
+        print("bite")
+        self.y_pipe_down = y_pipe_center_down + 250
+        self.y_pipe_top = y_pipe_center_top -250
+        if self.y_pipe_down>self.y_center_bird - 25 or self.y_center_bird + 25> self.y_pipe_top:
+            self.dead()
+
+    def dead(self):
+        self.root.destroy()
+        self.root.quit()
 
 
-def dead(self):
-    self.root.destroy()
-    self.root.quit()
+
+
+
+
+
+
 
 class Pipe:
-    def __init__(self, parent, x_pipe = 0, y_pipe = randint(150,550)):
-        self.x_pipe = x_pipe
-        self.y_pipe = y_pipe
-        self.y_pipe_top = y_pipe - 75
-        self.y_pipe_down = y_pipe + 75
+    def __init__(self, parent):
         self.parent = parent
         self.move_x = -8
         self.compte = 0
-
-
-
-
         self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')
+        self.test3 = PhotoImage(file = 'Flappy_Bird/Ressources/test3.png')
+        self.length_pipe = 500
 
-    def create_pipe(self):
-        self.top_pipe =  self.parent.Canvas_world.create_image(self.x_pipe + 75, self.y_pipe_top/2,  image = self.test)
-        self.down_pipe =  self.parent.Canvas_world.create_image(self.x_pipe + 75, (self.y_pipe_top+700)/2,  image = self.test)
+    def create_pipe(self, x_pipe, y_pipe):
+        self.y_pipe_top = y_pipe - 75
+        self.y_pipe_down = y_pipe + 75
+        self.top_pipe =  self.parent.Canvas_world.create_image(x_pipe + 75, self.y_pipe_top - self.length_pipe/2,  image = self.test3)
+        self.down_pipe =  self.parent.Canvas_world.create_image(x_pipe + 75,self.y_pipe_down + self.length_pipe/2 ,  image = self.test)
+        print(x_pipe + 75,self.y_pipe_down + self.length_pipe/2)
 
     def move_pipe(self):
         self.parent.Canvas_world.move(self.top_pipe, self.move_x,0)
         self.parent.Canvas_world.move(self.down_pipe, self.move_x,0)
         self.x_center_top_pipe, self.y_center_top_pipe =  self.parent.Canvas_world.coords(self.top_pipe)
         self.x_center_down_pipe, self.y_center_down_pipe =  self.parent.Canvas_world.coords(self.down_pipe)
-        self.verif_pipe(self.x_center_top_pipe, self.y_center_top_pipe, self.x_center_down_pipe, self.y_center_down_pipe)
+        self.parent.root.after(50,self.move_pipe)
 
-    def verif_pipe(self, x_center_top_pipe, y_center_top_pipe, x_center_down_pipe, y_center_down_pipe):
+        self.verif_pipe()
 
-        if x_center_top_pipe + 75 < 0:
+    def verif_pipe(self):
+
+
+        if self.x_center_top_pipe + 75 < 0:
             print(self.parent.compte)
             self.parent.Canvas_world.delete(self.top_pipe)
             self.parent.Canvas_world.delete(self.down_pipe)
 
-            self.parent.tuyau[self.compte].create_pipe()
-            self.parent.tuyau[self.compte].move_pipe()
+            self.create_pipe(1475, randint(100,400))
+
             self.parent.compte+=1
-            if self.parent.compte == 4:
-                self.parent.compte = 0
-        else:
-            self.parent.root.after(50,self.move_pipe)
+
+        if 75<self.x_center_top_pipe <125:
+            self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)
+            #print("bite")
+
+
+
 
 
 
