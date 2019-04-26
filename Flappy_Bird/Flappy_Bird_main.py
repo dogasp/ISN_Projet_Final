@@ -103,12 +103,13 @@ class bird:
 
         self.root.bind("<space>", self.test_press)
         self.x = 0
-        self.y = -3.8
+        self.y = -3
         self.vitesse = 0
         self.compte = 0.4
         self.count_image = 12
         self.press = False
         self.copy_count = 0
+        self.verite = True
 
         self.liste_image = []
         for i in range(2,31):
@@ -135,6 +136,7 @@ class bird:
 
     def start(self):
         self.root.focus_force()
+        self.verite = True
 
         self.tuyau0 = Pipe(self)
         self.tuyau1 = Pipe(self)
@@ -151,12 +153,14 @@ class bird:
 
         self.Canvas_world.create_image(350,250,  image = self.background[randint(0,6)])
         self.ground = self.Canvas_ground.create_image(450,35,  image = self.ground_image)
-        self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.liste_image[self.count_image])
+
 
         self.tuyau0.create_pipe(500,350)
         self.tuyau1.create_pipe(900, randint(100,400))
         self.tuyau2.create_pipe(1300, randint(100,400))
         self.tuyau3.create_pipe(1700, randint(100,400))
+
+        self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.liste_image[int(self.count_image)])
 
 
         self.update()
@@ -168,18 +172,19 @@ class bird:
 
 
     def update(self):
-        self.bird_move()
-        self.tuyau0.move_pipe()
-        self.tuyau1.move_pipe()
-        self.tuyau2.move_pipe()
-        self.tuyau3.move_pipe()
+        if self.verite == True:
+            self.bird_move()
+            self.tuyau0.move_pipe()
+            self.tuyau1.move_pipe()
+            self.tuyau2.move_pipe()
+            self.tuyau3.move_pipe()
 
-        self.root.after(2,self.update)
+            self.root.after(2,self.update)
 
 
     def bird_move(self):
         x, y =  self.Canvas_ground.coords(self.ground)
-        self.Canvas_ground.move(self.ground, -5,0)
+        self.Canvas_ground.move(self.ground, -6,0)
         if x < 260:
             self.Canvas_ground.coords(self.ground, 450,35)
 
@@ -225,14 +230,15 @@ class bird:
             self.dead()
 
     def dead(self):
+        self.Canvas_world.delete("all")
+        self.verite = False
 
-        self.root.destroy()
-        self.root.quit()
+        self.start()
 
 class Pipe:
     def __init__(self, parent):
         self.parent = parent
-        self.move_x = -5
+        self.move_x = -6
         self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')
         self.test3 = PhotoImage(file = 'Flappy_Bird/Ressources/test3.png')
         self.length_pipe = 500
