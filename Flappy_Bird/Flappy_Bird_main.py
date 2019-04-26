@@ -101,19 +101,21 @@ class bird:
         self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
         self.show_time.pack(padx= 3, pady = 3)
 
-        self.root.bind("<space>", self.bird_up)
+        self.root.bind("<space>", self.test_press)
         self.x = 0
-        self.y = -80
-        self.dx = -0.2
-        self.dy = 0.2
+        self.y = -3.8
         self.vitesse = 0
-        self.compte = 0
-        self.count_image = 0
-        self.Bird_yellow = [PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow1.png'), PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow2.png'),PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow3.png')]
-        self.Bird_chute = [PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow1_pi8.png'), PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow1_pi4.png'), PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow1_pi3_8.png'), PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow1_pi2.png')]
+        self.compte = 0.4
+        self.count_image = 12
+        self.press = False
+        self.copy_count = 0
+
+        self.liste_image = []
+        for i in range(2,31):
+            self.liste_image.append(PhotoImage(file = 'Flappy_Bird/Ressources/{}.png'.format(i)))
+
         self.background = [PhotoImage(file = 'Flappy_Bird/Ressources/decor1.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor2.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor3.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor4.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor5.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor6.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor7.png')]
         self.ground_image = PhotoImage(file = 'Flappy_Bird/Ressources/ground.png')
-        self.Bird_up = [PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow1_up.png'), PhotoImage(file = 'Flappy_Bird/Ressources/Bird_yellow1_up.png')]
         self.start()
 
         self.root.mainloop()
@@ -121,7 +123,6 @@ class bird:
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Flappy", self.User_name)
-
 
 
     def quit_ranking(self):
@@ -134,7 +135,6 @@ class bird:
 
     def start(self):
         self.root.focus_force()
-
 
         self.tuyau0 = Pipe(self)
         self.tuyau1 = Pipe(self)
@@ -151,7 +151,7 @@ class bird:
 
         self.Canvas_world.create_image(350,250,  image = self.background[randint(0,6)])
         self.ground = self.Canvas_ground.create_image(450,35,  image = self.ground_image)
-        self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.Bird_yellow[0])
+        self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.liste_image[self.count_image])
 
         self.tuyau0.create_pipe(500,350)
         self.tuyau1.create_pipe(900, randint(100,400))
@@ -162,56 +162,55 @@ class bird:
         self.update()
 
 
+    def test_press(self,  event = None):
+        self.press = True
+
 
 
     def update(self):
-        self.bird_down()
+        self.bird_move()
         self.tuyau0.move_pipe()
         self.tuyau1.move_pipe()
         self.tuyau2.move_pipe()
         self.tuyau3.move_pipe()
 
-        self.root.after(50,self.update)
+        self.root.after(2,self.update)
 
 
-
-    def bird_up(self, event = None):
-        self.vitesse = 0
-        self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird)
-        self.Canvas_world.move(self.image_Bird, self.x,self.y)
-        self.count_image +=1
-        #self.Canvas_world.itemconfigure(self.image_Bird, image = self.Bird_yellow[self.count_image])
-        self.Canvas_world.itemconfigure(self.image_Bird, image = self.Bird_up[0])
-        if self.count_image == 3:
-            self.count_image = 0
-
-
-    def bird_down(self):
+    def bird_move(self):
         x, y =  self.Canvas_ground.coords(self.ground)
-        self.Canvas_ground.move(self.ground, -12,0)
-        self.vitesse +=2
-        self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird)
-        self.Canvas_world.move(self.image_Bird, self.x,self.vitesse)
-
-
-        if x < 350:
+        self.Canvas_ground.move(self.ground, -5,0)
+        if x < 260:
             self.Canvas_ground.coords(self.ground, 450,35)
 
-        elif (self.y_center_bird +self.vitesse + 10) > 500:
-            self.dead()
+        for _ in range(6):
+            if self.press == True:
+                self.vitesse = 0
+                self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird)
+                self.Canvas_world.move(self.image_Bird, self.x,self.y)
+                self.Canvas_world.itemconfigure(self.image_Bird, image = self.liste_image[int(self.count_image)])
+                if int(self.count_image) == 0:
+                    self.press = False
+                else:
+                    self.count_image -= self.copy_count/33
 
-        elif self.vitesse <5:
-            self.Canvas_world.itemconfigure(self.image_Bird, image = self.Bird_up[1])
-        elif self.vitesse > 35:
-            self.Canvas_world.itemconfigure(self.image_Bird, image = self.Bird_chute[3])
-        elif self.vitesse > 25:
-            self.Canvas_world.itemconfigure(self.image_Bird, image = self.Bird_chute[2])
-        elif self.vitesse > 15:
-            self.Canvas_world.itemconfigure(self.image_Bird, image = self.Bird_chute[1])
-        elif self.vitesse > 5:
-            self.Canvas_world.itemconfigure(self.image_Bird, image = self.Bird_chute[0])
+            elif self.press == False:
+                if self.count_image < 25:
+                    self.count_image *=1.023
+                    self.copy_count = self.count_image
 
+                    self.vitesse +=0.03
+                    self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird)
 
+                    if (self.y_center_bird +self.vitesse + 20) > 500:
+                        self.dead()
+                    self.Canvas_world.itemconfigure(self.image_Bird, image = self.liste_image[int(self.count_image)])
+                else:
+                    self.vitesse +=0.03
+                    self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird)
+                    if (self.y_center_bird +self.vitesse + 20) > 500:
+                        self.dead()
+                self.Canvas_world.move(self.image_Bird, self.x,self.vitesse)
 
 
 
@@ -233,8 +232,7 @@ class bird:
 class Pipe:
     def __init__(self, parent):
         self.parent = parent
-        self.move_x = -12
-        self.compte = 0
+        self.move_x = -5
         self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')
         self.test3 = PhotoImage(file = 'Flappy_Bird/Ressources/test3.png')
         self.length_pipe = 500
