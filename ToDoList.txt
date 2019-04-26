@@ -1,0 +1,5 @@
+interfaces: Tetris, Pendu
+
+afficher les lettres déjà entréees Pendu
+
+régler la vitesse de chute sur Tetris
