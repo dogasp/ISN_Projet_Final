@@ -3,6 +3,7 @@ from Reseau.client import *
 from tkinter import font
 sys.path.append('../')
 from Reseau.client import *
+
 from Tete_chercheuse.tete_chercheuse import *
 from Snake.Snake_main import *
 from Fantome.Fantome_main import *
@@ -68,6 +69,18 @@ def valider(event = None):
     root_user.destroy()
     root_user.quit()
 
+def para():
+    playground = Frame(root_main, width = 800, height = 500, bg = "#111111")
+    playground.place(x = 200, y = 100)
+    Button_para.config( image = door, command = lambda: leave_para(playground))
+
+    Label(playground, text = "Paramètres", font = ("Helvetica", 25), bg = "#111111").place(x = 300, y = 20)
+
+    
+def leave_para(playground):
+    playground.destroy()
+    Button_para.config(image = gearImg, command = para)
+
 root_user = Tk()
 root_user.geometry("300x120")
 root_user.bind("<Return>", valider)
@@ -120,6 +133,10 @@ Frame_main.bind("<MouseWheel>", lambda event: Frame_main.yview_scroll(int(-1*(ev
 Frame_ranking = Frame(Frame_left, width = 196 , height =280 , bg = '#111111', relief = GROOVE)
 Frame_ranking.place(x = 2, y = 70)
 
+gearImg = PhotoImage(file = 'Parametters/gear.png')
+door = PhotoImage(file = "Parametters/door.png")
+Button_para = Button(Frame_top, image = gearImg, bg = "#111111", borderwidth = 0, highlightthickness = 0, cursor = "hand2", command = para)
+Button_para.place(x = 900, y = 30)
 
 score = get_score_list() #récupération du scoreboard
 
