@@ -67,13 +67,12 @@ class Tile: #classe utilisée pour gérer les formes géométrique
                 parent.score += 120*(parent.speed//2 + 1)
             if parent.score > parent.Best_score:
                 parent.Best_score = parent.score
-            if rowCount != 0:
-                print(parent.Total_Row, rowCount, parent.Total_Row%10)
+
             if rowCount != 0 and parent.Total_Row%10 + rowCount >= 10:
                 parent.speed += 2
 
             parent.Total_Row += rowCount
-            parent.aff_level["text"] = "Level = {}".format(int(parent.speed/2 + 1))
+            parent.aff_level["text"] = "Level = {}".format(int((parent.speed)/2 + 1))
             parent.aff_score["text"] = "Score = {}".format(parent.score)
             parent.current = parent.next
             parent.next = Tile(choice([(L, "L"), (J, "J"), (I, "I"), (O, "O"), (Z, "Z"), (S, "S"), (T, "T")]))
@@ -189,7 +188,7 @@ class tetris:
     def update(self):
         if self.run == True:
             self.frame_count += 1
-            if self.frame_count % ((35-self.speed)/4) == 0:
+            if self.frame_count % int((35-self.speed)/3) == 0:
                 self.current.update(0, self)
             self.canvas.delete("all")
             for i in range(len(self.grid)):
@@ -198,10 +197,10 @@ class tetris:
                         self.canvas.create_image(i*(self.width/10) + self.width/20, j*(self.height/22) + self.height/44, image = self.image_tiles[self.grid[i][j]])
             self.current.update(2, self)
             self.next.update(1, self)
-            self.root.after(20, self.update)
+            self.root.after(40, self.update)
 
     def KeyPressed(self, event):
-        if event.keycode == 80:
+        if event.keysym == "space":
             if self.run == True:
                 self.run = False
             else:

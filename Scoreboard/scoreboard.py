@@ -12,17 +12,17 @@ class Scoreboard:
         TopFrame = Frame(parent, width = 550, height = 425, relief = GROOVE) #frame contenant le scoreboard
         TopFrame.place(x = posx, y = posy)
 
-        TopFrame.after(0,lambda: ranking_game.place(x = 100, y= 20 ))
         ranking_game = Label(TopFrame, text = 'Classement du jeu', font = ("Berlin Sans FB", 35), relief = GROOVE) #titre
+        ranking_game.place(x = 90, y= 20 )
 
         players = get_game_score_list(jeux) #on obtient la liste des meilleurs joueurs sur le jeu lancé
-        Label(TopFrame, text = "Rang" + " "*8 + "Nom" + " "*28 + "Score    " ,font = ("Helvetica",15), relief = GROOVE).place(x = 70, y = 100) #légende
+        Label(TopFrame, text = "Rang" + " "*8 + "Nom" + " "*28 + "Score    " ,font = ("Helvetica",15), relief = GROOVE).place(x = 70, y = 90) #légende
 
         for i in range(len(players)): #pour chaque éléments de la liste recue, on affiche le pseudo et le score
-            Label(TopFrame,text = "#{} :       {}".format(i+1, players[i][0]),font = ("Helvetica", 15)).place(x = 85, y = 130 +i*25)
-            Label(TopFrame, text = "{}".format(str(int(players[i][1]))),font = ("Helvetica", 15)).place(x = 385, y = 130 +i*25)
+            Label(TopFrame,text = "#{} :       {}".format(i+1, players[i][0]),font = ("Helvetica", 15)).place(x = 85, y = 120 +i*26)
+            Label(TopFrame, text = "{}".format(str(int(players[i][1]))),font = ("Helvetica", 15)).place(x = 385, y = 120 +i*26)
         for i in range(10-len(players)): #si jamais la liste est plus petite que 10, on affiche des emplacements vides
-            Label(TopFrame,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 15)).place(x = 85, y = 130 + 25*len(players) +i*25)
+            Label(TopFrame,text = "#{} :".format(i+1+len(players)),font = ("Helvetica", 15)).place(x = 85, y = 120 + 25*len(players) +i*26)
 
         User_score = get_player_score(User_name)
 
