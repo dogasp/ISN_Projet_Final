@@ -57,7 +57,7 @@ with open('Data/mots.txt', 'r') as file:
 
 def valider(event = None):
     global User_name
-    temp = entry.get().replace(" ", "_") 
+    temp = entry.get().replace(" ", "_")
     if temp == "" or len(temp) > 20:
         alert.place(x = 50, y = 100)
         return
@@ -76,7 +76,7 @@ def para():
 
     Label(playground, text = "Paramètres", font = ("Helvetica", 25), bg = "#111111").place(x = 300, y = 20)
 
-    
+
 def leave_para(playground):
     playground.destroy()
     Button_para.config(image = gearImg, command = para)

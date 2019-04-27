@@ -105,7 +105,7 @@ class bird:
         self.root.bind("<Button-1>", self.test_press)
 
         self.x = 0
-        self.y = -3.1
+        self.y = -2.8
         self.vitesse = 0
         self.compte = 0
         self.count_image = 12
@@ -161,8 +161,6 @@ class bird:
     def wait_game(self,event = None):
         self.root.focus_force()
 
-        print("bite")
-
         if self.play == False:
             if self.wait == True:
                 self.vitesse_wait += 0.9
@@ -180,7 +178,6 @@ class bird:
             self.root.after(75,self.wait_game)
 
         elif self.play == True:
-            print("end")
             self.press = False
             self.start()
 
@@ -188,6 +185,7 @@ class bird:
         self.Canvas_world.delete(self.tap1)
         self.Canvas_world.delete(self.tap2)
         self.Canvas_world.delete(self.hand)
+        self.Canvas_world.delete(self.image_Bird)
         self.root.focus_force()
         self.verite = True
 
@@ -200,6 +198,8 @@ class bird:
         self.tuyau1.create_pipe(1300, randint(100,400))
         self.tuyau2.create_pipe(1700, randint(100,400))
         self.tuyau3.create_pipe(2100, randint(100,400))
+
+        self.image_Bird_true = self.Canvas_world.create_image(125,220,  image = self.liste_image[int(self.count_image)])
         self.update()
 
     def test_press(self,  event = None):
@@ -225,11 +225,12 @@ class bird:
         for _ in range(6):
             if self.press == True:
                 self.vitesse = 0
-                self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird)
-                self.Canvas_world.move(self.image_Bird, self.x,self.y)
-                self.Canvas_world.itemconfigure(self.image_Bird, image = self.liste_image[int(self.count_image)])
-                if int(self.count_image) == 0:
+                self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird_true)
+                self.Canvas_world.move(self.image_Bird_true, self.x,self.y)
+                self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(self.count_image)])
+                if self.count_image <= 0:
                     self.press = False
+                    self.count_image = 0.5
                 else:
                     self.count_image -= self.copy_count/29
 
@@ -239,40 +240,51 @@ class bird:
                     self.copy_count = self.count_image
 
                     self.vitesse +=0.05
-                    self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird)
+                    self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)
 
                     if (self.y_center_bird +self.vitesse + 20) > 500:
                         self.dead()
-                    self.Canvas_world.itemconfigure(self.image_Bird, image = self.liste_image[int(self.count_image)])
+                    else:
+                        self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
+                        self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(self.count_image)])
+
                 else:
                     self.vitesse +=0.05
-                    self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird)
+                    self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)
                     if (self.y_center_bird +self.vitesse + 20) > 500:
                         self.dead()
                         self.verite = False
-                self.Canvas_world.move(self.image_Bird, self.x,self.vitesse)
+                    else:
+                        self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
+
 
     def verif_bird(self, y_pipe_center_down, y_pipe_center_top):
         self.y_pipe_down = y_pipe_center_down + 250
         self.y_pipe_top = y_pipe_center_top -250
         if self.y_pipe_down>self.y_center_bird - 24 or self.y_center_bird + 24> self.y_pipe_top>self.y_center_bird:
+            self.verite = False
+            self.count_image = 12
+            self.Canvas_world.delete(self.image_Bird)
             self.wait_dead()
             self.dead()
             self.root.unbind("<Button-1>")
             self.root.unbind("<space>")
 
     def wait_dead(self):
-        x, y =  self.Canvas_world.coords(self.image_Bird)
-        if y + self.vitesse < 500:
-            if self.count_image < 25:
-                self.count_image *=1.04
-                self.Canvas_world.itemconfigure(self.image_Bird, image = self.liste_image[int(self.count_image)])
-                self.vitesse +=0.05
-                self.Canvas_world.move(self.image_Bird, self.x,self.vitesse)
+        x, y =  self.Canvas_world.coords(self.image_Bird_true)
+        if y + self.vitesse +25< 500:
+            self.count_image *=1.5
+            if self.count_image < 250:
+                self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(abs(self.count_image)/10)])
+                self.vitesse +=0.5
+                self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
             else:
-                self.vitesse +=0.05
-                self.Canvas_world.move(self.image_Bird, self.x,self.vitesse)
-        self.root.after(50,self.wait_dead)
+                self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[28])
+                self.vitesse +=0.5
+                self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
+            self.root.after(25,self.wait_dead)
+        else:
+            self.Canvas_world.coords(self.image_Bird_true, x, 475)
 
     def dead(self):
         pass
@@ -303,11 +315,10 @@ class Pipe:
 
     def verif_pipe(self):
         if self.x_center_top_pipe + 65 < 0:
-            print(self.parent.compte)
             self.parent.Canvas_world.delete(self.top_pipe)
             self.parent.Canvas_world.delete(self.down_pipe)
 
-            self.create_pipe(randint(1360, 1500), randint(100,400))
+            self.create_pipe(randint(1380, 1500), randint(100,400))
 
             self.parent.compte+=1
 
