@@ -108,7 +108,7 @@ class bird:
         self.y = -2.9
         self.vitesse = 0
         self.compte = 0
-        self.count_image = 12
+        self.count_image = 8
         self.press = False
         self.copy_count = 0
         self.verite = True
@@ -120,10 +120,14 @@ class bird:
         for i in range(2,31):
             self.liste_image.append(PhotoImage(file = 'Flappy_Bird/Ressources/{}.png'.format(i)))
 
-        self.background = [PhotoImage(file = 'Flappy_Bird/Ressources/decor1.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor2.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor3.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor4.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor5.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor6.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor7.png')]
+        self.background = []
+        for k in range(6):
+            self.background.append(PhotoImage(file = 'Flappy_Bird/Ressources/decor{}.png'.format(k+1)))
+
         self.ground_image = PhotoImage(file = 'Flappy_Bird/Ressources/ground.png')
         self.tap = [PhotoImage(file = 'Flappy_Bird/Ressources/tap_right.png'), PhotoImage(file = 'Flappy_Bird/Ressources/tap_left.png')]
         self.hand_image = PhotoImage(file = 'Flappy_Bird/Ressources/hand.png')
+        self.image = PhotoImage(file = "Flappy_Bird/Ressources/game_over.png")
 
         self.Frame_right = Frame(self.root, width = 700, height = 570, bg = 'black')
         self.Frame_right.pack(side = RIGHT)
@@ -133,22 +137,19 @@ class bird:
         self.Canvas_ground = Canvas(self.Frame_right, width = 900, height = 70, highlightthickness=0)
         self.Canvas_ground.place(x = 0, y = 500)
 
-        self.Canvas_world.create_image(350,250,  image = self.background[randint(0,6)])
+        self.Canvas_world.create_image(350,250,  image = self.background[randint(0,5)])
         self.ground = self.Canvas_ground.create_image(450,35,  image = self.ground_image)
 #125
         self.image_Bird = self.Canvas_world.create_image(350,220,  image = self.liste_image[int(self.count_image)])
         self.tap1 = self.Canvas_world.create_image(285,250,  image = self.tap[1])
         self.tap2 = self.Canvas_world.create_image(415,250,  image = self.tap[0])
-        self.hand = self.Canvas_world.create_image(125,300,  image = self.hand_image)
-
+        self.hand = self.Canvas_world.create_image(350,300,  image = self.hand_image)
         self.wait_game()
-
         self.root.mainloop()
 
     def quit_rules(self):
         self.Frame_main2_wind2.destroy()
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Flappy", self.User_name)
-
 
     def quit_ranking(self):
         self.show_rules.destroy()
@@ -160,7 +161,6 @@ class bird:
 
     def wait_game(self,event = None):
         self.root.focus_force()
-
         if self.play == False:
             if self.wait == True:
                 self.vitesse_wait += 0.9
@@ -178,13 +178,40 @@ class bird:
             self.root.after(75,self.wait_game)
 
         elif self.play == True:
+            self.move_bird_begin()
+
+    def move_bird_begin(self):
+        self.Canvas_world.delete(self.tap1)
+        self.Canvas_world.delete(self.tap2)
+        self.Canvas_world.delete(self.hand)
+        vitesse = -12
+        x, y =  self.Canvas_ground.coords(self.ground)
+        x1, y1 =  self.Canvas_world.coords(self.image_Bird)
+
+        self.Canvas_ground.move(self.ground, vitesse,0)
+        if x < 260:
+            self.Canvas_ground.coords(self.ground, 450,35)
+
+        if x1 + vitesse > 100:
+            if self.wait == True:
+                self.vitesse_wait += 0.9
+                self.Canvas_world.move(self.image_Bird, vitesse ,self.vitesse_wait)
+                if  self.vitesse_wait > 7:
+                    self.wait = False
+                    self.vitesse_wait = 0
+            elif self.wait == False:
+                self.vitesse_wait -= 0.9
+                self.Canvas_world.move(self.image_Bird, vitesse ,self.vitesse_wait)
+                if  self.vitesse_wait < -7:
+                    self.wait = True
+                    self.vitesse_wait = 0
+            self.root.after(75,self.move_bird_begin)
+        else:
+            self.Canvas_world.coords(self.image_Bird, 125, 220)
             self.press = False
             self.start()
 
     def start(self):
-        self.Canvas_world.delete(self.tap1)
-        self.Canvas_world.delete(self.tap2)
-        self.Canvas_world.delete(self.hand)
         self.Canvas_world.delete(self.image_Bird)
         self.root.focus_force()
         self.verite = True
@@ -205,6 +232,7 @@ class bird:
     def test_press(self,  event = None):
         self.play = True
         self.press = True
+        self.i = 0
 
     def update(self):
         if self.verite == True:
@@ -224,25 +252,32 @@ class bird:
 
         for _ in range(6):
             if self.press == True:
+                self.i +=1
                 self.vitesse = 0
                 self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird_true)
                 self.Canvas_world.move(self.image_Bird_true, self.x,self.y)
                 self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(self.count_image)])
-                if self.count_image <= 0:
+                if self.i >= 30:
                     self.press = False
                     self.count_image = 0.5
                 else:
-                    self.count_image -= self.copy_count/29
+                    if self.count_image > 0:
+                        self.count_image -= 1.2
+                    else:
+                        self.count_image = 0
 
             elif self.press == False:
                 if self.count_image < 25:
-                    self.count_image *=1.04
+                    if self.count_image > 5:
+                        self.count_image *=1.1
+                    else:
+                        self.count_image *=1.04
                     self.copy_count = self.count_image
-
                     self.vitesse +=0.055
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)
 
                     if (self.y_center_bird +self.vitesse + 20) > 500:
+                        self.verite = False
                         self.dead()
                     else:
                         self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
@@ -252,8 +287,8 @@ class bird:
                     self.vitesse +=0.055
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)
                     if (self.y_center_bird +self.vitesse + 20) > 500:
-                        self.dead()
                         self.verite = False
+                        self.dead()
                     else:
                         self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
 
@@ -268,11 +303,12 @@ class bird:
             self.Canvas_world.tag_raise(self.image_Bird_true)
             self.wait_dead()
             self.dead()
-            self.root.unbind("<Button-1>")
-            self.root.unbind("<space>")
+
 
     def wait_dead(self):
         x, y =  self.Canvas_world.coords(self.image_Bird_true)
+        self.image_game_over = self.Canvas_world.create_image(350,250,  image = self.image)
+        self.Canvas_world.tag_raise(self.image_game_over)
         if y + self.vitesse +25< 500:
             self.count_image *=1.5
             if self.count_image < 250:
@@ -287,7 +323,11 @@ class bird:
         else:
             self.Canvas_world.coords(self.image_Bird_true, x, 475)
 
+
+
     def dead(self):
+        self.root.unbind("<Button-1>")
+        self.root.unbind("<space>")
         pass
         """self.Canvas_world.delete("all")
         self.verite = False
