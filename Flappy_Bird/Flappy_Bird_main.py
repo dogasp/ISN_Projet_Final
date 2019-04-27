@@ -103,13 +103,16 @@ class bird:
 
         self.root.bind("<space>", self.test_press)
         self.x = 0
-        self.y = -3
+        self.y = -3.1
         self.vitesse = 0
-        self.compte = 0.4
+        self.compte = 0
         self.count_image = 12
         self.press = False
         self.copy_count = 0
         self.verite = True
+        self.vitesse_wait = 0
+        self.play = False
+        self.wait = True
 
         self.liste_image = []
         for i in range(2,31):
@@ -117,7 +120,21 @@ class bird:
 
         self.background = [PhotoImage(file = 'Flappy_Bird/Ressources/decor1.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor2.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor3.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor4.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor5.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor6.png'), PhotoImage(file = 'Flappy_Bird/Ressources/decor7.png')]
         self.ground_image = PhotoImage(file = 'Flappy_Bird/Ressources/ground.png')
-        self.start()
+
+
+        self.Frame_right = Frame(self.root, width = 700, height = 570, bg = 'black')
+        self.Frame_right.pack(side = RIGHT)
+
+        self.Canvas_world = Canvas(self.Frame_right, width = 1700, height = 500, highlightthickness=0)
+        self.Canvas_world.place(x = 0, y = 0)
+        self.Canvas_ground = Canvas(self.Frame_right, width = 900, height = 70, highlightthickness=0)
+        self.Canvas_ground.place(x = 0, y = 500)
+
+        self.Canvas_world.create_image(350,250,  image = self.background[randint(0,6)])
+        self.ground = self.Canvas_ground.create_image(450,35,  image = self.ground_image)
+
+        self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.liste_image[int(self.count_image)])
+        self.wait_game()
 
         self.root.mainloop()
 
@@ -134,6 +151,30 @@ class bird:
         self.root.destroy()
         self.root.quit()
 
+    def wait_game(self,event = None):
+        self.root.focus_force()
+
+
+        if self.play == False:
+            if self.wait == True:
+                self.vitesse_wait += 1
+                self.Canvas_world.move(self.image_Bird, 0 ,self.vitesse_wait)
+                if  self.vitesse_wait > 10:
+                    self.wait = False
+                    self.vitesse_wait = 0
+            elif self.wait == False:
+                self.vitesse_wait -= 1
+                self.Canvas_world.move(self.image_Bird, 0 ,self.vitesse_wait)
+                if  self.vitesse_wait < -10:
+                    self.wait = True
+                    self.vitesse_wait = 0
+
+            self.root.after(75,self.wait_game)
+
+        elif self.play == True:
+            self.press = False
+            self.start()
+
     def start(self):
         self.root.focus_force()
         self.verite = True
@@ -143,30 +184,16 @@ class bird:
         self.tuyau2 = Pipe(self)
         self.tuyau3 = Pipe(self)
 
-        self.Frame_right = Frame(self.root, width = 700, height = 570, bg = 'black')
-        self.Frame_right.pack(side = RIGHT)
-
-        self.Canvas_world = Canvas(self.Frame_right, width = 1700, height = 500, highlightthickness=0)
-        self.Canvas_world.place(x = 0, y = 0)
-        self.Canvas_ground = Canvas(self.Frame_right, width = 900, height = 70, highlightthickness=0)
-        self.Canvas_ground.place(x = 0, y = 500)
-
-        self.Canvas_world.create_image(350,250,  image = self.background[randint(0,6)])
-        self.ground = self.Canvas_ground.create_image(450,35,  image = self.ground_image)
-
 
         self.tuyau0.create_pipe(500,350)
         self.tuyau1.create_pipe(900, randint(100,400))
         self.tuyau2.create_pipe(1300, randint(100,400))
         self.tuyau3.create_pipe(1700, randint(100,400))
-
-        self.image_Bird = self.Canvas_world.create_image(100,100,  image = self.liste_image[int(self.count_image)])
-
-
         self.update()
 
 
     def test_press(self,  event = None):
+        self.play = True
         self.press = True
 
 
@@ -179,12 +206,12 @@ class bird:
             self.tuyau2.move_pipe()
             self.tuyau3.move_pipe()
 
-            self.root.after(2,self.update)
+            self.root.after(50,self.update)
 
 
     def bird_move(self):
         x, y =  self.Canvas_ground.coords(self.ground)
-        self.Canvas_ground.move(self.ground, -6,0)
+        self.Canvas_ground.move(self.ground, -12,0)
         if x < 260:
             self.Canvas_ground.coords(self.ground, 450,35)
 
@@ -194,51 +221,57 @@ class bird:
                 self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird)
                 self.Canvas_world.move(self.image_Bird, self.x,self.y)
                 self.Canvas_world.itemconfigure(self.image_Bird, image = self.liste_image[int(self.count_image)])
+                print(self.count_image)
                 if int(self.count_image) == 0:
                     self.press = False
                 else:
-                    self.count_image -= self.copy_count/33
+                    self.count_image -= self.copy_count/29
 
             elif self.press == False:
                 if self.count_image < 25:
-                    self.count_image *=1.023
+                    self.count_image *=1.04
                     self.copy_count = self.count_image
 
-                    self.vitesse +=0.03
+                    self.vitesse +=0.05
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird)
 
                     if (self.y_center_bird +self.vitesse + 20) > 500:
                         self.dead()
                     self.Canvas_world.itemconfigure(self.image_Bird, image = self.liste_image[int(self.count_image)])
                 else:
-                    self.vitesse +=0.03
+                    self.vitesse +=0.05
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird)
                     if (self.y_center_bird +self.vitesse + 20) > 500:
                         self.dead()
                 self.Canvas_world.move(self.image_Bird, self.x,self.vitesse)
 
 
-
-
-
-
     def verif_bird(self, y_pipe_center_down, y_pipe_center_top):
-        print("bite")
         self.y_pipe_down = y_pipe_center_down + 250
         self.y_pipe_top = y_pipe_center_top -250
         if self.y_pipe_down>self.y_center_bird - 25 or self.y_center_bird + 25> self.y_pipe_top:
             self.dead()
 
     def dead(self):
-        self.Canvas_world.delete("all")
+        pass
+        """self.Canvas_world.delete("all")
         self.verite = False
 
-        self.start()
+        self.start()"""
+
+
+
+
+
+
+
+
+
 
 class Pipe:
     def __init__(self, parent):
         self.parent = parent
-        self.move_x = -6
+        self.move_x = -12
         self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')
         self.test3 = PhotoImage(file = 'Flappy_Bird/Ressources/test3.png')
         self.length_pipe = 500
@@ -265,7 +298,7 @@ class Pipe:
             self.parent.Canvas_world.delete(self.top_pipe)
             self.parent.Canvas_world.delete(self.down_pipe)
 
-            self.create_pipe(1475, randint(100,400))
+            self.create_pipe(randint(1360, 1500), randint(100,400))
 
             self.parent.compte+=1
 
