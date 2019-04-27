@@ -115,6 +115,7 @@ class bird:
         self.vitesse_wait = 0
         self.play = False
         self.wait = True
+        self.Best_Score = 0
 
         self.liste_image = []
         for i in range(2,31):
@@ -328,11 +329,18 @@ class bird:
     def dead(self):
         self.root.unbind("<Button-1>")
         self.root.unbind("<space>")
-        pass
-        """self.Canvas_world.delete("all")
-        self.verite = False
 
-        self.start()"""
+        if (self.compte-2)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
+            self.Best_Score = (self.compte-2)*40
+        question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
+        if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
+            self.Frame_right.destroy()               # destruction des frames
+            self.Frame_left.destroy()
+            self.Frame_top.destroy()
+            self.start()
+            self.verite = False                             # reconstruction de la fenètre
+        else:
+            self.exit()                              #sinon, on quitte l'application
 
 class Pipe:
     def __init__(self, parent):
