@@ -78,32 +78,6 @@ class bird:
         self.root.title('Flappy Bird')
         self.root.focus_force()
 
-        ########-----------Frames Principaux------------#######################################
-        self.Frame_left = Frame(self.root, width = 200, height = 570, bg = 'white')
-        self.Frame_top = Frame(self.root, width = 900, height = 50, bg = 'grey')
-
-        ########-----------Frames Secondaires------------#######################################
-        self.Frame1 = Frame(self.Frame_left, width = 200, height = 200, bg = 'yellow')
-        self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'red')
-
-        #######-----------Package des Frames-------------####################################
-        self.Frame_top.pack(side = TOP)
-        self.Frame_left.pack(side = LEFT)
-        self.Frame1.pack(side = TOP)
-        self.Frame2.pack(side = BOTTOM)
-
-        ######-----------Elements du jeu-----------------##########################################
-        self.sentence = Label(self.Frame2, text = "Attrape Moi \n Si Tu Peux !!!",font = ("Berlin Sans FB", 15), bg = 'white')
-        self.sentence.place(x = 45, y = 60)
-
-        self.canvas_show_time = Canvas(self.Frame1, bg = 'black',highlightthickness=0)
-        self.canvas_show_time.place(x = 10, y = 30)
-        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
-        self.show_time.pack(padx= 3, pady = 3)
-
-        self.root.bind("<space>", self.test_press)
-        self.root.bind("<Button-1>", self.test_press)
-
         self.x = 0
         self.y = -2.9
         self.vitesse = 0
@@ -130,6 +104,63 @@ class bird:
         self.hand_image = PhotoImage(file = 'Flappy_Bird/Ressources/hand.png')
         self.image = PhotoImage(file = "Flappy_Bird/Ressources/game_over.png")
 
+
+        self.build_game()
+        self.root.mainloop()
+
+    def quit_rules(self):
+        self.Frame_main2_wind2.destroy()
+        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Flappy", self.User_name)
+
+    def quit_ranking(self):
+        self.show_rules.destroy()
+        self.show_rules.quit()
+
+    def exit(self):
+        self.root.destroy()
+        self.root.quit()
+
+    def build_game(self):
+        self.root.bind("<space>", self.test_press)
+        self.root.bind("<Button-1>", self.test_press)
+
+        ########-----------Frames Principaux------------#######################################
+        self.Frame_left = Frame(self.root, width = 200, height = 570, bg = 'white')
+        self.Frame_top = Frame(self.root, width = 900, height = 50, bg = 'grey')
+
+        ########-----------Frames Secondaires------------#######################################
+        self.Frame1 = Frame(self.Frame_left, width = 200, height = 200, bg = 'yellow')
+        self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'red')
+
+        #######-----------Package des Frames-------------####################################
+        self.Frame_top.pack(side = TOP)
+        self.Frame_left.pack(side = LEFT)
+        self.Frame1.pack(side = TOP)
+        self.Frame2.pack(side = BOTTOM)
+
+        ######-----------Elements du jeu-----------------##########################################
+        self.sentence = Label(self.Frame2, text = "Attrape Moi \n Si Tu Peux !!!",font = ("Berlin Sans FB", 15), bg = 'white')
+        self.sentence.place(x = 45, y = 60)
+
+        self.canvas_show_time = Canvas(self.Frame1, bg = 'black',highlightthickness=0)
+        self.canvas_show_time.place(x = 10, y = 30)
+        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
+        self.show_time.pack(padx= 3, pady = 3)
+
+        self.x = 0
+        self.y = -2.9
+        self.vitesse = 0
+        self.compte = 0
+        self.count_image = 8
+        self.press = False
+        self.copy_count = 0
+        self.verite = True
+        self.vitesse_wait = 0
+        self.play = False
+        self.wait = True
+        self.Best_Score = 0
+
+        self.root.focus_force()
         self.Frame_right = Frame(self.root, width = 700, height = 570, bg = 'black')
         self.Frame_right.pack(side = RIGHT)
 
@@ -146,22 +177,8 @@ class bird:
         self.tap2 = self.Canvas_world.create_image(415,250,  image = self.tap[0])
         self.hand = self.Canvas_world.create_image(350,300,  image = self.hand_image)
         self.wait_game()
-        self.root.mainloop()
-
-    def quit_rules(self):
-        self.Frame_main2_wind2.destroy()
-        Scoreboard(self.Frame_main1_wind2, self.show_rules, "Flappy", self.User_name)
-
-    def quit_ranking(self):
-        self.show_rules.destroy()
-        self.show_rules.quit()
-
-    def exit(self):
-        self.root.destroy()
-        self.root.quit()
 
     def wait_game(self,event = None):
-        self.root.focus_force()
         if self.play == False:
             if self.wait == True:
                 self.vitesse_wait += 0.9
@@ -277,9 +294,10 @@ class bird:
                     self.vitesse +=0.055
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)
 
-                    if (self.y_center_bird +self.vitesse + 20) > 500:
+                    if (self.y_center_bird +self.vitesse + 25) > 500:
+                        self.Canvas_world.coords(self.image_Bird_true, self.x_center_bird, 475)
+                        self.verif_bird(0,0,b = True)
                         self.verite = False
-                        self.dead()
                     else:
                         self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
                         self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(self.count_image)])
@@ -287,60 +305,79 @@ class bird:
                 else:
                     self.vitesse +=0.055
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)
-                    if (self.y_center_bird +self.vitesse + 20) > 500:
+                    if (self.y_center_bird +self.vitesse + 25) > 500:
+                        self.Canvas_world.coords(self.image_Bird_true, self.x_center_bird, 475)
+                        self.verif_bird(0,0,b = True)
                         self.verite = False
-                        self.dead()
                     else:
                         self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
 
 
-    def verif_bird(self, y_pipe_center_top, y_pipe_center_down):
-        self.y_pipe_down = y_pipe_center_down - 250
-        self.y_pipe_top = y_pipe_center_top + 250
-        if self.y_pipe_down<self.y_center_bird + 24 or self.y_center_bird - 24< self.y_pipe_top:
-            self.verite = False
-            self.count_image = 12
-            self.Canvas_world.delete(self.image_Bird)
-            self.Canvas_world.tag_raise(self.image_Bird_true)
-            self.wait_dead()
-            self.dead()
+    def verif_bird(self, y_pipe_center_top , y_pipe_center_down ,b = False):
+        if self.verite == True:
+            self.y_pipe_down = y_pipe_center_down - 250
+            self.y_pipe_top = y_pipe_center_top + 250
+            if self.y_pipe_down<self.y_center_bird + 24 or self.y_center_bird - 24< self.y_pipe_top or b == True:
+
+                self.root.unbind("<Button-1>")
+                self.root.unbind("<space>")
+                self.verite = False
+                self.count_image = 12
+                self.Canvas_world.tag_raise(self.image_Bird_true)
+                self.tempo_image = self.image.subsample(4)
+                self.image_game_over = self.Canvas_world.create_image(350,250,  image = self.tempo_image)
+                self.Canvas_world.after(500, self.testing)
+                self.Canvas_world.after(1000, lambda: self.testing(True))
+
+
+                if b == True:
+                    self.root.after(2000, self.dead)
+                else:
+                    self.wait_dead()
+                    self.root.after(2000, self.dead)
 
 
     def wait_dead(self):
         x, y =  self.Canvas_world.coords(self.image_Bird_true)
-        self.image_game_over = self.Canvas_world.create_image(350,250,  image = self.image)
         self.Canvas_world.tag_raise(self.image_game_over)
-        if y + self.vitesse +25< 500:
-            self.count_image *=1.5
-            if self.count_image < 250:
-                self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(abs(self.count_image)/10)])
-                self.vitesse +=0.5
-                self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
+        if y < 495:
+            if y + self.vitesse +25< 500:
+                self.count_image *=1.5
+                if self.count_image < 250:
+                    self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(abs(self.count_image)/10)])
+                    self.vitesse +=0.5
+                    self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
+                else:
+                    self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[28])
+                    self.vitesse +=0.5
+                    self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
+                self.root.after(25,self.wait_dead)
             else:
-                self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[28])
-                self.vitesse +=0.5
-                self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)
-            self.root.after(25,self.wait_dead)
+                self.Canvas_world.coords(self.image_Bird_true, x, 475)
+
+    def testing(self, a = False):
+        if a == False:
+            self.image = self.image.subsample(2)
         else:
-            self.Canvas_world.coords(self.image_Bird_true, x, 475)
+            self.image = self.image.zoom(2)
+        self.Canvas_world.itemconfig(self.image_game_over, image = self.image)
 
 
 
     def dead(self):
-        self.root.unbind("<Button-1>")
-        self.root.unbind("<space>")
 
         if (self.compte-2)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.compte-2)*40
+
         question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
         if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
             self.Frame_right.destroy()               # destruction des frames
             self.Frame_left.destroy()
             self.Frame_top.destroy()
-            self.start()
+            self.build_game()
             self.verite = False                             # reconstruction de la fenètre
         else:
-            self.exit()                              #sinon, on quitte l'application
+            self.exit()                               #sinon, on quitte l'application
 
 class Pipe:
     def __init__(self, parent):
