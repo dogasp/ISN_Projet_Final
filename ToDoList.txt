@@ -1,5 +1,3 @@
-interfaces: Tetris, Pendu
+interfaces: Tetris, Pendu, Flappy, démineur
 
-afficher les lettres déjà entréees Pendu
-
-régler la vitesse de chute sur Tetris
+afficher les lettres déjà entréees Pendu ~
