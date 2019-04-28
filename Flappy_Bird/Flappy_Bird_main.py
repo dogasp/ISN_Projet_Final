@@ -99,6 +99,10 @@ class bird:
         for k in range(6):
             self.background.append(PhotoImage(file = 'Flappy_Bird/Ressources/decor{}.png'.format(k+1)))
 
+        self.liste_nombres = []
+        for p in range(10):
+            self.liste_nombres.append(PhotoImage(file = 'Flappy_Bird/Ressources/u{}.png'.format(p)))
+
         self.ground_image = PhotoImage(file = 'Flappy_Bird/Ressources/ground.png')
         self.tap = [PhotoImage(file = 'Flappy_Bird/Ressources/tap_right.png'), PhotoImage(file = 'Flappy_Bird/Ressources/tap_left.png')]
         self.hand_image = PhotoImage(file = 'Flappy_Bird/Ressources/hand.png')
@@ -144,6 +148,7 @@ class bird:
 
         self.canvas_show_time = Canvas(self.Frame1, bg = 'black',highlightthickness=0)
         self.canvas_show_time.place(x = 10, y = 30)
+
         self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
         self.show_time.pack(padx= 3, pady = 3)
 
@@ -159,6 +164,9 @@ class bird:
         self.play = False
         self.wait = True
         self.Best_Score = 0
+        self.u = 0
+        self.d = 0
+        self.c = 0
 
         self.root.focus_force()
         self.Frame_right = Frame(self.root, width = 700, height = 570, bg = 'black')
@@ -171,11 +179,14 @@ class bird:
 
         self.Canvas_world.create_image(350,250,  image = self.background[randint(0,5)])
         self.ground = self.Canvas_ground.create_image(450,35,  image = self.ground_image)
+
 #125
         self.image_Bird = self.Canvas_world.create_image(350,220,  image = self.liste_image[int(self.count_image)])
         self.tap1 = self.Canvas_world.create_image(285,250,  image = self.tap[1])
         self.tap2 = self.Canvas_world.create_image(415,250,  image = self.tap[0])
         self.hand = self.Canvas_world.create_image(350,300,  image = self.hand_image)
+
+        self.image_unite = self.Canvas_world.create_image(350,30,  image = self.liste_nombres[self.u])
         self.wait_game()
 
     def wait_game(self,event = None):
@@ -245,6 +256,7 @@ class bird:
         self.tuyau3.create_pipe(2300, randint(100,400))
 
         self.image_Bird_true = self.Canvas_world.create_image(125,220,  image = self.liste_image[int(self.count_image)])
+        self.Canvas_world.tag_raise(self.image_unite)
         self.update()
 
     def test_press(self,  event = None):
@@ -336,6 +348,27 @@ class bird:
                     self.wait_dead()
                     self.root.after(2000, self.dead)
 
+    def count_score(self):
+        print(self.compte)
+        if self.compte == 10:
+            self.image_dizaine = self.Canvas_world.create_image(322,30,  image = self.liste_nombres[self.d])
+        elif self.compte == 100:
+            self.image_centaine = self.Canvas_world.create_image(304,30,  image = self.liste_nombres[self.c])
+        self.u+=1
+        if self.u >9:
+            self.u =0
+            self.d+=1
+            if self.d >9:
+                self.d = 0
+                self.c+=1
+                self.Canvas_world.itemconfigure(self.image_centaine, image = self.liste_nombres[self.c])
+            self.Canvas_world.itemconfigure(self.image_dizaine, image = self.liste_nombres[self.d])
+        self.Canvas_world.tag_raise(self.image_unite)
+        if self.compte >=10:
+            self.Canvas_world.tag_raise(self.image_dizaine)
+        if self.compte >=100:
+            self.Canvas_world.tag_raise(self.image_centaine)
+        self.Canvas_world.itemconfigure(self.image_unite, image = self.liste_nombres[self.u])
 
     def wait_dead(self):
         x, y =  self.Canvas_world.coords(self.image_Bird_true)
@@ -361,8 +394,6 @@ class bird:
         else:
             self.image = self.image.zoom(2)
         self.Canvas_world.itemconfig(self.image_game_over, image = self.image)
-
-
 
     def dead(self):
 
@@ -406,10 +437,12 @@ class Pipe:
 
             self.create_pipe(randint(1380, 1550), randint(100,400))
 
-            self.parent.compte+=1
+        """if 100<self.x_center_top_pipe + 60 <150 or 100<self.x_center_top_pipe - 60 <150:
+            self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)"""
 
-        if 100<self.x_center_top_pipe + 60 <150 or 100<self.x_center_top_pipe - 60 <150:
-            self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)
+        if 100>=self.x_center_top_pipe + 60 >88:
+            self.parent.compte+=1
+            self.parent.count_score()
 
 def Flappy_Bird(User):           # fonction pour commencer le jeu
   jeux = bird(User)       # création de l'instance
