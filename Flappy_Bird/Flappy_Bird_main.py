@@ -393,7 +393,7 @@ class bird:
 
     def dead(self):
         if (self.compte)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
-            self.Best_Score = (self.compte)*40
+            self.Best_Score = (self.compte)*100
 
         question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
         if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
