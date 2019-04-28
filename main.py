@@ -74,7 +74,8 @@ def para():
     playground.place(x = 200, y = 100)
     Button_para.config( image = door, command = lambda: leave_para(playground))
 
-    Label(playground, text = "Paramètres", font = ("Helvetica", 25), bg = "#111111").place(x = 300, y = 20)
+    Label(playground, text = "Aide", font = ("Helvetica", 25), bg = "#111111", fg = "#888888").place(x = 300, y = 20)
+    Label(playground, text = text, )
 
 
 def leave_para(playground):
