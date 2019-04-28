@@ -330,18 +330,14 @@ class bird:
             self.y_pipe_down = y_pipe_center_down - 250
             self.y_pipe_top = y_pipe_center_top + 250
             if self.y_pipe_down<self.y_center_bird + 24 or self.y_center_bird - 24< self.y_pipe_top or b == True:
-
                 self.root.unbind("<Button-1>")
                 self.root.unbind("<space>")
                 self.verite = False
                 self.count_image = 12
-                self.Canvas_world.tag_raise(self.image_Bird_true)
                 self.tempo_image = self.image.subsample(4)
                 self.image_game_over = self.Canvas_world.create_image(350,250,  image = self.tempo_image)
                 self.Canvas_world.after(500, self.testing)
                 self.Canvas_world.after(1000, lambda: self.testing(True))
-
-
                 if b == True:
                     self.root.after(2000, self.dead)
                 else:
@@ -349,7 +345,6 @@ class bird:
                     self.root.after(2000, self.dead)
 
     def count_score(self):
-        print(self.compte)
         if self.compte == 10:
             self.image_dizaine = self.Canvas_world.create_image(322,30,  image = self.liste_nombres[self.d])
         elif self.compte == 100:
@@ -369,6 +364,7 @@ class bird:
         if self.compte >=100:
             self.Canvas_world.tag_raise(self.image_centaine)
         self.Canvas_world.itemconfigure(self.image_unite, image = self.liste_nombres[self.u])
+        self.Canvas_world.tag_raise(self.image_Bird_true)
 
     def wait_dead(self):
         x, y =  self.Canvas_world.coords(self.image_Bird_true)
@@ -396,9 +392,8 @@ class bird:
         self.Canvas_world.itemconfig(self.image_game_over, image = self.image)
 
     def dead(self):
-
-        if (self.compte-2)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
-            self.Best_Score = (self.compte-2)*40
+        if (self.compte)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
+            self.Best_Score = (self.compte)*40
 
         question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
         if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
@@ -437,8 +432,8 @@ class Pipe:
 
             self.create_pipe(randint(1380, 1550), randint(100,400))
 
-        """if 100<self.x_center_top_pipe + 60 <150 or 100<self.x_center_top_pipe - 60 <150:
-            self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)"""
+        if 100<self.x_center_top_pipe + 60 <150 or 100<self.x_center_top_pipe - 60 <150:
+            self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)
 
         if 100>=self.x_center_top_pipe + 60 >88:
             self.parent.compte+=1
