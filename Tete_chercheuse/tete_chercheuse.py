@@ -330,7 +330,7 @@ class application:
                     reminder[(pos[0], pos[1])] += 1     # on essaye d'ajouter 1 à la position actuelle
                     if reminder[(pos[0], pos[1])] > 4:  # si on est passé plus de 4 fois au meme endroit, on restart
                         run = False
-                        restart()
+                        self.restart()
                         return
                 except:
                     reminder[(pos[0], pos[1])] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1

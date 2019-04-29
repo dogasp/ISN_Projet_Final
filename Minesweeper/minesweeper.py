@@ -38,7 +38,9 @@ class demineur:
         self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking) #protocole pour controler la fermeture d ela fenetre
 
-        self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE) #premier frame, celui en dessous
+        self.fond = PhotoImage(file = "thumbnail/Minesweeper2.png")
+        self.Frame_main1_wind2 = Canvas(self.show_rules, relief = GROOVE) #premier frame, celui en dessous
+        self.Frame_main1_wind2.create_image(335,265, image = self.fond)
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
         #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
         #self.Frame_main1_wind2.create_image(335,265,image =Fond_Frame_main1_wind2)
@@ -53,9 +55,25 @@ class demineur:
             ils indiquerons le nombre de bombes voisines. Si une cellule est succeptible d'être une bombe,\n\
             un clique droit marquera la case avec un drapeau.\n\n\
             Il y a trois difficultés, la taille de la grille ainsi que le nombre de mines change entre les niveaux.")
-        self.explanation.place(x = 20, y = 100)
+
+        Label(self.Frame_main2_wind2, text = "Le but du jeu est de décourvrir toutes les mines,\nSans se faire exploser...").place(x = 20, y = 80)
+        self.image1 = PhotoImage(file = "Minesweeper/Images/explode.png")
+        Label(self.Frame_main2_wind2, image = self.image1).place(x = 450, y = 80)
+
+        Label(self.Frame_main2_wind2, text = "il faut donc révéler les cases avec le clique gauche\n Ne nombre affiché sur la case renseigne sur\n le nombre de bombres adjascentes à celle-ci").place(x = 20, y = 150)
+
+        Label(self.Frame_main2_wind2, text = "Il faut donc placer des drapeaux (clique droit) sur les cases\n contenant des bombes afin de les sécuriser").place(x = 20, y = 220)
+        self.image3 = PhotoImage(file = "Minesweeper/Images/flag.png")
+        Label(self.Frame_main2_wind2, image = self.image3).place(x = 425, y = 180)
+
+        Label(self.Frame_main2_wind2, text = "Pour gagner, il faut marquer toutes les bombes avec un drapeau.").place(x = 20, y = 275)
+        self.image4 = PhotoImage(file = "Minesweeper/Images/win.png")
+        Label(self.Frame_main2_wind2, image = self.image4).place(x = 425, y = 275)
+
+        Label(self.Frame_main2_wind2, text = "Il y a trois difficultés, la taille de la grille\n ainsi que le nombre de mines change entre les niveaux.").place(x = 20, y = 310)
+
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
-        self.Button_Skip.place(x = 50, y = 350)
+        self.Button_Skip.place(x = 50, y = 370)
         self.show_rules.mainloop()
 
         self.root = Toplevel() #fenetre principale
