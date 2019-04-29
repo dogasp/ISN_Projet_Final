@@ -382,8 +382,6 @@ class bird:
         else:   #Si il touche le sol, la boucle s'arrête et on place l'oiseau à y = 475 pour être sur qu'il ne dépasse pas le sol
             self.Canvas_world.coords(self.image_Bird_true, x, 475)#On replace l'oiseau
 
-
-
     def dead(self):
         if (self.compte)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.compte)*100
