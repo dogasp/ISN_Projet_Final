@@ -99,6 +99,7 @@ class pong:
         self.Canvas_dessine.place(x = 0, y = 0)
         self.width = 700
         self.height = 500
+        self.Best_Player = get_game_score_list("Pong")[0]
 
         self.start()
 
@@ -125,11 +126,11 @@ class pong:
     def move(self, event):
         keyCode = event.keysym
         if self.player.pos.y + 50 < self.height and keyCode == "Down":
-            self.player.pos.y += 15
+            self.player.pos.y += 7
         elif self.player.pos.y-50 > 0 and keyCode == "Up":
-            self.player.pos.y -= 15
+            self.player.pos.y -= 7
         if self.pressing == True:
-            self.root.after(100, lambda: self.move(event))
+            self.root.after(25, lambda: self.move(event))
 
     def stop_move(self, event):
         self.pressing = False
@@ -149,6 +150,29 @@ class pong:
 
     def update(self):
         self.Canvas_dessine.delete("all")
+        self.Canvas_dessine.create_text(290, 35, text = "Score actuel:", fill = "white", font = ("Helvetica", 10))
+        self.Canvas_dessine.create_text(430, 35, text = "Meilleur score par {}:".format(self.Best_Player[0]), fill = "white", font = ("Helvetica", 10))
+
+        best = str(int(self.Best_Player[1]/50))
+        self.bestUnit = PhotoImage(file = "Pong/res/" + best[-1] + ".png")
+        self.Canvas_dessine.create_image(435, 75, image = self.bestUnit)
+        if len(best) > 1:
+            self.bestDix = PhotoImage(file = "Pong/res/" + best[-2] + ".png")
+            self.Canvas_dessine.create_image(410, 75, image = self.bestDix)
+            if len(best) > 2:
+                self.bestCent = PhotoImage(file = "Pong/res/" + best[-3] + ".png")
+                self.Canvas_dessine.create_image(385, 75, image = self.bestCent)
+
+        temp = str(self.touch)
+        self.scoreUnit = PhotoImage(file = "Pong/res/" + temp[-1] + ".png")
+        self.Canvas_dessine.create_image(300, 75, image = self.scoreUnit)
+        if len(temp) > 1:
+            self.scoreDix = PhotoImage(file = "Pong/res/" + temp[-2] + ".png")
+            self.Canvas_dessine.create_image(275, 75, image = self.scoreDix)
+            if len(temp) > 2:
+                self.scoreCent = PhotoImage(file = "Pong/res/" + temp[-3] + ".png")
+                self.Canvas_dessine.create_image(250, 75, image = self.scoreCent)
+
         self.Canvas_dessine.create_rectangle(2,2,698,498, outline = "white")
         self.Canvas_dessine.create_line(349,0,349,498, fill = "white", dash = (10,10))
         self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon,outline = 'white')
@@ -226,7 +250,7 @@ class Ball:
         self.vitesse = Vector(direction, 0)
         theta = randrange(-70,70)/100
         self.vitesse.rotate(theta)
-        self.vitesse.setMag(2)
+        self.vitesse.setMag(4)
 
     def update(self):
         if self.pos.y + 20 > self.parent.height:
@@ -243,22 +267,26 @@ class Ball:
                 return 0
             offset = self.parent.bot.pos.y - self.pos.y
             toApply = mapping(offset, -55, 55, 4, -4)
+            toApply += randrange(-int(abs(self.vitesse.y/2)), int(abs(self.vitesse.y/2))+1)
+            temp = self.vitesse.mag()
             self.vitesse.y += toApply
+            self.vitesse.setMag(temp)
 
             self.vitesse.x *= -1
-            self.parent.touch += 1
             self.pos.x = self.parent.width-40
             self.vitesse.setMag(self.vitesse.mag() + 0.5)
             if self.vitesse.mag() > 20:
                 self.vitesse.setMag(20)
 
         elif self.pos.x-20 < 20:
-            if self.parent.player.pos.y - 55 > self.pos.y or self.pos.y > self.parent.player.pos.y + 55:
+            if self.parent.player.pos.y - 60 > self.pos.y or self.pos.y > self.parent.player.pos.y + 60:
                 self.parent.dead(1)
                 return 0
             offset = self.parent.player.pos.y - self.pos.y
-            toApply = mapping(offset, -55, 55, 2, -2)
+            toApply = mapping(offset, -60, 60, 2, -2)
+            temp = self.vitesse.mag()
             self.vitesse.y += toApply
+            self.vitesse.setMag(temp)
 
             self.vitesse.x *= -1
             self.parent.touch += 1

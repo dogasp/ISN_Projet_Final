@@ -80,7 +80,7 @@ def para():
 
 def leave_para(playground):
     playground.destroy()
-    Button_para.config(image = gearImg, command = para)
+    Button_para.config(image = gearImg, comdmand = para)
 
 root_user = Tk()
 root_user.geometry("300x120")
