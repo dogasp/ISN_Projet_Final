@@ -130,7 +130,6 @@ scrollY.place(x = 962, y = 102, height = 456)
 Frame_main['yscrollcommand'] = scrollY.set
 Frame_main.bind("<MouseWheel>", lambda event: Frame_main.yview_scroll(int(-1*(event.delta/120)), "units"))
 
-
 Frame_ranking = Frame(Frame_left, width = 196 , height =280 , bg = '#111111', relief = GROOVE)
 Frame_ranking.place(x = 2, y = 70)
 
