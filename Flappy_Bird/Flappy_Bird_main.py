@@ -420,39 +420,40 @@ class bird:
         self.Canvas_world.tag_raise(self.image_Bird_true)#On met en avant l'oiseau à chaque fois
 
 class Pipe:                     #Creéation de la classe Pipe
-    def __init__(self, parent):
-        self.parent = parent
-        self.move_x = -12
-        self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')
-        self.test3 = PhotoImage(file = 'Flappy_Bird/Ressources/test3.png')
-        self.length_pipe = 500
+    def __init__(self, parent): #Argument qui sert à récupérer les variables de la classe Flappy
+        self.parent = parent    #
+        self.move_x = -12       #Vitesse de déplacement des tuyaux
+        self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')    #Tuyau du bas
+        self.test3 = PhotoImage(file = 'Flappy_Bird/Ressources/test3.png')  #Tuyau du haut
+        self.length_pipe = 500  #Taille de l'image des tuyaux, utile pour les calculs de placement du tuyau
 
-    def create_pipe(self, x_pipe, y_pipe):
-        self.y_pipe_top = y_pipe - 75
-        self.y_pipe_down = y_pipe + 75
-        self.top_pipe =  self.parent.Canvas_world.create_image(x_pipe + 75, self.y_pipe_top - self.length_pipe/2,  image = self.test3)
-        self.down_pipe =  self.parent.Canvas_world.create_image(x_pipe + 75,self.y_pipe_down + self.length_pipe/2 ,  image = self.test)
-    def move_pipe(self):
-        self.parent.Canvas_world.move(self.top_pipe, self.move_x,0)
-        self.parent.Canvas_world.move(self.down_pipe, self.move_x,0)
-        self.x_center_top_pipe, self.y_center_top_pipe =  self.parent.Canvas_world.coords(self.top_pipe)
-        self.x_center_down_pipe, self.y_center_down_pipe =  self.parent.Canvas_world.coords(self.down_pipe)
-        self.verif_pipe()
+    def create_pipe(self, x_pipe, y_pipe):  #Fonction servant à créer l'image du tuyau, appellée à chaque fois qu'un tuyau quitte l'écran
+        self.y_pipe_top = y_pipe - 75       #Permet de créer l'espace entre les 2 tuyaux
+        self.y_pipe_down = y_pipe + 75      #ce qui fait un écart de 150 pixels
+        self.top_pipe =  self.parent.Canvas_world.create_image(x_pipe + 75, self.y_pipe_top - self.length_pipe/2,  image = self.test3) #Création du tuyau haut
+        self.down_pipe =  self.parent.Canvas_world.create_image(x_pipe + 75,self.y_pipe_down + self.length_pipe/2 ,  image = self.test)#Création du tuyau bas
+    def move_pipe(self):  #Fonction servant à déplacer le tuyau à l'horizontal, la fonction tourne toutes les 50ms, grace à update
+        self.parent.Canvas_world.move(self.top_pipe, self.move_x,0) #Déplacement des 2 tuyaux
+        self.parent.Canvas_world.move(self.down_pipe, self.move_x,0)#
+        self.x_center_top_pipe, self.y_center_top_pipe =  self.parent.Canvas_world.coords(self.top_pipe)    #On récupère les coordonées des 2
+        self.x_center_down_pipe, self.y_center_down_pipe =  self.parent.Canvas_world.coords(self.down_pipe) #tuyaux qui serviront à verif_pipe
+        self.verif_pipe()   #On appelle verif_pipe à chaque déplacement du tuyau
 
-    def verif_pipe(self):
-        if self.x_center_top_pipe + 65 < 0:
-            self.parent.Canvas_world.delete(self.top_pipe)
-            self.parent.Canvas_world.delete(self.down_pipe)
+    def verif_pipe(self):   #Fonction servant à vérifier si le tuyau dans des intervalles donnés
+        if self.x_center_top_pipe + 65 < 0:#Si le tuyau a quitté l'écran, on le supprime et on le recréer directement caché à droite
+            self.parent.Canvas_world.delete(self.top_pipe)  #Supression du haut
+            self.parent.Canvas_world.delete(self.down_pipe) #Suppresion du bas
+                                                            #Au lieu de le supprimer et de le recréer on aurait pu le changer de place,
+                                                            #Le problème aurait été que l'ecart entre les 2 tuyaux serait trouvé toujours au même endroit du tuyau concerné
+            self.create_pipe(randint(1400, 1500), randint(100,400))#Création du nouveau tuyau, les randint servent à donner plus de fun et de difficultés au jeu
 
-            self.create_pipe(randint(1400, 1500), randint(100,400))
+        if 100<self.x_center_top_pipe + 60 <150 or 100<self.x_center_top_pipe - 60 <150:#Si le tuyau se trouve entre 100 et 150 pixels (c'est à dire au niveau de l'oiseau)
+            self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)#On appelle la fonction verif_bird permettant de voir si il y contact ou non
 
-        if 100<self.x_center_top_pipe + 60 <150 or 100<self.x_center_top_pipe - 60 <150:
-            self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)
+        if 100>=self.x_center_top_pipe + 60 >88:#Si le tuyau dépassé l'oiseau, l'interval est de 12 pixels car le tuyau se déplaces de 12 lui aussi toules 50ms
+            self.parent.compte+=1       #Le score augmente de 1
+            self.parent.count_score()   #On appelle count_score pour l'affichage du score
 
-        if 100>=self.x_center_top_pipe + 60 >88:
-            self.parent.compte+=1
-            self.parent.count_score()
-
-def Flappy_Bird(User):           # fonction pour commencer le jeu
+def Flappy_Bird(User):    # fonction pour commencer le jeu
   jeux = bird(User)       # création de l'instance
-  return jeux.Best_Score   #renvois du meilleur score
+  return jeux.Best_Score  #renvois du meilleur score

@@ -101,8 +101,16 @@ amélioration de l'algorithme de placement des bombes démineur
 
 ## Lundi 22 Avril 2019:
 
-début de travail sur Flappy bird
-
 correction algorithme démineur, correction niveaux Tetris
 
 ajout de la barre de scroll dans le menus principal pour faire défiler les jeux
+
+## Jeudi 25 Avril 2019:
+
+Début de Flappy Bird
+
+## Luni 28 Avril 2019:
+
+Fin du jeu Flappy Bird avec commentaires détaillés
+
+Début de la partie aide dans le menu
