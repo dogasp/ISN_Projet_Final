@@ -242,7 +242,7 @@ class Ball:
                 self.parent.dead(-1)
                 return 0
             offset = self.parent.bot.pos.y - self.pos.y
-            toApply = mapping(offset, -55, 55, 2, -2)
+            toApply = mapping(offset, -55, 55, 4, -4)
             self.vitesse.y += toApply
 
             self.vitesse.x *= -1
