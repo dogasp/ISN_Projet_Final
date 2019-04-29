@@ -348,21 +348,21 @@ class bird:
                 self.root.unbind("<Button-1>")          #On évite que le joueur click ce qui peut faire bugger le programme
                 self.root.unbind("<space>")
                 self.verite = False                     #On réinitialise self.verite = False pour éviter de refaire la fonction
-                self.tempo_image = self.image.subsample(4)
-                self.image_game_over = self.Canvas_world.create_image(350,250,  image = self.tempo_image)
-                self.Canvas_world.after(500, self.testing)
-                self.Canvas_world.after(1000, lambda: self.testing(True))
+                self.tempo_image = self.image.subsample(4) #image de game over réduite de 400%
+                self.image_game_over = self.Canvas_world.create_image(350,250,  image = self.tempo_image) #création de l'image de game over
+                self.Canvas_world.after(500, self.ending)
+                self.Canvas_world.after(1000, lambda: self.ending(True))
                 if b == True:                           #Cette condition sert à différencier
                     self.root.after(2000, self.dead)    #si la mort vient du sol ou du tuyau
                 else:                                   #ainsi si b == True, on n'appelle pas wait_dead puique l'oiseau est déjà au sol
                     self.wait_dead()                    #sinon, on appelle wait_dead qui sert à faire descendre l'oiseau quand il est mort
                     self.root.after(2000, self.dead)    #on appelle dead dans les 2 cas avec un temps de latence afin de voir le Game Over
 
-    def testing(self, a = False):
+    def ending(self, a = False) :#fonction pour afficher l'annimation de l'apparition du game over
         if a == False:
-            self.image = self.image.subsample(2)
+            self.image = self.image.subsample(2) #la première fois que la fonction est appelée, on affiche l'image réduite à 200%
         else:
-            self.image = self.image.zoom(2)
+            self.image = self.image.zoom(2) #affichage de l'image zoomée de 200% à la 2nd exécution de la fonction
         self.Canvas_world.itemconfig(self.image_game_over, image = self.image)
 
     def wait_dead(self): #Fonction servant à faire descendre l'oiseau lorsque ce dernier a touché un tuyau
