@@ -26,6 +26,7 @@ class BoutonS: #classe pour gérer les boutons interactifs
         global label_pseudo, label_score, score
         root_main.withdraw() #on masque l'interface principale
         result = self.run(User_name) #on execute le jeu
+        print("chatte")
         push_score(User_name, self.jeux, result) #on envois au serveur le score de la partie
         root_main.deiconify() #on fait réapparaite la fenetre principale
         Frame_main['yscrollcommand'] = scrollY.set #rappel de la bare de scroll

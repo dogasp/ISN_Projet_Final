@@ -282,70 +282,89 @@ class ghost:
                 self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image)
                 self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image)
                 self.root.unbind("<Key>")
-                self.win()
+                self.command_user("win")
             elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
                 self.table.itemconfigure(self.Tom, image = self.Tom_right_image)
                 self.table.itemconfigure(self.robot,  image = self.Tom_right_image)
                 self.root.unbind("<Key>")
-                self.dead()
+                self.command_user("dead")
         elif self.nbcases[self.level - 1] > 10:
             if self.grid[next_jerry_x][next_jerry_y] == "D":
                 self.table.itemconfigure(self.Drapeau, image = self.Fromage_Jerry_image_mini)
                 self.table.itemconfigure(self.robot,  image = self.Fromage_Jerry_image_mini)
                 self.root.unbind("<Key>")
-                self.win()
+                self.command_user("win")
             elif next_jerry_x == next_tom_x and next_jerry_y == next_tom_y:
                 self.table.itemconfigure(self.Tom, image = self.Tom_right_image_mini)
                 self.table.itemconfigure(self.robot,  image = self.Tom_right_image_mini)
                 self.root.unbind("<Key>")
-                self.dead()
+                self.command_user("dead")
 
     def time_num(self):
         self.time_game+=1
         self.root.after(1000,self.time_num)
         self.show_time['text'] = "Temps: %s" %str(self.time_game)
 
-    def win(self):
-        self.control_variable +=1
-        if self.control_variable == 1:
-            self.score_temp = (10000/(self.move*0.8 + self.time_game*0.2)) * self.level
-            self.score += self.score_temp
+
+    def command_user(self, x):
+        if x=="exit_menu":
+            self.question.destroy()
+            self.exit()
+
+        elif x=="next":
+            self.question.destroy()
+            self.level += 1
+            if self.level == len(level_map)+1:  # si le joueur a atteint la fin de la liste des niveaux
+                self.exit()
+                return
+            self.Frame_right.destroy()               # destruction des frames
+            self.start()
+
+
+
+        elif x=="dead":
+            question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
+            if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
+                self.score -= 50*(self.level)
+                self.Frame_right.destroy()               # destruction des frames
+                self.start()                             # reconstruction de la fenètre
+            else:
+                self.exit()
+
+        elif x=="win":
+            try:
+                self.question2.destroy()
+            except: pass
+            self.control_variable +=1
+            if self.control_variable == 1:
+                self.score_temp = (10000/(self.move*0.8 + self.time_game*0.2)) * self.level
+                self.score += self.score_temp
             self.show_score["text"] = "Score: %s"%str(int(self.score))
             self.question = Toplevel()
             self.question.geometry("300x125")
-            Button(self.question, text = "Restart", command = self.restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
-            Button(self.question, text = "Main Menu", command = self.exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
-            Button(self.question, text = "Next Level", command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
+            Button(self.question, text = "Restart",command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
+            Button(self.question, text = "Main Menu",command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+            Button(self.question, text = "Next Level",command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
 
-    def dead(self):
-        question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
-        if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
-            self.score -= 50*(self.level)
-            self.Frame_right.destroy()               # destruction des frames
-            self.start()                             # reconstruction de la fenètre
-        else:
-            self.exit()
+        elif x=="restart_question":
+            self.question.destroy()
+            self.question2 = Toplevel()
+            self.question2.geometry("300x125")
+            Button(self.question2, text = "Yes",command = lambda: self.command_user("restart2"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+            Button(self.question2, text = "No",command = lambda: self.command_user("win"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
 
-    def restart_question(self):
-        self.question.destroy()
-        self.question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras à chaque fois 50 points multiplié par le niveau où tu es")
-        if self.question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+
+            """self.question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras à chaque fois 50 points multiplié par le niveau où tu es")
+            if self.question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
+                self.score -= 50*(self.level) + self.score_temp
+                self.update()
+            elif self.question2 == "no":
+                self.command_user("win")"""
+
+        elif x=="restart2":
+            self.question2.destroy()
             self.score -= 50*(self.level) + self.score_temp
             self.update()
-        else:
-            self.win()
-    def exit_menu(self):
-        self.question.destroy()
-        self.exit()
-
-    def next(self):
-        self.question.destroy()
-        self.level += 1
-        if self.level == len(level_map)+1:  # si le joueur a atteint la fin de la liste des niveaux
-            self.exit()
-            return
-        self.Frame_right.destroy()               # destruction des frames
-        self.start()
 
     def update(self):
         self.Frame_right.destroy()               # destruction des frames

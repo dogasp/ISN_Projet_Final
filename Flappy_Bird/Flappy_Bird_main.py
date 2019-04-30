@@ -107,6 +107,9 @@ class bird:
         self.show_rules.quit()
 
     def exit(self):
+        try:
+            self.question.destroy()
+        except: pass
         self.root.destroy()
         self.root.quit()
 
@@ -386,8 +389,8 @@ class bird:
         if (self.compte)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.compte)*100
 
-        question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
-        if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
+        self.question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
+        if self.question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
             self.Frame_right.destroy()               # destruction des frames
             self.Frame_left.destroy()                #
             self.Frame_top.destroy()                 #

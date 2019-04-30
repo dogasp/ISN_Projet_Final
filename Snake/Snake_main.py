@@ -266,6 +266,9 @@ class snake:
         return True #revois de True si la case ne possède rien ou si le joueur a mangé un fruit
 
     def exit(self):            # si on décide de quiter la fenètre
+        try:
+            self.question.destroy()
+        except: pass
         self.pause = True      # on pause le jeu pour stopper la fonction update
         self.root.destroy()    # et on quite la fenetre principale
         self.root.quit()
@@ -306,8 +309,8 @@ class snake:
         self.pause = True                            # on arrête la boucle du update
         if (self.length_max-2)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.length_max-2)*40
-        question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
-        if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
+        self.question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
+        if self.question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
             self.Frame_right.destroy()               # destruction des frames
             self.Frame_left.destroy()
             self.Frame_top.destroy()
