@@ -92,6 +92,7 @@ class pendu:
         self.root_difficulty.focus_force()
         self.root_difficulty.title("Selectionne une difficulté")
         self.root_difficulty.geometry("300x125")
+        self.root_difficulty.protocol("WM_DELETE_WINDOW", print)
         #boutons avec les différentes difficultés
         Button(self.root_difficulty,image = self.level_easy , cursor ='hand2', command = lambda : self.start(0)).place(x = 15, y = 27)
         Button(self.root_difficulty,image = self.level_medium , cursor ='hand2', command = lambda : self.start(1)).place(x = 115, y = 27)
