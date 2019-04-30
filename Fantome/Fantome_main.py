@@ -346,10 +346,12 @@ class ghost:
             self.show_score["text"] = "Score: %s"%str(int(self.score))
             self.question = Toplevel()
             self.question.geometry("480x300")
-
-            Button(self.question, text = "Restart",command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
-            Button(self.question, text = "Main Menu",command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
-            Button(self.question, text = "Next Level",command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
+            self.canvas_question = Canvas(self.question, width = 480, height = 300)
+            self.canvas_question.place(x=0,y=0)
+            self.canvas_question.create_image(240, 150, image = self.fond_ecran)
+            Button(self.canvas_question, image = self.replay ,command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
+            Button(self.canvas_question, text = "Main Menu",command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+            Button(self.canvas_question, text = "Next Level",command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
 
         elif x=="restart_question":
             self.question.destroy()
