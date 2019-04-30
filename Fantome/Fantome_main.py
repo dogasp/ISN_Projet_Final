@@ -28,6 +28,12 @@ class ghost:
         self.Jerry_3 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_3.png")
         self.Jerry_2 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_2.png")
 
+        self.door = PhotoImage(file = "Parametters/door.png")
+        self.main = PhotoImage(file = "Parametters/main.png")
+        self.next = PhotoImage(file = "Parametters/next.png")
+        self.fond_ecran = PhotoImage(file = "Parametters/fond_ecran.png")
+        self.replay = PhotoImage(file = "Parametters/replay.png")
+
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 526)
         self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Ghost2.png")
@@ -320,8 +326,6 @@ class ghost:
             self.Frame_right.destroy()               # destruction des frames
             self.start()
 
-
-
         elif x=="dead":
             question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
             if question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
@@ -341,7 +345,8 @@ class ghost:
                 self.score += self.score_temp
             self.show_score["text"] = "Score: %s"%str(int(self.score))
             self.question = Toplevel()
-            self.question.geometry("300x125")
+            self.question.geometry("480x300")
+
             Button(self.question, text = "Restart",command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
             Button(self.question, text = "Main Menu",command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
             Button(self.question, text = "Next Level",command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
@@ -352,14 +357,6 @@ class ghost:
             self.question2.geometry("300x125")
             Button(self.question2, text = "Yes",command = lambda: self.command_user("restart2"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
             Button(self.question2, text = "No",command = lambda: self.command_user("win"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
-
-
-            """self.question2 = askquestion("RESTART", "Est-tu-sur de recommencer ? Tu perdras à chaque fois 50 points multiplié par le niveau où tu es")
-            if self.question2 == "yes": #si l'utilisateur veut recommencer, on regenère l'affichage
-                self.score -= 50*(self.level) + self.score_temp
-                self.update()
-            elif self.question2 == "no":
-                self.command_user("win")"""
 
         elif x=="restart2":
             self.question2.destroy()
