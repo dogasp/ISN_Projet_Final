@@ -49,13 +49,6 @@ class demineur:
         self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
         self.Rules.place(x = 200, y =5)
 
-
-        self.explanation = Label(self.Frame_main2_wind2, text = "Le but du jeu est de découvrir toutes les mines\n\
-            sans se faire exploser. Il faut donc cliquer (gauche) sur les cases avec afin de révéler des numéros\n\
-            ils indiquerons le nombre de bombes voisines. Si une cellule est succeptible d'être une bombe,\n\
-            un clique droit marquera la case avec un drapeau.\n\n\
-            Il y a trois difficultés, la taille de la grille ainsi que le nombre de mines change entre les niveaux.")
-
         Label(self.Frame_main2_wind2, text = "Le but du jeu est de décourvrir toutes les mines,\nSans se faire exploser...").place(x = 20, y = 80)
         self.image1 = PhotoImage(file = "Minesweeper/Images/explode.png")
         Label(self.Frame_main2_wind2, image = self.image1).place(x = 450, y = 80)
