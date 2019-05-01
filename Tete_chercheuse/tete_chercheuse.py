@@ -6,6 +6,9 @@ sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
 from Scoreboard.scoreboard import *
+sys.path.append('../Vectors')
+from Vectors.vector import *
+from math import pi
 
 ##################----------Variables------------######################################
 #'0' correpond à une case vide
@@ -27,7 +30,7 @@ class application:
 
         self.root_tete = Toplevel() #fenetre principale
         self.root_tete.geometry('700x550')
-        self.root_tete.protocol("WM_DELETE_WINDOW",exit)
+        self.root_tete.protocol("WM_DELETE_WINDOW", self.exit)
         self.root_tete.title("Tete Chercheuse")
         self.root_tete.resizable(False,False)
         self.root_tete.focus_force()
@@ -139,49 +142,43 @@ class application:
         self.Frame_main2_wind2.place(x = 60, y = 45)
     ###############---------Création des regles avec animations--------------####################
 
-        self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
-        self.Rules.place(x = 200, y =5)
+        Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE).place(x = 200, y =5)
 
     #------------------1----------------------------------------------------------------
         #détail d'une rêgle
-        self.Rules2 = Label(self.Frame_main2_wind2, text = "Le but est que le robot arrive au drapeau.\n\
-         ", font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(500, lambda: self.Rules2.place(x = 45, y = 70)) #affichage après un délais
+        Rules1 = Label(self.Frame_main2_wind2, text = "Le but est que le robot arrive au drapeau.\n", font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(500, lambda: Rules1.place(x = 45, y = 70)) #affichage après un délais
 
-        self.CANVAS1 = Canvas(self.Frame_main2_wind2, width = 150, height = 60) #canvas pour afficher l'image
-        self.Frame_main2_wind2.after(1000, lambda: self.CANVAS1.place(x = 380, y = 60 )) #placement du canvas
         self.first_photo1 = PhotoImage(file = "Tete_chercheuse/image/first_photo.png") #import de l'image
-        self.CANVAS1.create_image(75, 30,image = self.first_photo1) #création de l'image
+        Label1 = Label(self.Frame_main2_wind2, image = self.first_photo1)
+        self.Frame_main2_wind2.after(1000, lambda: Label1.place(x = 380, y = 60 )) #placement du canvas
 
     #------------------2-----------------------------------------------------------------
-        self.Rules3 = Label(self.Frame_main2_wind2, text = 'Pour cela, tu as à disposition des caisses \n\
+        Rules2 = Label(self.Frame_main2_wind2, text = 'Pour cela, tu as à disposition des caisses \n\
         qui te permettront de dévier le robot.',font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(2000, lambda: self.Rules3.place(x = 40, y = 150))
+        self.Frame_main2_wind2.after(2000, lambda: Rules2.place(x = 40, y = 150))
 
-        self.CANVAS2 = Canvas(self.Frame_main2_wind2,  width = 130, height = 72)
-        self.Frame_main2_wind2.after(2500, lambda: self.CANVAS2.place(x = 390, y = 140 ))
         self.first_photo2 = PhotoImage(file = "Tete_chercheuse/image/second_photo.png")
-        self.CANVAS2.create_image(65, 36,image = self.first_photo2)
+        Label2 = Label(self.Frame_main2_wind2, image = self.first_photo2)
+        self.Frame_main2_wind2.after(2500, lambda: Label2.place(x = 390, y = 140 ))
 
     #------------------3------------------------------------------------------------------
-        self.Rules4 = Label(self.Frame_main2_wind2, text = "A chaque fois que le robot rencontre un obstacle,\n il tourne à SA droite sinon il va toujours tout droit.",font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(3500, lambda: self.Rules4.place(x = 20, y = 240))
+        Rules3 = Label(self.Frame_main2_wind2, text = "A chaque fois que le robot rencontre un obstacle,\n il tourne à SA droite sinon il va toujours tout droit.",font = ("Berlin Sans FB", 12))
+        self.Frame_main2_wind2.after(3500, lambda: Rules3.place(x = 20, y = 240))
 
-        self.CANVAS3 = Canvas(self.Frame_main2_wind2, width = 190, height = 72)
-        self.Frame_main2_wind2.after(4000, lambda: self.CANVAS3.place(x = 350, y = 230 ))
         self.first_photo3 = PhotoImage(file = "Tete_chercheuse/image/third_photo.png")
-        self.CANVAS3.create_image(95, 36,image = self.first_photo3)
+        Label3 = Label(self.Frame_main2_wind2, image = self.first_photo3)
+        self.Frame_main2_wind2.after(4000, lambda: Label3.place(x = 350, y = 230 ))
 
     #------------------4-------------------------------------------------------------------
-        self.Rules5 = Label(self.Frame_main2_wind2, text = "Enfin tu peux rencontrer des pièces rouges et \n\
+        Rules4 = Label(self.Frame_main2_wind2, text = "Enfin tu peux rencontrer des pièces rouges et \n\
         jaunes, en passant dessus tu gagneras des points. \n\
         Les rouges rapportent plus de points que les jaunes.",font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(5000, lambda: self.Rules5.place(x = 17, y = 320))
+        self.Frame_main2_wind2.after(5000, lambda: Rules4.place(x = 17, y = 320))
 
-        self.CANVAS4 = Canvas(self.Frame_main2_wind2, width = 150, height = 86)
-        self.Frame_main2_wind2.after(5500, lambda: self.CANVAS4.place(x = 380, y = 320 ))
         self.first_photo4 = PhotoImage(file = "Tete_chercheuse/image/four_photo.png")
-        self.CANVAS4.create_image(75, 43,image = self.first_photo4)
+        Label4 = Label(self.Frame_main2_wind2, image = self.first_photo4)
+        self.Frame_main2_wind2.after(5500, lambda: Label4.place(x = 380, y = 320 ))
 
     #--------------5------------------------------------
         self.Bouton_skip = Button(self.Frame_main2_wind2, text = '-Skip-',font = ("Helvetica", 10),cursor ='hand2', relief = GROOVE,command = self.warning)
@@ -311,37 +308,40 @@ class application:
     def start(self): #fonction pour faire bouger le robot
         self.Table.unbind("<Button-1>")          # on désactive le clique et le bouton start
         self.Button_start["state"] = "disabled"
-        dir = [1, 0]                        # matrice de mouvement, par défaut, on va a droite
+        dir = Vector(1, 0)                       # vecteur de mouvement, par défaut, on va a droite
         for i in range(self.nbcases_width):
             for j in range(self.nbcases_height): # on récupère la position du robot en parcourant la liste
                 if self.table[i][j] == "R":
-                    pos = [i, j]
+                    pos = Vector(i, j)
                     break
         reminder = {} # pour vérifier le nombre de fois qu'on est passé a un meme endroit
         self.run = True    # variable vraie tant qu'on execute la boucle
         while self.run == True:
             sleep(0.4) #on fait avancer le robot toutes les 0.5 secondes
-            self.table[pos[0]][pos[1]] = "0" # on remplace la case où il était par une case vide
-            x = pos[0] + dir[0] #calcul de la prochaine position
-            y = pos[1] - dir[1]
+            self.table[pos.x][pos.y] = "0" # on remplace la case où il était par une case vide
+            x = pos.x + dir.x #calcul de la prochaine position
+            y = pos.y - dir.y
+
+
+            """faire des combinaisons de conditions"""
             if self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0 and self.table[x][y] == "0": #si la prochaine position est dans le tableau et que la prochaine case est libre
-                pos = [x, y] #on lui assigne la nouvelle position
+                pos = Vector(x, y) #on lui assigne la nouvelle position
                 try:
-                    reminder[(pos[0], pos[1])] += 1     # on essaye d'ajouter 1 à la position actuelle
-                    if reminder[(pos[0], pos[1])] > 4:  # si on est passé plus de 4 fois au meme endroit, on restart
+                    reminder[(pos.x, pos.y)] += 1     # on essaye d'ajouter 1 à la position actuelle
+                    if reminder[(pos.x, pos.y)] > 4:  # si on est passé plus de 4 fois au meme endroit, on restart
                         run = False
                         self.restart()
                         return
                 except:
-                    reminder[(pos[0], pos[1])] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1
+                    reminder[(pos.x, pos.y)] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1
 
             elif self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0 and self.table[x][y] == "S": #si la prochaine case est une petite pièce
-                pos = [x, y]        # on lui atribue la nouvelle position
+                pos = Vector(x, y)        # on lui atribue la nouvelle position
                 self.score_star += 50    # ajout du bonnus
                 self.table[x][y] = "0"   # et on vide la case
 
             elif self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0 and self.table[x][y] == "B": #même chose si la prochaine case est une grosse pièce
-                pos = [x, y]
+                pos = Vector(x, y)
                 self.score_star += 150
                 self.table[x][y] = "0"
 
@@ -352,10 +352,12 @@ class application:
                 self.end_game()  #fin du jeu
                 return      # fin de la fonction
 
-            else:                                   # sinon, on a un obstacle devant le robot
-                dir = [dir[1], -dir[0]]             # rotation d'une matrice [a, b] par -PI/2 en faisant [b, -a]
+            else:                                       # sinon, on a un obstacle devant le robot
+                #dir = Vector(dir.y, -dir.x)             # rotation d'une matrice [a, b] par -PI/2 en faisant [b, -a]
+                dir.rotate(-pi/2)
+                dir.integer()
                 self.index_robot = (self.index_robot + 1)%4   # affichage de la rotation
-            self.table[pos[0]][pos[1]] = "R"             # on place la robot dans la grille à sa position actuelle
+            self.table[pos.x][pos.y] = "R"             # on place la robot dans la grille à sa position actuelle
             self.update()
 
     def restart_button(self): #si on clique sur le bouton pour restart

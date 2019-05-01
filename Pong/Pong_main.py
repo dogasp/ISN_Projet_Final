@@ -5,9 +5,11 @@ sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
 from Scoreboard.scoreboard import *
+sys.path.append('../Vectors')
+from Vectors.vector import *
 from random import randrange
 from Fantome.Ressources.data.map_ghost import*
-from math import sqrt, cos, sin, pi
+from math import pi
 
 class pong:
     def __init__(self, user):
@@ -189,42 +191,6 @@ class pong:
         if self.touch > self.score:
             self.score = self.touch
         self.touch = 0
-
-#100x20
-class Vector:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def mag(self):
-        return sqrt(self.x**2 + self.y**2)
-
-    def normalize(self):
-        m = self.mag()
-        if m != 0 and  m!=1:
-            self.div(m)
-
-    def div(self, n):
-        self.x /= n
-        self.y /= n
-
-    def add(self, other):
-        self.x += other.x
-        self.y += other.y
-
-    def setMag(self, n):
-        self.normalize()
-        self.mult(n)
-
-    def mult(self, n):
-        self.x *= n
-        self.y *= n
-
-    def rotate(self, angle):
-        temp = self.x
-        self.x = self.x*cos(angle) - self.y*sin(angle)
-        self.y += temp*sin(angle) + self.y*cos(angle)
-
 
 class Board:
     def __init__(self, x, parent):

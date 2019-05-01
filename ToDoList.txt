@@ -1,14 +1,13 @@
-interfaces: Tetris, Pendu, Flappy, démineur
+interfaces: Tetris, Pendu, Flappy
 
 afficher les lettres déjà entréees Pendu ~
 
-
 Faire le changement du minesweeper au niveau du score
 
-Space invadors/ arkanoid/ asteroid/ doodle jump/ tron/
+Space invaders/ arkanoid/ asteroid/ doodle jump/ tron/
 
 mettre tous les jeux 1vs1
 
 future lointain: faire les jeux 1vs1 en réseau avec requette d'ami exemple
 
-augmenter le nombre de possibilités dans les questions et l'accès plus simple aux diiférents scoreboard
+augmenter le nombre de possibilités dans les questions et l'accès plus simple aux différents scoreboard
