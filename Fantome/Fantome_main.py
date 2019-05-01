@@ -28,11 +28,11 @@ class ghost:
         self.Jerry_3 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_3.png")
         self.Jerry_2 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_2.png")
 
-        self.door = PhotoImage(file = "Parametters/door.png")
-        self.main = PhotoImage(file = "Parametters/main.png")
-        self.next = PhotoImage(file = "Parametters/next.png")
+
+        self.main = PhotoImage(file = "Parametters/main2.png")
+        self.next = PhotoImage(file = "Parametters/next2.png")
         self.fond_ecran = PhotoImage(file = "Parametters/fond_ecran.png")
-        self.replay = PhotoImage(file = "Parametters/replay.png")
+        self.replay = PhotoImage(file = "Parametters/replay2.png")
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 526)
@@ -345,13 +345,16 @@ class ghost:
                 self.score += self.score_temp
             self.show_score["text"] = "Score: %s"%str(int(self.score))
             self.question = Toplevel()
-            self.question.geometry("480x300")
-            self.canvas_question = Canvas(self.question, width = 480, height = 300)
+            self.question.geometry("482x300")
+            self.canvas_question = Canvas(self.question, width = 482, height = 300)
             self.canvas_question.place(x=0,y=0)
-            self.canvas_question.create_image(240, 150, image = self.fond_ecran)
-            Button(self.canvas_question, image = self.replay ,command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 30, y = 45)
-            Button(self.canvas_question, text = "Main Menu",command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
-            Button(self.canvas_question, text = "Next Level",command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
+            self.canvas_question.create_image(241, 150, image = self.fond_ecran)
+            self.canvas_question.create_text(90, 110, text = 'Restart', font = ("Berlin Sans FB", 23))
+            self.canvas_question.create_text(241, 110, text = 'Next', font = ("Berlin Sans FB", 23))
+            self.canvas_question.create_text(390, 110, text = 'Menu', font = ("Berlin Sans FB", 23))
+            Button(self.canvas_question,image = self.replay, highlightthickness=0, borderwidth = 1, command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 60, y = 150)
+            Button(self.canvas_question,image = self.main,highlightthickness=0, borderwidth = 1,command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 360, y = 150)
+            Button(self.canvas_question,image = self.next,highlightthickness=0, borderwidth = 1,command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
 
         elif x=="restart_question":
             self.question.destroy()

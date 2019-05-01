@@ -321,7 +321,7 @@ class bird:
                         self.count_image *=1.1  #On multiplie self.count_image par 1.1
                     else:                       #Sinon
                         self.count_image *=1.04 #On multiplie self.count_image par 1.4 pour faire accéler l'inclinaison
-                    self.vitesse +=0.055        #La vitesse est toujours augmentée
+                    self.vitesse +=0.06        #La vitesse est toujours augmentée
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)#On récupérer les coordonnées de l'oiseau
                                                                                                 #########################################
                     if (self.y_center_bird +self.vitesse + 25) > 500:                           #Grace aux coordonées, on vérifie si l'oiseau ne touche pas le sol
@@ -334,7 +334,7 @@ class bird:
 
                                                 ############################################################################
                 else:                           #Si self.count_image > 27
-                    self.vitesse +=0.055        #On effectue la même chose qu'au dessus sans changer l'inclinaison
+                    self.vitesse +=0.06        #On effectue la même chose qu'au dessus sans changer l'inclinaison
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)############################
                     if (self.y_center_bird +self.vitesse + 25) > 500:                                       #
                         self.Canvas_world.coords(self.image_Bird_true, self.x_center_bird, 475)             #
