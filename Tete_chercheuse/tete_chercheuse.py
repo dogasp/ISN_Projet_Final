@@ -299,15 +299,15 @@ class application:
             self.update(False)
             self.question = Toplevel()
             self.question.geometry("482x300")
-            self.canvas_question = Canvas(self.question, width = 482, height = 300)
+            self.canvas_question = Canvas(self.question, width = 482, height = 300, highlightthickness = 0)
             self.canvas_question.place(x=0,y=0)
             self.canvas_question.create_image(241, 150, image = self.fond_ecran)
             self.canvas_question.create_text(90, 110, text = 'Restart', font = ("Berlin Sans FB", 23))
             self.canvas_question.create_text(241, 110, text = 'Next', font = ("Berlin Sans FB", 23))
             self.canvas_question.create_text(390, 110, text = 'Menu', font = ("Berlin Sans FB", 23))
-            Button(self.canvas_question,image = self.replay, highlightthickness=0, borderwidth = 1, command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 60, y = 150)
-            Button(self.canvas_question,image = self.main,highlightthickness=0, borderwidth = 1,command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 360, y = 150)
-            Button(self.canvas_question,image = self.next,highlightthickness=0, borderwidth = 1,command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
+            Button(self.canvas_question,image = self.replay, highlightthickness=0, borderwidth = 0, command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 60, y = 150)
+            Button(self.canvas_question,image = self.main,highlightthickness=0, borderwidth = 0,command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 360, y = 150)
+            Button(self.canvas_question,image = self.next,highlightthickness=0, borderwidth = 0,command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
 
         elif x=="restart_question":
             self.question.destroy()
@@ -366,41 +366,40 @@ class application:
             x = pos.x + dir.x #calcul de la prochaine position
             y = pos.y - dir.y
 
+            if self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0:
+                if self.table[x][y] == "0": #si la prochaine position est dans le tableau et que la prochaine case est libre
+                    pos = Vector(x, y) #on lui assigne la nouvelle position
+                    try:
+                        reminder[(pos.x, pos.y)] += 1     # on essaye d'ajouter 1 à la position actuelle
+                        if reminder[(pos.x, pos.y)] > 4:  # si on est passé plus de 4 fois au meme endroit, on restart
+                            run = False
+                            self.command_user("restart2")
+                            return
+                    except:
+                        reminder[(pos.x, pos.y)] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1
 
-            """faire des combinaisons de conditions"""
-            if self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0 and self.table[x][y] == "0": #si la prochaine position est dans le tableau et que la prochaine case est libre
-                pos = Vector(x, y) #on lui assigne la nouvelle position
-                try:
-                    reminder[(pos.x, pos.y)] += 1     # on essaye d'ajouter 1 à la position actuelle
-                    if reminder[(pos.x, pos.y)] > 4:  # si on est passé plus de 4 fois au meme endroit, on restart
-                        run = False
-                        self.command_user("restart2")
-                        return
-                except:
-                    reminder[(pos.x, pos.y)] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1
+                elif self.table[x][y] == "S": #si la prochaine case est une petite pièce
+                    pos = Vector(x, y)        # on lui atribue la nouvelle position
+                    self.score_star += 50    # ajout du bonnus
+                    self.table[x][y] = "0"   # et on vide la case
 
-            elif self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0 and self.table[x][y] == "S": #si la prochaine case est une petite pièce
-                pos = Vector(x, y)        # on lui atribue la nouvelle position
-                self.score_star += 50    # ajout du bonnus
-                self.table[x][y] = "0"   # et on vide la case
-
-            elif self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0 and self.table[x][y] == "B": #même chose si la prochaine case est une grosse pièce
-                pos = Vector(x, y)
-                self.score_star += 150
-                self.table[x][y] = "0"
+                elif self.table[x][y] == "B": #même chose si la prochaine case est une grosse pièce
+                    pos = Vector(x, y)
+                    self.score_star += 150
+                    self.table[x][y] = "0"
 
 
-            elif self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0 and self.table[x][y] == "P": #si la prochaine case est le drapeau
-                self.table[x][y] = "E" #on change la case actuelle à réussi pour afficher avec le drapeau
-                self.run = False #on arrete la boucle
-                self.command_user("end_game")  #fin du jeu
-                return      # fin de la fonction
+                elif self.table[x][y] == "P": #si la prochaine case est le drapeau
+                    self.table[x][y] = "E" #on change la case actuelle à réussi pour afficher avec le drapeau
+                    self.run = False #on arrete la boucle
+                    self.command_user("end_game")  #fin du jeu
+                    return      # fin de la fonction
 
-            else:                                       # sinon, on a un obstacle devant le robot
-                #dir = Vector(dir.y, -dir.x)             # rotation d'une matrice [a, b] par -PI/2 en faisant [b, -a]
-                dir.rotate(-pi/2)
-                dir.integer()
-                self.index_robot = (self.index_robot + 1)%4   # affichage de la rotation
+                else:                                       # sinon, on a un obstacle devant le robot
+                    #dir = Vector(dir.y, -dir.x)             # rotation d'une matrice [a, b] par -PI/2 en faisant [b, -a]
+                    dir.rotate(-pi/2)
+                    dir.integer()
+                    self.index_robot = (self.index_robot + 1)%4   # affichage de la rotation
             self.table[pos.x][pos.y] = "R"             # on place la robot dans la grille à sa position actuelle
             self.update()
 
