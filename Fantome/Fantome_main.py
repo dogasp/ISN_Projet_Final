@@ -29,10 +29,10 @@ class ghost:
         self.Jerry_2 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_2.png")
 
 
-        self.main = PhotoImage(file = "Parametters/main2.png")
-        self.next = PhotoImage(file = "Parametters/next2.png")
-        self.fond_ecran = PhotoImage(file = "Parametters/fond_ecran.png")
-        self.replay = PhotoImage(file = "Parametters/replay2.png")
+        self.main = PhotoImage(file = "Parametters/main3.png")
+        self.next = PhotoImage(file = "Parametters/next3.png")
+        self.fond_ecran = PhotoImage(file = "Parametters/fond_ecran2.png")
+        self.replay = PhotoImage(file = "Parametters/replay3.png")
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 526)
