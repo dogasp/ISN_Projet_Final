@@ -135,12 +135,13 @@ class pendu:
         self.message = Label(self.root, text = "entrée déjà saisie ou trop longue", fg = "red")
         Button(self.root, text = "Valider", cursor ='hand2', command = self.check).place(x = 160, y = 195)
 
-        self.Entered = Label(self.root, text = "")
-        self.Entered.place(x = 30, y = 100)
+        self.Entered_Label = Label(self.root, text = "")
+        self.Entered_Label.place(x = 30, y = 100)
 
     def check(self, event = None):
         lettre = self.entry.get().lower()
-        self.Entered["text"] += " " + lettre
+        if lettre not in self.Entered_Label["text"]:
+            self.Entered_Label["text"] += " " + lettre
         self.entry.delete(0, len(lettre))
         if lettre in self.entred or len(lettre) > 1:
             self.message.place(x = 30, y = 230)

@@ -46,7 +46,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         save()
         return b"ok" #le retour n'est pas important
 
-        """################--------------Condition pour l'ajout du Classement Total----------#############################"""
+        """################--------------Condition pour récupération du Classement Total----------#############################"""
 
     elif command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
         total_score = []
@@ -58,7 +58,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         total_score.sort(key = lambda list: list[1], reverse = True) #on trie la liste et on renvois les 10 premiers éléments
         return pickle.dumps(total_score[:10])
 
-        """################--------------Condition pour l'ajout du Classement du jeu----------#############################"""
+        """################--------------Condition pour récupération du Classement du jeu----------#############################"""
 
     elif command == "game_list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
         total_score = []

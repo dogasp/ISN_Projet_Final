@@ -121,7 +121,7 @@ class pong:
         self.update()
 
     def start_move(self, event):
-        if self.pressing != True:
+        if not(self.pressing):
             self.pressing = True
             self.move(event)
 
@@ -178,7 +178,7 @@ class pong:
         self.Canvas_dessine.create_rectangle(2,2,698,498, outline = "white")
         self.Canvas_dessine.create_line(349,0,349,498, fill = "white", dash = (10,10))
         self.Canvas_dessine.create_oval(349-self.rayon, 249 - self.rayon, 349 + self.rayon, 249 + self.rayon,outline = 'white')
-        if self.launch != 0:
+        if self.launch:
             self.ball.launch(self.launch)
 
         self.player.show()
@@ -233,7 +233,7 @@ class Ball:
                 return 0
             offset = self.parent.bot.pos.y - self.pos.y
             toApply = mapping(offset, -55, 55, 4, -4)
-            toApply += randrange(-int(abs(self.vitesse.y/2)), int(abs(self.vitesse.y/2))+1)
+            toApply += randrange(-int(abs(self.vitesse.y/2)), int(abs(self.vitesse.y/2))+1) #un peux d'aléatoire...
             temp = self.vitesse.mag()
             self.vitesse.y += toApply
             self.vitesse.setMag(temp)
@@ -264,7 +264,7 @@ class Ball:
         self.pos.add(self.vitesse)
         self.parent.Canvas_dessine.create_oval(self.pos.x-20, self.pos.y-20, self.pos.x+20, self.pos.y+20, fill = "white")
 
-def mapping(value, istart, iend, ostart, oend):
+def mapping(value, istart, iend, ostart, oend): 
     return ostart + (oend - ostart) * ((value - istart)/(iend - istart))
 
 def Pong(user):

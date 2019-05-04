@@ -1,9 +1,12 @@
 from math import sin, cos, sqrt
 
 class Vector: #classe vecteur
-    def __init__(self, x, y): #le vectieur est initialisé avec un x et un y
+    def __init__(self, x, y): #le vecteur est initialisé avec un x et un y
         self.x = x
         self.y = y
+
+    def __str__(self): #fonction pour print un vecteur
+        return "Vector (%d, %d)" % (self.x, self.y)
 
     def mag(self): #retourne la longeur du vecteur (sa magnétude)
         return sqrt(self.x**2 + self.y**2)

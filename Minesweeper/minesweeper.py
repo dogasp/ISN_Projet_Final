@@ -166,7 +166,7 @@ class demineur:
     def click(self, event): #fonction déclanchée avec un clique de la souris sur le canvas
         x = event.x//self.border #on détermine l'emplacement dans le tableau de la case cliquée
         y = event.y//self.border
-        if self.first == False:
+        if not(self.first):
             self.first = True
             for _ in range(self.mine_Count): #loop pour placer les bombes
                 turn = True

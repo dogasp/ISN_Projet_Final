@@ -207,7 +207,7 @@ class snake:
                   self.pos = [newX, newY]             # on assigne la prochaine position au serpent
                   for i in range(20):
                       for j in range(20):
-                          if self.grid[i][j][0] != 0: # chaque partie du serpent perds de la vie
+                          if self.grid[i][j][0]: # chaque partie du serpent perds de la vie
                               self.grid[i][j][0] -= 1
                   #si la prochaine rotation est différente de la direction actuelle, on lui atribue la direction actuelle
                   if self.next_Rotation != convert_dir(self.dir, True):
@@ -258,7 +258,7 @@ class snake:
         elif x == self.fruit[0] and y == self.fruit[1]: #si on arrive sur les coordonées du fruit
             for i in range(20):
                 for j in range(20):
-                    if self.grid[i][j][0] != 0: #on incrémente la vie de chaque parties de 1
+                    if self.grid[i][j][0]: #on incrémente la vie de chaque parties de 1
                         self.grid[i][j][0] += 1
             self.length_max += 1 #on augmente la taille du serpent de 1
             self.Score["text"] = "Score : {}".format((self.length_max-2)*40) #actualisation du score

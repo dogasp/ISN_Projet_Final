@@ -197,14 +197,14 @@ class bird:
         self.wait_game()
 
     def wait_game(self,event = None):       #Fonction servant à bouger l'oiseau de haut en bas dans l'attente
-        if self.play == False:              #Si le joueur n'as toujours pas appuyé, la fonction s'éxécute en boucle
-            if self.wait == True:           #Si self.wait == True, alors l'oiseau monte
+        if not(self.play):              #Si le joueur n'as toujours pas appuyé, la fonction s'éxécute en boucle
+            if self.wait:           #Si self.wait == True, alors l'oiseau monte
                 self.vitesse_wait += 0.9
                 self.Canvas_world.move(self.image_Bird, 0 ,self.vitesse_wait)
                 if  self.vitesse_wait > 7:  #Si il atteind la limite, self.wait = False et l'oiseau descend
                     self.wait = False
                     self.vitesse_wait = 0   #On réinitialise la variable à 0 pour la descente
-            elif self.wait == False:                                            ###########################
+            else:                                            ###########################
                 self.vitesse_wait -= 0.9                                        #
                 self.Canvas_world.move(self.image_Bird, 0 ,self.vitesse_wait)   #    Même résonnement
                 if  self.vitesse_wait < -7:                                     #
@@ -212,7 +212,7 @@ class bird:
                     self.vitesse_wait = 0                                       ###########################
             self.root.after(75,self.wait_game)
 
-        elif self.play == True:             #Le joueur a appuyé sur la touche, la fonction s'arrête et passe à la suivante
+        else:                                #Le joueur a appuyé sur la touche, la fonction s'arrête et passe à la suivante
             self.move_bird_begin()
 
     def move_bird_begin(self):              #Fonction servant à déplacer l'oiseau jusqu'à la zone où il pourra sauter
@@ -227,13 +227,13 @@ class bird:
             self.Canvas_ground.coords(self.ground, 450,35)
 
         if x1 + vitesse > 100:                      #Tant que l'abscisse de l'oiseau est supérieur à 100, la fonction tourne en boucle
-            if self.wait == True:                                                   ####################################
+            if self.wait:                                                   ####################################
                 self.vitesse_wait += 0.9                                            #
                 self.Canvas_world.move(self.image_Bird, vitesse ,self.vitesse_wait) #
                 if  self.vitesse_wait > 7:                                          #
                     self.wait = False                                               #
                     self.vitesse_wait = 0                                           #   Même résonnement qu'à la fonction
-            elif self.wait == False:                                                #   précédente pour le déplacement vertical,
+            else:                                                #   précédente pour le déplacement vertical,
                 self.vitesse_wait -= 0.9                                            #   on rajoute seulement le déplacement horizontal ici
                 self.Canvas_world.move(self.image_Bird, vitesse ,self.vitesse_wait) #
                 if  self.vitesse_wait < -7:                                         #
@@ -263,7 +263,7 @@ class bird:
         self.update()
 
     def update(self):  #Fonction servant à relancer différentes fonctions toutes le 50 ms
-        if self.verite == True:         #La fonction s'éffectue si self.verite == True
+        if self.verite:         #La fonction s'éffectue si self.verite == True
             self.bird_move()            #Déplacement de l'oiseau
             self.tuyau0.move_pipe()     #######################
             self.tuyau1.move_pipe()     #Déplacement des tuyaux
@@ -300,7 +300,7 @@ class bird:
         if x < 260:                                         #
             self.Canvas_ground.coords(self.ground, 450,35)  ############################
         for _ in range(6): #Début de la boucle pour plus de calculs et de précision
-            if self.press == True:  #La montée de l'oiseau
+            if self.press:  #La montée de l'oiseau
                 self.i +=1          #On incrémente i de 1
                 self.vitesse = 0    #On réinitialise la vitesse pour la déscente
                 self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird_true) #Coordonées de l'oiseau qui servent ensuite à la fonction verif_bird
@@ -315,7 +315,7 @@ class bird:
                     else:                       # jusqu'à ce self.count_image = 0
                         self.count_image = 0    ################################
 
-            elif self.press == False:           #La descente de l'oiseau
+            else:           #La descente de l'oiseau
                 if self.count_image < 25:       #Si self.count_image < 27, pour éviter index out of range
                     if self.count_image > 5:    #Si self.count_image > 5:
                         self.count_image *=1.1  #On multiplie self.count_image par 1.1
@@ -344,7 +344,7 @@ class bird:
 
 
     def verif_bird(self, y_pipe_center_top , y_pipe_center_down ,b = False): #Fonction serant à vérifier si l'oiseau rentre en contact avec le tuyau ou non
-        if self.verite == True: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False
+        if self.verite: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False
             self.y_pipe_down = y_pipe_center_down - 250 #Valeur du haut du tuyau bas
             self.y_pipe_top = y_pipe_center_top + 250   #Valeur du bas du tuyau haut
             if self.y_pipe_down<self.y_center_bird + 24 or self.y_center_bird - 24< self.y_pipe_top or b == True: #Si il y a touche du sol ou du tuyau
@@ -355,7 +355,7 @@ class bird:
                 self.image_game_over = self.Canvas_world.create_image(350,250,  image = self.tempo_image) #création de l'image de game over
                 self.Canvas_world.after(500, self.ending)
                 self.Canvas_world.after(1000, lambda: self.ending(True))
-                if b == True:                           #Cette condition sert à différencier
+                if b:                           #Cette condition sert à différencier
                     self.root.after(2000, self.dead)    #si la mort vient du sol ou du tuyau
                 else:                                   #ainsi si b == True, on n'appelle pas wait_dead puique l'oiseau est déjà au sol
                     self.wait_dead()                    #sinon, on appelle wait_dead qui sert à faire descendre l'oiseau quand il est mort
@@ -403,22 +403,17 @@ class bird:
             self.image_dizaine = self.Canvas_world.create_image(322,30,  image = self.liste_nombres[self.d])
         elif self.compte == 100:#Si le compte = 100, on crée l'image du chiffre des centaines
             self.image_centaine = self.Canvas_world.create_image(304,30,  image = self.liste_nombres[self.c])
-        self.u+=1               #On incrémente le chiffre des unités à chaque tuyau
-        if self.u >9:           #Si le chiffre des unités dépasse 9
-            self.u =0           #On le réinitialise à 0
-            self.d+=1           #Et on incrémente le chiffre des dizaines tous les 10 tuyaux
-            if self.d >9:       #Si le chiffre des dizaines dépasse 9
-                self.d = 0      #On le réinitialise à 0
-                self.c+=1       #Et on incrémente le chiffre des centaines tous les 100 tuyaux
-                self.Canvas_world.itemconfigure(self.image_centaine, image = self.liste_nombres[self.c])#On itemconfigure le chiffre des centaines si il le faut
-            self.Canvas_world.itemconfigure(self.image_dizaine, image = self.liste_nombres[self.d])#On itemconfigure le chiffre des dizaines si il le faut
-        self.Canvas_world.itemconfigure(self.image_unite, image = self.liste_nombres[self.u])#On itemconfigure le chiffre des unités à chaque fois
+        count = str(self.compte)
+        self.Canvas_world.itemconfigure(self.image_unite, image = self.liste_nombres[int(count[-1])])#On itemconfigure le chiffre des unités à chaque fois
         self.Canvas_world.tag_raise(self.image_unite)#On met en avant devant les tuyaux à chaque fois
-        if self.compte >=10:
-            self.Canvas_world.tag_raise(self.image_dizaine)#On met en avant le chiffre des centaines devant les tuyaux si il le faut
-        if self.compte >=100:
-            self.Canvas_world.tag_raise(self.image_centaine)#On met en avant le chiffre des centaines devant les tuyaux si il le faut
-        self.Canvas_world.tag_raise(self.image_Bird_true)#On met en avant l'oiseau à chaque fois
+        if len(count) > 1:
+                self.Canvas_world.itemconfigure(self.image_dizaine, image = self.liste_nombres[int(count[-2])])#On itemconfigure le chiffre des dizaines si il le faut
+                self.Canvas_world.tag_raise(self.image_dizaine)#On met en avant le chiffre des centaines devant les tuyaux
+                if len(count) > 2:
+                    self.Canvas_world.itemconfigure(self.image_centaine, image = self.liste_nombres[int(count[-3])])#On itemconfigure le chiffre des centaines si il le faut
+                    self.Canvas_world.tag_raise(self.image_centaine)#On met en avant le chiffre des centaines devant les tuyaux
+
+        self.Canvas_world.tag_raise(self.image_Bird_true) #On met en avant l'oiseau à chaque fois
 
 class Pipe:                     #Creéation de la classe Pipe
     def __init__(self, parent): #Argument qui sert à récupérer les variables de la classe Flappy
@@ -433,6 +428,7 @@ class Pipe:                     #Creéation de la classe Pipe
         self.y_pipe_down = y_pipe + 75      #ce qui fait un écart de 150 pixels
         self.top_pipe =  self.parent.Canvas_world.create_image(x_pipe + 75, self.y_pipe_top - self.length_pipe/2,  image = self.test3) #Création du tuyau haut
         self.down_pipe =  self.parent.Canvas_world.create_image(x_pipe + 75,self.y_pipe_down + self.length_pipe/2 ,  image = self.test)#Création du tuyau bas
+
     def move_pipe(self):  #Fonction servant à déplacer le tuyau à l'horizontal, la fonction tourne toutes les 50ms, grace à update
         self.parent.Canvas_world.move(self.top_pipe, self.move_x,0) #Déplacement des 2 tuyaux
         self.parent.Canvas_world.move(self.down_pipe, self.move_x,0)#
