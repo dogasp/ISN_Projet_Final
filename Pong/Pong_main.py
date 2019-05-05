@@ -233,7 +233,7 @@ class Ball:
                 return 0
             offset = self.parent.bot.pos.y - self.pos.y
             toApply = mapping(offset, -55, 55, 4, -4)
-            toApply += randrange(-int(abs(self.vitesse.y/2)), int(abs(self.vitesse.y/2))+1) #un peux d'aléatoire...
+            toApply += randrange(-int(abs(self.vitesse.y/1.2)), int(abs(self.vitesse.y/1.2))+1) #un peux d'aléatoire...
             temp = self.vitesse.mag()
             self.vitesse.y += toApply
             self.vitesse.setMag(temp)
