@@ -268,6 +268,7 @@ class snake:
     def exit(self):            # si on décide de quiter la fenètre
         try:
             self.question.destroy()
+            self.question.quit()
         except: pass
         self.pause = True      # on pause le jeu pour stopper la fonction update
         self.root.destroy()    # et on quite la fenetre principale

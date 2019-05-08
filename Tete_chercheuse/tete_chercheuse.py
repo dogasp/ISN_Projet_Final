@@ -366,7 +366,7 @@ class application:
             x = pos.x + dir.x #calcul de la prochaine position
             y = pos.y - dir.y
 
-            if self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0:
+            if self.nbcases_width > x >= 0 and self.nbcases_height > y >= 0 and self.table[x][y]!= 'X' and self.table[x][y]!= 'C':
                 if self.table[x][y] == "0": #si la prochaine position est dans le tableau et que la prochaine case est libre
                     pos = Vector(x, y) #on lui assigne la nouvelle position
                     try:
@@ -395,11 +395,12 @@ class application:
                     self.command_user("end_game")  #fin du jeu
                     return      # fin de la fonction
 
-                else:                                       # sinon, on a un obstacle devant le robot
-                    #dir = Vector(dir.y, -dir.x)             # rotation d'une matrice [a, b] par -PI/2 en faisant [b, -a]
-                    dir.rotate(-pi/2)
-                    dir.integer()
-                    self.index_robot = (self.index_robot + 1)%4   # affichage de la rotation
+            else:                                       # sinon, on a un obstacle devant le robot
+                #dir = Vector(dir.y, -dir.x)             # rotation d'une matrice [a, b] par -PI/2 en faisant [b, -a]
+                dir.rotate(-pi/2)
+                dir.integer()
+                self.index_robot = (self.index_robot + 1)%4   # affichage de la rotation
+
             self.table[pos.x][pos.y] = "R"             # on place la robot dans la grille à sa position actuelle
             self.update()
 
