@@ -6,12 +6,14 @@ sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
 from Scoreboard.scoreboard import *
+sys.path.append("../Vectors")
+from Vectors.vector import *
 from Tetris.tiles import *
 from random import choice, randint
 
 class Tile: #classe utilisée pour gérer les formes géométrique
     def __init__(self, pattern):
-        self.pos = [3, 0]           # position de la pièce, initiée au centre de la grille
+        self.pos = Vector(3, 0)           # position de la pièce, initiée au centre de la grille
         self.pattern = pattern[0]   # grille correspondant au placement des éléments
         self.letter = pattern[1]    # lettre correspondant à la forme
         self.index = 0              # index de la rotation
@@ -22,25 +24,25 @@ class Tile: #classe utilisée pour gérer les formes géométrique
             for j in range(4):
                 if self.pattern[self.index][i][j] != "_": # on boucle dans le pattern et si on trouve autre chose que du vide (symbolisé par "_")
                     if state == 0: #si on veut faire bouger la pièce, on l'actualise
-                        parent.canvas.create_image((i+self.pos[0])*(parent.width/10) + parent.width/20, (j+self.pos[1])*(parent.height/22) + parent.height/44, image = parent.image_tiles[self.letter])
+                        parent.canvas.create_image((i+self.pos.x)*(parent.width/10) + parent.width/20, (j+self.pos.y)*(parent.height/22) + parent.height/44, image = parent.image_tiles[self.letter])
                         if self.verify(i, j, parent) == True: #et on vérifie si elle peut desscendre
                             return 0 #si elle ne peut pas, on arrete la fonction
                     elif state == 2: #si on veut seulement l'afficher
-                        parent.canvas.create_image((i+self.pos[0])*(parent.width/10) + parent.width/20, (j+self.pos[1])*(parent.height/22) + parent.height/44, image = parent.image_tiles[self.letter])
+                        parent.canvas.create_image((i+self.pos.x)*(parent.width/10) + parent.width/20, (j+self.pos.y)*(parent.height/22) + parent.height/44, image = parent.image_tiles[self.letter])
                     else: #si on veut l'afficher sur le côté, pour la prochaine pièce
                         parent.next_Canvas.create_image(i*parent.width/10 + parent.width/20, j*parent.height/22 + parent.height/44, image = parent.image_tiles[self.letter])
         if state == 0: #si on veut le déplacer
-            self.pos[1] += 1    # on le fait déscendre
+            self.pos.y += 1    # on le fait déscendre
             self.lifetime += 1  # on incrémente sa durée de vie, le joueur n'a pas perdus
 
     def verify(self, x, y, parent): #fonction de vérification si on vient de compléter une ligne
-        testX = x + int(self.pos[0]) #calcul des coordonées à tester pour la prochaine chute
-        testY = y + int(self.pos[1]) + 1
+        testX = x + int(self.pos.x) #calcul des coordonées à tester pour la prochaine chute
+        testY = y + int(self.pos.y) + 1
         if testY == 22 or parent.grid[testX][testY] != "": #si on atteind le bas de la fenetre ou que la prochaine case n'est pas vide
             for i in range(4):
                 for j in range(4):
                     if self.pattern[self.index][i][j] != "_": #pour chaque cases du pattern si cette case n'est pas vide
-                        parent.grid[int(i+self.pos[0])][int(self.pos[1]+j)] = self.pattern[self.index][i][j] #on atribue à la grid les cases du pattern
+                        parent.grid[int(i+self.pos.x)][int(self.pos.y+j)] = self.pattern[self.index][i][j] #on atribue à la grid les cases du pattern
             rowCount = 0 #variable pour compter le nombre de lignes completées
             j = 0
             while j < 22: #on boucle dans chaque ligne
@@ -68,7 +70,7 @@ class Tile: #classe utilisée pour gérer les formes géométrique
             if parent.score > parent.Best_score:
                 parent.Best_score = parent.score
 
-            if rowCount != 0 and parent.Total_Row%10 + rowCount >= 10:
+            if rowCount and parent.Total_Row%10 + rowCount >= 10:
                 parent.speed += 2
 
             parent.Total_Row += rowCount
@@ -88,7 +90,7 @@ class Tile: #classe utilisée pour gérer les formes géométrique
         for i in range(4):
             for j in range(4):
                 if self.pattern[self.index][i][j] != "_":
-                    if i + self.pos[0] + coeff == 10 or j + self.pos[1] == 22 or i + self.pos[0] + coeff == -1 or parent.grid[int(self.pos[0]) + i + coeff][int(self.pos[1]) + j] != "":
+                    if i + self.pos.x + coeff == 10 or j + self.pos.y == 22 or i + self.pos.x + coeff == -1 or parent.grid[int(self.pos.x) + i + coeff][int(self.pos.y) + j] != "":
                         return False
         return True
 
@@ -96,7 +98,7 @@ class Tile: #classe utilisée pour gérer les formes géométrique
         toTry = (self.index + 1)%len(self.pattern)
         for i in range(4):
             for j in range(4):
-                if self.pattern[toTry][i][j] != "_" and ((self.pos[0] + i == 10 or self.pos[0] == -1) or parent.grid[self.pos[0] + i][self.pos[1] + j] != ""):
+                if self.pattern[toTry][i][j] != "_" and ((self.pos.x + i == 10 or self.pos.x == -1) or parent.grid[self.pos.x + i][self.pos.y + j] != ""):
                     return False
         return True
 
@@ -213,11 +215,11 @@ class tetris:
 
             elif keyCode == "Right":
                 if self.current.border(1, self) == True:
-                    self.current.pos[0] += 1
+                    self.current.pos.x += 1
 
             elif keyCode == "Left":
                 if self.current.border(-1, self) == True:
-                    self.current.pos[0] -= 1
+                    self.current.pos.x -= 1
 
             elif keyCode == "Up":
                 if self.current.check(self) == True:
