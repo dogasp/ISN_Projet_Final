@@ -122,7 +122,7 @@ class application:
 
         ###############-----------Lancement des fonctions-------------######################
         self.time_num()
-        self.command_user("restart2")
+        self.command_user("restart")
         self.update()
 
         self.root_tete.mainloop()
@@ -228,7 +228,6 @@ class application:
     def click2(self, event):
         x = event.x #on récupère la position de la souris sur l'écran
         y = event.y
-
         i = int(x//self.cell_width) #on convertit la position de la souris en indice pour le tableau
         j = int(y//self.cell_height)
         if self.table[i][j] == "R":
@@ -265,7 +264,6 @@ class application:
         if Print_Score == True: #on peut appeler la fonction update sans actualiser le score
             self.show_score["text"] = "Score: %s" %str(int(sum(self.score))) #actualisation du score
 
-
     def command_user(self, x):
         if x=="exit_menu":
             self.question.destroy()
@@ -281,7 +279,7 @@ class application:
                 self.exit()                  # on quitte le jeu en arretant la fonction
                 return
             self.Title_level["text"] = "Level {}".format(self.level) #actualisation de l'affichage
-            self.command_user("restart2")                   # régénération de l'affichage
+            self.command_user("restart")                   # régénération de l'affichage
 
 
         elif x=="end_game":
@@ -313,13 +311,13 @@ class application:
             self.question.destroy()
             self.question2 = Toplevel()
             self.question2.geometry("300x125")
-            Button(self.question2, text = "Yes",command = lambda: self.command_user("restart2"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+            Button(self.question2, text = "Yes",command = lambda: self.command_user("restart"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
             Button(self.question2, text = "No",command = lambda: self.command_user("end_game"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
 
             self.box_placed = 0 #nombre de box que l'utilisateur a posé sur la map
             self.time_game = 0 #temps pris par le joueur pour résoudre l'agnime
 
-        elif x=="restart2":
+        elif x=="restart":
             try:
                 self.question2.destroy()
             except: pass
@@ -335,19 +333,16 @@ class application:
             self.Table.bind("<Button-2>", self.click2)
             self.show_time['text'] = "Temps: %s" %str(self.time_game) #actualisation des affichages
             self.show_count['text'] = "Nombre de palettes: %s" %str(self.box_placed)
-
+            
             for i in range(self.nbcases_width):
                 for j in range(self.nbcases_height):
                     self.table[i][j] = Levels[self.level-1][(j*self.nbcases_width)+i] #réinitialisation de la table
             self.update()
 
-
-
     def time_num(self): #fonciton pour incrémenter le temps
         self.time_game+=1 # incrémentation de la variable
         self.show_time['text'] = "Temps: %s" %str(self.time_game) #actualisation de l'affichage
         self.root_tete.after(1000,self.time_num) #rappel de la fonction après 1 seconde (1000 ms)
-
 
     def start(self): #fonction pour faire bouger le robot
         self.Table.unbind("<Button-1>")          # on désactive le clique et le bouton start
@@ -373,7 +368,7 @@ class application:
                         reminder[(pos.x, pos.y)] += 1     # on essaye d'ajouter 1 à la position actuelle
                         if reminder[(pos.x, pos.y)] > 4:  # si on est passé plus de 4 fois au meme endroit, on restart
                             run = False
-                            self.command_user("restart2")
+                            self.command_user("restart")
                             return
                     except:
                         reminder[(pos.x, pos.y)] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1
@@ -406,9 +401,7 @@ class application:
 
     def restart_button(self): #si on clique sur le bouton pour restart
         self.run = False #on arrete la boucle
-        self.command_user("restart2")   #restart de l'application
-
-
+        self.command_user("restart")   #restart de l'application
 
     def exit(self): #fonction pour quitter, elle se charge de détruire les fenètres lancées
         try:
