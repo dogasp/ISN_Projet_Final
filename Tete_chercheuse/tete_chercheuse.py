@@ -42,8 +42,6 @@ class application:
         self.cell_height = 500/self.nbcases_height
         self.score_star = 0            #bonnus des pièces
         self.time_game = 0
-        self.nbx = 0
-        self.nbl = 0
 
         self.table = [[0 for i in range(self.nbcases_width)] for j in range(self.nbcases_height)]#tableau
         self.level = 1 #niveau
@@ -63,7 +61,7 @@ class application:
 
 
         self.main = PhotoImage(file = "Parametters/main2.png")
-        self.next = PhotoImage(file = "Parametters/next2.png")
+        self.next_image = PhotoImage(file = "Parametters/next2.png")
         self.fond_ecran = PhotoImage(file = "Parametters/fond_ecran.png")
         self.replay = PhotoImage(file = "Parametters/replay2.png")
 
@@ -122,7 +120,7 @@ class application:
 
         ###############-----------Lancement des fonctions-------------######################
         self.time_num()
-        self.command_user("restart")
+        self.restart2()
         self.update()
 
         self.root_tete.mainloop()
@@ -207,7 +205,7 @@ class application:
     """######################------------------Début du Jeu---------------------------########################################"""
 
     def click(self, event): #fonction appelée lors du clique de la souris sur le canvas
-        x = event.x #on récupère la position de la souris sur l'écran
+        x = event.x                 #on récupère la position de la souris sur l'écran
         y = event.y
 
         i = int(x//self.cell_width) #on convertit la position de la souris en indice pour le tableau
@@ -221,17 +219,6 @@ class application:
             self.table[i][j] = "0"    # on l'enlève
             self.box_placed-=1        # on décrémente le compteur en actualisant l'affichage
             self.show_count['text'] = "Nombre de palettes: %s" %str(self.box_placed)
-        elif self.table[i][j] == "P":
-            self.nbx +=1
-        self.update()
-
-    def click2(self, event):
-        x = event.x #on récupère la position de la souris sur l'écran
-        y = event.y
-        i = int(x//self.cell_width) #on convertit la position de la souris en indice pour le tableau
-        j = int(y//self.cell_height)
-        if self.table[i][j] == "R":
-            self.nbl +=1
         self.update()
 
     def update(self, Print_Score = True): #fonction pour regénérer l'affichage
@@ -264,85 +251,81 @@ class application:
         if Print_Score == True: #on peut appeler la fonction update sans actualiser le score
             self.show_score["text"] = "Score: %s" %str(int(sum(self.score))) #actualisation du score
 
-    def command_user(self, x):
-        if x=="exit_menu":
-            self.question.destroy()
-            self.exit()
 
-        elif x=="next":
-            self.score[-1] += self.score_temp     # on atribue au dernier niveau joué le score gardé en mémoire
-            self.score.append(50*(self.level+1))  # création d'un nouveau slot dans la liste des scores pour le nouveau niveau initié avec une valeur car il y a un malus appliqué dans la foction restart
-            self.question.destroy()
-            self.level += 1                  # incrémentation du niveau
-            if self.level == len(Levels)+1:  # si le joueur a atteint la fin de la liste des niveaux
-                self.score[-1] = 0           # le dernier score ne doit pas avoir d'offset
-                self.exit()                  # on quitte le jeu en arretant la fonction
-                return
-            self.Title_level["text"] = "Level {}".format(self.level) #actualisation de l'affichage
-            self.command_user("restart")                   # régénération de l'affichage
+    def exit_menu(self):
+        self.question.destroy()
+        self.exit()
+
+    def next(self):
+        self.score[-1] += self.score_temp     # on atribue au dernier niveau joué le score gardé en mémoire
+        self.score.append(50*(self.level+1))  # création d'un nouveau slot dans la liste des scores pour le nouveau niveau initié avec une valeur car il y a un malus appliqué dans la foction restart
+        self.question.destroy()
+        self.level += 1                  # incrémentation du niveau
+        if self.level == len(Levels)+1:  # si le joueur a atteint la fin de la liste des niveaux
+            self.score[-1] = 0           # le dernier score ne doit pas avoir d'offset
+            self.exit()                  # on quitte le jeu en arretant la fonction
+            return
+        self.Title_level["text"] = "Level {}".format(self.level) #actualisation de l'affichage
+        self.restart2()                   # régénération de l'affichage
 
 
-        elif x=="end_game":
-            try:
-                self.question2.destroy()
-            except: pass
-            self.control_variable +=1
-            if self.control_variable == 1:
-                if self.nbx == 3 and self.nbl == 2:
-                    self.score_temp = 10000 + (10000/(self.box_placed*10 + self.time_game*0.2) + self.score_star) * self.level
-                else:
-                    self.score_temp = (10000/(self.box_placed*10 + self.time_game*0.2) + self.score_star) * self.level #calcul du score
-            self.show_score["text"] = "Score: %s"%str(int(sum(self.score + [self.score_temp]))) #on actualise l'affichage
-            self.Button_restart["state"] = "disabled" #désactivation du bouton restart
-            self.update(False)
-            self.question = Toplevel()
-            self.question.geometry("482x300")
-            self.canvas_question = Canvas(self.question, width = 482, height = 300, highlightthickness = 0)
-            self.canvas_question.place(x=0,y=0)
-            self.canvas_question.create_image(241, 150, image = self.fond_ecran)
-            self.canvas_question.create_text(90, 110, text = 'Restart', font = ("Berlin Sans FB", 23))
-            self.canvas_question.create_text(241, 110, text = 'Next', font = ("Berlin Sans FB", 23))
-            self.canvas_question.create_text(390, 110, text = 'Menu', font = ("Berlin Sans FB", 23))
-            Button(self.canvas_question,image = self.replay, highlightthickness=0, borderwidth = 0, command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 60, y = 150)
-            Button(self.canvas_question,image = self.main,highlightthickness=0, borderwidth = 0,command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 360, y = 150)
-            Button(self.canvas_question,image = self.next,highlightthickness=0, borderwidth = 0,command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
+    def end_game(self):
+        try:
+            self.question2.destroy()
+        except: pass
+        if self.Score_calculated is False:
+            self.Score_calculated = True
+            self.score_temp = (10000/(self.box_placed*10 + self.time_game*0.2) + self.score_star) * self.level #calcul du score
+        self.show_score["text"] = "Score: %s"%str(int(sum(self.score + [self.score_temp]))) #on actualise l'affichage
+        self.Button_restart["state"] = "disabled" #désactivation du bouton restart
+        self.update(False)
+        self.question = Toplevel()
+        self.question.geometry("482x300")
+        self.canvas_question = Canvas(self.question, width = 482, height = 300, highlightthickness = 0)
+        self.canvas_question.place(x=0,y=0)
+        self.canvas_question.create_image(241, 150, image = self.fond_ecran)
+        self.canvas_question.create_text(90, 110, text = 'Restart', font = ("Berlin Sans FB", 23))
+        self.canvas_question.create_text(241, 110, text = 'Next', font = ("Berlin Sans FB", 23))
+        self.canvas_question.create_text(390, 110, text = 'Menu', font = ("Berlin Sans FB", 23))
+        Button(self.canvas_question,image = self.replay, highlightthickness=0, borderwidth = 0, command = self.restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 60, y = 150)
+        Button(self.canvas_question,image = self.main,highlightthickness=0, borderwidth = 0,command = self.exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 360, y = 150)
+        Button(self.canvas_question,image = self.next_image,highlightthickness=0, borderwidth = 0,command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
 
-        elif x=="restart_question":
-            self.question.destroy()
-            self.question2 = Toplevel()
-            self.question2.geometry("300x125")
-            Button(self.question2, text = "Yes",command = lambda: self.command_user("restart"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
-            Button(self.question2, text = "No",command = lambda: self.command_user("end_game"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
+    def restart_question(self):
+        self.question.destroy()
+        self.question2 = Toplevel()
+        self.question2.geometry("300x125")
+        Button(self.question2, text = "Yes",command = self.restart2,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
+        Button(self.question2, text = "No",command = self.end_game,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
 
-            self.box_placed = 0 #nombre de box que l'utilisateur a posé sur la map
-            self.time_game = 0 #temps pris par le joueur pour résoudre l'agnime
+        self.box_placed = 0 #nombre de box que l'utilisateur a posé sur la map
+        self.time_game = 0 #temps pris par le joueur pour résoudre l'agnime
 
-        elif x=="restart":
-            try:
-                self.question2.destroy()
-            except: pass
-            self.control_variable = 0
-            self.Button_restart["state"] = "normal" #on réactive le bouton restart
-            self.nbl = 0
-            self.nbx = 0
-            self.index_robot = 0 #on repositionne le robot à droite
-            self.score[-1] -= 50*self.level #pénalité
-            self.Button_start["state"] = "normal" #réactivation du bouton start
-            self.time_game = self.box_placed = self.score_star = 0 #on réinitaialise des variables de jeu
-            self.Table.bind("<Button-1>", self.click)  #rebind du clique droit
-            self.Table.bind("<Button-2>", self.click2)
-            self.show_time['text'] = "Temps: %s" %str(self.time_game) #actualisation des affichages
-            self.show_count['text'] = "Nombre de palettes: %s" %str(self.box_placed)
-            
-            for i in range(self.nbcases_width):
-                for j in range(self.nbcases_height):
-                    self.table[i][j] = Levels[self.level-1][(j*self.nbcases_width)+i] #réinitialisation de la table
-            self.update()
+    def restart2(self):
+        try:
+            self.question2.destroy()
+        except: pass
+        self.Score_calculated = False
+        self.Button_restart["state"] = "normal" #on réactive le bouton restart
+        self.index_robot = 0 #on repositionne le robot à droite
+        self.score[-1] -= 50*self.level #pénalité
+        self.Button_start["state"] = "normal" #réactivation du bouton start
+        self.time_game = self.box_placed = self.score_star = 0 #on réinitaialise des variables de jeu
+        self.Table.bind("<Button-1>", self.click)  #rebind du clique droit
+        self.show_time['text'] = "Temps: %s" %str(self.time_game) #actualisation des affichages
+        self.show_count['text'] = "Nombre de palettes: %s" %str(self.box_placed)
+
+        for i in range(self.nbcases_width):
+            for j in range(self.nbcases_height):
+                self.table[i][j] = Levels[self.level-1][(j*self.nbcases_width)+i] #réinitialisation de la table
+        self.update()
+
 
     def time_num(self): #fonciton pour incrémenter le temps
         self.time_game+=1 # incrémentation de la variable
         self.show_time['text'] = "Temps: %s" %str(self.time_game) #actualisation de l'affichage
         self.root_tete.after(1000,self.time_num) #rappel de la fonction après 1 seconde (1000 ms)
+
 
     def start(self): #fonction pour faire bouger le robot
         self.Table.unbind("<Button-1>")          # on désactive le clique et le bouton start
@@ -367,8 +350,8 @@ class application:
                     try:
                         reminder[(pos.x, pos.y)] += 1     # on essaye d'ajouter 1 à la position actuelle
                         if reminder[(pos.x, pos.y)] > 4:  # si on est passé plus de 4 fois au meme endroit, on restart
-                            run = False
-                            self.command_user("restart")
+                            self.run = False
+                            self.restart2()
                             return
                     except:
                         reminder[(pos.x, pos.y)] = 1 #si impossible de ajouter 1 c'est que la clef n'est pas crée, on l'initialise a 1
@@ -387,7 +370,7 @@ class application:
                 elif self.table[x][y] == "P": #si la prochaine case est le drapeau
                     self.table[x][y] = "E" #on change la case actuelle à réussi pour afficher avec le drapeau
                     self.run = False #on arrete la boucle
-                    self.command_user("end_game")  #fin du jeu
+                    self.end_game()  #fin du jeu
                     return      # fin de la fonction
 
             else:                                       # sinon, on a un obstacle devant le robot
@@ -401,7 +384,9 @@ class application:
 
     def restart_button(self): #si on clique sur le bouton pour restart
         self.run = False #on arrete la boucle
-        self.command_user("restart")   #restart de l'application
+        self.restart2()   #restart de l'application
+
+
 
     def exit(self): #fonction pour quitter, elle se charge de détruire les fenètres lancées
         try:
