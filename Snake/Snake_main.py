@@ -5,6 +5,8 @@ sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
 from Scoreboard.scoreboard import *
+sys.path.append('../Vectors')
+from Vectors.vector import *
 from random import randint
 
 """--------------------------------Directions-------------------------"""
@@ -115,10 +117,10 @@ class snake:
         #pour chaque élément de la grille, on a le temps de vie et la direction de la partie du serpent;
         #le troisième élément de la liste est utilisé pour les angles
         self.length_max = 2           # longeur du serpent
-        self.fruit = [-1, -1]         # position du fruit
-        self.dir = [1, 0]             # direction du serpent initialisée à droite
+        self.fruit = Vector(-1, -1)         # position du fruit
+        self.dir = Vector(1, 0)             # direction du serpent initialisée à droite
         self.next_Rotation = 0        # prochaine rotation, sélectionnée à droite aussi
-        self.pos = [0, 10]            # position actuelle du serpent
+        self.pos = Vector(0, 10)            # position actuelle du serpent
         self.grid[0][10] = [2, 0, 0]  # valeur de la grille à l'emplacement du serpent
         self.pause = True             # valeur de la pause
 
@@ -198,13 +200,13 @@ class snake:
 
     def update(self): #fonciton pour actualiser la position du serpent
           if self.pause == False: #si la pause n'est pas enclenchée
-              newX = self.pos[0] + self.dir[0] #on prends les coordonées du peochain point
-              newY = self.pos[1] + self.dir[1]
-              self.grid[self.pos[0]][self.pos[1]] = [self.length_max, convert_dir(self.dir, True), self.next_Rotation]
+              newX = self.pos.x + self.dir.x #on prends les coordonées du peochain point
+              newY = self.pos.y + self.dir.y
+              self.grid[self.pos.x][self.pos.y] = [self.length_max, convert_dir(self.dir, True), self.next_Rotation]
               #définition de la pièce du corps juste après la tête pour lui appliquer une rotation
 
               if self.verif(newX, newY) == True:      # si la vérification renvois True
-                  self.pos = [newX, newY]             # on assigne la prochaine position au serpent
+                  self.pos = Vector(newX, newY)             # on assigne la prochaine position au serpent
                   for i in range(20):
                       for j in range(20):
                           if self.grid[i][j][0]: # chaque partie du serpent perds de la vie
@@ -235,7 +237,7 @@ class snake:
 
               self.grille.create_rectangle(0,0,500,500)
 
-              self.grille.create_image(self.fruit[0]*25 + 13, self.fruit[1]*25 + 13, image = self.Fruit_Image)
+              self.grille.create_image(self.fruit.x*25 + 13, self.fruit.y*25 + 13, image = self.Fruit_Image)
               self.root.bind("<Key>", self.rotate)
               self.root.after(150, self.update) #la fonction update s'éxécute toues les 150 ms soit 6.6 Fps
 
@@ -245,9 +247,9 @@ class snake:
             x = randint(0, 19)
             y = randint(0, 19)
             # les conditions sont: pas à l'emplacement du joueur ni au même endroit que précédement
-            if self.grid[x][y][0] == 0 and x != self.fruit[0] and y != self.fruit[1]:
+            if self.grid[x][y][0] == 0 and x != self.fruit.x and y != self.fruit.y:
                 verite = False
-                self.fruit = (x, y)
+                self.fruit = Vector(x, y)
             #pick a random cords
             #while cords isn't a snake part
 
@@ -255,7 +257,7 @@ class snake:
         #il faut que x et x soient compris dans les dimensions du tableau et qu'il n' ait pas de partie du serpent à cet endroit la
         if x < 0 or x > 19 or y < 0 or y > 19 or self.grid[x][y][0] != 0:
             return False #si les conditions ne sont pas respectées, on revois False
-        elif x == self.fruit[0] and y == self.fruit[1]: #si on arrive sur les coordonées du fruit
+        elif Vector(x, y) == self.fruit: #si on arrive sur les coordonées du fruit
             for i in range(20):
                 for j in range(20):
                     if self.grid[i][j][0]: #on incrémente la vie de chaque parties de 1
@@ -322,23 +324,23 @@ class snake:
 
 def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est une matrice ou non qui est entrée
     if mat == True: #série de ifs pour faire la conversion
-        if dir == [1, 0]:
+        if dir == Vector(1, 0):
             return 0
-        elif dir == [0, 1]:
+        elif dir == Vector(0, 1):
             return 1
-        elif dir == [-1, 0]:
+        elif dir == Vector(-1, 0):
             return 2
-        elif dir == [0, -1]:
+        elif dir == Vector(0, -1):
             return 3
     else:
         if dir == 0:
-            return [1, 0]
+            return Vector(1, 0)
         elif dir == 1:
-            return [0, 1]
+            return Vector(0, 1)
         elif dir == 2:
-            return [-1, 0]
+            return Vector(-1, 0)
         elif dir == 3:
-            return [0, -1]
+            return Vector(0, -1)
 
 def Snake(User):           # fonction pour commencer le jeu
   jeux = snake(User)       # création de l'instance

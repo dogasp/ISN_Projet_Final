@@ -339,7 +339,7 @@ class application:
         reminder = {} # pour vérifier le nombre de fois qu'on est passé a un meme endroit
         self.run = True    # variable vraie tant qu'on execute la boucle
         while self.run == True:
-            sleep(0.4) #on fait avancer le robot toutes les 0.5 secondes
+            sleep(0.4) #on fait avancer le robot toutes les 0.4 secondes
             self.table[pos.x][pos.y] = "0" # on remplace la case où il était par une case vide
             x = pos.x + dir.x #calcul de la prochaine position
             y = pos.y - dir.y

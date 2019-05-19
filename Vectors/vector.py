@@ -8,6 +8,9 @@ class Vector: #classe vecteur
     def __str__(self): #fonction pour print un vecteur
         return "Vector (%d, %d)" % (self.x, self.y)
 
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
     def mag(self): #retourne la longeur du vecteur (sa magnétude)
         return sqrt(self.x**2 + self.y**2)
 
