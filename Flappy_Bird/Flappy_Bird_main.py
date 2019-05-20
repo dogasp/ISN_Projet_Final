@@ -104,10 +104,10 @@ class bird:
 
         ########-----------Frames Principaux------------#######################################
         self.Frame_left = Canvas(self.root, width = 900, height = 620, bg = 'white', highlightthickness=0)
-        self.Frame_right = Frame(self.Frame_left, width = 700, height = 570, bg = 'black')
+        self.Frame_right = Frame(self.Frame_left, width = 700, height = 550, bg = 'black')
 
         self.Frame_left.place(x = 0, y = 0)
-        self.Frame_right.place(x = 150, y = 60)
+        self.Frame_right.place(x = 187, y = 60)
         self.Frame_left.create_image(450,310, image = self.fond_decor)
 
         ######-----------Elements du jeu-----------------##########################################
