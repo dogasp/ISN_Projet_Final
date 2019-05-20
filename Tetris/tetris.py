@@ -128,7 +128,7 @@ class tetris:
 
 
         self.explanation = Label(self.Frame_main2_wind2, text = "Le but du jeu est de compléter des lignes\n\
-        fleime d'écrire la suite")
+        La sute arrivera un jour")
         self.explanation.place(x = 20, y = 100)
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 50, y = 350)
@@ -197,9 +197,28 @@ class tetris:
                 for j in range(len(self.grid[i])):
                     if self.grid[i][j] != "":
                         self.canvas.create_image(i*(self.width/10) + self.width/20, j*(self.height/22) + self.height/44, image = self.image_tiles[self.grid[i][j]])
+            self.ghost()
             self.current.update(2, self)
             self.next.update(1, self)
             self.root.after(40, self.update)
+        
+    def ghost(self): #fonction pour afficher l'apperçus en bas de la fenetre
+        offset = 0
+        search = True
+        while search:
+            for i in range(4):
+                for j in range(4):
+                    if self.current.pattern[self.current.index][i][j] != "_":
+                        x = i + int(self.current.pos.x)
+                        y = j + int(self.current.pos.y) + offset
+                        if y == 22 or self.grid[x][y] != "":
+                            offset -= 2
+                            search = False
+            offset += 1
+        for i in range(4):
+            for j in range(4):
+                if self.current.pattern[self.current.index][i][j] != "_":
+                    self.canvas.create_rectangle((self.current.pos.x + i) * (self.width/10), (self.current.pos.y + offset + j) * (self.height/22), (self.current.pos.x+1 + i) * (self.width/10), (self.current.pos.y+1 + j + offset) * (self.height/22), fill = "darkgrey", width = 0)
 
     def KeyPressed(self, event):
         if event.keysym == "space":
