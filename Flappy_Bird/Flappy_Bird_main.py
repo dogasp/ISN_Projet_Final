@@ -120,7 +120,7 @@ class bird:
         self.press = True                #Initialisation de press à chaque click servant à ce que l'oiseau monte
         self.i = 0                       #Initialisation de i à chaque click servant à la montée de l'oiseau
 
-    def build_game(self):          #Fonction servant au lancement du jeu (appellée à chaque restart)
+    def build_game(self):          #Fonction servant au lancement du jeu (appellée à chaque restart) #Création de la map
         self.root.focus_force()
         self.root.bind("<space>", self.test_press)
         self.root.bind("<Button-1>", self.test_press)
@@ -294,6 +294,8 @@ class bird:
     on place l'oiseau à y = 475 afin d'être sûr qu'il touche bien sans dépasser le sol, on appelle la fonction vérif qui nous
     sert à afficher le Game Over et self.verite = False afin d'arrêter la boucle de la fonction update.
     """
+
+
     def bird_move(self): #Fonction servant à déplacer le sol et l'oiseau pendant le jeu
         x, y =  self.Canvas_ground.coords(self.ground)      ############################
         self.Canvas_ground.move(self.ground, -12,0)         #   Déplacement du sol
@@ -341,7 +343,6 @@ class bird:
                         self.verif_bird(0,0,b = True)                                                       # Même résonnement
                     else:                                                                                   #
                         self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)                   ############################
-
 
     def verif_bird(self, y_pipe_center_top , y_pipe_center_down ,b = False): #Fonction serant à vérifier si l'oiseau rentre en contact avec le tuyau ou non
         if self.verite: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False

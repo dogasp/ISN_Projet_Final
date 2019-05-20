@@ -214,8 +214,6 @@ class ghost:
                     elif self.grid[i][j] == 'D':
                         self.Drapeau = self.table.create_image(self.length* i +self.length/2, self.length* j +self.length/2, image = self.Fromage_image_mini)
 
-
-
     def move_Jerry(self, event = None):
         pos_x, pos_y = self.table.coords(self.robot)
         symb = event.keysym
@@ -240,7 +238,6 @@ class ghost:
                     self.move_Tom(pos_x + self.dir_Jerry[0]*self.length, pos_y + self.dir_Jerry[1]*self.length)
                     self.move += 1
         self.table.update()
-
 
     def move_Tom(self, last_x, last_y):
         for elt in range(len(self.fantome)):
@@ -281,7 +278,6 @@ class ghost:
             self.verif(self.new_grid_x_Jerry,self.new_grid_y_Jerry,self.new_grid_x_Tom,self.new_grid_y_Tom)
         self.table.update()
 
-
     def verif(self,next_jerry_x, next_jerry_y,next_tom_x, next_tom_y):
         if self.nbcases[self.level - 1] <= 10:
             if self.grid[next_jerry_x][next_jerry_y] == "D":
@@ -310,7 +306,6 @@ class ghost:
         self.time_game+=1
         self.root.after(1000,self.time_num)
         self.show_time['text'] = "Temps: %s" %str(self.time_game)
-
 
     def command_user(self, x):
         if x=="exit_menu":
