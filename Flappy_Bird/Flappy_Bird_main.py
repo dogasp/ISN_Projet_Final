@@ -265,11 +265,12 @@ class bird:
     def update(self):  #Fonction servant à relancer différentes fonctions toutes le 50 ms
         if self.verite:         #La fonction s'éffectue si self.verite == True
             self.bird_move()            #Déplacement de l'oiseau
-            self.tuyau0.move_pipe()     #######################
-            self.tuyau1.move_pipe()     #Déplacement des tuyaux
-            self.tuyau2.move_pipe()     #
-            self.tuyau3.move_pipe()     #######################
+            #self.tuyau0.move_pipe()     #######################
+            #self.tuyau1.move_pipe()     #Déplacement des tuyaux
+            #self.tuyau2.move_pipe()     #
+            #self.tuyau3.move_pipe()     #######################
             self.root.after(50,self.update)
+
 
     """
     La fonction Bird_move sert à déplacer l'oiseau de bas en haut ou de haut en bas. Elle sert aussi à changer l'inclinaison
@@ -343,9 +344,14 @@ class bird:
                         self.verif_bird(0,0,b = True)                                                       # Même résonnement
                     else:                                                                                   #
                         self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)                   ############################
+            print(self.y_center_bird)
+
+            self.tuyau0.move_pipe()
+            self.tuyau1.move_pipe()
+            self.tuyau2.move_pipe()
+            self.tuyau3.move_pipe()
 
     def verif_bird(self, y_pipe_center_top , y_pipe_center_down ,b = False): #Fonction serant à vérifier si l'oiseau rentre en contact avec le tuyau ou non
-        print(self.y_center_bird)
         if self.verite: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False
             self.y_pipe_down = y_pipe_center_down - 250 #Valeur du haut du tuyau bas
             self.y_pipe_top = y_pipe_center_top + 250   #Valeur du bas du tuyau haut
@@ -420,7 +426,7 @@ class bird:
 class Pipe:                     #Creéation de la classe Pipe
     def __init__(self, parent): #Argument qui sert à récupérer les variables de la classe Flappy
         self.parent = parent    #
-        self.move_x = -12       #Vitesse de déplacement des tuyaux
+        self.move_x = -2       #Vitesse de déplacement des tuyaux
         self.test = PhotoImage(file = 'Flappy_Bird/Ressources/test.png')    #Tuyau du bas
         self.test3 = PhotoImage(file = 'Flappy_Bird/Ressources/test3.png')  #Tuyau du haut
         self.length_pipe = 500  #Taille de l'image des tuyaux, utile pour les calculs de placement du tuyau
@@ -449,7 +455,7 @@ class Pipe:                     #Creéation de la classe Pipe
         if 100<self.x_center_top_pipe + 60 <150 or 100<self.x_center_top_pipe - 60 <150:#Si le tuyau se trouve entre 100 et 150 pixels (c'est à dire au niveau de l'oiseau)
             self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)#On appelle la fonction verif_bird permettant de voir si il y contact ou non
 
-        if 100>=self.x_center_top_pipe + 60 >88:#Si le tuyau dépassé l'oiseau, l'interval est de 12 pixels car le tuyau se déplaces de 12 lui aussi toules 50ms
+        if 100>=self.x_center_top_pipe + 60 >98:#Si le tuyau dépassé l'oiseau, l'interval est de 12 pixels car le tuyau se déplaces de 12 lui aussi toules 50ms
             self.parent.compte+=1       #Le score augmente de 1
             self.parent.count_score()   #On appelle count_score pour l'affichage du score
 
