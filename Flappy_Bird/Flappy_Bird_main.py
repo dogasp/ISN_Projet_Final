@@ -118,9 +118,9 @@ class bird:
     def test_press(self,  event = None): #Fonction servant à recevoir le click du joueur
         self.play = True
         self.press = True                #Initialisation de press à chaque click servant à ce que l'oiseau monte
-        self.i = 0                       #Initialisation de i à chaque click servant à la montée de l'oiseau
+        self.i = 0                      #Initialisation de i à chaque click servant à la montée de l'oiseau
 
-    def build_game(self):          #Fonction servant au lancement du jeu (appellée à chaque restart)
+    def build_game(self):          #Fonction servant au lancement du jeu (appellée à chaque restart) #Création de la map
         self.root.focus_force()
         self.root.bind("<space>", self.test_press)
         self.root.bind("<Button-1>", self.test_press)
@@ -294,6 +294,8 @@ class bird:
     on place l'oiseau à y = 475 afin d'être sûr qu'il touche bien sans dépasser le sol, on appelle la fonction vérif qui nous
     sert à afficher le Game Over et self.verite = False afin d'arrêter la boucle de la fonction update.
     """
+
+
     def bird_move(self): #Fonction servant à déplacer le sol et l'oiseau pendant le jeu
         x, y =  self.Canvas_ground.coords(self.ground)      ############################
         self.Canvas_ground.move(self.ground, -12,0)         #   Déplacement du sol
@@ -303,7 +305,7 @@ class bird:
             if self.press:  #La montée de l'oiseau
                 self.i +=1          #On incrémente i de 1
                 self.vitesse = 0    #On réinitialise la vitesse pour la déscente
-                self.x_center_bird, self.y_center_bird=  self.Canvas_world.coords(self.image_Bird_true) #Coordonées de l'oiseau qui servent ensuite à la fonction verif_bird
+                self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true) #Coordonées de l'oiseau qui servent ensuite à la fonction verif_bird
                 self.Canvas_world.move(self.image_Bird_true, self.x,self.y) #Déplacement de l'oiseau
                 self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(self.count_image)])  #Changement de l'inclinaison de l'oiseau
                 if self.i >= 30:    #Grace à ctte condition, on effectue 30 calculs et on recommence la descente avec self.press = False
@@ -324,7 +326,7 @@ class bird:
                     self.vitesse +=0.06        #La vitesse est toujours augmentée
                     self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true)#On récupérer les coordonnées de l'oiseau
                                                                                                 #########################################
-                    if (self.y_center_bird +self.vitesse + 25) > 500:                           #Grace aux coordonées, on vérifie si l'oiseau ne touche pas le sol
+                    if (self.y_center_bird + self.vitesse + 25) > 500:                           #Grace aux coordonées, on vérifie si l'oiseau ne touche pas le sol
                         self.Canvas_world.coords(self.image_Bird_true, self.x_center_bird, 475) #Si oui: on le positione à y = 475 et on
                         self.verif_bird(0,0,b = True)                                           #appelle la fonction verif_bird avec b = True (IMPORTANT), cela sert à
                                                                                                 #ne pas lancer la fonction wait_dead ensuite ainsi que l'arret de la fonction update
@@ -342,8 +344,8 @@ class bird:
                     else:                                                                                   #
                         self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)                   ############################
 
-
     def verif_bird(self, y_pipe_center_top , y_pipe_center_down ,b = False): #Fonction serant à vérifier si l'oiseau rentre en contact avec le tuyau ou non
+        print(self.y_center_bird)
         if self.verite: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False
             self.y_pipe_down = y_pipe_center_down - 250 #Valeur du haut du tuyau bas
             self.y_pipe_top = y_pipe_center_top + 250   #Valeur du bas du tuyau haut
