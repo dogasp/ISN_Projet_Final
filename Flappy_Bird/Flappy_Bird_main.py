@@ -102,31 +102,6 @@ class bird:
         self.root.bind("<space>", self.test_press)
         self.root.bind("<Button-1>", self.test_press)
 
-        ########-----------Frames Principaux------------#######################################
-        self.Frame_left = Canvas(self.root, width = 900, height = 620, bg = 'white', highlightthickness=0)
-        self.Frame_right = Frame(self.Frame_left, width = 700, height = 550, bg = 'black')
-
-        self.Frame_left.place(x = 0, y = 0)
-        self.Frame_right.place(x = 187, y = 60)
-        self.Frame_left.create_image(450,310, image = self.fond_decor)
-
-        ######-----------Elements du jeu-----------------##########################################
-        self.Frame_left.create_text(70,360 ,text = "Attention aux tuyaux !!!! ",fill  = 'white',font = ("Berlin Sans FB", 14))
-        self.Frame_left.create_image(70,400 ,image = self.liste_image[5])
-        self.Frame_left.create_text(70,460 ,text = "Tu as des bonus de \n points tous les 10 tuyaux",fill  = 'white' ,font = ("Berlin Sans FB", 12))
-        bestplayer = get_game_score_list("Flappy")[0]
-        self.Frame_left.create_text(70,100 ,text = "Meilleur joueur:" ,fill  = 'white', font = ("Berlin Sans FB", 14))
-        self.Frame_left.create_text(70,115 ,text = "{} points".format(int(bestplayer[1])),fill  = 'white', font = ("Berlin Sans FB", 14))
-
-
-        self.canvas_show_time = Canvas(self.Frame_left, bg = 'black',highlightthickness=0)
-        self.canvas_show_time.place(x = 10, y = 30)
-
-        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
-        self.show_time.pack(padx= 3, pady = 3)
-
-
-        self.Frame_left.create_image(450,32, image = self.title)
 
         #######---------------Variables du jeu-------------###########################
         self.x = 0                      #Déplacement du bird en x
@@ -148,6 +123,33 @@ class bird:
         self.c = 0                      #Centaine pour l'affichage du score
         ###############################################################################
 
+        ########-----------Frames Principaux------------#######################################
+        self.Frame_left = Canvas(self.root, width = 900, height = 620, bg = 'white', highlightthickness=0)
+        self.Frame_right = Frame(self.Frame_left, width = 700, height = 550, bg = 'black')
+
+        self.Frame_left.place(x = 0, y = 0)
+        self.Frame_right.place(x = 187, y = 60)
+        self.Frame_left.create_image(450,310, image = self.fond_decor)
+
+        ######-----------Elements du jeu-----------------##########################################
+        self.Frame_left.create_image(450,32, image = self.title)
+
+        self.Frame_left.create_text(100,360 ,text = "Attention aux tuyaux !!!! ",fill  = 'white',font = ("Berlin Sans FB", 13))
+        self.Frame_left.create_image(70,400 ,image = self.liste_image[5])
+        self.Frame_left.create_text(70,460 ,text = "A savoir...",fill  = 'white' ,font = ("Berlin Sans FB", 12))
+
+        self.Frame_left.create_text(70,475 ,text = "Tu as des points\n tous les 10 tuyaux",fill  = 'white' ,font = ("Berlin Sans FB", 12))
+
+        bestplayer = get_game_score_list("Flappy")[0]
+        self.Frame_left.create_text(70,100 ,text = "Meilleur joueur:" ,fill  = 'white', font = ("Berlin Sans FB", 14))
+        self.Frame_left.create_text(70,115 ,text = "{} points".format(int(bestplayer[1])/100),fill  = 'white', font = ("Berlin Sans FB", 14))
+
+        self.canvas_show_time = Canvas(self.Frame_left, bg = 'black',highlightthickness=0)
+        self.canvas_show_time.place(x = 10, y = 30)
+
+        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
+        self.show_time.pack(padx= 3, pady = 3)
+
         ############--------------Labels/Canvas et autres-----------------###################
         self.Canvas_world = Canvas(self.Frame_right, width = 1700, height = 500, highlightthickness=0)
         self.Canvas_world.place(x = 0, y = 0)
@@ -168,7 +170,7 @@ class bird:
         self.wait_game()
 
     def wait_game(self,event = None):       #Fonction servant à bouger l'oiseau de haut en bas dans l'attente
-        if not(self.play):              #Si le joueur n'as toujours pas appuyé, la fonction s'éxécute en boucle
+        if self.play is False:              #Si le joueur n'as toujours pas appuyé, la fonction s'éxécute en boucle
             if self.wait:           #Si self.wait == True, alors l'oiseau monte
                 self.vitesse_wait += 0.9
                 self.Canvas_world.move(self.image_Bird, 0 ,self.vitesse_wait)
@@ -236,11 +238,7 @@ class bird:
     def update(self):  #Fonction servant à relancer différentes fonctions toutes le 50 ms
         if self.verite:         #La fonction s'éffectue si self.verite == True
             self.bird_move()            #Déplacement de l'oiseau
-            #self.tuyau0.move_pipe()     #######################
-            #self.tuyau1.move_pipe()     #Déplacement des tuyaux
-            #self.tuyau2.move_pipe()     #
-            #self.tuyau3.move_pipe()     #######################
-            self.root.after(50,self.update)
+            self.root.after(48,self.update)
 
 
     """
@@ -274,13 +272,13 @@ class bird:
         if x < 260:                                         #
             self.Canvas_ground.coords(self.ground, 450,35)  ############################
         for _ in range(6): #Début de la boucle pour plus de calculs et de précision
-            if self.press:  #La montée de l'oiseau
+            if self.press is True:  #La montée de l'oiseau
                 self.i +=1          #On incrémente i de 1
                 self.vitesse = 0    #On réinitialise la vitesse pour la déscente
                 self.x_center_bird, self.y_center_bird =  self.Canvas_world.coords(self.image_Bird_true) #Coordonées de l'oiseau qui servent ensuite à la fonction verif_bird
                 self.Canvas_world.move(self.image_Bird_true, self.x,self.y) #Déplacement de l'oiseau
                 self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(self.count_image)])  #Changement de l'inclinaison de l'oiseau
-                if self.i >= 30:    #Grace à ctte condition, on effectue 30 calculs et on recommence la descente avec self.press = False
+                if self.i >= 27:    #Grace à ctte condition, on effectue 30 calculs et on recommence la descente avec self.press = False
                     self.press = False
                     self.count_image = 0.5 #On réinitialise self.count_image = 0.5 pour la descente
                 else:                           ################################
@@ -315,13 +313,13 @@ class bird:
                         self.verif_bird(0,0,b = True)                                                       # Même résonnement
                     else:                                                                                   #
                         self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)                   ############################
-            self.tuyau0.move_pipe()
-            self.tuyau1.move_pipe()
-            self.tuyau2.move_pipe()
-            self.tuyau3.move_pipe()
+            self.tuyau0.move_pipe()     #######################
+            self.tuyau1.move_pipe()     #Déplacement des tuyaux
+            self.tuyau2.move_pipe()     #
+            self.tuyau3.move_pipe()     #######################
 
     def verif_bird(self, y_pipe_center_top , y_pipe_center_down ,b = False): #Fonction serant à vérifier si l'oiseau rentre en contact avec le tuyau ou non
-        if self.verite: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False
+        if self.verite == True: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False
             self.y_pipe_down = y_pipe_center_down - 250 #Valeur du haut du tuyau bas
             self.y_pipe_top = y_pipe_center_top + 250   #Valeur du bas du tuyau haut
             if self.y_pipe_down<self.y_center_bird + 24 or self.y_center_bird - 24< self.y_pipe_top or b == True: #Si il y a touche du sol ou du tuyau
@@ -332,7 +330,7 @@ class bird:
                 self.image_game_over = self.Canvas_world.create_image(350,250,  image = self.tempo_image) #création de l'image de game over
                 self.Canvas_world.after(500, self.ending)
                 self.Canvas_world.after(1000, lambda: self.ending(True))
-                if b:                           #Cette condition sert à différencier
+                if b == True:                           #Cette condition sert à différencier
                     self.root.after(2000, self.dead)    #si la mort vient du sol ou du tuyau
                 else:                                   #ainsi si b == True, on n'appelle pas wait_dead puique l'oiseau est déjà au sol
                     self.wait_dead()                    #sinon, on appelle wait_dead qui sert à faire descendre l'oiseau quand il est mort
@@ -349,9 +347,9 @@ class bird:
         x, y =  self.Canvas_world.coords(self.image_Bird_true) #On récupère les coordonnées de l'oiseau au moment de sa mort
         self.Canvas_world.tag_raise(self.image_game_over)      #On le place au premier plan devant les tuyaux
         if y + self.vitesse +25< 500: #Condition pour savoir si il a atteint le sol ou non
-            self.count_image *=1.5    #On augmente count_image pour augmenter l'inclinaison
-            if self.count_image < 250:#Si self.count_image < 250, on continue à itemconfigure avec image = self.liste_image[int(abs(self.count_image)/10)]
-                self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(abs(self.count_image)/10)])
+            self.count_image += 1.5    #On augmente count_image pour augmenter l'inclinaison
+            if self.count_image < 25:#Si self.count_image < 250, on continue à itemconfigure avec image = self.liste_image[int(abs(self.count_image)/10)]
+                self.Canvas_world.itemconfigure(self.image_Bird_true, image = self.liste_image[int(abs(self.count_image))])
                 self.vitesse +=0.5 #On augmente la vitesse de descente
                 self.Canvas_world.move(self.image_Bird_true, self.x,self.vitesse)#On déplace l'oiseau
             else:                     #Si self.count_image > 250, on fait les mêmes déplacements en mettant l'inclinaison à image = self.liste_image[28]
@@ -418,9 +416,9 @@ class Pipe:                     #Creéation de la classe Pipe
             self.parent.Canvas_world.delete(self.down_pipe) #Suppresion du bas
                                                             #Au lieu de le supprimer et de le recréer on aurait pu le changer de place,
                                                             #Le problème aurait été que l'ecart entre les 2 tuyaux serait trouvé toujours au même endroit du tuyau concerné
-            self.create_pipe(randint(1400, 1500), randint(100,400))#Création du nouveau tuyau, les randint servent à donner plus de fun et de difficultés au jeu
+            self.create_pipe(randint(1425, 1475), randint(100,400))#Création du nouveau tuyau, les randint servent à donner plus de fun et de difficultés au jeu
 
-        if 100<self.x_center_top_pipe + 60 <150 or 100<self.x_center_top_pipe - 60 <150:#Si le tuyau se trouve entre 100 et 150 pixels (c'est à dire au niveau de l'oiseau)
+        if 40 < self.x_center_top_pipe < 210:#Si le tuyau se trouve entre 100 et 150 pixels (c'est à dire au niveau de l'oiseau)
             self.parent.verif_bird(self.y_center_top_pipe,self.y_center_down_pipe)#On appelle la fonction verif_bird permettant de voir si il y contact ou non
 
         if 100>=self.x_center_top_pipe + 60 >98:#Si le tuyau dépassé l'oiseau, l'interval est de 12 pixels car le tuyau se déplaces de 12 lui aussi toules 50ms

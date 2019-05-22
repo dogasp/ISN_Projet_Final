@@ -175,7 +175,7 @@ bouton_2 = BoutonS(5, 3, "Ghost", Ghost, "Tom & Jerry")
 bouton_3 = BoutonS(5, 5, "Minesweeper", Minesweeper, "Démineur")
 bouton_4 = BoutonS(2, 5, "Pendu", Pendu, "Pendu")
 bouton_5 = BoutonS(5, 1, "Tetris", Tetris, "Tetris")
-bouton_6 = BoutonS(8, 5, "Pong", Pong, "Pong")
+bouton_6 = BoutonS(5, 7, "Pong", Pong, "Pong")
 bouton_7 = BoutonS(2, 7, "Flappy", Flappy_Bird, "Flappy")
 
 root_main.mainloop()

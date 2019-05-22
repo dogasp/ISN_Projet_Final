@@ -7,7 +7,7 @@ Port = 1243
 def push_score(pseudo, game, score):
     """pour ajouter un score après une partie """
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
-    s.settimeout(100)
+    s.settimeout(0.2)
     try:
         s.connect((Host, Port)) #on lie l'adresse ip et le port
     except:
@@ -20,7 +20,7 @@ def push_score(pseudo, game, score):
 def get_score_list():
     """ récupérer le scoreboard"""
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
-    s.settimeout(100)
+    s.settimeout(0.2)
     try:
         s.connect((Host, Port)) #on lie l'adresse ip et le port
     except:
@@ -34,7 +34,7 @@ def get_score_list():
 def get_game_score_list(game):
     """ récupérer le scoreboard pour un jeu spécifique"""
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
-    s.settimeout(100)
+    s.settimeout(0.2)
     try:
         s.connect((Host, Port)) #on lie l'adresse ip et le port
     except:
@@ -48,7 +48,7 @@ def get_game_score_list(game):
 def get_player_score(User_name):
     """récupération des scores d'un joueur"""
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
-    s.settimeout(100)
+    s.settimeout(0.2)
     try:
         s.connect((Host, Port)) #on lie l'adresse ip et le port
     except:
