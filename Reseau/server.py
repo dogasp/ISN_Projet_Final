@@ -3,8 +3,7 @@ import select
 import pickle
 import os
 
-"""###################--------------Initialisation du serveur---------------###################################"""
-
+###################--------------Initialisation du serveur---------------###################################
 Host = "192.168.1.30" #ip locale sinon "90.91.3.228"
 Port = 1243
 
@@ -15,18 +14,19 @@ else:
     players = {} #dictionnaire des joueurs
 
 
-"""#########################-----------Fonction Save-------------------####################################"""
-
+#########################-----------Fonction Save-------------------####################################
 def save(): #fonction pour sauvegarder les scores des joueurs dans le fichier
     with open("data", "wb") as f:
         pickle.dump(players, f)
 
-"""####################----------------Fonction Process--------------------------###################################"""
+####################----------------Fonction Process--------------------------###################################
 
 def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     global players
     list = msg.split(" ") #on split
     command = list[0] #la commande est le premier mot, on le stocke pour plus de simplicité
+
+    """################--------------Condition pour l'ajout du nouveau meilleur score----------#############################"""
     ##########################
     #list[1] = nom du joueur
     #list[3] = score du joueur
@@ -42,11 +42,12 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
             if players[list[1]][list[2]] < float(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
                 players[list[1]][list[2]] = float(list[3])
         except:
+            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0}
             players[list[1]][list[2]] = float(list[3])
         save()
         return b"ok" #le retour n'est pas important
 
-        """################--------------Condition pour récupération du Classement Total----------#############################"""
+        """################--------------Condition pour l'ajout du Classement Total----------#############################"""
 
     elif command == "list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
         total_score = []
@@ -58,7 +59,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         total_score.sort(key = lambda list: list[1], reverse = True) #on trie la liste et on renvois les 10 premiers éléments
         return pickle.dumps(total_score[:10])
 
-        """################--------------Condition pour récupération du Classement du jeu----------#############################"""
+        """################--------------Condition pour l'ajout du Classement du jeu----------#############################"""
 
     elif command == "game_list": #si c'est la liste, on sérialise le dictionnaire et on l'envois
         total_score = []
@@ -72,7 +73,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         try:
             players[list[1]]["Tete"] < 0
         except:
-            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0} #création d'un nouveau joueur
+            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #création d'un nouveau joueur
         return pickle.dumps(players[list[1]])
 
 
