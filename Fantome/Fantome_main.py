@@ -301,7 +301,7 @@ class ghost:
                 self.command_user("dead")
 
     def time_num(self):
-        
+
         self.time_game+=1
         self.root.after(1000,self.time_num)
         self.show_time['text'] = "Temps: %s" %str(self.time_game)
@@ -337,18 +337,18 @@ class ghost:
             if self.control_variable == 1:
                 self.score_temp = (10000/(self.move*0.8 + self.time_game*0.2)) * self.level
                 self.score += self.score_temp
-            self.show_score["text"] = "Score: %s"%str(int(self.score))
-            self.question = Toplevel()
-            self.question.geometry("482x300")
-            self.canvas_question = Canvas(self.question, width = 482, height = 300)
-            self.canvas_question.place(x=0,y=0)
-            self.canvas_question.create_image(241, 150, image = self.fond_ecran)
-            self.canvas_question.create_text(90, 110, text = 'Restart', font = ("Berlin Sans FB", 23))
-            self.canvas_question.create_text(241, 110, text = 'Next', font = ("Berlin Sans FB", 23))
-            self.canvas_question.create_text(390, 110, text = 'Menu', font = ("Berlin Sans FB", 23))
-            Button(self.canvas_question,image = self.replay, highlightthickness=0, borderwidth = 1, command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 60, y = 150)
-            Button(self.canvas_question,image = self.main,highlightthickness=0, borderwidth = 1,command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 360, y = 150)
-            Button(self.canvas_question,image = self.next,highlightthickness=0, borderwidth = 1,command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
+                self.show_score["text"] = "Score: %s"%str(int(self.score))
+                self.question = Toplevel()
+                self.question.geometry("482x300")
+                self.canvas_question = Canvas(self.question, width = 482, height = 300)
+                self.canvas_question.place(x=0,y=0)
+                self.canvas_question.create_image(241, 150, image = self.fond_ecran)
+                self.canvas_question.create_text(90, 110, text = 'Restart', font = ("Berlin Sans FB", 23))
+                self.canvas_question.create_text(241, 110, text = 'Next', font = ("Berlin Sans FB", 23))
+                self.canvas_question.create_text(390, 110, text = 'Menu', font = ("Berlin Sans FB", 23))
+                Button(self.canvas_question,image = self.replay, highlightthickness=0, borderwidth = 1, command = lambda: self.command_user("restart_question"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 60, y = 150)
+                Button(self.canvas_question,image = self.main,highlightthickness=0, borderwidth = 1,command = lambda: self.command_user("exit_menu"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 360, y = 150)
+                Button(self.canvas_question,image = self.next,highlightthickness=0, borderwidth = 1,command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
 
         elif x=="restart_question":
             self.question.destroy()
