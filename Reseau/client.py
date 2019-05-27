@@ -1,7 +1,7 @@
 import socket #imports
 import pickle
 
-Host = "90.91.3.228" #création des variables
+Host = "92.91.130.103" #création des variables
 Port = 1243
 
 def push_score(pseudo, game, score):
