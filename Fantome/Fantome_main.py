@@ -89,6 +89,20 @@ class ghost:
         self.root.focus_force()
         ########---------Import Photos interface----------###########################
         self.Tom_vs_Jerry = PhotoImage(file = "Fantome/Ressources/Images/Tom_vs_Jerry.png")
+        #########-----------Import des photos-------------#################################
+        self.Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Jerry.png")
+        self.Tom_image_left = PhotoImage(file = "Fantome/Ressources/Images/Tom_left.png")
+        self.Tom_image_right = PhotoImage(file = "Fantome/Ressources/Images/Tom_right.png")
+        self.Fromage_image = PhotoImage(file = "Fantome/Ressources/Images/fromage.png")
+        self.Fromage_Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Fromage_Jerry.png")
+        self.Tom_right_image = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry.png")
+        #######-----------Images en Mini-----------------####################################
+        self.Jerry_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Jerry_mini.png")
+        self.Tom_image_left_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_left_mini.png")
+        self.Tom_image_right_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_right_mini.png")
+        self.Fromage_image_mini = PhotoImage(file = "Fantome/Ressources/Images/fromage_mini.png")
+        self.Fromage_Jerry_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Fromage_Jerry_mini.png")
+        self.Tom_right_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry_mini.png")
 
         ########-----------Frames Principaux------------#######################################
         self.Frame_left = Frame(self.root, width = 200, height = 500, bg = 'white')
@@ -151,22 +165,6 @@ class ghost:
         self.move = 0
         self.control_variable = 0
         self.grid = [[(0) for i in range(self.nbcases[self.level - 1])] for j in range((self.nbcases[self.level - 1]))]
-
-
-        #########-----------Import des photos-------------#################################
-        self.Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Jerry.png")
-        self.Tom_image_left = PhotoImage(file = "Fantome/Ressources/Images/Tom_left.png")
-        self.Tom_image_right = PhotoImage(file = "Fantome/Ressources/Images/Tom_right.png")
-        self.Fromage_image = PhotoImage(file = "Fantome/Ressources/Images/fromage.png")
-        self.Fromage_Jerry_image = PhotoImage(file = "Fantome/Ressources/Images/Fromage_Jerry.png")
-        self.Tom_right_image = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry.png")
-        #######-----------Images en Mini-----------------####################################
-        self.Jerry_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Jerry_mini.png")
-        self.Tom_image_left_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_left_mini.png")
-        self.Tom_image_right_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_right_mini.png")
-        self.Fromage_image_mini = PhotoImage(file = "Fantome/Ressources/Images/fromage_mini.png")
-        self.Fromage_Jerry_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Fromage_Jerry_mini.png")
-        self.Tom_right_image_mini = PhotoImage(file = "Fantome/Ressources/Images/Tom_Jerry_mini.png")
 
         ########------------Frames Pricipaux-------------########################################
         self.Frame_right = Frame(self.root, width = 500, height = 500, bg = 'black')
@@ -303,6 +301,7 @@ class ghost:
                 self.command_user("dead")
 
     def time_num(self):
+        
         self.time_game+=1
         self.root.after(1000,self.time_num)
         self.show_time['text'] = "Temps: %s" %str(self.time_game)

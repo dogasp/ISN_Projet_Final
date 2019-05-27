@@ -112,6 +112,7 @@ class bird:
         self.compte = 0                 #Score du joueur
         self.count_image = 8            #Départ du jeu à l'image 8
         self.Best_Score = 0             #Init du meilleur score à retenir
+        self.time_game = 0              #Temps dans le jeu
 
         self.play = False               #Variable servant à declencher le début de la partie
         self.wait = True                #Variable servant à savoir quand descendre ou monter (bird en attente)
@@ -124,30 +125,32 @@ class bird:
         ###############################################################################
 
         ########-----------Frames Principaux------------#######################################
-        self.Frame_left = Canvas(self.root, width = 900, height = 620, bg = 'white', highlightthickness=0)
-        self.Frame_right = Frame(self.Frame_left, width = 700, height = 550, bg = 'black')
+        self.Frame_main_game = Canvas(self.root, width = 900, height = 620, bg = 'white', highlightthickness=0)
+        self.Frame_right = Frame(self.Frame_main_game, width = 700, height = 550, bg = 'black')
 
-        self.Frame_left.place(x = 0, y = 0)
+        self.Frame_main_game.place(x = 0, y = 0)
         self.Frame_right.place(x = 187, y = 60)
-        self.Frame_left.create_image(450,310, image = self.fond_decor)
+        self.Frame_main_game.create_image(450,310, image = self.fond_decor)
 
         ######-----------Elements du jeu-----------------##########################################
-        self.Frame_left.create_image(450,32, image = self.title)
+        self.Frame_main_game.create_image(537,32, image = self.title)
 
-        self.Frame_left.create_text(100,360 ,text = "Attention aux tuyaux !!!! ",fill  = 'white',font = ("Berlin Sans FB", 13))
-        self.Frame_left.create_image(70,400 ,image = self.liste_image[5])
-        self.Frame_left.create_text(70,460 ,text = "A savoir...",fill  = 'white' ,font = ("Berlin Sans FB", 12))
+        self.Frame_main_game.create_text(100,250 ,text = "Attention aux tuyaux !!!! ",fill  = 'white',font = ("Berlin Sans FB", 13))
+        self.Frame_main_game.create_image(30,290 ,image = self.liste_image[2])
+        self.Frame_main_game.create_image(90,330 ,image = self.liste_image[12])
+        self.Frame_main_game.create_image(150,390 ,image = self.liste_image[22])
 
-        self.Frame_left.create_text(70,475 ,text = "Tu as des points\n tous les 10 tuyaux",fill  = 'white' ,font = ("Berlin Sans FB", 12))
+        self.Frame_main_game.create_text(95,460 ,text = "A savoir...",fill  = 'white' ,font = ("Berlin Sans FB", 13))
+        self.Frame_main_game.create_text(95,490 ,text = "Une grosse surprise\n t'attend à la fin",fill  = 'white' ,font = ("Berlin Sans FB", 13))
 
         bestplayer = get_game_score_list("Flappy")[0]
-        self.Frame_left.create_text(70,100 ,text = "Meilleur joueur:" ,fill  = 'white', font = ("Berlin Sans FB", 14))
-        self.Frame_left.create_text(70,115 ,text = "{} points".format(int(bestplayer[1])/100),fill  = 'white', font = ("Berlin Sans FB", 14))
+        self.Frame_main_game.create_text(85,120 ,text = "Meilleur joueur:" ,fill  = 'white', font = ("Berlin Sans FB", 14))
+        self.Frame_main_game.create_text(85,135 ,text = "{} points".format(int(bestplayer[1]/100)),fill  = 'white', font = ("Berlin Sans FB", 14))
 
-        self.canvas_show_time = Canvas(self.Frame_left, bg = 'black',highlightthickness=0)
-        self.canvas_show_time.place(x = 10, y = 30)
+        self.canvas_show_time = Canvas(self.Frame_main_game, bg = 'black',highlightthickness=0)
+        self.canvas_show_time.place(x = 20, y = 30)
 
-        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'blue2', bg = 'black',font = ("Berlin Sans FB", 24))
+        self.show_time = Label(self.canvas_show_time, text = "Temps: %s" %str(0), foreground = 'white', bg = 'black',font = ("Berlin Sans FB", 24))
         self.show_time.pack(padx= 3, pady = 3)
 
         ############--------------Labels/Canvas et autres-----------------###################
@@ -187,6 +190,7 @@ class bird:
 
         else:                                #Le joueur a appuyé sur la touche, la fonction s'arrête et passe à la suivante
             self.move_bird_begin()
+            self.time_num()
 
     def move_bird_begin(self):              #Fonction servant à déplacer l'oiseau jusqu'à la zone où il pourra sauter
         self.Canvas_world.delete(self.tap1) #~~~~~~~~~~~~~~~~~~~~~~~~
@@ -218,6 +222,12 @@ class bird:
             self.press = False  #On réinitialise self.press = False pour que l'oiseau descende au début de partie
             self.start()
 
+    def time_num(self):
+        if self.verite == True:
+            self.time_game+=1
+            self.root.after(1000,self.time_num)
+            self.show_time['text'] = "Temps: %s" %str(self.time_game)
+
     def start(self):    #Fonction servant à créer le nouvel oiseau qui pourra voler et les 4 tuyaux
         self.Canvas_world.delete(self.image_Bird)   #Suppression de l'ancien oiseau
         self.root.focus_force()
@@ -236,7 +246,7 @@ class bird:
         self.update()
 
     def update(self):  #Fonction servant à relancer différentes fonctions toutes le 50 ms
-        if self.verite:         #La fonction s'éffectue si self.verite == True
+        if self.verite == True:         #La fonction s'éffectue si self.verite == True
             self.bird_move()            #Déplacement de l'oiseau
             self.root.after(48,self.update)
 
@@ -322,7 +332,7 @@ class bird:
         if self.verite == True: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False
             self.y_pipe_down = y_pipe_center_down - 250 #Valeur du haut du tuyau bas
             self.y_pipe_top = y_pipe_center_top + 250   #Valeur du bas du tuyau haut
-            if self.y_pipe_down<self.y_center_bird + 24 or self.y_center_bird - 24< self.y_pipe_top or b == True: #Si il y a touche du sol ou du tuyau
+            if self.y_pipe_down<self.y_center_bird + 25 or self.y_center_bird - 25< self.y_pipe_top or b == True: #Si il y a touche du sol ou du tuyau
                 self.root.unbind("<Button-1>")          #On évite que le joueur click ce qui peut faire bugger le programme
                 self.root.unbind("<space>")
                 self.verite = False                     #On réinitialise self.verite = False pour éviter de refaire la fonction
@@ -367,7 +377,7 @@ class bird:
         self.question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")
         if self.question == "yes":                        # si l'utilisateur veut recommencer, on regenère l'affichage
             self.Frame_right.destroy()               # destruction des frames
-            self.Frame_left.destroy()                #
+            self.Frame_main_game.destroy()                #
             self.build_game()                        # reconstruction de la fenètre
         else:
             self.exit()                              #sinon, on quitte l'application
