@@ -12,12 +12,20 @@ if os.path.isfile("./data"): #si le fichier est créé, on charge ce qu'il y a d
         players = pickle.load(f)
 else:
     players = {} #dictionnaire des joueurs
+    
+if os.path.isfile("./message"): #si le fichier est créé, on charge ce qu'il y a dessus
+    with open("message", "rb") as f:
+        message = pickle.load(f)
+else:
+    messages = {0: "Salut", 1: "Hey"} #dictionnaire des joueurs
 
 
 #########################-----------Fonction Save-------------------####################################
 def save(): #fonction pour sauvegarder les scores des joueurs dans le fichier
     with open("data", "wb") as f:
         pickle.dump(players, f)
+    with open("message", "wb") as f:
+        pickle.dump(messages, f)
 
 ####################----------------Fonction Process--------------------------###################################
 
@@ -42,7 +50,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
             if players[list[1]][list[2]] < float(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
                 players[list[1]][list[2]] = float(list[3])
         except:
-            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0}
+            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #
             players[list[1]][list[2]] = float(list[3])
         save()
         return b"ok" #le retour n'est pas important
@@ -75,6 +83,8 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         except:
             players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #création d'un nouveau joueur
         return pickle.dumps(players[list[1]])
+    elif command == "message":
+        return b"salut,hey"
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
