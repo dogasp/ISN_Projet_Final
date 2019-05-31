@@ -171,6 +171,7 @@ class pendu:
 
     def end(self, win):
         scored = (self.level+1)*50*win*2*(len(self.entred)-self.error_Count)/(1+self.error_Count)
+        send_statistics(self.user, "Pendu", scored)
         if scored > self.score:
             self.score = scored
         self.entry.unbind("<Return>")

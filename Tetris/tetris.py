@@ -244,6 +244,7 @@ class tetris:
                 if self.current.check(self) == True:
                     self.current.index = (self.current.index +1)%len(self.current.pattern)
     def end(self):
+        send_statistics(self.user, "Tetris", self.score)
         self.root.unbind("<Key>")
         question = askquestion("RESTART", "La partie est finie\n veux-tu recommencer?")
         if question == "yes":

@@ -216,7 +216,7 @@ class snake:
                       self.next_Rotation = convert_dir(self.dir, True)
                   self.grid[newX][newY] = [self.length_max, convert_dir(self.dir, True), convert_dir(self.dir, True)]
               else:
-                  self.dead()                         # la la vérification renvois False, le joueur a perdu
+                  self.dead((newX, newY))                         # la la vérification renvois False, le joueur a perdu
           if self.pause == False:       # revérification car la fonction prends trop de temps à s'executer
               self.grille.delete("all") # on régénère la grille en détruisant tout et en recréant tout
 
@@ -306,7 +306,8 @@ class snake:
 
 
 
-    def dead(self):
+    def dead(self, coords):
+        send_statistics(self.User_name, "Snake", (self.length_max-2)*40, coords)
         self.start_button["state"] = "disabled"                                  # si le joueur est mort
         self.Pause_Button["state"] = "disabled"      # on désactive le bouton de la pause
         self.pause = True                            # on arrête la boucle du update

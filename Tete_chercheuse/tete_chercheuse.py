@@ -389,6 +389,7 @@ class application:
 
 
     def exit(self): #fonction pour quitter, elle se charge de détruire les fenètres lancées
+        send_statistics(self.User_name, "Tete", sum(self.score))
         try:
             self.question.destroy()
         except: pass

@@ -371,7 +371,8 @@ class bird:
             self.Canvas_world.coords(self.image_Bird_true, x, 475)#On replace l'oiseau
 
     def dead(self):
-        if (self.compte)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
+        send_statistics(self.User_name, "Flappy", (self.compte)*100)
+        if (self.compte)*100 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.compte)*100
 
         self.question = askquestion("RESTART", "Perdu!\nVeux-tu recommencer")

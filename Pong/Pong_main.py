@@ -187,6 +187,7 @@ class pong:
         self.root.after(25, self.update)
 
     def dead(self, looser):
+        send_statistics(self.user, "Pong", self.touch)
         self.launch = looser
         if self.touch > self.score:
             self.score = self.touch

@@ -13,11 +13,12 @@ if os.path.isfile("./data"): #si le fichier est créé, on charge ce qu'il y a d
 else:
     players = {} #dictionnaire des joueurs
     
-if os.path.isfile("./message"): #si le fichier est créé, on charge ce qu'il y a dessus
-    with open("message", "rb") as f:
+if os.path.isfile("./statistics"): #si le fichier est créé, on charge ce qu'il y a dessus
+    with open("statistics", "rb") as f:
         message = pickle.load(f)
 else:
-    messages = {0: "Salut", 1: "Hey"} #dictionnaire des joueurs
+    statistics = [{"Tete": {"moyenne":[0, 0], "player_count":{}}, "Snake": {"moyenne":[0, 0], "player_count":{}}, "Ghost": {"moyenne":[0, 0], "player_count":{}}, "Minesweeper": {"moyenne":[0, 0], "player_count":{}},\
+         "Tetris": {"moyenne":[0, 0], "player_count":{}}, "Pendu": {"moyenne":[0, 0], "player_count":{}}, "Pong": {"moyenne":[0, 0], "player_count": {}}, "Space": {"moyenne":[0, 0], "player_count":{}}, "Flappy": {"moyenne":[0, 0], "player_count":{}} }, {(0,0): 0}]
 
 
 #########################-----------Fonction Save-------------------####################################
@@ -25,7 +26,7 @@ def save(): #fonction pour sauvegarder les scores des joueurs dans le fichier
     with open("data", "wb") as f:
         pickle.dump(players, f)
     with open("message", "wb") as f:
-        pickle.dump(messages, f)
+        pickle.dump(statistics, f)
 
 ####################----------------Fonction Process--------------------------###################################
 
@@ -83,8 +84,26 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         except:
             players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #création d'un nouveau joueur
         return pickle.dumps(players[list[1]])
-    elif command == "message":
-        return b"salut,hey"
+        
+    elif command == "statistics_get":
+        return statistics
+        
+    elif command == "statistics_add":
+        player = list[1], jeu = list[2], score = list[3]
+
+        try: #incrémentation du nombre de parties jouées par joueur dans un jeu
+            statistics[0][jeu]["player_count"][player] += 1
+        except:
+            statistics[0][jeu]["player_count"][player] = 1
+
+        #calcul de la nouvelle moyenne et du nouveau compte total
+        statistics[0][jeu]["moyenne"] = [(statistics[0][jeu]["moyenne"][0]* statistics[0][jeu]["moyenne"][1] + score)/(statistics[0][jeu]["moyenne"][1]+1), statistics[0][jeu]["moyenne"][1] +1]
+
+        if jeu == "Snake": #compte des emplacements de mort dans le jeu Snake
+            try:
+                statistics[1][list[4]] += 1
+            except:
+                statistics[1][list[4]] = 1
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
@@ -126,5 +145,3 @@ for client in client_list: #fin des connections
     client.close()
 s.close()
 save()
-print(players.keys())
-print(players[player].values())

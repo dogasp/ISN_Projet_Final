@@ -238,6 +238,7 @@ class demineur:
 
     def end(self, win, count = 0): #fonction appelée à la fin de la partie
         self.canvas.unbind("<Button>")
+        send_statistics(self.User, "Minesweeper", count*50)
         if win == False: #si le joueur a perdus, on affiche toutes les bombes
             for x in range(self.dims[0]):
                 for y in range(self.dims[1]):
