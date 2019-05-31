@@ -68,7 +68,7 @@ def get_statistics():
     except:
         return [{"Tete": {"moyenne":[0, 0], "player_count":{}}, "Snake": {"moyenne":[0, 0], "player_count":{}}, "Ghost": {"moyenne":[0, 0], "player_count":{}}, "Minesweeper": {"moyenne":[0, 0], "player_count":{}}, "Tetris": {"moyenne":[0, 0], "player_count":{}}, "Pendu": {"moyenne":[0, 0], "player_count":{}}, "Pong": {"moyenne":[0, 0], "player_count": {}}, "Space": {"moyenne":[0, 0], "player_count":{}}, "Flappy": {"moyenne":[0, 0], "player_count":{}} }, {(0,0): 0}]
     s.send("statistics_get ".encode("utf-8")) #on demande la liste
-    response = s.recv(1024)
+    response = s.recv(2048)
     response = pickle.loads(response) #on désérialise la réponse pour récupérer un dictionnaire
     s.close()
     return response
@@ -83,6 +83,5 @@ def send_statistics(pseudo, game, score, pos = None):
         return
     s.send("statistics_add {} {} {} {}".format(pseudo, game, score, pos).encode("utf-8")) #on demande la liste
     response = s.recv(1024)
-    response = pickle.loads(response) #on désérialise la réponse pour récupérer un dictionnaire
     s.close()
 #https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/
