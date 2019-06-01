@@ -2,7 +2,6 @@ from tkinter import *
 from Reseau.client import *
 from tkinter import font
 sys.path.append('../')
-from Reseau.client import *
 
 from Tete_chercheuse.tete_chercheuse import *
 from Snake.Snake_main import *
@@ -12,6 +11,7 @@ from Pendu.pendu import *
 from Tetris.tetris import *
 from Pong.Pong_main import*
 from Flappy_Bird.Flappy_Bird_main import*
+from Stats.Main_stat import*
 
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run, name): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
@@ -70,14 +70,22 @@ def valider(event = None):
     root_user.quit()
 
 def para():
-    playground = Frame(root_main, width = 800, height = 500, bg = "#111111")
+
+    playground = Canvas(root_main, highlightthickness = 0,width = 800, height = 500, bg = "#111111")
     playground.place(x = 200, y = 100)
     Button_para.config( image = door, command = lambda: leave_para(playground))
 
     text = "Le but de cette application est de s'ammuser en jouant a des jeux.\nTu peux défier tes amis en comparant leur score au tien\nsur différents jeux et essayer de faire le meilleur score possible."
     Label(playground, text = "Aide", font = ("Helvetica", 25), bg = "#111111", fg = "#888888").place(x = 300, y = 20)
     Label(playground, text = text, font = ("Helvetica", 10), bg = "#111111", fg = "#888888").place(x = 100, y = 60)
+    bouton_stat = playground.create_text(40,250, text = 'Stat', font = ("Helvetica", 25))
 
+    playground.tag_bind(bouton_stat, "<Button-1>", execute)
+
+
+def execute(event = None):
+    app = SeaofBTCapp()
+    app.mainloop()
 
 def leave_para(playground):
     playground.destroy()
@@ -178,4 +186,5 @@ bouton_5 = BoutonS(5, 1, "Tetris", Tetris, "Tetris")
 bouton_6 = BoutonS(5, 7, "Pong", Pong, "Pong")
 bouton_7 = BoutonS(2, 7, "Flappy", Flappy_Bird, "Flappy")
 
+get_statistics()
 root_main.mainloop()
