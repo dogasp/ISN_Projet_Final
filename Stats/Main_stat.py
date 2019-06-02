@@ -199,9 +199,9 @@ class PageFive(tk.Frame):
 
         for cle,valeur in a[1].items():
             #for i in range(valeur):
-            b[cle[1]][cle[0]]+= valeur
+            b[abs(cle[1]-19)][cle[0]]+= valeur
 
-        print(b)
+        
         fig, ax = plt.subplots(figsize=(4, 4))
         im = plt.imshow(b) # later use a.set_data(new_data)
 
