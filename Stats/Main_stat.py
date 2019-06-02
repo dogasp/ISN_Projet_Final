@@ -6,6 +6,8 @@ import numpy as np
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
+from matplotlib.pyplot import imshow, show, colorbar
+
 
 import tkinter as tk
 from tkinter import ttk
@@ -27,7 +29,7 @@ class SeaofBTCapp(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -60,6 +62,10 @@ class StartPage(tk.Frame):
         button4 = ttk.Button(self, text="Graph 2 Page",
                             command=lambda: controller.show_frame(PageFour))
         button4.pack()
+
+        button5 = ttk.Button(self, text="Graph 3 Page",
+                            command=lambda: controller.show_frame(PageFive))
+        button5.pack()
 
 
 class PageOne(tk.Frame):
@@ -138,27 +144,73 @@ class PageFour(tk.Frame):
     def __init__(self, parent, controller):
         a = get_statistics()
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Graph Page!", font=LARGE_FONT)
+        label = tk.Label(self, text="Graph 3 Page!", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
         button1 = ttk.Button(self, text="Back to Home",
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
-        print(a)
+        import matplotlib.pyplot as plt
+        # Data
+        x = []
+        y = []
+
         for cle,valeur in a[1].items():
+            for i in range(valeur):
+                x.append(cle[0]+1)
+                y.append(abs(cle[1]-20))
+
             print (cle, valeur)
-        data = np.random.randn(10000, 2)
 
-        gammas = [0.8, 0.5, 0.3]
-        fig, ax = plt.subplots(figsize=(5, 5))
 
-        ax.set_title('Hey')
-        ax.hist2d(data[:, 0], data[:, 1], bins=100,norm=mcolors.PowerNorm(0.3))
-        ax.set_xlim(-2, 2)
-        ax.set_ylim(-2, 2)
+        fig, ax = plt.subplots(figsize=(4, 4))
+        fig.suptitle('Example Of Scatterplot')
+        ax.set_xlim(1, 20)
+        ax.set_ylim(1, 20)
+
+                # Create the Scatter Plot
+        ax.scatter(x, y, color="blue", s=500, alpha=0.1, linewidths=1)
+
         fig.tight_layout()
 
         canvas = FigureCanvasTkAgg(fig, self)
+        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+        toolbar = NavigationToolbar2Tk(canvas, self)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+class PageFive(tk.Frame):
+
+    def __init__(self, parent, controller):
+        a = get_statistics()
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Graph 3 Page!", font=LARGE_FONT)
+        label.pack(pady=10,padx=10)
+
+        button1 = ttk.Button(self, text="Back to Home",
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack()
+
+        b = np.zeros((20, 20), dtype = int)
+        # Data
+        x = []
+        y = []
+
+        for cle,valeur in a[1].items():
+            #for i in range(valeur):
+            b[cle[1]][cle[0]]+= valeur
+
+        print(b)
+        fig, ax = plt.subplots(figsize=(4, 4))
+        im = plt.imshow(b) # later use a.set_data(new_data)
+
+        ax.set_xlim(-0.5, 19.5)
+        ax.set_ylim(-0.5, 19.5)
+
+        plt.colorbar()
+        canvas = FigureCanvasTkAgg(fig, self)
+        #canvas.show()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
         toolbar = NavigationToolbar2Tk(canvas, self)
