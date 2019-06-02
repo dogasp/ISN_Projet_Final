@@ -217,6 +217,16 @@ class demineur:
                                         next_process.append((xb, yb))
                     process = next_process #process prend la valeur des cases à vérifier
 
+        elif event.num == 2: #si c'est un clique molette
+            #si la case cliquée est un nombre
+            if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] != str(self.Normal_Image) and self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] != str(self.Flag_Image):
+                event.num = 1 #on définit l'évènement comme étant un clique gauche
+                for xb, yb in around(x, y): #on simule un clique sur toutes les cases autour si ce ne sont pas des drapeaux
+                    if self.canvas.itemconfigure(self.list_images[xb][yb])["image"][-1] == str(self.Normal_Image):
+                        event.x = xb*self.border
+                        event.y = yb*self.border
+                        self.click(event)
+
         elif event.num == 3: #clique droit
             #lors d'un clique droit, on vérifie si l'utilisateur n'a pas déjà posé un drapeau:
             #si oui, on change par un bouton normal; si non, on met un drapeau dans la liste
