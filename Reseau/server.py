@@ -12,7 +12,7 @@ if os.path.isfile("./data"): #si le fichier est créé, on charge ce qu'il y a d
         players = pickle.load(f)
 else:
     players = {} #dictionnaire des joueurs
-    
+
 if os.path.isfile("./statistics"): #si le fichier est créé, on charge ce qu'il y a dessus
     with open("statistics", "rb") as f:
         message = pickle.load(f)
@@ -84,7 +84,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         except:
             players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #création d'un nouveau joueur
         return pickle.dumps(players[list[1]])
-        
+
     elif command == "statistics_get":
         return pickle.dumps(statistics)
 
@@ -94,9 +94,10 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         score = list[3]
 
         try: #incrémentation du nombre de parties jouées par joueur dans un jeu
-            statistics[0][jeu]["player_count"][player] += 1
+            statistics[0][jeu]["player_count"][player][0] += 1
+            statistics[0][jeu]["player_count"][player][1] = (statistics[0][jeu]["player_count"][player][0] * statistics[0][jeu]["player_count"][player][1] + int(score)) / (statistics[0][jeu]["player_count"][player][0]+1)
         except:
-            statistics[0][jeu]["player_count"][player] = 1
+            statistics[0][jeu]["player_count"][player] = [1, list[3]]
 
         #calcul de la nouvelle moyenne et du nouveau compte total
         statistics[0][jeu]["moyenne"] = [(statistics[0][jeu]["moyenne"][0] * statistics[0][jeu]["moyenne"][1] + int(score))/(statistics[0][jeu]["moyenne"][1]+1), statistics[0][jeu]["moyenne"][1] +1]
