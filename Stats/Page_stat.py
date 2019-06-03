@@ -1,86 +1,89 @@
 from tkinter import *
+import tkinter as tk
 import matplotlib
+matplotlib.use("TkAgg")
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
-import numpy as np
-matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 from matplotlib.pyplot import imshow, show, colorbar
+import numpy as np
 
-
-import tkinter as tk
-from tkinter import ttk
 sys.path.append('../Reseau')
 from Reseau.client import *
 
 class App_stat:
+    def __init__(self, master, fig):
+        self.frame_stat_main = Frame(master, width = 1020, height = 600)
+        self.frame_stat_main.place(x = 0, y = 0)
 
+        canvas = FigureCanvasTkAgg(fig, master)
+        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+        toolbar = NavigationToolbar2Tk(canvas, master)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        self.quitbutton = Button(master, text="Retour", fg="red", command=master.quit)
+        self.quitbutton.place(x = 100, y = 50)
+
+class Graph_1(App_stat):
+    def __init__(self, master, user_name, grille):
+
+        grille = np.zeros((20, 20), dtype = int)
+
+        fig, ax = plt.subplots(figsize=(4, 4))
+        im = plt.imshow(grille) # later use a.set_data(new_data)
+
+        ax.set_xlim(-0.5, 19.5)
+        ax.set_ylim(-0.5, 19.5)
+
+        plt.colorbar()
+        super().__init__(master,fig)
+
+
+class Graph_2(App_stat):
+    def __init__(self, master,user_name, x,y):
+
+        fig, ax = plt.subplots(figsize=(4, 4))
+        fig.suptitle('Example Of Scatterplot')
+        ax.set_xlim(1, 20)
+        ax.set_ylim(1, 20)
+        # Create the Scatter Plot
+        ax.scatter(x, y, color="blue", s=500, alpha=0.1, linewidths=1)
+        fig.tight_layout()
+        super().__init__(master,fig)
+
+class Graph_3(App_stat):
     def __init__(self, master):
 
-        global frame
-        frame = Frame(master)
-        frame.pack(side=TOP)
+        
+        score_moyen = (14,12,10,7,6,6,5,4,2,1)
 
-        self.quitbutton = Button(frame, text="QUIT", fg="red", command=frame.quit)
-        self.quitbutton.grid(row=4,column=0,sticky=W)
+        players = []
+        for player in get_score_list():
+            players.append(player[0])
 
-        self.hi_there = Button(frame, text="LOAD",command=self.loadfile)
-        self.hi_there.grid(row=0,column=0,sticky=W)
-
-        self.cutbutton = Button(frame, text="CUT", fg="purple",command=self.cut)
-        self.cutbutton.grid(row=1,column=0,sticky=W)
-
-        global canvas, ax, f
-
-        f = Figure(figsize=(20,4))
-        ax = f.add_subplot(111)
-        ax.set_xlabel('Time(s)',fontsize=20)
-        ax.set_ylabel('Current(nA)',fontsize=20)
-        canvas = FigureCanvasTkAgg(f, master=root)
-        #canvas.show()
-        canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=1)
-
-        toolbar1 = NavigationToolbar2Tk( canvas, root )
-        toolbar1.update()
-        f.tight_layout()
+        max_score = []
+        for player in get_score_list():
+            max_score.append(player[1])
 
 
-    def loadfile(self):
-        ax.clear()
-        self.data=np.random.rand(1000)
-        self.t=np.arange(0,len(self.data))
-        ##############################################plot data
-        self.baseline=np.median(self.data)
-        self.var=2*(np.std(self.data))
-        ax.plot(self.t,self.data,'b')
+        ind = np.arange(len(max_score))  # the x locations for the groups
+        width = 0.35  # the width of the bars
 
-        ax.set_xlabel('Time(s)',fontsize=20)
-        ax.set_ylabel('Current(nA)',fontsize=20)
-        ax.axhline(linewidth=2, y=self.baseline, color='g')
-        ax.set_xlabel('Time(s)',fontsize=20)
-        ax.set_ylabel('Current(nA)',fontsize=20)
-        canvas.draw()
+        fig, ax = plt.subplots(figsize=(7, 5))
+        rects1 = ax.bar(ind - width/2, max_score, width,
+                        label='Score max')
+        rects2 = ax.bar(ind + width/2, score_moyen, width,
+                        label='Score moyen')
 
-    def cut(self):
-        pts=np.array(f.ginput(2))
-        pts=pts[:,0]
-        print (pts)
-        self.data=np.delete(self.data,pts)
-
-        ax.clear()
-        self.baseline=np.median(self.data)
-        self.t=np.arange(0,len(self.data))
-        ax.plot(self.t,self.data,'b')
-        ax.axhline(linewidth=2, y=self.baseline, color='g')
-        canvas.draw()
+        # Add some text for labels, title and custom x-axis tick labels, etc.
+        ax.set_ylabel('Scores')
+        ax.set_title('Score max et moyenne des joueurs du Top 10')
+        ax.set_xticks(ind)
 
 
-
-
-root = Tk()
-
-app = App_stat(root)
-
-root.mainloop()
-root.destroy()
+        ax.set_xticklabels(players)
+        ax.legend()
+        fig.tight_layout()
+        super().__init__(master,fig)

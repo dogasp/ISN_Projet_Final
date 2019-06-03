@@ -12,6 +12,7 @@ from Tetris.tetris import *
 from Pong.Pong_main import*
 from Flappy_Bird.Flappy_Bird_main import*
 from Stats.Main_stat import*
+from Stats.Page_stat import*
 
 class BoutonS: #classe pour gérer les boutons interactifs
     def __init__(self, x, y, jeux, run, name): # a besoin de ligne, colone, ne nom du jeux et la commande our executer le jeu
@@ -84,8 +85,12 @@ def para():
 
 
 def execute(event = None):
-    app = SeaofBTCapp()
-    app.mainloop()
+    root = Toplevel()
+    root.geometry('1020x600')
+    #app = SeaofBTCapp()
+    app = Graph_3(root)
+    root.mainloop()
+    #app.mainloop()
 
 def leave_para(playground):
     playground.destroy()

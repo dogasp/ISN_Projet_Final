@@ -8,10 +8,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 from matplotlib.pyplot import imshow, show, colorbar
 
-import matplotlib.backends.tkagg as tkagg
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
-
 import tkinter as tk
 from tkinter import ttk
 sys.path.append('../Reseau')
@@ -164,7 +160,10 @@ class PageFour(tk.Frame):
                 y.append(abs(cle[1]-20))
 
         for cle,valeur in a[0].items():
-            print(cle, valeur['moyenne'][0])
+            print(cle, valeur)
+
+        print(x)
+        print(y)
 
         print(a[0]['Flappy']['player_count']['sophie'])
 
@@ -197,18 +196,16 @@ class PageFive(tk.Frame):
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
-        b = np.zeros((20, 20), dtype = int)
-        # Data
-        x = []
-        y = []
+        grille = np.zeros((20, 20), dtype = int)
+
 
         for cle,valeur in a[1].items():
             #for i in range(valeur):
-            b[abs(cle[1]-19)][cle[0]]+= valeur
+            grille[abs(cle[1]-19)][cle[0]]+= valeur
 
 
         fig, ax = plt.subplots(figsize=(4, 4))
-        im = plt.imshow(b) # later use a.set_data(new_data)
+        im = plt.imshow(grille) # later use a.set_data(new_data)
 
         ax.set_xlim(-0.5, 19.5)
         ax.set_ylim(-0.5, 19.5)
