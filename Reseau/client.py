@@ -73,6 +73,8 @@ def get_statistics():
     s.send("statistics_get ".encode("utf-8")) #on demande la liste
     response = s.recv(1024)
     response = pickle.loads(response) #on désérialise la réponse pour récupérer un dictionnaire
+
+    
     s.close()
 
     return response

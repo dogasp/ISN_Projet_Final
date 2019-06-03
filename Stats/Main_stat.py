@@ -8,6 +8,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 from matplotlib.pyplot import imshow, show, colorbar
 
+import matplotlib.backends.tkagg as tkagg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 
 import tkinter as tk
 from tkinter import ttk
@@ -160,8 +163,10 @@ class PageFour(tk.Frame):
                 x.append(cle[0]+1)
                 y.append(abs(cle[1]-20))
 
-            print (cle, valeur)
+        for cle,valeur in a[0].items():
+            print(cle, valeur['moyenne'][0])
 
+        print(a[0]['Flappy']['player_count']['sophie'])
 
         fig, ax = plt.subplots(figsize=(4, 4))
         fig.suptitle('Example Of Scatterplot')
@@ -201,7 +206,7 @@ class PageFive(tk.Frame):
             #for i in range(valeur):
             b[abs(cle[1]-19)][cle[0]]+= valeur
 
-        
+
         fig, ax = plt.subplots(figsize=(4, 4))
         im = plt.imshow(b) # later use a.set_data(new_data)
 
@@ -210,7 +215,7 @@ class PageFive(tk.Frame):
 
         plt.colorbar()
         canvas = FigureCanvasTkAgg(fig, self)
-        #canvas.show()
+
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
         toolbar = NavigationToolbar2Tk(canvas, self)
