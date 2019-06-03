@@ -42,8 +42,32 @@ for cle,valeur in a[1].items():
 
 _________________________________
 
+a = get_statistics()
 
+for cle,valeur in a[1].items():
+    for i in range(valeur):
+        x.append(cle[0]+1)
+        y.append(abs(cle[1]-20))
 
+for cle,valeur in a[0].items():
+    print(cle, valeur)
+
+____________________________________
+
+players = []
+for player in get_score_list():
+    players.append(player[0])
+
+max_score = []
+for player in get_score_list():
+    max_score.append(player[1])
+____________________________________
+
+x = []
+y = []
+for players in get_game_score_list('Flappy'):
+    x.append(players[0])
+    y.append(players[1])
 
 
 [{'Tete': {'moyenne': [0.0, 3], 'player_count': {'dodo': 2, 'Gwendal': 1}},
