@@ -22,18 +22,9 @@ augmenter le nombre de possibilités dans les questions et l'accès plus simple 
 Faire les scrollars savoir si on veut des graphes perso ou général pour le jeu, type de graphes, axes, (dans cet ordre)
 
 liste arguments:
-________________________________
-x = []
-y = []
-
-for cle,valeur in a[1].items():
-    for i in range(valeur):
-        x.append(cle[0]+1)
-        y.append(abs(cle[1]-20))
-
 
 _________________________________
-
+#donnees pour la temperature
 grille = np.zeros((20, 20), dtype = int)
 
 for cle,valeur in a[1].items():
@@ -41,7 +32,9 @@ for cle,valeur in a[1].items():
     grille[abs(cle[1]-19)][cle[0]]+= valeur
 
 _________________________________
-
+# données pour les bulles
+x = []
+y = []
 a = get_statistics()
 
 for cle,valeur in a[1].items():

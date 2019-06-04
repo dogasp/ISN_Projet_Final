@@ -86,7 +86,7 @@ def para():
 
 def execute(event = None):
     root_main.withdraw()
-    app = Stats()
+    app = Stats(User_name)
     root_main.deiconify()
 
 def leave_para(playground):

@@ -26,6 +26,25 @@ class App_stat:
         self.quitbutton = Button(master, text="Retour", fg="red", command=master.quit)
         self.quitbutton.place(x = 100, y = 50)
 
+class Graph_jeux_1(App_stat):
+    def __init__(self, master):
+        fig, ax = plt.subplots(figsize=(5, 5), subplot_kw=dict(aspect="equal"))
+        
+        
+        def func(pct, allvals):
+            absolute = int(pct/100.*np.sum(allvals))
+            return "{:.1f}%\n({:d} g)".format(pct, absolute)
+
+        wedges, texts, autotexts = ax.pie(score_app, autopct=lambda pct: func(pct, score_app),
+                                        textprops=dict(color="w"))
+
+        ax.legend(wedges, name_game, title="Jeux",loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
+        plt.setp(autotexts, size=8, weight="bold")
+
+        ax.set_title("Matplotlib bakery: A pie")
+        super().__init__(master,fig)
+
 class Graph_1(App_stat):
     def __init__(self, master, user_name, grille):
 
@@ -54,19 +73,9 @@ class Graph_2(App_stat):
         super().__init__(master,fig)
 
 class Graph_3(App_stat):
-    def __init__(self, master):
+    def __init__(self, master,max_score,players):
 
-        
         score_moyen = (14,12,10,7,6,6,5,4,2,1)
-
-        players = []
-        for player in get_score_list():
-            players.append(player[0])
-
-        max_score = []
-        for player in get_score_list():
-            max_score.append(player[1])
-
 
         ind = np.arange(len(max_score))  # the x locations for the groups
         width = 0.35  # the width of the bars
@@ -82,8 +91,9 @@ class Graph_3(App_stat):
         ax.set_title('Score max et moyenne des joueurs du Top 10')
         ax.set_xticks(ind)
 
-
         ax.set_xticklabels(players)
         ax.legend()
         fig.tight_layout()
         super().__init__(master,fig)
+
+
