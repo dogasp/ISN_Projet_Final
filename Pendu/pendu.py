@@ -143,30 +143,33 @@ class pendu:
         lettre = self.entry.get().lower()    # On enregistre la lettre sasie avec la variable lettre
         self.entred.append(lettre)           # On la rajoute dans les lettre entrées
         self.message.place_forget()          # On efface le message d'erreur à chaque fois
-        if lettre in self.word_accentless:   ####--- le joueur a trouvé une lettre alors: --###
-            if lettre not in self.Entered_Label["text"]:    # On vérifie si la personne a déjà rentré la lettre
-                self.Entered_Label["text"] += " " + lettre  # On rajoute la lettre dans la liste des lettres fausses
-                old = self.result["text"]        # old est le text du label self.result
-                index = find(self.word_accentless, lettre) # index est la position de la lettre trouvée dans le mot
-                for i in range(len(index)):      # len(index) est le nombre de lettres trouvées
-                    self.result["text"] = old[:index[i]*2] + self.word[index[i]] + old[index[i]*2+1:] # le *2 sert aux espaces entre les lettres
-                    #  old[:index[i]*2] représente ce qu'il y a avant la lettre trouvée
-                    #  self.word[index[i]] est la lettre trouvée
-                    #  old[index[i]*2+1:] représente ce qu'il y a après la lettre trouvée
-                    old = self.result["text"]
-                if old.replace(" ","") == self.word:    #Si le mot est fini:
-                    self.end(True)  # Le joueur a gagné
-            else:
-                self.message.place(x = 30, y = 230)
-        else:   ####--- le joueur s'est trompé alors: --###
-            if lettre not in self.Entered_Label["text"] and len(lettre) == 1: # On vérifie si la personne a déjà rentré la lettre et si elle fait un caractère
-                self.Entered_Label["text"] += " " + lettre  # On rajoute la lettre dans la liste des lettres fausses
-                self.elements[self.error_Count]()   # On rajoute un élément du pendu
-                self.error_Count += 1               # On incrémente le nombre d'erreurs
-                if self.error_Count == 11:          # Si le nombre d'erreurs = 11:
-                    self.end(False)                 # le joueur a perdu la partie
-            elif lettre in self.entred or len(lettre) > 1: # Si la lettre a déjà été entrée est trop longue
-                self.message.place(x = 30, y = 230)      # On lui envoie un message d'erreur
+        if len(lettre) == 1:
+            if lettre in self.word_accentless:   ####--- le joueur a trouvé une lettre alors: --###
+                if lettre not in self.Entered_Label["text"]:    # On vérifie si la personne a déjà rentré la lettre
+                    self.Entered_Label["text"] += " " + lettre  # On rajoute la lettre dans la liste des lettres fausses
+                    old = self.result["text"]        # old est le text du label self.result
+                    index = find(self.word_accentless, lettre) # index est la position de la lettre trouvée dans le mot
+                    for i in range(len(index)):      # len(index) est le nombre de lettres trouvées
+                        self.result["text"] = old[:index[i]*2] + self.word[index[i]] + old[index[i]*2+1:] # le *2 sert aux espaces entre les lettres
+                        #  old[:index[i]*2] représente ce qu'il y a avant la lettre trouvée
+                        #  self.word[index[i]] est la lettre trouvée
+                        #  old[index[i]*2+1:] représente ce qu'il y a après la lettre trouvée
+                        old = self.result["text"]
+                    if old.replace(" ","") == self.word:    #Si le mot est fini:
+                        self.end(True)  # Le joueur a gagné
+                else:
+                    self.message.place(x = 30, y = 230)
+            else:   ####--- le joueur s'est trompé alors: --###
+                if lettre not in self.Entered_Label["text"]: # On vérifie si la personne a déjà rentré la lettre et si elle fait un caractère
+                    self.Entered_Label["text"] += " " + lettre  # On rajoute la lettre dans la liste des lettres fausses
+                    self.elements[self.error_Count]()   # On rajoute un élément du pendu
+                    self.error_Count += 1               # On incrémente le nombre d'erreurs
+                    if self.error_Count == 11:          # Si le nombre d'erreurs = 11:
+                        self.end(False)                 # le joueur a perdu la partie
+                elif lettre in self.entred: # Si la lettre a déjà été entrée est trop longue
+                    self.message.place(x = 30, y = 230)      # On lui envoie un message d'erreur
+        else:
+            self.message.place(x = 30, y = 230)
         self.entry.delete(0, len(lettre))  # On supprime à chaque fois ce que le joueur a écrit précédement
 
     def end(self, win):
