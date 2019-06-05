@@ -76,6 +76,7 @@ class pendu:
 
     def exit(self): #fonction appelée pour quiter l'application
         self.root.destroy()
+        self.root_difficulty.quit()
         self.root.quit()
 
     def quit_ranking(self): #fonction utilisée pour quitter l'interface des classements
@@ -102,7 +103,6 @@ class pendu:
     def start(self, level): #fontion appelée après la sélection de la difficulté avec level en paramètre
         self.entred = []
         self.root_difficulty.destroy() #destruction de la fenetre de la difficulté
-        self.root_difficulty.quit()
         self.level = level
         if level == 0:
             self.selection = [list[0] for list in self.data if 4 > list[1] and len(list[0]) > 3]
@@ -143,6 +143,7 @@ class pendu:
         lettre = self.entry.get().lower()    # On enregistre la lettre sasie avec la variable lettre
         self.entred.append(lettre)           # On la rajoute dans les lettre entrées
         self.message.place_forget()          # On efface le message d'erreur à chaque fois
+        self.entry.delete(0, len(lettre))  # On supprime à chaque fois ce que le joueur a écrit précédement
         if len(lettre) == 1:
             if lettre in self.word_accentless:   ####--- le joueur a trouvé une lettre alors: --###
                 if lettre not in self.Entered_Label["text"]:    # On vérifie si la personne a déjà rentré la lettre
@@ -170,7 +171,6 @@ class pendu:
                     self.message.place(x = 30, y = 230)      # On lui envoie un message d'erreur
         else:
             self.message.place(x = 30, y = 230)
-        self.entry.delete(0, len(lettre))  # On supprime à chaque fois ce que le joueur a écrit précédement
 
     def end(self, win):
         scored = (self.level+1)*50*win*2*(len(self.entred)-self.error_Count)/(1+self.error_Count)
