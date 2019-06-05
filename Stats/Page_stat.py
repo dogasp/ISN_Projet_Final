@@ -29,8 +29,8 @@ class App_stat:
 class Graph_jeux_1(App_stat):
     def __init__(self, master):
         fig, ax = plt.subplots(figsize=(5, 5), subplot_kw=dict(aspect="equal"))
-        
-        
+
+
         def func(pct, allvals):
             absolute = int(pct/100.*np.sum(allvals))
             return "{:.1f}%\n({:d} g)".format(pct, absolute)
@@ -46,33 +46,6 @@ class Graph_jeux_1(App_stat):
         super().__init__(master,fig)
 
 class Graph_1(App_stat):
-    def __init__(self, master, user_name, grille):
-
-        grille = np.zeros((20, 20), dtype = int)
-
-        fig, ax = plt.subplots(figsize=(4, 4))
-        im = plt.imshow(grille) # later use a.set_data(new_data)
-
-        ax.set_xlim(-0.5, 19.5)
-        ax.set_ylim(-0.5, 19.5)
-
-        plt.colorbar()
-        super().__init__(master,fig)
-
-
-class Graph_2(App_stat):
-    def __init__(self, master,user_name, x,y):
-
-        fig, ax = plt.subplots(figsize=(4, 4))
-        fig.suptitle('Example Of Scatterplot')
-        ax.set_xlim(1, 20)
-        ax.set_ylim(1, 20)
-        # Create the Scatter Plot
-        ax.scatter(x, y, color="blue", s=500, alpha=0.1, linewidths=1)
-        fig.tight_layout()
-        super().__init__(master,fig)
-
-class Graph_3(App_stat):
     def __init__(self, master,max_score,players):
 
         score_moyen = (14,12,10,7,6,6,5,4,2,1)
@@ -96,4 +69,29 @@ class Graph_3(App_stat):
         fig.tight_layout()
         super().__init__(master,fig)
 
+class Graph_2(App_stat):
+    def __init__(self, master, user_name, grille):
 
+        grille = np.zeros((20, 20), dtype = int)
+
+        fig, ax = plt.subplots(figsize=(4, 4))
+        im = plt.imshow(grille) # later use a.set_data(new_data)
+
+        ax.set_xlim(-0.5, 19.5)
+        ax.set_ylim(-0.5, 19.5)
+
+        plt.colorbar()
+        super().__init__(master,fig)
+
+
+class Graph_3(App_stat):
+    def __init__(self, master,user_name, x,y):
+
+        fig, ax = plt.subplots(figsize=(4, 4))
+        fig.suptitle('Example Of Scatterplot')
+        ax.set_xlim(1, 20)
+        ax.set_ylim(1, 20)
+        # Create the Scatter Plot
+        ax.scatter(x, y, color="blue", s=500, alpha=0.1, linewidths=1)
+        fig.tight_layout()
+        super().__init__(master,fig)

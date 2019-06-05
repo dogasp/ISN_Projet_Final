@@ -31,6 +31,22 @@ class Stats:
         self.listbox_2.bind("<ButtonRelease-1>", self.Select_mode)
         self.selected_mode2 = 0
 
+        self.select_graph_liste_game = np.array([
+        1, 0, 0, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 0, 0,
+        1, 2, 3, 0, 1, 2, 3, 0,
+        1, 0, 0, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 0, 0])
+
+        self.select_graph_liste_game.resize((8,2,4))
+
+        self.liste_jeux_app = ["tout les jeux","Tete","Snake","Ghost","Minesweeper","Tetris","Pendu","Pong","Space"]
+        self.liste_mode_listbox_1 = ["Statistiques sur toi","Statistiques globales"]
+
         validate_button = Button(self.root, text = "validate", command = self.launch)
         validate_button.place(x = 500, y = 300)
 
@@ -38,9 +54,8 @@ class Stats:
 
     def get_variable_1(self, event = None):
         a = self.listbox_1.curselection()
-        print(a)
         self.selected_mode = self.listbox_1.get(a)
-        print(self.selected_mode)
+        self.variable2 = self.liste_mode_listbox_1.index(self.selected_mode)
 
     def Select_mode(self, event = None):
         a  = self.listbox_2.curselection()
@@ -65,6 +80,7 @@ class Stats:
     def get_variable_2(self, event = None):
         a = self.listbox_3_bis.curselection()
         self.selected_mode3 = self.listbox_3_bis.get(a)
+        self.variable = self.liste_jeux_app.index(self.selected_mode3)
         self.Select_graphType()
 
     def get_variable_3(self, event = None):
@@ -76,20 +92,22 @@ class Stats:
     def Select_graphType(self, event = None):
         self.listbox_4 = Listbox(self.root)
         self.listbox_4.place(x = 500, y = 60)
-        self.listbox_4.insert(END, "Application")
-        if self.selected_mode == "Statistiques sur jeu":
-            pass
-            """ A poursuivre...."""
 
-
-        self.listbox_4.insert(END, "Thermique")
+        for z in range(4):
+            if self.select_graph_liste_game[self.variable][self.variable2][z]== 1:
+                self.listbox_4.insert(END, "Graph_1")
+            if self.select_graph_liste_game[self.variable][self.variable2][z]== 2:
+                self.listbox_4.insert(END, "Graph_2")
+            if self.select_graph_liste_game[self.variable][self.variable2][z]== 3:
+                self.listbox_4.insert(END, "Graph_3")
+            if self.select_graph_liste_game[self.variable][self.variable2][z]== 4:
+                self.listbox_4.insert(END, "Graph_4")
         self.listbox_4.bind("<ButtonRelease-1>", self.Select_graphType2)
 
 
     def Select_game(self, event = None):
         a  = self.listbox_3.curselection()
         self.game_ToSend = self.listbox_3.get(a)
-
 
     def Select_graphType2(self, event = None):
         a = self.listbox_4.curselection()

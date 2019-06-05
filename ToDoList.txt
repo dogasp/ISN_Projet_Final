@@ -64,7 +64,8 @@ for players in get_game_score_list('Flappy'):
 
 
 [{'Tete': {'moyenne': [0.0, 3], 'player_count': {'dodo': 2, 'Gwendal': 1}},
-'Pendu': {'moyenne': [0, 0], 'player_count': {}}, 'Ghost': {'moyenne': [0, 0], 'player_count': {}},
+'Pendu': {'moyenne': [0, 0], 'player_count': {}},
+'Ghost': {'moyenne': [0, 0], 'player_count': {}},
 'Space': {'moyenne': [0, 0], 'player_count': {}},
 'Snake': {'moyenne': [254.54545454545453, 44], 'player_count': {'Thomas': 1, 'Romain': 1, 'Camille': 1, 'd': 5, 'Gwendal': 17, 'Hugo': 7, 'dodo': [1, 840], 'sophie': 1, 'Stan': 1, 'Paul': 1, 'Marie': 1}},
 'Minesweeper': {'moyenne': [715.625, 32], 'player_count': {'dodo': 15, 'f': 3, 'g': 1, 'd': 8, 'Gwendal': 5}},
