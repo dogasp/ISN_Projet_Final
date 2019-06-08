@@ -28,7 +28,7 @@ class App_stat:
 
     def back_home(self):
         self.frame_stat_main.destroy()
-            
+
 
 class Graph_jeux_1_exe(App_stat):
     def __init__(self, master):
@@ -50,16 +50,21 @@ class Graph_jeux_1_exe(App_stat):
         super().__init__(master,fig)
 
 class Graph_1_exe(App_stat):
-    def __init__(self, master,x0,y0, x1,title, Legend1, Legend2):
+    def __init__(self, master,x0,y0, x1,title, Legend1, Legend2,name_y_axe):
         print(Legend2)
         ind = np.arange(len(x0))  # the x locations for the groups
         width = 0.35  # the width of the bars
 
         fig, ax = plt.subplots(figsize=(7, 5))
-        rects1 = ax.bar(ind - width/2, x0, width,
-                        label=Legend1)
-        rects2 = ax.bar(ind + width/2, x1, width,
-                        label=Legend2)
+        if x1 == []:
+            rects1 = ax.bar(ind, x0, width,
+                            label=Legend1)
+
+        else:
+            rects1 = ax.bar(ind - width/2, x0, width,
+                            label=Legend1)
+            rects2 = ax.bar(ind + width/2, x1, width,
+                            label=Legend2)
 
         # Add some text for labels, title and custom x-axis tick labels, etc.
         ax.set_ylabel('Scores')
