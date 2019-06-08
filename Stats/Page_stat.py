@@ -26,7 +26,7 @@ class App_stat:
         self.quitbutton = Button(master, text="Retour", fg="red", command=master.quit)
         self.quitbutton.place(x = 100, y = 50)
 
-class Graph_jeux_1(App_stat):
+class Graph_jeux_1_exe(App_stat):
     def __init__(self, master):
         fig, ax = plt.subplots(figsize=(5, 5), subplot_kw=dict(aspect="equal"))
 
@@ -45,7 +45,7 @@ class Graph_jeux_1(App_stat):
         ax.set_title("Matplotlib bakery: A pie")
         super().__init__(master,fig)
 
-class Graph_1(App_stat):
+class Graph_1_exe(App_stat):
     def __init__(self, master,max_score,players):
 
         score_moyen = (14,12,10,7,6,6,5,4,2,1)
@@ -69,7 +69,7 @@ class Graph_1(App_stat):
         fig.tight_layout()
         super().__init__(master,fig)
 
-class Graph_2(App_stat):
+class Graph_2_exe(App_stat):
     def __init__(self, master, user_name, grille):
 
         grille = np.zeros((20, 20), dtype = int)
@@ -84,7 +84,7 @@ class Graph_2(App_stat):
         super().__init__(master,fig)
 
 
-class Graph_3(App_stat):
+class Graph_3_exe(App_stat):
     def __init__(self, master,user_name, x,y):
 
         fig, ax = plt.subplots(figsize=(4, 4))
