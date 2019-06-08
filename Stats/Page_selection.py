@@ -197,6 +197,7 @@ class Stats:
                 else:
                     #Le meilleur score de l'utilsateur dans chaque jeu
                     #Avec sa moyenne dans de score dans chaque jeu
+                    #Nombre de parties du joueur dans chaque jeu
                     pass
 
         elif sur_quoi == "Statistiques sur Application":
