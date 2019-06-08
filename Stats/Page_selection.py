@@ -28,7 +28,7 @@ class Stats:
         'Snake': [1, 2, 3, 0, 1, 2, 3, 0],'Minesweeper': [1, 0, 0, 0, 1, 0, 0, 0], 'Tetris': [1, 0, 0, 0, 1, 0, 0, 0], 'Pong': [1, 0, 0, 0, 1, 0, 0, 0],  'Flappy': [1, 0, 0, 0, 1, 0, 0, 0]}
         liste_attente = [1, 0, 0, 0, 1, 0, 0, 0]
 
-        self.liste_jeux_app = ["tout les jeux"]
+        self.liste_jeux_app = ["tous les jeux"]
         for elt in self.games:
             self.liste_jeux_app.append(elt)
             liste_attente += dict_games[elt]
@@ -62,8 +62,6 @@ class Stats:
             total_parties_joueur[game] = data[game]["player_count"]["dodo"][1]
 
         print(total_parties_joueur)
-
-
 
         self.root.mainloop()
 
@@ -102,7 +100,7 @@ class Stats:
         else:
             self.listbox_3_bis = Listbox(self.root)
             self.listbox_3_bis.place(x = 350, y = 60)
-            self.listbox_3_bis.insert(END, "tout les jeux")
+            self.listbox_3_bis.insert(END, "tous les jeux")
             for elt in self.games:
                 self.listbox_3_bis.insert(END, elt)
             self.listbox_3_bis.bind("<ButtonRelease-1>", self.get_variable_2)
@@ -169,33 +167,46 @@ class Stats:
 
     def Graph_1(self, sur_qui, sur_quoi, lequel):
         print(sur_qui, sur_quoi, lequel)
-        #Statistiques globales Statistiques sur jeu Snake
+        x0 = [] #Correspond au meilleur score
+        y = []  #Correspond au titre ne bas ex: G1, G2
+        x1 = [] #Correspond au score moyen
+        title = 'Titre'
+        Legend1 = 'Legend1'
+        Legend2 = 'Legend2'
         if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
+            Legend1 = "Score max"
+            Legend2 = "Score moyen"
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
-                if lequel != "tout les jeux": #si c'est un jeu spécifique
-                    x = []
-                    y = []
+                if lequel != "tous les jeux": #si c'est un jeu spécifique
+                    title = "Top 10 du jeu {}".format(lequel)
                     for player in get_game_score_list(lequel):
-                        x.append(player[0])
-                        y.append(player[1])
-
+                        y.append(player[0])
+                        x0.append(player[1])
                 else: #le classement général tout jeux confondus
-                    x = []
-                    y = []
+                    title = "Classement général"
                     for player in get_score_list():
-                        x.append(player[0])
-                        y.append(player[1])
+                        y.append(player[0])
+                        x0.append(player[1])
 
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
-                pass
+                if lequel != 'tous les jeux': #si c'est un jeu spécifique
+                    #Score max et moyen de l'utilisateur pour un jeu donné + nombre de parties
+                    #Score max du jeu, moyenne de scores des gens sur le jeu +nombre moyen de parties jouées
+                    y = ["{}   Parties: {}".format(self.user,20), "Reste des joueurs   Parties: {}".format(10)]
+                    title = "Statistiques de {} en comparaison au reste des joueurs".format(self.user)
+                else:
+                    #Le meilleur score de l'utilsateur dans chaque jeu
+                    #Avec sa moyenne dans de score dans chaque jeu
+                    pass
+
         elif sur_quoi == "Statistiques sur Application":
-            if lequel == "":
+            if lequel == "stat1":
                 pass
-            elif lequel == "":
+            elif lequel == "stat2":
                 pass
-            elif lequel == "":
+            elif lequel == "stat3":
                 pass
-            elif lequel == "":
+            elif lequel == "stat4":
                 pass
 
                 pass
@@ -203,7 +214,9 @@ class Stats:
         else: #si la personne veut des stats globales
             pass
 
-        Graph_1_exe(self.root,y, x)
+        x0 =[5000, 4000]
+        x1 =[2500, 2000]
+        Graph_1_exe(self.root,x0, y, x1,title, Legend1, Legend2)
 
     def Graph_2(self):
         pass
@@ -221,8 +234,6 @@ class Stats:
         self.root.destroy()
         self.root.quit()
         Stats(self.user)
-
-
 
 
     def launch(self):
