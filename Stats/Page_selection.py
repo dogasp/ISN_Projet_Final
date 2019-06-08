@@ -50,18 +50,18 @@ class Stats:
         Reset_button.place(x = 700, y = 300)
 
 
-        data = get_statistics()[0]
+        self.data = get_statistics()[0]
         moyennes = {}
         total = {}
         total_parties_joueur = {}
 
-        for game in data.keys():
-            moyennes[game] = data[game]["moyenne"][0]
-            total[game] = data[game]["moyenne"][1]
+        for game in self.data.keys():
+            moyennes[game] = self.data[game]["moyenne"][0]
+            total[game] = self.data[game]["moyenne"][1]
 
-            total_parties_joueur[game] = data[game]["player_count"]["dodo"][1]
+            #total_parties_joueur[game] = data[game]["player_count"]["dodo"][1]
 
-        print(total_parties_joueur)
+        print(self.data)
 
         self.root.mainloop()
 
@@ -69,6 +69,12 @@ class Stats:
         a = self.listbox_1.curselection()
         self.selected_mode = self.listbox_1.get(a)
         self.variable = self.listbox_1.index(a)
+        try:
+            self.listbox_2.destroy()
+            self.listbox_3.destroy()
+            self.listbox_4.destroy()
+        except:
+            pass
         self.Select_mode0()
 
     def Select_mode0(self, event = None):
@@ -82,6 +88,11 @@ class Stats:
     def Select_mode(self, event = None):
         a  = self.listbox_2.curselection()
         self.selected_mode2 = self.listbox_2.get(a)
+        try:
+            self.listbox_3.destroy()
+            self.listbox_4.destroy()
+        except:
+            pass
 
         if self.selected_mode2 == "Statistiques sur Application":
             self.listbox_3 = Listbox(self.root)
@@ -98,17 +109,17 @@ class Stats:
                 self.listbox_3.insert(END, "stat4")
             self.listbox_3.bind("<ButtonRelease-1>", self.get_variable_3)
         else:
-            self.listbox_3_bis = Listbox(self.root)
-            self.listbox_3_bis.place(x = 350, y = 60)
-            self.listbox_3_bis.insert(END, "tous les jeux")
+            self.listbox_3 = Listbox(self.root)
+            self.listbox_3.place(x = 350, y = 60)
+            self.listbox_3.insert(END, "tous les jeux")
             for elt in self.games:
-                self.listbox_3_bis.insert(END, elt)
-            self.listbox_3_bis.bind("<ButtonRelease-1>", self.get_variable_2)
+                self.listbox_3.insert(END, elt)
+            self.listbox_3.bind("<ButtonRelease-1>", self.get_variable_2)
 
     def get_variable_2(self, event = None): #pour les jeux
-        a = self.listbox_3_bis.curselection()
-        self.selected_mode3 = self.listbox_3_bis.get(a)
-        self.variable2 = self.listbox_3_bis.index(a)
+        a = self.listbox_3.curselection()
+        self.selected_mode3 = self.listbox_3.get(a)
+        self.variable2 = self.listbox_3.index(a)
         self.Select_graphType()
 
     def get_variable_3(self, event = None): #pour l'app
@@ -180,43 +191,118 @@ class Stats:
                 if lequel != "tous les jeux": #si c'est un jeu spécifique
                     title = "Top 10 du jeu {}".format(lequel)
                     for player in get_game_score_list(lequel):
-                        y.append(player[0])
+                        label = player[0]
+                        score_moyen = 0
+                        try:
+                            label += " " + str(self.data[lequel]['player_count'][player[0]][0])
+                            score_moyen = self.data[lequel]['player_count'][player[0]][1]
+                        except:
+                            pass
+                        y.append(label)
                         x0.append(player[1])
+                        x1.append(score_moyen)
+
                 else: #le classement général tout jeux confondus
                     title = "Classement général"
                     for player in get_score_list():
-                        y.append(player[0])
+                        label = player[0]
                         x0.append(player[1])
+                        moyenne = []
+                        somme = 0
+                        for jeu in self.data.keys():
+                            try:
+                                moyenne.append(self.data[jeu]["player_count"][player[0]][1])
+                                somme += self.data[jeu]["player_count"][player[0]][0]
+                            except:
+                                pass
+                        label += " " + str(somme)
+                        if len(moyenne) == 0:
+                            moyenne.append(0)
+                        x1.append(sum(moyenne)/len(moyenne))
+                        y.append(label)
+                    #Mettre les moyennes de score de chaque joueur du top 10 tous jeux confondus avec x1
 
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if lequel != 'tous les jeux': #si c'est un jeu spécifique
-                    #Score max et moyen de l'utilisateur pour un jeu donné + nombre de parties
-                    #Score max du jeu, moyenne de scores des gens sur le jeu +nombre moyen de parties jouées
-                    y = ["{}   Parties: {}".format(self.user,20), "Reste des joueurs   Parties: {}".format(10)]
+                    parties = 0
+                    try:
+                        data_game = self.data[lequel]["player_count"][self.user]
+                        x1.append(data_game[1])
+                        parties = data_game[0]
+                        x0.append(get_player_score(self.user)[lequel])
+                    except:
+                        x0.append(0)
+                        x1.append(0)
+
+                    moyenne_moyenne = [] #moyenne des moyennes
+                    moyenne_max = []     #moyenne des maximums
+                    moyenne_parties = [] #moyenne des parties
+
+                    for joueur in self.data[lequel]["player_count"].keys():
+                        moyenne_moyenne.append(self.data[lequel]["player_count"][joueur][1])
+                        moyenne_parties.append(self.data[lequel]["player_count"][joueur][0])
+                        temp = get_player_score(joueur)
+                        moyenne_max.append(temp[lequel])
+                    if len(moyenne_moyenne) == 0:
+                        x1.append(0)
+                    else: x1.append(sum(moyenne_moyenne)/len(moyenne_moyenne))
+                    
+                    if len(moyenne_max) == 0:
+                        x0.append(0)
+                    else: x0.append(sum(moyenne_max)/len(moyenne_max)) 
+                    if len(moyenne_parties) == 0:
+                        moyenne_parties.append(0)         
+                    y = ["{}   Parties: {}".format(self.user,parties), "Reste des joueurs   Parties: {}".format(round(sum(moyenne_parties)/len(moyenne_parties)))]
+                    #Score max et moyen de l'utilisateur pour un jeu donné + nombre de parties avec x0 et x1 dans yo[0]
+                    #Score max du jeu, moyenne de scores des gens sur le jeu +nombre moyen de parties jouées x0 et x1 dans yo[1]
+                    
                     title = "Statistiques de {} en comparaison au reste des joueurs".format(self.user)
-                else:
-                    #Le meilleur score de l'utilsateur dans chaque jeu
-                    #Avec sa moyenne dans de score dans chaque jeu
-                    #Nombre de parties du joueur dans chaque jeu
-                    pass
+                else: #sur tous les jeux
+                    #Le meilleur score de l'utilsateur dans chaque jeu avec x0
+                    #Avec sa moyenne de score dans chaque jeu avec x1
+                    #Tous les jeux Nombre de parties du joueur dans chaque jeu dans y0
+
+                    for jeu in self.data.keys():
+                        try:
+                            moyenne = self.data[jeu]["player_count"][self.user][1]
+                            somme = self.data[jeu]["player_count"][self.user][0]
+                            best = get_player_score(self.user)[jeu]
+                        except:
+                            moyenne = 0
+                            best = 0
+                            somme = 0
+                        x0.append(best)
+                        x1.append(moyenne)
+                        y.append(jeu + " " + str(somme))
+                    title = "Meilleur score et moyenne de {} dans chaque jeu".format(self.user)
+                    
 
         elif sur_quoi == "Statistiques sur Application":
-            if lequel == "stat1":
-                pass
-            elif lequel == "stat2":
-                pass
-            elif lequel == "stat3":
-                pass
-            elif lequel == "stat4":
-                pass
+            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                if lequel == "stat1":
+                    pass
+                elif lequel == "stat2":
+                    pass
+                elif lequel == "stat3":
+                    pass
+                elif lequel == "stat4":
+                    pass
+            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
+                if lequel == "stat1":
+                    #Nombre de parties au total de chaque jeu
+                    #y0 = les jeux 
+                    #x0 = le nombres de parties
+                    #x1 
+                    pass
+                elif lequel == "stat2":
+                    pass
+                elif lequel == "stat3":
+                    pass
+                elif lequel == "stat4":
+                    pass
 
-                pass
-
-        else: #si la personne veut des stats globales
-            pass
-
-        x0 =[5000, 4000]
-        x1 =[2500, 2000]
+        #x0 =[5000, 4000]
+        #x1 =[2500, 2000]
         Graph_1_exe(self.root,x0, y, x1,title, Legend1, Legend2)
 
     def Graph_2(self):

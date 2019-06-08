@@ -15,16 +15,20 @@ from Reseau.client import *
 class App_stat:
     def __init__(self, master, fig):
         self.frame_stat_main = Frame(master, width = 1020, height = 600)
-        self.frame_stat_main.place(x = 0, y = 0)
+        self.frame_stat_main.pack(fill = BOTH)
 
-        canvas = FigureCanvasTkAgg(fig, master)
+        canvas = FigureCanvasTkAgg(fig, self.frame_stat_main)
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
-        toolbar = NavigationToolbar2Tk(canvas, master)
+        toolbar = NavigationToolbar2Tk(canvas, self.frame_stat_main)
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-        self.quitbutton = Button(master, text="Retour", fg="red", command=master.quit)
-        self.quitbutton.place(x = 100, y = 50)
+        self.quitbutton = Button(self.frame_stat_main, text="Retour", fg="red", command=self.back_home )
+        self.quitbutton.pack(side = RIGHT)
+
+    def back_home(self):
+        self.frame_stat_main.destroy()
+            
 
 class Graph_jeux_1_exe(App_stat):
     def __init__(self, master):
@@ -47,7 +51,7 @@ class Graph_jeux_1_exe(App_stat):
 
 class Graph_1_exe(App_stat):
     def __init__(self, master,x0,y0, x1,title, Legend1, Legend2):
-
+        print(Legend2)
         ind = np.arange(len(x0))  # the x locations for the groups
         width = 0.35  # the width of the bars
 
@@ -61,6 +65,7 @@ class Graph_1_exe(App_stat):
         ax.set_ylabel('Scores')
         ax.set_title(title)
         ax.set_xticks(ind)
+        plt.gca().xaxis.set_tick_params(labelsize = 8)
 
         ax.set_xticklabels(y0)
         ax.legend()

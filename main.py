@@ -59,7 +59,7 @@ with open('Data/mots.txt', 'r') as file:
 def valider(event = None):
     global User_name
     temp = entry.get().replace(" ", "_")
-    if temp == "" or len(temp) > 20:
+    if temp == "" or len(temp) > 12:
         alert.place(x = 50, y = 100)
         return
     for elt in mots_interdits[:-1]:

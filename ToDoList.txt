@@ -73,3 +73,9 @@ for players in get_game_score_list('Flappy'):
 'Pong': {'moyenne': [0, 0], 'player_count': {}},
 'Flappy': {'moyenne': [78.26086956521738, 23], 'player_count': {'Pierre': 2, 'f': 9, 'd': 2, 'Gwendal': 2, 'paul': 1, 'dodo': 3, 'sophie': 1, 'gaetan': 2, 'hugpo': 1}}},
 {(17, 0): 1, (0, 0): 6, (9, 14): 1, (19, 19): 2, (19, 6): 1, (8, 11): 1, (19, 13): 1, (19, 4): 2, (0, 18): 1, (19, 15): 1, (8, 19): 1, (0, 16): 1, (13, 19): 1, (19, 0): 1, (1, 0): 1, (18, 10): 1, (6, 19): 1, (9, 0): 2, (10, 16): 1, (0, 19): 3, (9, 9): 1, (19, 5): 1, (0, 17): 2, (7, 19): 2, (0, 11): 1, (5, 0): 1, (10, 0): 1, (19, 10): 4, (0, 2): 1}]
+
+
+{'Ghost': {'player_count': {}, 'moyenne': [0, 0]}, 'Snake': {'player_count': {}, 'moyenne': [0, 0]}, 'Space': {'player_count': {}, 'moyenne': [0, 0]}, 'Flappy': {'player_count': {}, 'moyenne': [0, 0]}, 'Tete': {'player_count': {}, 'moyenne': [0, 0]}, 'Pendu': {'player_count': {}, 'moyenne': [0, 0]}, 'Tetris': {'player_count': {}, 'moyenne': [0, 0]}, 'Minesweeper': {'player_count': {}, 'moyenne': [0, 0]}, 'Pong': {'player_count': {}, 'moyenne': [0, 0]}}
+
+
+'Snake': {'player_count': {'Stan': [7, 28.571428571428573], 'Romain': [1, 240.0], 'sophie': [4, 90.0], 'Marie': [4, 20.0], 'Wonderwoman': [1, 200.0], 'Arno_': [2, 20.0], 'Paul': [8, 40.0], 'dodo': [4, 30.0], 'Gwendal': [5, 40.0]}, 'moyenne': [48.8888888888889, 36]}
