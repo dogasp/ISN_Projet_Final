@@ -43,8 +43,8 @@ class Stats:
         1, 0, 0, 0, 1, 0, 0, 0,])#stat4
         self.select_graph_liste_stat.resize((4,2,4))
 
-        validate_button = Button(self.root, text = "validate", command = self.launch)
-        validate_button.place(x = 500, y = 300)
+        """validate_button = Button(self.root, text = "validate", command = self.launch)
+        validate_button.place(x = 500, y = 300)"""
 
         Reset_button = Button(self.root, text = "Reset", command = self.Reset)
         Reset_button.place(x = 700, y = 300)
@@ -267,11 +267,28 @@ class Stats:
                         else:
                             x0.append(0)
 
-
-                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
-                    pass
+                elif lequel == "stat2": #Meilleur score en fonction du jeu
+                    name_y_axe = "Score"
+                    title = "Score Maximum en fonction du Jeu"
+                    Legend1 = "Score max"
+                    for games in self.data.keys():
+                        x0.append(get_game_score_list(games)[0][1])
+                        y.append(games)
                 elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
-                    pass
+                    name_y_axe = "Score"
+                    title = "Score Moyen en fonction du Jeu"
+                    Legend1 = "Score max"
+                    moyenne_moyenne = [] #moyenne des moyennes
+                    for game in self.data.keys():
+                        y.append(game)
+                        for joueur in self.data[game]["player_count"].keys():
+                            moyenne_moyenne.append(self.data[game]["player_count"][joueur][1])
+
+                        if len(moyenne_moyenne) == 0: x0.append(0)
+                        else: x0.append(sum(moyenne_moyenne)/len(moyenne_moyenne))
+                        moyenne_moyenne = []
+                    ##moyenne de tous les gens dans chaque jeu
+
                 elif lequel == "stat4":
                     pass
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
@@ -326,14 +343,11 @@ class Stats:
     def Graph_2(self):
         pass
 
-
     def Graph_3(self):
         pass
 
-
     def Graph_4(self):
         pass
-
 
     def Reset(self):
         self.root.destroy()
