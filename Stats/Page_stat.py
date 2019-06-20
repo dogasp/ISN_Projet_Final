@@ -77,10 +77,14 @@ class Graph_1_exe(App_stat):
         super().__init__(master,fig)
 
 class Graph_2_exe(App_stat):
-    def __init__(self, master, user_name, grille):
+    def __init__(self, master): #, user_name, grille)
 
         grille = np.zeros((20, 20), dtype = int)
-
+        j = 0
+        for i in range(20):
+            grille[i][j] = i
+            j += 1
+        grille[5][5] = 20
         fig, ax = plt.subplots(figsize=(4, 4))
         im = plt.imshow(grille) # later use a.set_data(new_data)
 

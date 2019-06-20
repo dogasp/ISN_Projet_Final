@@ -91,9 +91,7 @@ class bird:
         self.show_rules.quit()
 
     def exit(self):
-        try:
-            self.question.destroy()
-        except: pass
+
         self.root.destroy()
         self.root.quit()
 
@@ -106,6 +104,7 @@ class bird:
 
     def build_game(self):          #Fonction servant au lancement du jeu (appellée à chaque restart) #Création de la map
         self.root.focus_force()
+        self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.bind("<space>", self.test_press)
         self.root.bind("<Button-1>", self.test_press)
 
@@ -379,6 +378,7 @@ class bird:
 
     def dead(self):
         send_statistics(self.User_name, "Flappy", (self.compte)*100)
+        self.root.protocol("WM_DELETE_WINDOW", print)
         if (self.compte)*100 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.compte)*100
 

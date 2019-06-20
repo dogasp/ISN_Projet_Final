@@ -9,7 +9,7 @@ class Stats:
         self.user = user
         self.root = Tk()
         self.root.geometry("1000x600")
-        self.root.protocol()
+        self.root.protocol("WM_DELETE_WINDOW", self.exit)
 
         self.titre = Label(self.root, text = "Page de sélection des graphs à afficher")
         self.titre.place(x = 200, y = 20)
@@ -50,6 +50,10 @@ class Stats:
         Reset_button.place(x = 700, y = 300)
         self.data = get_statistics()[0]
         self.root.mainloop()
+
+    def exit(self):
+        self.root.quit()
+        self.root.destroy()
 
     def get_variable_1(self, event = None):
         a = self.listbox_1.curselection()
@@ -294,7 +298,7 @@ class Stats:
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu
                     name_y_axe = "Nombre de parties"
-                    title = "Nombres de parties lancées en fonction du Jeu"
+                    title = "Nombres de parties lancées du joueur en fonction du Jeu"
                     Legend1 = "Nb de parties"
                     for games in self.data.keys():
                         y.append(games)
@@ -320,7 +324,7 @@ class Stats:
 
                 elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
                     name_y_axe = "Score"
-                    title = "Nombres de parties lancées en fonction du Jeu"
+                    title = "Nombres de parties lancées du joueur en fonction du Jeu"
                     Legend1 = "Nb de parties"
                     #Score max de chaque jeu en comparaison
                     for jeu in self.data.keys():
@@ -328,26 +332,145 @@ class Stats:
                         y.append(jeu)
                 elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
                     name_y_axe = "Nombre de parties"
-                    title = "Nombres de parties lancées en fonction du Jeu"
+                    title = "Score Moyen du joueur en fonction du Jeu"
                     Legend1 = "Nb de parties"
                     for jeu in self.data.keys():
-                        x0.append(self.data[games]["moyenne"][1])
+                        x0.append(self.data[jeu]["moyenne"][1])
                         y.append(jeu)
                 elif lequel == "stat4":
                     pass
-
         #x0 =[5000, 4000]
         #x1 =[2500, 2000]
         Graph_1_exe(self.root,x0, y, x1,title, Legend1, Legend2,name_y_axe)
 
-    def Graph_2(self):
-        pass
+    def Graph_2(self, sur_qui, sur_quoi, lequel):
+        if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
+            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                if lequel == "Snake":
+                    pass
+                elif lequel == "Flappy":
+                    pass
+                elif lequel == "Pong":
+                    pass
+                else:
+                    pass
+
+            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
+                if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                    if lequel == "Snake":
+                        pass
+                    elif lequel == "Flappy":
+                        pass
+                    elif lequel == "Pong":
+                        pass
+                    else:
+                        pass
+        elif sur_quoi == "Statistiques sur Application":
+
+            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
+                    pass
+                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat4":
+                    pass
+
+            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
+                if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
+                    pass
+                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat4":
+                    pass
+        Graph_2_exe(self.root)
 
     def Graph_3(self):
-        pass
+        if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
+            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                if lequel == "Snake":
+                    pass
+                elif lequel == "Flappy":
+                    pass
+                elif lequel == "Pong":
+                    pass
+                else:
+                    pass
+            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
+                if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                    if lequel == "Snake":
+                        pass
+                    elif lequel == "Flappy":
+                        pass
+                    elif lequel == "Pong":
+                        pass
+                    else:
+                        pass
+        elif sur_quoi == "Statistiques sur Application":
+            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
+                    pass
+                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat4":
+                    pass
+
+            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
+                if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
+                    pass
+                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat4":
+                    pass
 
     def Graph_4(self):
-        pass
+        if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
+            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                if lequel == "Snake":
+                    pass
+                elif lequel == "Flappy":
+                    pass
+                elif lequel == "Pong":
+                    pass
+                else:
+                    pass
+            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
+                if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                    if lequel == "Snake":
+                        pass
+                    elif lequel == "Flappy":
+                        pass
+                    elif lequel == "Pong":
+                        pass
+                    else:
+                        pass
+        elif sur_quoi == "Statistiques sur Application":
+            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
+                if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
+                    pass
+                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat4":
+                    pass
+
+            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
+                if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
+                    pass
+                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
+                    pass
+                elif lequel == "stat4":
+                    pass
 
     def Reset(self):
         self.root.destroy()

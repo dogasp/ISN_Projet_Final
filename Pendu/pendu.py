@@ -75,8 +75,11 @@ class pendu:
         self.root.mainloop()
 
     def exit(self): #fonction appelée pour quiter l'application
+        try:
+            self.root_difficulty.destroy()
+            self.root_difficulty.quit()
+        except: pass
         self.root.destroy()
-        self.root_difficulty.quit()
         self.root.quit()
 
     def quit_ranking(self): #fonction utilisée pour quitter l'interface des classements

@@ -110,6 +110,7 @@ class snake:
         self.show_rules.quit()
 
     def start(self): #fonction d'initialisation
+        self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.bind("<Return>", self.start_game)
         self.root.bind("<Key>", self.rotate)
         self.root.focus_force()
@@ -310,6 +311,8 @@ class snake:
         send_statistics(self.User_name, "Snake", (self.length_max-2)*40, (self.pos.x, self.pos.y))
         self.start_button["state"] = "disabled"                                  # si le joueur est mort
         self.Pause_Button["state"] = "disabled"      # on désactive le bouton de la pause
+        self.Button_quit["state"] = "disabled"
+        self.root.protocol("WM_DELETE_WINDOW", print)  
         self.pause = True                            # on arrête la boucle du update
         if (self.length_max-2)*40 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.length_max-2)*40
