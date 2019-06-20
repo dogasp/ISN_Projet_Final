@@ -276,7 +276,6 @@ class application:
             self.score_temp = (10000/(self.box_placed*10 + self.time_game*0.2) + self.score_star) * self.level #calcul du score
         self.show_score["text"] = "Score: %s"%str(int(sum(self.score + [self.score_temp]))) #on actualise l'affichage
         self.Button_restart["state"] = "disabled" #désactivation du bouton restart
-        self.Button_quit["state"] = "disabled"
         self.canvas_question = Canvas(self.Frame_right, width = 482, height = 300, highlightthickness = 0)
         self.canvas_question.place(x=9,y=100)
         self.canvas_question.create_image(241, 150, image = self.fond_ecran)
@@ -309,7 +308,6 @@ class application:
         self.index_robot = 0 #on repositionne le robot à droite
         self.score[-1] -= 50*self.level #pénalité
         self.Button_start["state"] = "normal" #réactivation du bouton start
-        self.Button_quit["state"] = "normal"
         self.time_game = self.box_placed = self.score_star = 0 #on réinitaialise des variables de jeu
         self.show_time['text'] = "Temps: %s" %str(self.time_game) #actualisation des affichages
         self.show_count['text'] = "Nombre de palettes: %s" %str(self.box_placed)
