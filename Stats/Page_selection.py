@@ -26,7 +26,7 @@ class Stats:
 
         dict_games = {'Tete': [1, 0, 0, 0, 1, 0, 0, 0], 'Pendu': [1, 0, 0, 0, 1, 0, 0, 0], 'Ghost': [1, 0, 0, 0, 1, 0, 0, 0],'Space': [1, 0, 0, 0, 1, 0, 0, 0],
         'Snake': [1, 2, 3, 0, 1, 2, 3, 0],'Minesweeper': [1, 0, 0, 0, 1, 0, 0, 0], 'Tetris': [1, 0, 0, 0, 1, 0, 0, 0], 'Pong': [1, 0, 0, 0, 1, 0, 0, 0],  'Flappy': [1, 0, 0, 0, 1, 0, 0, 0]}
-        liste_attente = [1, 0, 0, 0, 1, 0, 0, 0]
+        liste_attente = [1, 0, 0, 4, 1, 0, 0, 4]
 
         self.liste_jeux_app = ["tous les jeux"]
         for elt in self.games:
@@ -292,7 +292,6 @@ class Stats:
                         else: x0.append(sum(moyenne_moyenne)/len(moyenne_moyenne))
                         moyenne_moyenne = []
                     ##moyenne de tous les gens dans chaque jeu
-
                 elif lequel == "stat4":
                     pass
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
@@ -307,47 +306,43 @@ class Stats:
                         except:
                             x0.append(0)
 
-                    """moyennes = {}
-                    total = {}
-                    total_parties_joueur = {}
-
-                    for game in self.data.keys():
-                        moyennes[game] = self.data[game]["moyenne"][0]
-                        total[game] = self.data[game]["moyenne"][1]
-
-                        #total_parties_joueur[game] = data[game]["player_count"]["dodo"][1]"""
-
-                    #Nombre de parties au total de chaque jeu
-                    #y0 = les jeux
-                    #x0 = le nombres de parties
-                    #x1
-
                 elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
                     name_y_axe = "Score"
-                    title = "Nombres de parties lancées du joueur en fonction du Jeu"
-                    Legend1 = "Nb de parties"
+                    title = "Score maximum en fonction des jeux"
+                    Legend1 = "Score max"
                     #Score max de chaque jeu en comparaison
                     for jeu in self.data.keys():
                         x0.append(get_player_score(self.user)[jeu])
                         y.append(jeu)
                 elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
-                    name_y_axe = "Nombre de parties"
-                    title = "Score Moyen du joueur en fonction du Jeu"
-                    Legend1 = "Nb de parties"
+                    name_y_axe = "Score"
+                    title = "Score Moyen en fonction du Jeu"
+                    Legend1 = "Score Moyen"
+                    moyenne_moyenne = [] #moyenne des moyennes
                     for jeu in self.data.keys():
-                        x0.append(self.data[jeu]["moyenne"][1])
+                        x0.append(self.data[jeu]["moyenne"][0])
                         y.append(jeu)
                 elif lequel == "stat4":
                     pass
         #x0 =[5000, 4000]
         #x1 =[2500, 2000]
-        Graph_1_exe(self.root,x0, y, x1,title, Legend1, Legend2,name_y_axe)
+        Graph_1_exe(self.root,self.user,x0, y, x1,title, Legend1, Legend2,name_y_axe)
 
     def Graph_2(self, sur_qui, sur_quoi, lequel):
+        x0 = [] #Correspond au meilleur score
+        y = []  #Correspond au titre ne bas ex: G1, G2
+        x1 = [] #Correspond au score moyen
+        title = 'Titre'
+        title2 = 'Titre2'
+        Legend1 = 'Legend1'
+        Legend2 = 'Legend2'
+        name_y_axe = 'Score'
         if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
                 if lequel == "Snake":
-                    pass
+                    x0 = get_statistics()[1]
+                    title = "Disposition des morts dans Snake"
+                    Legend1 = "Nb de morts"
                 elif lequel == "Flappy":
                     pass
                 elif lequel == "Pong":
@@ -386,13 +381,23 @@ class Stats:
                     pass
                 elif lequel == "stat4":
                     pass
-        Graph_2_exe(self.root)
+        Graph_2_exe(self.root,self.user,x0,title,Legend1)
 
-    def Graph_3(self):
+    def Graph_3(self, sur_qui, sur_quoi, lequel):
+        x0 = [] #Correspond au meilleur score
+        y = []  #Correspond au titre ne bas ex: G1, G2
+        x1 = [] #Correspond au score moyen
+        title = 'Titre'
+        title2 = 'Titre2'
+        Legend1 = 'Legend1'
+        Legend2 = 'Legend2'
+        name_y_axe = 'Score'
         if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
                 if lequel == "Snake":
-                    pass
+                    x0 = get_statistics()[1]
+                    title = "Disposition des morts dans Snake"
+                    Legend1 = "Nb de morts"
                 elif lequel == "Flappy":
                     pass
                 elif lequel == "Pong":
@@ -430,47 +435,118 @@ class Stats:
                 elif lequel == "stat4":
                     pass
 
-    def Graph_4(self):
+        Graph_3_exe(self.root,self.user,x0,title,Legend1)
+
+    def Graph_4(self, sur_qui, sur_quoi, lequel):
+        x0 = [] #Correspond au meilleur score
+        y = []  #Correspond au titre ne bas ex: G1, G2
+        x1 = [] #Correspond au score moyen
+        title = 'Titre'
+        title2 = 'Titre2'
+        Legend1 = 'Legend1'
+        Legend2 = 'Legend2'
+        name_y_axe = 'Score'
         if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
-                if lequel == "Snake":
+                if lequel == "tous les jeux":
+                    for jeu in self.data.keys():
+                        y.append(jeu)
+                        x0.append(get_game_score_list(jeu)[0][1])
+                    title = "Meilleur score de chaque jeu"
+                    title2 = "Jeux"
+                elif lequel != "tous les jeux":
                     pass
-                elif lequel == "Flappy":
-                    pass
-                elif lequel == "Pong":
-                    pass
-                else:
-                    pass
+
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
-                if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
-                    if lequel == "Snake":
-                        pass
-                    elif lequel == "Flappy":
-                        pass
-                    elif lequel == "Pong":
-                        pass
-                    else:
-                        pass
+                if lequel != "tous les jeux":
+                    pass
+                elif lequel == "tous les jeux":
+                    for jeu in self.data.keys():
+                        try:
+                            moyenne = self.data[jeu]["player_count"][self.user][1]
+                            somme = self.data[jeu]["player_count"][self.user][0]
+                            best = get_player_score(self.user)[jeu]
+                        except:
+                            moyenne = 0
+                            best = 0
+                            somme = 0
+                        x0.append(best)
+                        x1.append(moyenne)
+                        y.append(jeu + " " + str(somme))
+                    title = "Meilleur score et moyenne de {} dans chaque jeu".format(self.user)
+                    title2 = "Jeux"
+
+
         elif sur_quoi == "Statistiques sur Application":
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
                 if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
-                    pass
+                    title = "Nombres de parties lancées en fonction du Jeu"
+                    Legend1 = "Nb de parties"
+                    x0_att =[]
+                    title2 = "Jeux"
+                    for games in self.data.keys():
+                        x0_att =[]
+                        y.append(games)
+                        if len(self.data[games]["player_count"]) != 0:
+                            for players in self.data[games]["player_count"]:
+                                x0_att.append(self.data[games]["player_count"][players][0])
+                            x0.append(sum(x0_att))
+                        else:
+                            x0.append(0)
                 elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
-                    pass
+                    title = "Score Maximum en fonction du Jeu"
+                    Legend1 = "Score max"
+                    title2 = "Jeux"
+                    for games in self.data.keys():
+                        x0.append(get_game_score_list(games)[0][1])
+                        y.append(games)
                 elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
-                    pass
+                    title = "Score Moyen en fonction du Jeu"
+                    Legend1 = "Score max"
+                    title2 = "Jeux"
+                    moyenne_moyenne = [] #moyenne des moyennes
+                    for game in self.data.keys():
+                        y.append(game)
+                        for joueur in self.data[game]["player_count"].keys():
+                            moyenne_moyenne.append(self.data[game]["player_count"][joueur][1])
+                        if len(moyenne_moyenne) == 0: x0.append(0)
+                        else: x0.append(sum(moyenne_moyenne)/len(moyenne_moyenne))
+                        moyenne_moyenne = []
+                    ##moyenne de tous les gens dans chaque jeu
                 elif lequel == "stat4":
                     pass
 
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
-                    pass
+                    title = "Nombres de parties lancées du joueur en fonction du Jeu"
+                    Legend1 = "Nb de parties"
+                    title2 = "Jeux"
+                    for games in self.data.keys():
+                        y.append(games)
+                        try:
+                            x0.append(self.data[games]["player_count"][self.user][0])
+                        except:
+                            x0.append(0)
                 elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
-                    pass
+                    title = "Score maximum en fonction des jeux"
+                    Legend1 = "Score max"
+                    title2 = "Jeux"
+                    #Score max de chaque jeu en comparaison
+                    for jeu in self.data.keys():
+                        x0.append(get_player_score(self.user)[jeu])
+                        y.append(jeu)
                 elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
-                    pass
+                    title2 = "Jeux"
+                    title = "Score Moyen en fonction du Jeu"
+                    Legend1 = "Score Moyen"
+                    moyenne_moyenne = [] #moyenne des moyennes
+                    for jeu in self.data.keys():
+                        x0.append(self.data[jeu]["moyenne"][0])
+                        y.append(jeu)
                 elif lequel == "stat4":
                     pass
+
+        Graph_4_exe(self.root,self.user,x0,y, x1,title,title2, Legend1, Legend2,name_y_axe)
 
     def Reset(self):
         self.root.destroy()
