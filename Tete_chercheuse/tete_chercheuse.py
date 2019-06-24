@@ -1,7 +1,7 @@
 from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
 from Tete_chercheuse.data import *
-from time import sleep
+from time import sleep, time
 sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
@@ -117,6 +117,7 @@ class application:
 
         ###############-----------Lancement des fonctions-------------######################
         self.time_num()
+        self.time_start = time()
         self.restart2()
         self.update()
 
@@ -182,7 +183,7 @@ class application:
         self.Frame_main2_wind2.after(5500, lambda: Label4.place(x = 380, y = 320 ))
 
     #--------------5------------------------------------
-        self.Bouton_skip = Button(self.Frame_main2_wind2, text = '-Skip-',font = ("Helvetica", 10),cursor ='hand2', relief = GROOVE,command = self.warning)
+        self.Bouton_skip = Button(self.Frame_main2_wind2, text = '-Skip-',font = ("Helvetica", 10),cursor ='hand2', relief = GROOVE,command = self.quit_rules)
         self.Bouton_skip.place(x = 200, y = 390)
 
         self.show_rules.mainloop()
@@ -194,10 +195,6 @@ class application:
     def quit_rules(self): #fonction pour quiter les rêgles et aller sur les classements
         self.Frame_main2_wind2.destroy()
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Tete", self.User_name) #appel de la classe du scoreboard
-
-    def warning(self): #warning appelé au moment du clique sur le bouton skip au niveau des rêgles
-        showwarning("Attention", "Attention !! La partie commencera quand tu \n appuyeras sur le bouton 'Continuer' \n et le temps est compté donc prépare-toi.")
-        self.quit_rules()
 
     """######################------------------Début du Jeu---------------------------########################################"""
 
@@ -264,7 +261,6 @@ class application:
         self.restart2()                   # régénération de l'affichage
 
     def end_game(self):
-        self.root_tete.protocol("WM_DELETE_WINDOW", print)
         try:
             self.Table.destroy()
         except: pass
@@ -279,9 +275,9 @@ class application:
         self.canvas_question = Canvas(self.Frame_right, width = 482, height = 300, highlightthickness = 0)
         self.canvas_question.place(x=9,y=100)
         self.canvas_question.create_image(241, 150, image = self.fond_ecran)
-        self.canvas_question.create_text(90, 110, text = 'Restart', font = ("Berlin Sans FB", 23))
-        self.canvas_question.create_text(241, 110, text = 'Next', font = ("Berlin Sans FB", 23))
-        self.canvas_question.create_text(390, 110, text = 'Menu', font = ("Berlin Sans FB", 23))
+        self.canvas_question.create_text(90, 110, text = 'Recommencer', font = ("Berlin Sans FB", 20))
+        self.canvas_question.create_text(241, 110, text = 'Suivant', font = ("Berlin Sans FB", 20))
+        self.canvas_question.create_text(390, 110, text = 'Menu', font = ("Berlin Sans FB", 20))
         Button(self.canvas_question,image = self.replay, highlightthickness=0, borderwidth = 0, command = self.restart_question,cursor ='hand2', font = ("Helvetica", 10)).place(x = 60, y = 150)
         Button(self.canvas_question,image = self.main,highlightthickness=0, borderwidth = 0,command = self.exit_menu,cursor ='hand2', font = ("Helvetica", 10)).place(x = 360, y = 150)
         Button(self.canvas_question,image = self.next_image,highlightthickness=0, borderwidth = 0,command = self.next,cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
@@ -291,8 +287,9 @@ class application:
         self.canvas_question = Canvas(self.Frame_right, width = 482, height = 300, highlightthickness = 0)
         self.canvas_question.place(x=9,y=100)
         self.canvas_question.create_image(241, 150, image = self.fond_ecran)
-        Button(self.canvas_question, text = "Yes",command = self.restart2,cursor ='hand2', font = ("Helvetica", 10)).place(x = 210, y = 45)
-        Button(self.canvas_question, text = "No",command = self.end_game,cursor ='hand2', font = ("Helvetica", 10)).place(x = 110, y = 45)
+        self.canvas_question.create_text(232, 100, text ='             Perdu !! \n Veux-tu recommencer ?', font = ("Berlin Sans FB", 14))
+        answer1 = Button(self.canvas_question, text = " Oui ",command = self.restart2,cursor ='hand2',fg = 'white', bg = 'black', font = ("Helvetica", 12)).place(x = 120, y = 150)
+        answer2 = Button(self.canvas_question, text = " Non ",command = self.end_game,cursor ='hand2',fg = 'white', bg = 'black', font = ("Helvetica", 12)).place(x = 300, y = 150)
 
         self.box_placed = 0 #nombre de box que l'utilisateur a posé sur la map
         self.time_game = 0 #temps pris par le joueur pour résoudre l'agnime
@@ -383,13 +380,14 @@ class application:
         self.restart2()   #restart de l'application
 
     def exit(self): #fonction pour quitter, elle se charge de détruire les fenètres lancées
-        send_statistics(self.User_name, "Tete", sum(self.score))
         try:
             self.canvas_question.destroy()
         except: pass
-        self.root_tete.quit()
+        self.count = 1
         self.root_tete.destroy()
+        self.root_tete.quit()
+
 
 def Tete(user): #fonction principale
-    jeu = application(user)
-    return sum(jeu.score) #retour du score total du joueur sur tout les niveaux joués
+    jeux = application(user)
+    return (sum(jeux.score), sum(jeux.score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, []) #retour du score total du joueur sur tout les niveaux joués

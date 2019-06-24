@@ -27,7 +27,7 @@ class BoutonS: #classe pour gérer les boutons interactifs
         global label_pseudo, label_score, score
         root_main.withdraw() #on masque l'interface principale
         result = self.run(User_name) #on execute le jeu
-        push_score(User_name, self.jeux, result) #on envois au serveur le score de la partie
+        push_score(User_name, self.jeux, result, 0, 0, 0, []) #on envois au serveur le score de la partie
         root_main.deiconify() #on fait réapparaite la fenetre principale
         Frame_main['yscrollcommand'] = scrollY.set #rappel de la bare de scroll
 
@@ -82,7 +82,6 @@ def para():
     bouton_stat = playground.create_text(40,250, text = 'Stat', font = ("Helvetica", 25))
 
     playground.tag_bind(bouton_stat, "<Button-1>", execute)
-
 
 def execute(event = None):
     root_main.withdraw()

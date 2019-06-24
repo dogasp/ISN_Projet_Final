@@ -4,7 +4,7 @@ import pickle
 import os
 
 ###################--------------Initialisation du serveur---------------###################################
-Host = "localhost" #ip locale sinon "90.91.3.228"
+Host = "192.168.1.30" #ip locale sinon "90.91.3.228"
 Port = 1243
 
 if os.path.isfile("./data"): #si le fichier est créé, on charge ce qu'il y a dessus
@@ -15,17 +15,20 @@ else:
 
 if os.path.isfile("./statistics"): #si le fichier est créé, on charge ce qu'il y a dessus
     with open("statistics", "rb") as f:
-        message = pickle.load(f)
+        statistics = pickle.load(f)
 else:
     statistics = [{"Tete": {"moyenne":[0, 0], "player_count":{}}, "Snake": {"moyenne":[0, 0], "player_count":{}}, "Ghost": {"moyenne":[0, 0], "player_count":{}}, "Minesweeper": {"moyenne":[0, 0], "player_count":{}},\
-         "Tetris": {"moyenne":[0, 0], "player_count":{}}, "Pendu": {"moyenne":[0, 0], "player_count":{}}, "Pong": {"moyenne":[0, 0], "player_count": {}}, "Space": {"moyenne":[0, 0], "player_count":{}}, "Flappy": {"moyenne":[0, 0], "player_count":{}} }, {(0,0): 0}]
-
+         "Tetris": {"moyenne":[0, 0], "player_count":{}}, "Pendu": {"moyenne":[0, 0], "player_count":{}}, "Pong": {"moyenne":[0, 0], "player_count": {}}, "Space": {"moyenne":[0, 0], "player_count":{}}, "Flappy": {"moyenne":[0, 0], "player_count":{}} }, \
+         {"Snake": {}, "Minesweeper": {}, "Flappy": {}, "Pong": {}}, \
+         {"Tete": {"moyenne": 0, "player_count":{}}, "Snake": {"moyenne":0, "player_count":{}}, "Ghost": {"moyenne":0, "player_count":{}}, "Minesweeper": {"moyenne":0, "player_count":{}},\
+         "Tetris": {"moyenne":0, "player_count":{}}, "Pendu": {"moyenne":0, "player_count":{}}, "Pong": {"moyenne":0, "player_count": {}}, "Space": {"moyenne":0, "player_count":{}}, "Flappy": {"moyenne":0, "player_count":{}} }]
+    #scores, nombre de parties / emplacements de mort / temps joué
 
 #########################-----------Fonction Save-------------------####################################
 def save(): #fonction pour sauvegarder les scores des joueurs dans le fichier
     with open("data", "wb") as f:
         pickle.dump(players, f)
-    with open("message", "wb") as f:
+    with open("statistics", "wb") as f:
         pickle.dump(statistics, f)
 
 ####################----------------Fonction Process--------------------------###################################
@@ -45,14 +48,58 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     """################--------------Condition pour l'ajout du nouveau meilleur score----------#############################"""
 
     if command == "add":     #si la commande est add, on ajoute le score
+        player = list[1]
+        jeu = list[2]
+        score_max = float(list[3])
+        score = float(list[4])
+        count = int(list[5])
+        time = float(list[6])
 
-        print("player {} scored {} in {}".format(list[1], list[3], list[2]))
+        print("player {} scored {} in {}".format(player, score_max, jeu))
         try:
-            if players[list[1]][list[2]] < float(list[3]): #si le score marqué est plus grand que le précédent, on le retiends
-                players[list[1]][list[2]] = float(list[3])
+            if players[player][jeu] < score_max: #si le score marqué est plus grand que le précédent, on le retiends
+                players[player][jeu] = score_max
         except:
-            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #
-            players[list[1]][list[2]] = float(list[3])
+            players[player] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #
+            players[player][jeu] = score_max
+
+        try: #incrémentation du nombre de parties jouées par joueur dans un jeu
+            statistics[0][jeu]["player_count"][player][1] = ((statistics[0][jeu]["player_count"][player][0]) * statistics[0][jeu]["player_count"][player][1] + score*count) / (statistics[0][jeu]["player_count"][player][0] + count)
+        except:
+            statistics[0][jeu]["player_count"][player] = [1, list[3]]
+
+        #calcul de la nouvelle moyenne et du nouveau compte total
+        statistics[0][jeu]["moyenne"][0] = (statistics[0][jeu]["moyenne"][0] * statistics[0][jeu]["moyenne"][1] + score*count)/(statistics[0][jeu]["moyenne"][1]+count)
+
+        #partie sur le temps joué
+        try:
+            statistics[2][jeu]["player_count"][player]
+        except: statistics[2][jeu]["player_count"][player] = {}
+
+        try:
+            statistics[2][jeu]["player_count"][player] = (statistics[2][jeu]["player_count"][player]*statistics[0][jeu]["player_count"][player] + time*count)/(statistics[0][jeu]["player_count"][player] + count)
+        except:
+            statistics[2][jeu]["player_count"][player] = time
+
+        statistics[2][jeu]["moyenne"] = (statistics[2][jeu]["moyenne"] + time*count)/(statistics[0][jeu]["moyenne"][1] + count)
+
+        statistics[0][jeu]["player_count"][player][0] += count
+        statistics[0][jeu]["moyenne"][1] += count
+
+
+        if jeu in ["Snake", "Pong", "Minesweeper", "Flappy"]: #compte des emplacements de mort dans le jeu Snake
+            pos = eval("".join(list[7:]))
+
+            try:
+                statistics[1][jeu][player]
+            except: statistics[1][jeu][player] = {}
+
+            for place in pos:
+                try:
+                    statistics[1][jeu][player][place] += 1
+                except:
+                    statistics[1][jeu][player][place] = 1
+
         save()
         return b"ok" #le retour n'est pas important
 
@@ -88,29 +135,6 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
     elif command == "statistics_get":
         return pickle.dumps(statistics)
 
-    elif command == "statistics_add":
-        player = list[1]
-        jeu = list[2]
-        score = list[3]
-
-        try: #incrémentation du nombre de parties jouées par joueur dans un jeu
-            statistics[0][jeu]["player_count"][player][0] += 1
-            statistics[0][jeu]["player_count"][player][1] = (statistics[0][jeu]["player_count"][player][0] * statistics[0][jeu]["player_count"][player][1] + int(score)) / (statistics[0][jeu]["player_count"][player][0]+1)
-        except:
-            statistics[0][jeu]["player_count"][player] = [1, list[3]]
-
-        #calcul de la nouvelle moyenne et du nouveau compte total
-        statistics[0][jeu]["moyenne"] = [(statistics[0][jeu]["moyenne"][0] * statistics[0][jeu]["moyenne"][1] + int(score))/(statistics[0][jeu]["moyenne"][1]+1), statistics[0][jeu]["moyenne"][1] +1]
-
-        if jeu == "Snake": #compte des emplacements de mort dans le jeu Snake
-            pos = eval("".join(list[4:]))
-            try:
-                statistics[1][pos] += 1
-            except:
-                statistics[1][pos] = 1
-        return b"ok"
-
-
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
 s.bind((Host, Port)) #on lie l'adresse ip et le ports
 s.listen(5) #nombre de connections simultanées entrantes acceptées
@@ -135,7 +159,7 @@ while launched == True: #tant que cette vairable est vraie, le serveur tourne
         pass
     else:
         for client in Client_To_Read: #pour chaque client, on observe le message envoyé
-                #try: #on essaye de décoder le message
+            try: #on essaye de décoder le message
                 msg = client.recv(1024).decode("utf-8")
                 answer = process(msg) #on créé la réponse suivant la demande
                 if type(answer) == type(None):
@@ -144,8 +168,8 @@ while launched == True: #tant que cette vairable est vraie, le serveur tourne
                     client.send(answer) #et on renvois cette réponse
                 if msg == "end": #si un utilisateur envoie end , on stoppe le serveur
                     launched = False
-                """except: #si on ne peut pas lire le message, c'est que le socket n'est pas valide donc le client est déconnecté, on le supprime de la liste
-                #si on a une erreur, cela veut dire que le client s'est déconnecté, on le supprime"""
+            except: client_list.remove(client)#si on ne peut pas lire le message, c'est que le socket n'est pas valide donc le client est déconnecté, on le supprime de la liste
+                #si on a une erreur, cela veut dire que le client s'est déconnecté, on le supprime
 
 print("Ending connections")
 for client in client_list: #fin des connections

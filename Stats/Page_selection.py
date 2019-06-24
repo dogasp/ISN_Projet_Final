@@ -262,14 +262,8 @@ class Stats:
                     x0_att =[]
 
                     for games in self.data.keys():
-                        x0_att =[]
                         y.append(games)
-                        if len(self.data[games]["player_count"]) != 0:
-                            for players in self.data[games]["player_count"]:
-                                x0_att.append(self.data[games]["player_count"][players][0])
-                            x0.append(sum(x0_att))
-                        else:
-                            x0.append(0)
+                        x0.append(self.data[game]["moyenne"][1])
 
                 elif lequel == "stat2": #Meilleur score en fonction du jeu
                     name_y_axe = "Score"
@@ -285,11 +279,7 @@ class Stats:
                     moyenne_moyenne = [] #moyenne des moyennes
                     for game in self.data.keys():
                         y.append(game)
-                        for joueur in self.data[game]["player_count"].keys():
-                            moyenne_moyenne.append(self.data[game]["player_count"][joueur][1])
-
-                        if len(moyenne_moyenne) == 0: x0.append(0)
-                        else: x0.append(sum(moyenne_moyenne)/len(moyenne_moyenne))
+                        x0.append(self.data[game]["moyenne"][0])
                         moyenne_moyenne = []
                     ##moyenne de tous les gens dans chaque jeu
                 elif lequel == "stat4":

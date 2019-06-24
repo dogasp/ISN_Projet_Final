@@ -10,7 +10,7 @@ from math import*
 
 class bird:
     def __init__(self,user):
-        self.User_name = user
+        self.User_name = user  
         self.Best_Score = 0
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')

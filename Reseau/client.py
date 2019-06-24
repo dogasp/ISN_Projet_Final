@@ -1,18 +1,27 @@
 import socket #imports
 import pickle
 
-Host = "92.91.130.103" #création des variables
+Host = "92.91.135.103" #création des variables 0 au lieu de 5
 Port = 1243
 
-def push_score(pseudo, game, score):
-    """pour ajouter un score après une partie """
+def push_score(pseudo, game, score_max, score, count, time, pos = []):
+    """pour ajouter un score après une partie
+
+    pseudo: nom du joueur
+    game: nom du jeu
+    score_max: score maximal de la session
+    score: liste des scores des parties jouées
+    count: nombre de parties jouées
+    time: temps passé a faire ces parties
+    pos: emplacement de mort, facultatif """
+
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
     s.settimeout(0.2)
     try:
         s.connect((Host, Port)) #on lie l'adresse ip et le port
     except:
         return
-    msg_To_send = "add {} {} {}".format(pseudo, game, score) #on envois la commande pour ajouter la partie actuelle
+    msg_To_send = "add {} {} {} {} {} {}".format(pseudo, game, score_max, score, count, time, pos) #on envois la commande pour ajouter la partie actuelle
     s.send(msg_To_send.encode())
     s.recv(1024) #la réponse n'est pas utile mais il y en a une
     s.close()
@@ -78,15 +87,4 @@ def get_statistics():
 
     return response
 
-def send_statistics(pseudo, game, score, pos = None):
-    """récupération des données statistiques récoltées"""
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
-    s.settimeout(0.2)
-    try:
-        s.connect((Host, Port)) #on lie l'adresse ip et le port
-    except:
-        return
-    s.send("statistics_add {} {} {} {}".format(pseudo, game, score, pos).encode("utf-8")) #on demande la liste
-    response = s.recv(1024)
-    s.close()
 #https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/
