@@ -357,4 +357,4 @@ def convert_dir(dir, mat = False): #dir correspond à l'entrée et mat, si c'est
 
 def Snake(User):           # fonction pour commencer le jeu
   jeux = snake(User)       # création de l'instance
-  return (jeux.Best_Score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois du meilleur score
+  return (jeux.Best_Score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois les données

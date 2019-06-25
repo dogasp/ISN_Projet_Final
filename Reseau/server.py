@@ -65,6 +65,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
 
         try: #incrémentation du nombre de parties jouées par joueur dans un jeu
             statistics[0][jeu]["player_count"][player][1] = ((statistics[0][jeu]["player_count"][player][0]) * statistics[0][jeu]["player_count"][player][1] + score*count) / (statistics[0][jeu]["player_count"][player][0] + count)
+            statistics[0][jeu]["player_count"][player][0] += count
         except:
             statistics[0][jeu]["player_count"][player] = [1, list[3]]
 
@@ -77,13 +78,13 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         except: statistics[2][jeu]["player_count"][player] = {}
 
         try:
-            statistics[2][jeu]["player_count"][player] = (statistics[2][jeu]["player_count"][player]*statistics[0][jeu]["player_count"][player] + time*count)/(statistics[0][jeu]["player_count"][player] + count)
+            statistics[2][jeu]["player_count"][player] = (statistics[2][jeu]["player_count"][player]*(statistics[0][jeu]["player_count"][player]-count) + time*count)/(statistics[0][jeu]["player_count"][player])
         except:
             statistics[2][jeu]["player_count"][player] = time
 
         statistics[2][jeu]["moyenne"] = (statistics[2][jeu]["moyenne"] + time*count)/(statistics[0][jeu]["moyenne"][1] + count)
 
-        statistics[0][jeu]["player_count"][player][0] += count
+
         statistics[0][jeu]["moyenne"][1] += count
 
 
@@ -159,7 +160,7 @@ while launched == True: #tant que cette vairable est vraie, le serveur tourne
         pass
     else:
         for client in Client_To_Read: #pour chaque client, on observe le message envoyé
-            try: #on essaye de décoder le message
+                #try: #on essaye de décoder le message
                 msg = client.recv(1024).decode("utf-8")
                 answer = process(msg) #on créé la réponse suivant la demande
                 if type(answer) == type(None):
@@ -168,7 +169,7 @@ while launched == True: #tant que cette vairable est vraie, le serveur tourne
                     client.send(answer) #et on renvois cette réponse
                 if msg == "end": #si un utilisateur envoie end , on stoppe le serveur
                     launched = False
-            except: client_list.remove(client)#si on ne peut pas lire le message, c'est que le socket n'est pas valide donc le client est déconnecté, on le supprime de la liste
+                #except: client_list.remove(client)#si on ne peut pas lire le message, c'est que le socket n'est pas valide donc le client est déconnecté, on le supprime de la liste
                 #si on a une erreur, cela veut dire que le client s'est déconnecté, on le supprime
 
 print("Ending connections")
