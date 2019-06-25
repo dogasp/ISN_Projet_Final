@@ -1,6 +1,6 @@
 from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
-from time import sleep
+from time import sleep, time
 sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
@@ -17,6 +17,9 @@ class demineur:
         self.User = user  #utilisateur qui joue au jeux
         self.level = 0    #difficulté
         self.border = 25  #taille d'une cellule
+        self.average_score = []
+        self.death_pos = []
+        self.count = 0
 
         #import des images
         self.Number_Image = [PhotoImage(file = "Minesweeper/Images/0.png").subsample(8), PhotoImage(file = "Minesweeper/Images/1.png").subsample(8), PhotoImage(file = "Minesweeper/Images/2.png").subsample(8),\
@@ -76,6 +79,7 @@ class demineur:
         self.root.focus_force()
         self.root.withdraw() #on masque la fenetre principale le temps de la sélection de la difficulté
 
+        self.time_start = time()
         self.difficulty() #on charge la difficulté
         self.root.mainloop()
 
@@ -88,7 +92,9 @@ class demineur:
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Minesweeper", self.User)
 
     def difficulty(self): #fonction de sélection de la difficulté
+        self.AntiSpamDesLeDebut = False
 
+        self.count += 1
         self.root_difficulty = Toplevel()
         self.root_difficulty.title("difficulté")
         self.root_difficulty.resizable(False,False)
@@ -185,6 +191,7 @@ class demineur:
                             if self.dims[0] > ip >-1 and self.dims[1] > jp >= 0 and self.grid[ip][jp]!=-1:
                                 self.grid[ip][jp] += 1
         if event.num == 1: # si clique gauche
+            self.AntiSpamDesLeDebut = True
             value = self.grid[x][y] #valeur de la grille à l'amplacement cliqué
             #si l'image est un drapeau, on l'enlève
             if self.canvas.itemconfigure(self.list_images[x][y])["image"][-1] == str(self.Flag_Image):
@@ -196,7 +203,7 @@ class demineur:
                         #si il y a une image de drapeau et qu'il y a une bombe à l'emplacement
                         if self.canvas.itemconfigure(self.list_images[i][j])["image"][-1] == str(self.Flag_Image) and self.grid[i][j] == -1:
                             count += 1
-                self.end(False, count) #appel de la fonction end de la classe
+                self.end(False, count, [x, y]) #appel de la fonction end de la classe
                 return
             elif value > 0: #si on a cliqué sur une case contenant au moins une bombe voisine, on affiche le nombre de voisins
                 self.canvas.itemconfigure(self.list_images[x][y], image = self.Number_Image[value])
@@ -226,7 +233,8 @@ class demineur:
                         if self.canvas.itemconfigure(self.list_images[xc][yc])["image"][-1] == str(self.Normal_Image):
                             event.x = xc*self.border
                             event.y = yc*self.border
-                            self.click(event)
+                            if self.AntiSpamDesLeDebut:
+                                self.click(event)
 
         elif event.num == 3: #clique droit
             #lors d'un clique droit, on vérifie si l'utilisateur n'a pas déjà posé un drapeau:
@@ -247,9 +255,12 @@ class demineur:
             self.end(True, count)
         self.canvas.update()
 
-    def end(self, win, count = 0): #fonction appelée à la fin de la partie
+    def end(self, win, count = 0, pos = []): #fonction appelée à la fin de la partie
         self.canvas.unbind("<Button>")
-        send_statistics(self.User, "Minesweeper", count*50)
+        #send_statistics(self.User, "Minesweeper", count*50)
+        self.average_score.append(count * 50)
+        if win == False:
+            self.death_pos.append(pos)
         if win == False: #si le joueur a perdus, on affiche toutes les bombes
             for x in range(self.dims[0]):
                 for y in range(self.dims[1]):
@@ -272,4 +283,4 @@ class demineur:
 
 def Minesweeper(user):    # fonction appelée pour lancer le jeu
     jeux = demineur(user) # création de la classe
-    return jeux.score     # retour du meilleur score de la session
+    (jeux.score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois les données

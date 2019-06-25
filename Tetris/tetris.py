@@ -1,7 +1,7 @@
 from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
 from tkinter.font import Font
-from time import sleep
+from time import sleep, time
 sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
@@ -106,9 +106,11 @@ class tetris:
     def __init__(self, user):
         self.user = user
         self.Best_score = 0
-        self.height = 420
+        self.height = 420 #modulable
         self.width = 220
         self.paused = False
+        self.average_score = []
+        self.count = 0
 
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
@@ -154,6 +156,7 @@ class tetris:
         self.best_label = Label(self.root, text = "Meilleur joueur:\n{} avec {} points".format(bestplayer[0], int(bestplayer[1]))) #je te laisse la mise en forme
         self.best_label.place(x = 245, y = 350)
 
+        self.time_start = time()
         self.start()
 
         self.root.mainloop()
@@ -172,8 +175,9 @@ class tetris:
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Tetris", self.user)
 
     def start(self):
+        self.count += 1
         self.root.bind("<Key>", self.KeyPressed)
-        self.canvas = Canvas(self.root, width = 220, height = 420, bg = "grey", highlightthickness=0)
+        self.canvas = Canvas(self.root, width = self.width, height = self.height, bg = "grey", highlightthickness=0)
         self.next_Canvas = Canvas(self.root, width = 4*self.width/10, height = 4*self.height/22, bg = "lightgrey")
         self.next_Canvas.place(x = 270, y = 230)
         self.canvas.place(x=0, y=0)
@@ -201,7 +205,7 @@ class tetris:
             self.current.update(2, self)
             self.next.update(1, self)
             self.root.after(40, self.update)
-        
+
     def ghost(self): #fonction pour afficher l'apperçus en bas de la fenetre
         offset = 0
         search = True
@@ -244,6 +248,7 @@ class tetris:
                 if self.current.check(self) == True:
                     self.current.index = (self.current.index +1)%len(self.current.pattern)
     def end(self):
+        self.average_score.append(self.score)
         send_statistics(self.user, "Tetris", self.score)
         self.root.unbind("<Key>")
         question = askquestion("RESTART", "La partie est finie\n veux-tu recommencer?")
@@ -256,4 +261,4 @@ class tetris:
 
 def Tetris(user):
     jeux = tetris(user)
-    return jeux.Best_score
+    return (jeux.Best_Score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, [])   #renvois les données

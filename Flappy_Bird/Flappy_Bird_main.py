@@ -1,6 +1,6 @@
 from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
-from time import sleep
+from time import sleep, time
 sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
@@ -10,8 +10,11 @@ from math import*
 
 class bird:
     def __init__(self,user):
-        self.User_name = user  
+        self.User_name = user
         self.Best_Score = 0
+        self.count = 0
+        self.average_score = []
+        self.death_pos = []
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('670x530')
@@ -59,6 +62,8 @@ class bird:
         self.root.resizable(False,False)
         self.root.title('Flappy Bird')
         self.root.focus_force()
+
+        self.time_start = time()
 
         self.liste_image = []                      #Import des photos du Bird pour les différents angles
         for i in range(2,31):
@@ -377,7 +382,11 @@ class bird:
             self.Canvas_world.coords(self.image_Bird_true, x, 475)#On replace l'oiseau
 
     def dead(self):
-        send_statistics(self.User_name, "Flappy", (self.compte)*100)
+        #send_statistics(self.User_name, "Flappy", (self.compte)*100)
+        self.count += 1
+        self.average_score.append((self.compte)*100)
+        x, y =  self.Canvas_world.coords(self.image_Bird_true)
+        self.death_pos.append((x, y))
         self.root.protocol("WM_DELETE_WINDOW", print)
         if (self.compte)*100 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.compte)*100
@@ -445,4 +454,4 @@ class Pipe:                     #Creéation de la classe Pipe
 
 def Flappy_Bird(User):    # fonction pour commencer le jeu
   jeux = bird(User)       # création de l'instance
-  return jeux.Best_Score  #renvois du meilleur score
+  return (jeux.Best_Score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois des données

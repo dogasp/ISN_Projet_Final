@@ -1,6 +1,6 @@
 from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
-from time import sleep
+from time import sleep, time
 sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
@@ -18,6 +18,9 @@ class pong:
         self.pressing = False
         self.score = 0
         self.launch = -1
+        self.count = 0
+        self.death_pos = []
+        self.average_score = []
         self.show_rules.title('Règles')
         self.show_rules.geometry('670x530')
         self.show_rules.resizable(False,False)
@@ -103,11 +106,13 @@ class pong:
         self.height = 500
         self.Best_Player = get_game_score_list("Pong")[0]
 
+        self.time_start = time()
         self.start()
 
         self.root.mainloop()
 
     def start(self):
+        self.count += 1
         self.root.bind("<KeyPress>", self.start_move)
         self.root.bind("<KeyRelease>", self.stop_move)
         self.Canvas_dessine.delete("all")
@@ -187,7 +192,8 @@ class pong:
         self.root.after(25, self.update)
 
     def dead(self, looser):
-        send_statistics(self.user, "Pong", self.touch)
+        self.average_score.append(self.touch * 50)
+        self.death_pos.append((self.player.x, self.player.y))
         self.launch = looser
         if self.touch > self.score:
             self.score = self.touch
@@ -265,9 +271,9 @@ class Ball:
         self.pos.add(self.vitesse)
         self.parent.Canvas_dessine.create_oval(self.pos.x-20, self.pos.y-20, self.pos.x+20, self.pos.y+20, fill = "white")
 
-def mapping(value, istart, iend, ostart, oend): 
+def mapping(value, istart, iend, ostart, oend):
     return ostart + (oend - ostart) * ((value - istart)/(iend - istart))
 
 def Pong(user):
-    game = pong(user)
-    return game.score*50
+    jeux = pong(user)
+    return (jeux.score*50, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois les données

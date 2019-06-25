@@ -1,6 +1,6 @@
 from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
-from time import sleep
+from time import sleep, time
 sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')
@@ -17,6 +17,8 @@ class pendu:
     def __init__(self, user):
         self.user = user
         self.score = 0
+        self.count = 0
+        self.average_score = []
         with open("Pendu/ressources/liste_francais.txt") as f:
             self.data = f.read().lower().split("\n")
         #elements du pendu
@@ -71,6 +73,8 @@ class pendu:
         self.root.focus_force()
         self.root.withdraw() #on masque la fenetre principale le temps de la sélection de la difficulté
 
+        self.time_start = time()
+
         self.difficulty() #on charge la difficulté
         self.root.mainloop()
 
@@ -91,6 +95,7 @@ class pendu:
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Pendu", self.user)
 
     def difficulty(self): #fonction de sélection de la difficulté
+        self.count += 1
         self.root_difficulty = Toplevel()
         self.root_difficulty.resizable(False,False)
         self.root_difficulty.focus_force()
@@ -177,7 +182,7 @@ class pendu:
 
     def end(self, win):
         scored = (self.level+1)*50*win*2*(len(self.entred)-self.error_Count)/(1+self.error_Count)
-        send_statistics(self.user, "Pendu", scored)
+        self.average_score.append(scored)
         if scored > self.score:
             self.score = scored
         self.entry.unbind("<Return>")
@@ -212,5 +217,5 @@ def letter_count(word):
     return len(lettre)
 
 def Pendu(user):
-    partie = pendu(user)
-    return partie.score
+    jeux = pendu(user)
+    return (jeux.score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, [])   #renvois du meilleur score

@@ -26,8 +26,8 @@ class BoutonS: #classe pour gérer les boutons interactifs
     def command(self, event = None): #fonction executée lors du clique sur le boutton
         global label_pseudo, label_score, score
         root_main.withdraw() #on masque l'interface principale
-        result = self.run(User_name) #on execute le jeu
-        push_score(User_name, self.jeux, result, 0, 0, 0, []) #on envois au serveur le score de la partie
+        max_score, score, Average_Time, count, death_pos = self.run(User_name) #on execute le jeu
+        push_score(User_name, self.jeux, max_score, score, count, Average_Time, death_pos) #on envois au serveur le score de la partie
         root_main.deiconify() #on fait réapparaite la fenetre principale
         Frame_main['yscrollcommand'] = scrollY.set #rappel de la bare de scroll
 
