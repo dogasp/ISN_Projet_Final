@@ -1,7 +1,7 @@
 import socket #imports
 import pickle
 
-Host = "92.91.135.103" #création des variables 0 au lieu de 5
+Host = "92.91.130.103" #création des variables 0 au lieu de 5
 Port = 1243
 
 def push_score(pseudo, game, score_max, score, count, time, pos = []):
@@ -21,7 +21,7 @@ def push_score(pseudo, game, score_max, score, count, time, pos = []):
         s.connect((Host, Port)) #on lie l'adresse ip et le port
     except:
         return
-    msg_To_send = "add {} {} {} {} {} {}".format(pseudo, game, score_max, score, count, time, pos) #on envois la commande pour ajouter la partie actuelle
+    msg_To_send = "add {} {} {} {} {} {} {}".format(pseudo, game, score_max, score, count, time, pos) #on envois la commande pour ajouter la partie actuelle
     s.send(msg_To_send.encode())
     s.recv(1024) #la réponse n'est pas utile mais il y en a une
     s.close()
