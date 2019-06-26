@@ -18,10 +18,10 @@ if os.path.isfile("./statistics"): #si le fichier est créé, on charge ce qu'il
         statistics = pickle.load(f)
 else:
     statistics = [{"Tete": {"moyenne":[0, 0], "player_count":{}}, "Snake": {"moyenne":[0, 0], "player_count":{}}, "Ghost": {"moyenne":[0, 0], "player_count":{}}, "Minesweeper": {"moyenne":[0, 0], "player_count":{}},\
-         "Tetris": {"moyenne":[0, 0], "player_count":{}}, "Pendu": {"moyenne":[0, 0], "player_count":{}}, "Pong": {"moyenne":[0, 0], "player_count": {}}, "Space": {"moyenne":[0, 0], "player_count":{}}, "Flappy": {"moyenne":[0, 0], "player_count":{}} }, \
+         "Tetris": {"moyenne":[0, 0], "player_count":{}}, "Pendu": {"moyenne":[0, 0], "player_count":{}}, "Pong": {"moyenne":[0, 0], "player_count": {}},  "Flappy": {"moyenne":[0, 0], "player_count":{}} }, \
          {"Snake": {}, "Minesweeper": {}, "Flappy": {}, "Pong": {}}, \
          {"Tete": {"moyenne": 0, "player_count":{}}, "Snake": {"moyenne":0, "player_count":{}}, "Ghost": {"moyenne":0, "player_count":{}}, "Minesweeper": {"moyenne":0, "player_count":{}},\
-         "Tetris": {"moyenne":0, "player_count":{}}, "Pendu": {"moyenne":0, "player_count":{}}, "Pong": {"moyenne":0, "player_count": {}}, "Space": {"moyenne":0, "player_count":{}}, "Flappy": {"moyenne":0, "player_count":{}} }]
+         "Tetris": {"moyenne":0, "player_count":{}}, "Pendu": {"moyenne":0, "player_count":{}}, "Pong": {"moyenne":0, "player_count": {}}, "Flappy": {"moyenne":0, "player_count":{}} }]
     #scores, nombre de parties / emplacements de mort / temps joué
 
 #########################-----------Fonction Save-------------------####################################
@@ -63,7 +63,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
             if players[player][jeu] < score_max: #si le score marqué est plus grand que le précédent, on le retiends
                 players[player][jeu] = score_max
         except:
-            players[player] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #
+            players[player] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Flappy": 0} #
             players[player][jeu] = score_max
         try: #incrémentation du nombre de parties jouées par joueur dans un jeu
             #la moyenne du joueur = nb_parties*moyenne + score
@@ -132,7 +132,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         try:
             players[list[1]]["Tete"] < 0
         except:
-            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #création d'un nouveau joueur
+            players[list[1]] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Flappy": 0} #création d'un nouveau joueur
         return pickle.dumps(players[list[1]])
 
     elif command == "statistics_get":
