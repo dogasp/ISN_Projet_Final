@@ -55,6 +55,9 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         count = int(list[5])
         time = float(list[6])
 
+        #allo Snake 160      100.0    2              9.517096400260925 [(9, 19), (17, 19)]
+        #nom jeu score max  moyen   nb parties             time
+
         print("player {} scored {} in {}".format(player, score_max, jeu))
         try:
             if players[player][jeu] < score_max: #si le score marqué est plus grand que le précédent, on le retiends
@@ -62,13 +65,12 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
         except:
             players[player] = {"Tete": 0, "Snake": 0, "Ghost": 0, "Minesweeper": 0, "Tetris": 0, "Pendu": 0, "Pong": 0, "Space": 0, "Flappy": 0} #
             players[player][jeu] = score_max
-
         try: #incrémentation du nombre de parties jouées par joueur dans un jeu
-            statistics[0][jeu]["player_count"][player][1] = ((statistics[0][jeu]["player_count"][player][0]) * statistics[0][jeu]["player_count"][player][1] + score*count) / (statistics[0][jeu]["player_count"][player][0] + count)
+            #la moyenne du joueur = nb_parties*moyenne + score
             statistics[0][jeu]["player_count"][player][0] += count
+            statistics[0][jeu]["player_count"][player][1] = ((statistics[0][jeu]["player_count"][player][0]) * statistics[0][jeu]["player_count"][player][1] + score*count) / (statistics[0][jeu]["player_count"][player][0] + count)
         except:
             statistics[0][jeu]["player_count"][player] = [1, list[3]]
-
         #calcul de la nouvelle moyenne et du nouveau compte total
         statistics[0][jeu]["moyenne"][0] = (statistics[0][jeu]["moyenne"][0] * statistics[0][jeu]["moyenne"][1] + score*count)/(statistics[0][jeu]["moyenne"][1]+count)
 
@@ -84,7 +86,7 @@ def process(msg): #fonction pour décider de ce qu'il faut retourner au client
 
         statistics[2][jeu]["moyenne"] = (statistics[2][jeu]["moyenne"] + time*count)/(statistics[0][jeu]["moyenne"][1] + count)
 
-
+        #nombre de parties par jeu
         statistics[0][jeu]["moyenne"][1] += count
 
 
