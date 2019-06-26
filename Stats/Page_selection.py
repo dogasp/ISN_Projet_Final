@@ -37,11 +37,13 @@ class Stats:
 
         #Statistiques sur toi / Statistiques globales
         self.select_graph_liste_stat = np.array([
-        1, 0, 0, 4, 1, 0, 0, 4,  #stat1
-        1, 0, 0, 4, 1, 0, 0, 4,  #stat2
-        1, 0, 0, 4, 1, 0, 0, 4,  #stat3
-        1, 0, 0, 0, 1, 0, 0, 0,])#stat4
-        self.select_graph_liste_stat.resize((4,2,4))
+        1, 0, 0, 4, 5, 1, 0, 0, 4, 5,  #stat1
+        1, 0, 0, 4, 5, 1, 0, 0, 4, 5,  #stat2
+        1, 0, 0, 4, 5, 1, 0, 0, 4, 5,  #stat3
+        1, 0, 0, 0, 5, 1, 0, 0, 0, 5])#stat4
+        self.select_graph_liste_stat.resize((4,2,5))
+
+
 
         """validate_button = Button(self.root, text = "validate", command = self.launch)
         validate_button.place(x = 500, y = 300)"""
@@ -122,7 +124,7 @@ class Stats:
         self.listbox_4.place(x = 500, y = 60)
 
         if self.selected_mode2 == "Statistiques sur jeu":
-            for z in range(4):
+            for z in range(len(self.select_graph_liste_game[0][0])):
                 if self.select_graph_liste_game[self.variable2][self.variable][z]== 1:
                     self.listbox_4.insert(END, "Graph_1")
                 if self.select_graph_liste_game[self.variable2][self.variable][z]== 2:
@@ -131,17 +133,19 @@ class Stats:
                     self.listbox_4.insert(END, "Graph_3")
                 if self.select_graph_liste_game[self.variable2][self.variable][z]== 4:
                     self.listbox_4.insert(END, "Graph_4")
+                if self.select_graph_liste_game[self.variable2][self.variable][z]== 5:
+                    self.listbox_4.insert(END, "Graph_5")
 
         elif self.selected_mode2 == "Statistiques sur Application":
-            for z in range(4):
+            for z in range(len(self.select_graph_liste_stat[0][0])):
                 if self.select_graph_liste_stat[self.variable2][self.variable][z] == 1:
                     self.listbox_4.insert(END, "Graph_1")
                 if self.select_graph_liste_stat[self.variable2][self.variable][z] == 2:
                     self.listbox_4.insert(END, "Graph_2")
                 if self.select_graph_liste_stat[self.variable2][self.variable][z] == 3:
                     self.listbox_4.insert(END, "Graph_3")
-                if self.select_graph_liste_stat[self.variable2][self.variable][z] == 4:
-                    self.listbox_4.insert(END, "Graph_4")
+                if self.select_graph_liste_stat[self.variable2][self.variable][z] == 5:
+                    self.listbox_4.insert(END, "Graph_5")
 
         self.listbox_4.bind("<ButtonRelease-1>", self.Select_graphType2)
 
@@ -154,12 +158,14 @@ class Stats:
         self.type_stats = self.listbox_4.get(a)
         if self.type_stats == "Graph_1":
             self.Graph_1(self.selected_mode, self.selected_mode2, self.selected_mode3)
-        if self.type_stats == "Graph_2":
+        elif self.type_stats == "Graph_2":
             self.Graph_2(self.selected_mode, self.selected_mode2, self.selected_mode3)
-        if self.type_stats == "Graph_3":
+        elif self.type_stats == "Graph_3":
             self.Graph_3(self.selected_mode, self.selected_mode2, self.selected_mode3)
-        if self.type_stats == "Graph_4":
+        elif self.type_stats == "Graph_4":
             self.Graph_4(self.selected_mode, self.selected_mode2, self.selected_mode3)
+        elif self.type_stats == "Graph_5":
+            self.Graph_5(self.selected_mode, self.selected_mode2, self.selected_mode3)
 
     def Graph_1(self, sur_qui, sur_quoi, lequel):
         x0 = [] #Correspond au meilleur score
@@ -572,8 +578,8 @@ class Stats:
 
                         elif parametters == "Nb parties {}".format(self.user):
                             for games in self.data[0].keys():
-                                x0[parametters][games] = self.data[0][games]["player_count"][self.user]
-
+                                try:x0[parametters][games] = self.data[0][games]["player_count"][self.user]
+                                except: x0[parametters][games] = 0
                         elif parametters == "Nb parties du meilleur joueur du jeu":
                             for games in self.data[0].keys():
                                 x0[parametters][games] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
@@ -656,190 +662,38 @@ class Stats:
                     title = "Différentes stats sur les nombres de parties en fonctions des jeux"
                     x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
                     for games in x0:
-                        if x0 == 'Tete':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
-                        elif x0 == 'Pendu':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
-                        elif x0 == 'Ghost':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
-                        elif x0 == 'Space':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
-                        elif x0 == 'Snake':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
-                        elif x0 == 'Minesweeper':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
-                        elif x0 == 'Tetris':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
-                        elif x0 == 'Pong':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
-                        elif x0 == 'Flappy':
-                            if len(self.data[0][games]["player_count"]) != 0:
-                                x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
-                            else:
-                                x0[parametters][games] = 0
-                            x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-                            x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
+                        if len(self.data[0][games]["player_count"]) != 0:
+                            x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
+                        else:
+                            x0[games]["Moyenne de parties"] = 0
+                        x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
+                        x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
+
 
                 elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
                     Legend1 = "Nb de parties"
                     title = "Différentes stats sur les Scores Max en fonction des Jeux"
                     x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
                     for games in x0:
-                        if x0 == 'Tete':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Pendu':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
+                        x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
+                        x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
+                        try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
+                        except: x0[games]["Score max de {}".format(self.user)] = 0
 
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Ghost':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
-
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Space':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
-
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Snake':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
-
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Minesweeper':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
-
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Tetris':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
-
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Pong':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
-
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Flappy':
-                            x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
-
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
                 elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
                     Legend1 = "Nb de parties"
                     title = "Différentes stats sur les Scores Moyens en fonction des Jeux"
                     x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
                     for games in x0:
-                        if x0 == 'Tete':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Pendu':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Ghost':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Space':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Snake':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Minesweeper':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Tetris':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Pong':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
-                        elif x0 == 'Flappy':
-                            try: x0[games][{"Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
-                            except: x0[games][{"Score moyen de {}".format(self.user)] = 0
-                            x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
-                            try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
-                            except: x0[games]["Score max de {}".format(self.user)] = 0
+                        try: x0[games]["Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
+                        except: x0[games]["Score moyen de {}".format(self.user)] = 0
+                        x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
+                        try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
+                        except: x0[games]["Score max de {}".format(self.user)] = 0
+
                 elif lequel == "stat4":
                     pass
-
+        Graph_5_exe(self.root,self.user,x0,title)
     def Reset(self):
         self.root.destroy()
         self.root.quit()

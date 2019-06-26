@@ -125,11 +125,9 @@ class Graph_4_exe(App_stat):
 class Graph_5_exe(App_stat):
     def __init__(self, master,user_name,x0,title):
         #game = x0 un dico
-        x0 = {"score_moyen": {"Flappy":1500,"Snake":3000,"Pendu":4000,"Pong":5000},
-              "score_max": {"Flappy":7000,"Snake":4000,"Pendu":6000,"Pong":8000},
-              "score_user": {"Flappy":3000,"Snake":2000,"Pendu":4000,"Pong":2000}}
+
         mycolors = ['red', 'blue', 'green', 'orange', 'brown', 'grey', 'pink', 'olive', 'deeppink', 'steelblue', 'firebrick', 'mediumseagreen']
-        plt.figure(figsize=(16,10), dpi= 80)
+        fig = plt.figure(figsize=(16,10), dpi= 80)
         for i,score in enumerate(x0):
             x_att = []
             x_att2 = []
@@ -137,10 +135,10 @@ class Graph_5_exe(App_stat):
                 x_att.append(y)
                 x_att2.append(x0[score][y])
             plt.plot(x_att,x_att2, color=mycolors[i], label=score)
-            plt.text(len(x0["score_moyen"])-0.95 ,x_att2[-1], score, fontsize=10, color=mycolors[i])
+            plt.text(len(x_att2)-0.95 ,x_att2[-1], score, fontsize=10, color=mycolors[i])
 
         plt.ylim(0,10000)
-        plt.xlim(-0.1, len(x0["score_moyen"])-1)
+        plt.xlim(-0.1, len(x_att2)-1)
         plt.ylabel('Scores')
         plt.title("Tracé des différents scores", fontsize=22)
 
@@ -149,3 +147,4 @@ class Graph_5_exe(App_stat):
         plt.gca().spines["right"].set_alpha(0.0)
         plt.gca().spines["left"].set_alpha(0.5)
         plt.legend(loc='upper right', ncol=2, fontsize=10)
+        super().__init__(master,fig)
