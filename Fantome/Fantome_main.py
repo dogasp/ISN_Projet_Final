@@ -22,6 +22,7 @@ class ghost:
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
         self.level = 1
         self.score = 0
+        self.count = 1
 
         self.Jerry_1 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_1.png")
         self.keyboard_fantome = PhotoImage(file = "Fantome/Ressources/Images/keyboard_fantome.png")
@@ -360,6 +361,7 @@ class ghost:
                 Button(self.canvas_question,image = self.next_image,highlightthickness=0, borderwidth = 0,command = lambda: self.command_user("next"),cursor ='hand2', font = ("Helvetica", 10)).place(x = 211, y = 150)
 
         elif x=="restart_question":
+            self.count += 1
             self.control_variable2 = 0
             self.canvas_question.destroy()
             self.canvas_question = Canvas(self.Frame_right, width = 482, height = 300, highlightthickness = 0)
@@ -383,4 +385,4 @@ class ghost:
 
 def Ghost(User):
   jeux = ghost(User)
-  return (jeux.score, jeux.score, (time()-jeux.time_start), 1, [])
+  return (jeux.score, jeux.score, (time()-jeux.time_start), jeux.count, [])

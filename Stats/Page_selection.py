@@ -24,7 +24,7 @@ class Stats:
         self.games = get_player_score("dodo").keys()
         self.game_ToSend = "Flappy"
 
-        dict_games = {'Tete': [1, 0, 0, 0, 1, 0, 0, 0], 'Pendu': [1, 0, 0, 0, 1, 0, 0, 0], 'Ghost': [1, 0, 0, 0, 1, 0, 0, 0],'Space': [1, 0, 0, 0, 1, 0, 0, 0],
+        dict_games = {'Tete': [1, 0, 0, 0, 1, 0, 0, 0], 'Pendu': [1, 0, 0, 0, 1, 0, 0, 0], 'Ghost': [1, 0, 0, 0, 1, 0, 0, 0],
         'Snake': [1, 2, 3, 0, 1, 2, 3, 0],'Minesweeper': [1, 0, 0, 0, 1, 0, 0, 0], 'Tetris': [1, 0, 0, 0, 1, 0, 0, 0], 'Pong': [1, 0, 0, 0, 1, 0, 0, 0],  'Flappy': [1, 0, 0, 0, 1, 0, 0, 0]}
         liste_attente = [1, 0, 0, 4, 1, 0, 0, 4]
 
@@ -33,7 +33,7 @@ class Stats:
             self.liste_jeux_app.append(elt)
             liste_attente += dict_games[elt]
         self.select_graph_liste_game = np.array([liste_attente])
-        self.select_graph_liste_game.resize((10,2,4))
+        self.select_graph_liste_game.resize((9,2,4))
 
         #Statistiques sur toi / Statistiques globales
         self.select_graph_liste_stat = np.array([
@@ -223,18 +223,14 @@ class Stats:
                         x0.append(0)
                         x1.append(0)
 
-                    moyenne_moyenne = [] #moyenne des moyennes
                     moyenne_max = []     #moyenne des maximums
-                    moyenne_parties = [] #moyenne des parties
+                    moyenne_parties = [self.data[0][lequel]["moyenne"][1]] #moyenne des parties
 
                     for joueur in self.data[0][lequel]["player_count"].keys():
                         if joueur != self.user:
-                            moyenne_moyenne.append(self.data[0][lequel]["player_count"][joueur][1])
-                            moyenne_parties.append(self.data[0][lequel]["player_count"][joueur][0])
                             moyenne_max.append(get_player_score(joueur)[lequel])
+                    x1.append(self.data[0][lequel]["moyenne"][0])
 
-                    if len(moyenne_moyenne) == 0: x1.append(0)
-                    else: x1.append(sum(moyenne_moyenne)/len(moyenne_moyenne))
                     if len(moyenne_max) == 0: x0.append(0)
                     else: x0.append(sum(moyenne_max)/len(moyenne_max))
                     if len(moyenne_parties) == 0: moyenne_parties.append(0)
@@ -248,16 +244,13 @@ class Stats:
                     #Tous les jeux Nombre de parties du joueur dans chaque jeu dans y0
                     for jeu in self.data[0].keys():
                         try:
-                            moyenne = self.data[0][jeu]["player_count"][self.user][1]
-                            somme = self.data[0][jeu]["player_count"][self.user][0]
-                            best = get_player_score(self.user)[jeu]
+                            x1.append(self.data[0][jeu]["player_count"][self.user][1])
+                            y.append(jeu + " " + str(self.data[0][jeu]["player_count"][self.user][0]))
+                            x0.append(get_player_score(self.user)[jeu])
                         except:
-                            moyenne = 0
-                            best = 0
-                            somme = 0
-                        x0.append(best)
-                        x1.append(moyenne)
-                        y.append(jeu + " " + str(somme))
+                            x1.append(0)
+                            x0.append(0)
+                            y.append(jeu + " " + str(0))
                     title = "Meilleur score et moyenne de {} dans chaque jeu".format(self.user)
         elif sur_quoi == "Statistiques sur Application":
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
@@ -265,12 +258,9 @@ class Stats:
                     name_y_axe = "Nombre de parties"
                     title = "Nombres de parties lancées en fonction du Jeu"
                     Legend1 = "Nb de parties"
-                    x0_att =[]
-
                     for games in self.data[0].keys():
                         y.append(games)
                         x0.append(self.data[0][game]["moyenne"][1])
-
                 elif lequel == "stat2": #Meilleur score en fonction du jeu
                     name_y_axe = "Score"
                     title = "Score Maximum en fonction du Jeu"
@@ -282,13 +272,20 @@ class Stats:
                     name_y_axe = "Score"
                     title = "Score Moyen en fonction du Jeu"
                     Legend1 = "Score max"
-                    moyenne_moyenne = [] #moyenne des moyennes
                     for game in self.data[0].keys():
                         y.append(game)
                         x0.append(self.data[0][game]["moyenne"][0])
-                        moyenne_moyenne = []
                 elif lequel == "stat4":
-                    pass
+                    name_y_axe = "Temps en seconde"
+                    title = "Différentes stats sur la durée des parties"
+                    Legend1 = "Temps passé en moyenne"
+                    Legend2 = "Temps passé par le meilleur"
+                    for game in self.data[2].keys():
+                        y.append(game)
+                        x0.append(self.data[2][game]["moyenne"][0])
+                        try: x1.append(self.data[2][game][get_game_score_list(lequel)[0][0]])
+                        except: x1.append(0)
+
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu
                     name_y_axe = "Nombre de parties"
@@ -575,16 +572,13 @@ class Stats:
                                     x0[parametters][games] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
                                 else:
                                     x0[parametters][games] = 0
-
                         elif parametters == "Nb parties {}".format(self.user):
                             for games in self.data[0].keys():
                                 try:x0[parametters][games] = self.data[0][games]["player_count"][self.user]
                                 except: x0[parametters][games] = 0
                         elif parametters == "Nb parties du meilleur joueur du jeu":
                             for games in self.data[0].keys():
-                                x0[parametters][games] = self.data[0][games]["player_count"][get_game_score_list(lequel)[0][1]]
-
-
+                                x0[parametters][games] = self.data[0][games]["player_count"][get_game_score_list(games)[0][0]]
                 elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
                     title = "Différentes stats sur les Scores Max en fonction des Jeux"
                     Legend1 = " Score total"
@@ -599,7 +593,6 @@ class Stats:
                                     x0[parametters][games] = get_player_score(self.user)[games]
                                 except:
                                     x0[parametters][games] = 0
-
                         elif parametters == "Score moyen":
                             for games in self.data[0].keys():
                                 x0[parametters][games] = self.data[0][games]["moyenne"][0]
@@ -614,7 +607,6 @@ class Stats:
                                     x0[parametters][games] = self.data[0][games]["player_count"][self.user][1]
                                 except:
                                     x0[parametters][games] = 0
-
                         elif parametters == "Score max de {}".format(self.user):
                             for games in self.data[0].keys():
                                 try:
@@ -646,14 +638,14 @@ class Stats:
                         elif parametters == "Temps passé en moyenne":
                             for games in self.data[2].keys():
                                 try:
-                                    x0[parametters][games] = self.data[0][games][moyenne][0]
+                                    x0[parametters][games] = self.data[0][games]["moyenne"][0]
                                 except:
                                     x0[parametters][games] = 0
 
-                        elif parametters == "Temps passé au max":
+                        elif parametters == "Temps passé par le meilleur du jeu":
                             for games in self.data[2].keys():
                                 try:
-                                    x0[parametters][games] = self.data[0][games][moyenne][0]
+                                    x0[parametters][games] = self.data[0][games]["moyenne"][1]
                                 except:
                                     x0[parametters][games] = 0
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
@@ -679,7 +671,6 @@ class Stats:
                         x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
                         try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
                         except: x0[games]["Score max de {}".format(self.user)] = 0
-
                 elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
                     Legend1 = "Nb de parties"
                     title = "Différentes stats sur les Scores Moyens en fonction des Jeux"
@@ -690,10 +681,23 @@ class Stats:
                         x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
                         try: x0[games]["Score max de {}".format(self.user)] =  get_player_score(self.user)[games]
                         except: x0[games]["Score max de {}".format(self.user)] = 0
-
+                        print(games)
                 elif lequel == "stat4":
-                    pass
+                    title = "Différentes stats sur les Scores Moyens en fonction des Jeux"
+                    Legend1 = " Score total"
+                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
+                    for games in x0:
+                        try: x0[games]["Temps moyen passé par {}".format(self.user)] = self.data[0][games][self.user][0]
+                        except: x0[games]["Temps moyen passé par {}".format(self.user)] = 0
+                        try: x0[games]["Temps max passé par {}".format(self.user)] = self.data[0][games][self.user][1]
+                        except: x0[games]["Temps max passé par {}".format(self.user)] = 0
+                        try: x0[games]["Temps passé en moyenne"] = self.data[0][games]["moyenne"][0]
+                        except: x0[games]["Temps passé en moyenne"] = 0
+                        try: x0[games]["Temps passé par le meilleur du jeu"] = self.data[0][games]["moyenne"][1]
+                        except: x0[games]["Temps passé par le meilleur du jeu"] = 0
+
         Graph_5_exe(self.root,self.user,x0,title)
+
     def Reset(self):
         self.root.destroy()
         self.root.quit()
