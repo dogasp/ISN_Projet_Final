@@ -121,19 +121,37 @@ class tetris:
 
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE) #premier frame, celui en dessous
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
-        #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
-        #self.Frame_main1_wind2.create_image(335,265,image =Fond_Frame_main1_wind2)
+        self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tetris2.png")
+        self.Frame_main1_wind2.create_image(335,265,image = self.Fond_Frame_main1_wind2)
         self.Frame_main2_wind2 = Frame(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE) #second frame, au dessus
         self.Frame_main2_wind2.place(x = 60, y = 45)
-        self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
-        self.Rules.place(x = 200, y =5)
 
+        first_label = Label(self.Frame_main2_wind2, text = "Tu disposes de pièces qui descendent du ciel\n pour interagir, tu peux utiliser\n les touches directionelles")
+        self.Frame_main2_wind2.after(1000, lambda: first_label.place(x = 20, y = 80))
+        
+        self.image1 = PhotoImage(file = "Tetris/Images/rules1.png")
+        first_image = Label(self.Frame_main2_wind2, image = self.image1)
+        self.Frame_main2_wind2.after(1500, lambda: first_image.place(x = 380, y = 57))
 
-        self.explanation = Label(self.Frame_main2_wind2, text = "Le but du jeu est de compléter des lignes\n\
-        La sute arrivera un jour")
-        self.explanation.place(x = 20, y = 100)
+        second_label = Label(self.Frame_main2_wind2, text = "La flèche du haut fait tourner la pièce\n et les autres dirigent la pièce suivant la direction")
+        self.Frame_main2_wind2.after(2000, lambda: second_label.place(x = 20, y = 170))
+
+        self.image3 = PhotoImage(file = "Tetris/Images/rules2.png")
+        third_image = Label(self.Frame_main2_wind2, image = self.image3)
+        self.Frame_main2_wind2.after(2500, lambda: third_image.place(x = 380, y = 200))
+
+        third_label = Label(self.Frame_main2_wind2, text = "Tu gagne des points lorsque tu complète des lignes")
+        self.Frame_main2_wind2.after(3000, lambda: third_label.place(x = 20, y = 230))
+
+        """self.image4 = PhotoImage(file = "Tetris/Images/rules3.png")
+        fourth_image = Label(self.Frame_main2_wind2, image = self.image4)
+        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 350, y = 300))"""
+
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
-        self.Button_Skip.place(x = 50, y = 350)
+        self.Button_Skip.place(x = 150, y = 370)
+
+
+        
         self.show_rules.mainloop()
 
         self.root = Toplevel()
