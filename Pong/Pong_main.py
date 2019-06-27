@@ -193,7 +193,7 @@ class pong:
 
     def dead(self, looser):
         self.average_score.append(self.touch * 50)
-        self.death_pos.append((self.player.x, self.player.y))
+        self.death_pos.append((self.player.pos.x, self.player.pos.y))
         self.launch = looser
         if self.touch > self.score:
             self.score = self.touch
