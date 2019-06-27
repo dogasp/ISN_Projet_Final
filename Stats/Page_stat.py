@@ -66,8 +66,8 @@ class Graph_2_exe(App_stat):
         grille = np.zeros((20, 20), dtype = int)
         print(x0)
         for elt in x0:
-            elt = [int(a*20) for a in elt]
-            grille[abs(elt[1]-19),abs(elt[0])] += x0[elt]
+            elt_ = [int(a*20) for a in elt]
+            grille[abs(elt_[1]-19),abs(elt_[0])] += x0[elt]
 
         fig, ax = plt.subplots(figsize=(5, 5))
         im = plt.imshow(grille) # later use a.set_data(new_data)
@@ -127,12 +127,13 @@ class Graph_4_exe(App_stat):
 class Graph_5_exe(App_stat):
     def __init__(self, master,user_name,x0,title, label_y):
         #game = x0 un dico
-
+        x_att = []
+        x_att2 = []
+        print(x0)
         mycolors = ['red', 'blue', 'green', 'orange', 'brown', 'grey', 'pink', 'olive', 'deeppink', 'steelblue', 'firebrick', 'mediumseagreen']
         fig = plt.figure(figsize=(16,10), dpi= 80)
         for i,score in enumerate(x0):
-            x_att = []
-            x_att2 = []
+
             for y in x0[score]:
                 x_att.append(y)
                 x_att2.append(x0[score][y])
@@ -145,6 +146,7 @@ class Graph_5_exe(App_stat):
             plt.ylim(0,500)
         if label_y == "temps":
             plt.ylim(0,500)
+        print(x_att2)
         plt.xlim(-0.1, len(x_att2)-1)
         plt.ylabel('Scores')
         plt.title("Tracé des différents scores", fontsize=22)

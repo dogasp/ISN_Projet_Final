@@ -11,7 +11,6 @@ from Pendu.pendu import *
 from Tetris.tetris import *
 from Pong.Pong_main import*
 from Flappy_Bird.Flappy_Bird_main import*
-from Stats.Main_stat import*
 from Stats.Page_selection import*
 
 class BoutonS: #classe pour gérer les boutons interactifs
