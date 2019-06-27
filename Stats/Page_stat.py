@@ -64,10 +64,8 @@ class Graph_2_exe(App_stat):
     def __init__(self, master, user_name, x0, title,Legend1): #, user_name, grille)
 
         grille = np.zeros((20, 20), dtype = int)
-        print(x0)
         for elt in x0:
-            elt_ = [int(a*20) for a in elt]
-            grille[abs(elt_[1]-19),abs(elt_[0])] += x0[elt]
+            grille[abs(elt[1]-19),abs(elt[0])] += x0[elt]
 
         fig, ax = plt.subplots(figsize=(5, 5))
         im = plt.imshow(grille) # later use a.set_data(new_data)
@@ -84,12 +82,10 @@ class Graph_3_exe(App_stat):
 
         x =[]
         y =[]
-        print(x0)
-        for elt in x0:
-            elt = [int(a*20) for a in elt]
-            for elt2 in range(x0[elt]):
-                x.append(elt[0])
-                y.append(abs(elt[1]-19))
+        for key, value in x0.items():
+            for _ in range(value):
+                x.append(key[0])
+                y.append(abs(key[1]-19))
 
         fig, ax = plt.subplots(figsize=(8, 8))
         ax.set_xlim(-0.25, 19.25)
@@ -133,7 +129,8 @@ class Graph_5_exe(App_stat):
         mycolors = ['red', 'blue', 'green', 'orange', 'brown', 'grey', 'pink', 'olive', 'deeppink', 'steelblue', 'firebrick', 'mediumseagreen']
         fig = plt.figure(figsize=(16,10), dpi= 80)
         for i,score in enumerate(x0):
-
+            x_att = []
+            x_att2 = []
             for y in x0[score]:
                 x_att.append(y)
                 x_att2.append(x0[score][y])

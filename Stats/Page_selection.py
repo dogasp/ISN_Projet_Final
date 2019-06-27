@@ -10,7 +10,6 @@ class Stats:
         self.root = Tk()
         self.root.geometry("1000x600")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
-
         self.titre = Label(self.root, text = "Page de sélection des graphs à afficher")
         self.titre.place(x = 200, y = 20)
 
@@ -25,15 +24,9 @@ class Stats:
         self.data = get_statistics()
         for games in self.data[0] :
             self.games.append(games)
-            #print(games)
-        #print(self.games)
-
-        #self.games = get_player_score("dodo").keys()
-        self.game_ToSend = "Flappy"
-
 
         dict_games = {'Tete': [1,0,0,0,5,1,0,0,0,5], 'Pendu': [1,0,0,0,5,1,0,0,0,5], 'Ghost': [1,0,0,0,5,1,0,0,0,5],
-        'Snake': [1,2,3,0,5,1,2,3,0,5],'Minesweeper': [1,2,3,0,5,1,3,2,0,5], 'Tetris': [1,0,0,0,5,1,0,0,0,5], 'Pong': [1,2,3,0,5,1,2,3,0,5],  'Flappy': [1,2,3,0,5,1,2,3,0,5]}
+        'Snake': [1,2,3,0,5,1,2,3,0,5],'Minesweeper': [1,2,3,0,5,1,2,3,0,5], 'Tetris': [1,0,0,0,5,1,0,0,0,5], 'Pong': [1,2,3,0,5,1,2,3,0,5],  'Flappy': [1,2,3,0,5,1,2,3,0,5]}
         liste_attente = [1,0,0,4,5,1,0,0,4,5]
 
         self.liste_jeux_app = ["tous les jeux"]
@@ -51,14 +44,9 @@ class Stats:
         1, 0, 0, 0, 5, 1, 0, 0, 0, 5])#stat4
         self.select_graph_liste_stat.resize((4,2,5))
 
-        """validate_button = Button(self.root, text = "validate", command = self.launch)
-        validate_button.place(x = 500, y = 300)"""
-
         Reset_button = Button(self.root, text = "Reset", command = self.Reset)
         Reset_button.place(x = 700, y = 300)
-
         self.root.mainloop()
-
 
     def exit(self):
         self.root.quit()
@@ -72,8 +60,7 @@ class Stats:
             self.listbox_2.destroy()
             self.listbox_3.destroy()
             self.listbox_4.destroy()
-        except:
-            pass
+        except: pass
         self.Select_mode0()
 
     def Select_mode0(self, event = None):
@@ -90,8 +77,7 @@ class Stats:
         try:
             self.listbox_3.destroy()
             self.listbox_4.destroy()
-        except:
-            pass
+        except: pass
 
         if self.selected_mode2 == "Statistiques sur Application":
             self.listbox_3 = Listbox(self.root)
@@ -119,16 +105,13 @@ class Stats:
         a = self.listbox_3.curselection()
         self.selected_mode3 = self.listbox_3.get(a)
         self.variable2 = self.listbox_3.index(a)
-        try:
-            self.listbox_4.destroy()
-        except:
-            pass
+        try: self.listbox_4.destroy()
+        except: pass
         self.Select_graphType()
 
     def Select_graphType(self, event = None):
         self.listbox_4 = Listbox(self.root)
         self.listbox_4.place(x = 500, y = 60)
-
         if self.selected_mode2 == "Statistiques sur jeu":
             for z in range(len(self.select_graph_liste_game[0][0])):
                 if self.select_graph_liste_game[self.variable2][self.variable][z]== 1:
@@ -353,8 +336,7 @@ class Stats:
                             x0[pos] = value[pos]
 
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
-                if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
-                    x0 = self.data[1][lequel][self.user]
+                x0 = self.data[1][lequel][self.user]
 
         elif sur_quoi == "Statistiques sur Application":
 
@@ -384,8 +366,6 @@ class Stats:
 
     def Graph_3(self, sur_qui, sur_quoi, lequel):
         self.Graph_2(sur_qui, sur_quoi, lequel, True)
-
-
 
     def Graph_4(self, sur_qui, sur_quoi, lequel):
         x0 = [] #Correspond au meilleur score
@@ -530,6 +510,10 @@ class Stats:
                             for games in self.data[0].keys():
                                 x0[parametters][games] = self.data[0][games]["moyenne"][0]
                 elif lequel != "tous les jeux":
+                    pass
+
+            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
+                if lequel != "tous les jeux":
                     x0 = {}
                     for i,players in enumerate(get_game_score_list(lequel)):
                         x0[players[0]+':'+ str(i+1)] = {}
@@ -537,24 +521,19 @@ class Stats:
                         except: x0[players[0]+':'+ str(i+1)]["Score moyen"] = 0
                         try: x0[players[0]+':'+ str(i+1)]["Score max"] = players[1]
                         except: x0[players[0]+':'+ str(i+1)]["Score max"] = 0
-            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
-                if lequel != "tous les jeux":
-                    pass
                 elif lequel == "tous les jeux":
                     title = "Différentes stats sur les Scores Max en fonction des Jeux"
                     Legend1 = " Score total"
                     label_y = "score"
                     x0 = {}
                     for games in self.data[0]:
+                        x0[games] = {}
                         try: x0[games]["Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
                         except: x0[games]["Score moyen de {}".format(self.user)] = 0
-
                         try: x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
                         except: x0[games]["Score maximum"] = 0
-
                         try:x0[parametters]["Score max de {}".format(self.user)] = get_player_score(self.user)[games]
                         except:x0[games]["Score max de {}".format(self.user)] = 0
-
                         try: x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
                         except: x0[games]["Score moyen"] = 0
 

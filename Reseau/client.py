@@ -83,7 +83,7 @@ def get_statistics():
          {"Tete": {"moyenne": 0, "player_count":{}}, "Snake": {"moyenne":0, "player_count":{}}, "Ghost": {"moyenne":0, "player_count":{}}, "Minesweeper": {"moyenne":0, "player_count":{}},\
          "Tetris": {"moyenne":0, "player_count":{}}, "Pendu": {"moyenne":0, "player_count":{}}, "Pong": {"moyenne":0, "player_count": {}}, "Flappy": {"moyenne":0, "player_count":{}} }]
     s.send("statistics_get ".encode("utf-8")) #on demande la liste
-    response = s.recv(2048)
+    response = s.recv(8192)
     response = pickle.loads(response) #on désérialise la réponse pour récupérer un dictionnaire
 
     s.close()
