@@ -143,15 +143,14 @@ class tetris:
         third_label = Label(self.Frame_main2_wind2, text = "Tu gagne des points lorsque tu complète des lignes")
         self.Frame_main2_wind2.after(3000, lambda: third_label.place(x = 20, y = 230))
 
-        """self.image4 = PhotoImage(file = "Tetris/Images/rules3.png")
-        fourth_image = Label(self.Frame_main2_wind2, image = self.image4)
-        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 350, y = 300))"""
+        
+        fourth_label = Label(self.Frame_main2_wind2, text = "Mais attention, si le tas atteint le heut,\n tu as perdus")
+        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 350, y = 300))
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 150, y = 370)
 
 
-        
         self.show_rules.mainloop()
 
         self.root = Toplevel()
