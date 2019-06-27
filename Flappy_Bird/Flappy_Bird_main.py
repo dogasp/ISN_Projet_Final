@@ -386,7 +386,7 @@ class bird:
         self.count += 1
         self.average_score.append((self.compte)*100)
         x, y =  self.Canvas_world.coords(self.image_Bird_true)
-        self.death_pos.append((x, y))
+        self.death_pos.append((x, self.y_center_bird))
         self.root.protocol("WM_DELETE_WINDOW", print)
         if (self.compte)*100 > self.Best_Score: # si on a fait un meilleur score que l'ancien on l'enregistre
             self.Best_Score = (self.compte)*100

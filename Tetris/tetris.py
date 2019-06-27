@@ -260,4 +260,4 @@ class tetris:
 
 def Tetris(user):
     jeux = tetris(user)
-    return (jeux.Best_Score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, [])   #renvois les données
+    return (jeux.Best_score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, [])   #renvois les données
