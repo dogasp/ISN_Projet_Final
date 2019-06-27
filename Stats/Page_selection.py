@@ -32,16 +32,16 @@ class Stats:
         self.game_ToSend = "Flappy"
 
 
-        dict_games = {'Tete': [1, 0, 0, 0, 1, 0, 0, 0], 'Pendu': [1, 0, 0, 0, 1, 0, 0, 0], 'Ghost': [1, 0, 0, 0, 1, 0, 0, 0],
-        'Snake': [1, 2, 3, 0, 1, 2, 3, 0],'Minesweeper': [1, 0, 0, 0, 1, 0, 0, 0], 'Tetris': [1, 0, 0, 0, 1, 0, 0, 0], 'Pong': [1, 0, 0, 0, 1, 0, 0, 0],  'Flappy': [1, 0, 0, 0, 1, 0, 0, 0]}
-        liste_attente = [1, 0, 0, 4, 1, 0, 0, 4]
+        dict_games = {'Tete': [1,0,0,0,5,1,0,0,0,5], 'Pendu': [1,0,0,0,5,1,0,0,0,5], 'Ghost': [1,0,0,0,5,1,0,0,0,5],
+        'Snake': [1,2,3,0,5,1,2,3,0,5],'Minesweeper': [1,2,3,0,5,1,3,2,0,5], 'Tetris': [1,0,0,0,5,1,0,0,0,5], 'Pong': [1,2,3,0,5,1,2,3,0,5],  'Flappy': [1,2,3,0,5,1,2,3,0,5]}
+        liste_attente = [1,0,0,4,5,1,0,0,4,5]
 
         self.liste_jeux_app = ["tous les jeux"]
         for elt in self.games:
             self.liste_jeux_app.append(elt)
             liste_attente += dict_games[elt]
         self.select_graph_liste_game = np.array([liste_attente])
-        self.select_graph_liste_game.resize((9,2,4))
+        self.select_graph_liste_game.resize((9,2,5))
 
         #Statistiques sur toi / Statistiques globales
         self.select_graph_liste_stat = np.array([
@@ -50,10 +50,6 @@ class Stats:
         1, 0, 0, 4, 5, 1, 0, 0, 4, 5,  #stat3
         1, 0, 0, 0, 5, 1, 0, 0, 0, 5])#stat4
         self.select_graph_liste_stat.resize((4,2,5))
-
-        x0 = {}
-        for players in get_game_score_list(lequel):
-            print(players)
 
         """validate_button = Button(self.root, text = "validate", command = self.launch)
         validate_button.place(x = 500, y = 300)"""
@@ -338,7 +334,7 @@ class Stats:
         #x1 =[2500, 2000]
         Graph_1_exe(self.root,self.user,x0, y, x1,title, Legend1, Legend2,name_y_axe)
 
-    def Graph_2(self, sur_qui, sur_quoi, lequel):
+    def Graph_2(self, sur_qui, sur_quoi, lequel, tree = False):
         x0 = [] #Correspond au meilleur score
         y = []  #Correspond au titre ne bas ex: G1, G2
         x1 = [] #Correspond au score moyen
@@ -350,8 +346,7 @@ class Stats:
         if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
                 if lequel == "Snake":
-                    x0 = get_statistics()[1]
-                    #self.data[1]
+                    x0 = self.data[1][lequel]
                     title = "Disposition des morts dans Snake"
                     Legend1 = "Nb de morts"
                 elif lequel == "Flappy":
@@ -392,62 +387,15 @@ class Stats:
                     pass
                 elif lequel == "stat4":
                     pass
-        Graph_2_exe(self.root,self.user,x0,title,Legend1)
+        if tree:
+            Graph_3_exe(self.root,self.user,x0,title,Legend1)
+        else:
+            Graph_2_exe(self.root,self.user,x0,title,Legend1)
 
     def Graph_3(self, sur_qui, sur_quoi, lequel):
-        x0 = [] #Correspond au meilleur score
-        y = []  #Correspond au titre ne bas ex: G1, G2
-        x1 = [] #Correspond au score moyen
-        title = 'Titre'
-        title2 = 'Titre2'
-        Legend1 = 'Legend1'
-        Legend2 = 'Legend2'
-        name_y_axe = 'Score'
-        if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
-            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
-                if lequel == "Snake":
-                    x0 = get_statistics()[1]
-                    #self.data[1]
-                    title = "Disposition des morts dans Snake"
-                    Legend1 = "Nb de morts"
-                elif lequel == "Flappy":
-                    pass
-                elif lequel == "Pong":
-                    pass
-                else:
-                    pass
-            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
-                if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
-                    if lequel == "Snake":
-                        pass
-                    elif lequel == "Flappy":
-                        pass
-                    elif lequel == "Pong":
-                        pass
-                    else:
-                        pass
-        elif sur_quoi == "Statistiques sur Application":
-            if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
-                if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
-                    pass
-                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
-                    pass
-                elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
-                    pass
-                elif lequel == "stat4":
-                    pass
+        Graph_2(self, sur_qui, sur_quoi, lequel, True)
 
-            elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
-                if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
-                    pass
-                elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
-                    pass
-                elif lequel == "stat3": #Moyenne de score du joueur en fonction du jeu
-                    pass
-                elif lequel == "stat4":
-                    pass
 
-        Graph_3_exe(self.root,self.user,x0,title,Legend1)
 
     def Graph_4(self, sur_qui, sur_quoi, lequel):
         x0 = [] #Correspond au meilleur score
@@ -593,8 +541,13 @@ class Stats:
                                 x0[parametters][games] = self.data[0][games]["moyenne"][0]
                 elif lequel != "tous les jeux":
                     x0 = {}
-                    for players in get_game_score_list(lequel):
-                        x0[players] = a
+                    for i,players in enumerate(get_game_score_list(lequel)):
+                        x0[players[0]+':'+ str(i+1)] = {}
+                        try: x0[players[0]+':'+ str(i+1)]["Score moyen"] = self.data[0][lequel]['player_count'][players[0]][1]
+                        except: x0[players[0]+':'+ str(i+1)]["Score moyen"] = 0
+                        try: x0[players[0]+':'+ str(i+1)]["Score max"] = players[1]
+                        except: x0[players[0]+':'+ str(i+1)]["Score max"] = 0
+
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if lequel != "tous les jeux":
                     pass
