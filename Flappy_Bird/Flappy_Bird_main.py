@@ -261,7 +261,6 @@ class bird:
             self.bird_move()            #Déplacement de l'oiseau
             self.root.after(48,self.update)
 
-
     """
     La fonction Bird_move sert à déplacer l'oiseau de bas en haut ou de haut en bas. Elle sert aussi à changer l'inclinaison
     de la tête de l'oiseau en fonction de la vitesse de descente. Tout d'abord, on place toute la fonction dans une boucle qui
@@ -285,7 +284,6 @@ class bird:
     on place l'oiseau à y = 475 afin d'être sûr qu'il touche bien sans dépasser le sol, on appelle la fonction vérif qui nous
     sert à afficher le Game Over et self.verite = False afin d'arrêter la boucle de la fonction update.
     """
-
 
     def bird_move(self): #Fonction servant à déplacer le sol et l'oiseau pendant le jeu
         x, y =  self.Canvas_ground.coords(self.ground)      ############################
@@ -343,7 +341,7 @@ class bird:
         if self.verite == True: #Cette condition sert à n'executer qu'une fois cette fonction car après l'appel de celle-ci, self.verite = False
             self.y_pipe_down = y_pipe_center_down - 250 #Valeur du haut du tuyau bas
             self.y_pipe_top = y_pipe_center_top + 250   #Valeur du bas du tuyau haut
-            if self.y_pipe_down<self.y_center_bird + 25 or self.y_center_bird - 25< self.y_pipe_top or b == True: #Si il y a touche du sol ou du tuyau
+            if self.y_pipe_down<self.y_center_bird + 24 or self.y_center_bird - 24< self.y_pipe_top or b == True: #Si il y a touche du sol ou du tuyau
                 self.root.unbind("<Button-1>")          #On évite que le joueur click ce qui peut faire bugger le programme
                 self.root.unbind("<space>")
                 self.verite = False                     #On réinitialise self.verite = False pour éviter de refaire la fonction
