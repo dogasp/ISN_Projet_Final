@@ -345,16 +345,9 @@ class Stats:
         name_y_axe = 'Score'
         if sur_quoi == "Statistiques sur jeu": #si la personne veut un graphique sur les Jeux
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
-                if lequel == "Snake":
-                    x0 = self.data[1][lequel]
-                    title = "Disposition des morts dans Snake"
-                    Legend1 = "Nb de morts"
-                elif lequel == "Flappy":
-                    pass
-                elif lequel == "Pong":
-                    pass
-                else:
-                    pass
+                x0 = self.data[1][lequel]
+                title = f"Disposition des morts dans {lequel}"
+                Legend1 = "Nb de morts"
 
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
@@ -538,7 +531,7 @@ class Stats:
                                     x0[parametters][games] = 0
                         elif parametters == "Score moyen":
                             for games in self.data[0].keys():
-                                x0[parametters][games] = self.data[0][games]["moyenne"][1]
+                                x0[parametters][games] = self.data[0][games]["moyenne"][0]
                 elif lequel != "tous les jeux":
                     x0 = {}
                     for i,players in enumerate(get_game_score_list(lequel)):
@@ -547,12 +540,45 @@ class Stats:
                         except: x0[players[0]+':'+ str(i+1)]["Score moyen"] = 0
                         try: x0[players[0]+':'+ str(i+1)]["Score max"] = players[1]
                         except: x0[players[0]+':'+ str(i+1)]["Score max"] = 0
-
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if lequel != "tous les jeux":
                     pass
                 elif lequel == "tous les jeux":
-                    pass
+                    title = "Différentes stats sur les Scores Max en fonction des Jeux"
+                    Legend1 = " Score total"
+                    label_y = "Joueurs"
+                    x0 = {}
+                    for i,players in enumerate(get_game_score_list(lequel)):
+                        x0[players[0]+':'+ str(i+1)] = {}
+                        try: x0[players[0]+':'+ str(i+1)]["Score moyen de {}".format(self.user)] =
+                        except: x0[players[0]+':'+ str(i+1)]["Score moyen de {}".format(self.user)] = 0
+                        try: x0[players[0]+':'+ str(i+1)]["Score maximum"] =
+                        except: x0[players[0]+':'+ str(i+1)]["Score maximum"] = 0
+                        try: x0[players[0]+':'+ str(i+1)]["Score max de {}".format(self.user)] =
+                        except: x0[players[0]+':'+ str(i+1)]["Score max de {}".format(self.user)] = 0
+                        try: x0[players[0]+':'+ str(i+1)]["Score moyen"] =
+                        except: x0[players[0]+':'+ str(i+1)]["Score moyen"] = 0
+
+                    x0 ={"Score moyen de {}".format(self.user): {},"Score maximum": {},"Score max de {}".format(self.user): {},"Score moyen": {}}
+                    for parametters in x0:
+                        if parametters == "Score moyen de {}".format(self.user):
+                            for games in self.data[0].keys():
+                                try:
+                                    x0[parametters][games] = self.data[0][games]["player_count"][self.user][1]
+                                except:
+                                    x0[parametters][games] = 0
+                        elif parametters == "Score maximum":
+                            for games in self.data[0].keys():
+                                x0[parametters][games] = get_game_score_list(games)[0][1]
+                        elif parametters == "Score max de {}".format(self.user):
+                            for games in self.data[0].keys():
+                                try:
+                                    x0[parametters][games] = get_player_score(self.user)[games]
+                                except:
+                                    x0[parametters][games] = 0
+                        elif parametters == "Score moyen":
+                            for games in self.data[0].keys():
+                                x0[parametters][games] = self.data[0][games]["moyenne"][0]
         elif sur_quoi == "Statistiques sur Application":
             if sur_qui == "Statistiques globales": #si la personne veut un graphique sur les gens
                 if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*

@@ -66,6 +66,7 @@ class Graph_2_exe(App_stat):
         grille = np.zeros((20, 20), dtype = int)
         print(x0)
         for elt in x0:
+            elt = [int(a*20) for a in elt]
             grille[abs(elt[1]-19),abs(elt[0])] += x0[elt]
 
         fig, ax = plt.subplots(figsize=(5, 5))
@@ -85,6 +86,7 @@ class Graph_3_exe(App_stat):
         y =[]
         print(x0)
         for elt in x0:
+            elt = [int(a*20) for a in elt]
             for elt2 in range(x0[elt]):
                 x.append(elt[0])
                 y.append(abs(elt[1]-19))
