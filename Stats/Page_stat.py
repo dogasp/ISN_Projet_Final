@@ -123,7 +123,7 @@ class Graph_4_exe(App_stat):
         super().__init__(master,fig)
 
 class Graph_5_exe(App_stat):
-    def __init__(self, master,user_name,x0,title):
+    def __init__(self, master,user_name,x0,title, label_y):
         #game = x0 un dico
 
         mycolors = ['red', 'blue', 'green', 'orange', 'brown', 'grey', 'pink', 'olive', 'deeppink', 'steelblue', 'firebrick', 'mediumseagreen']
@@ -137,7 +137,12 @@ class Graph_5_exe(App_stat):
             plt.plot(x_att,x_att2, color=mycolors[i], label=score)
             plt.text(len(x_att2)-0.95 ,x_att2[-1], score, fontsize=10, color=mycolors[i])
 
-        plt.ylim(0,10000)
+        if label_y == "score":
+            plt.ylim(0,10000)
+        if label_y == "parties":
+            plt.ylim(0,500)
+        if label_y == "temps":
+            plt.ylim(0,500)
         plt.xlim(-0.1, len(x_att2)-1)
         plt.ylabel('Scores')
         plt.title("Tracé des différents scores", fontsize=22)
