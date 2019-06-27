@@ -538,7 +538,7 @@ class Stats:
                                     x0[parametters][games] = 0
                         elif parametters == "Score moyen":
                             for games in self.data[0].keys():
-                                x0[parametters][games] = self.data[0][games]["moyenne"][0]
+                                x0[parametters][games] = self.data[0][games]["moyenne"][1]
                 elif lequel != "tous les jeux":
                     x0 = {}
                     for i,players in enumerate(get_game_score_list(lequel)):
