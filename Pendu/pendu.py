@@ -233,4 +233,7 @@ def letter_count(word):
 
 def Pendu(user):
     jeux = pendu(user)
-    return (jeux.score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, [])   #renvois du meilleur score
+    if jeux.count!=0:
+        return (jeux.score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, [])   #renvois du meilleur score
+    else:
+      return (0, 0, 0, 0, [])
