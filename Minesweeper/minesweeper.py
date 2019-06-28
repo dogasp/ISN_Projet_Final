@@ -75,6 +75,7 @@ class demineur:
         self.root = Toplevel() #fenetre principale
         self.root.title("Minesweeper")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.geometry("950x450")
         self.root.resizable(False,False)
         self.root.focus_force()
         self.root.withdraw() #on masque la fenetre principale le temps de la sélection de la difficulté
@@ -114,20 +115,21 @@ class demineur:
         if level == 0: #sélection des dimensions et du nombre de mines suivant le niveau sélectionné
             self.dims = (9,9)
             self.mine_Count = 10
+            offset = (150, )
         elif level == 1:
             self.dims = (16,16)
             self.mine_Count = 40
+            offset = 100
         else:
             self.dims = (30, 16)
             self.mine_Count = 99
+            offset = 0
 
         self.first = False
         self.root.deiconify()   # affichage de la fenetre principale
         self.root.focus_force() # on force le focus
-        #on détermine la taille de la fenetre principale suivant le niveau
-        self.root.geometry("%sx%s" % (200 + self.dims[0]*self.border, self.dims[1]*self.border + 50))
 
-        self.Frame_right = Frame(self.root, width = self.dims[0]*self.border , height = self.dims[1]*self.border, bg = 'white')
+        self.Frame_right = Frame(self.root, width = 700 , height = 400, bg = 'pink')
         self.Frame_left = Frame(self.root, width = 200  , height = self.dims[1]*self.border  , bg = 'white')
         self.Frame_top = Frame(self.root, width = 200 + self.dims[0]*self.border , height = 50, bg = 'lightgrey')
 
@@ -136,7 +138,7 @@ class demineur:
 
         self.Frame_top.pack(side = TOP)
         self.Frame_left.pack(side = LEFT)
-        self.Frame_right.pack(side = RIGHT)
+        self.Frame_right.pack(side = LEFT, fill = BOTH)
         self.Frame1.pack(side = TOP)
         self.Frame2.pack(side = BOTTOM)
 
@@ -149,9 +151,9 @@ class demineur:
 
         self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #création de la grille contenant l'état des cellules
 
-        self.canvas = Canvas(self.Frame_right, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "red", highlightthickness=0)
+        self.canvas = Canvas(self.Frame_right, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "white", highlightthickness=0)
         self.canvas.bind("<Button>", self.click)
-        self.canvas.place(x = 0, y = 0)
+        self.canvas.place(x = offset, y = 0)
 
         self.list_images = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #liste contenant les images de la grille
         for i in range(self.dims[0]):

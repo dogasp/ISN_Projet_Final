@@ -13,6 +13,7 @@ from math import pi
 
 class pong:
     def __init__(self, user):
+        self.user = user
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
         self.show_rules.geometry('670x530')
@@ -62,7 +63,6 @@ class pong:
         self.root.resizable(False,False)
         self.root.title('Pong')
         self.root.focus_force()
-        self.user = user
         self.pressing = False
         self.score = 0
         self.launch = -1
