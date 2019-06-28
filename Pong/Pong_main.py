@@ -13,66 +13,45 @@ from math import pi
 
 class pong:
     def __init__(self, user):
-        self.user = user
         self.show_rules = Toplevel()
-        self.pressing = False
-        self.score = 0
-        self.launch = -1
-        self.count = 0
-        self.death_pos = []
-        self.average_score = []
         self.show_rules.title('Règles')
         self.show_rules.geometry('670x530')
         self.show_rules.resizable(False,False)
         self.show_rules.focus_force()
         self.show_rules.protocol("WM_DELETE_WINDOW", self.quit_ranking)
 
-        self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE)
-        self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
-        #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
-        #self.Frame_main1_wind2.create_image(335,265,image =Fond_Frame_main1_wind2)
+        self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'white', relief = GROOVE)
+        self.Frame_main1_wind2.pack(ipadx = 670, ipady = 526)
+        self.Fond_Frame_main1_wind2 = PhotoImage(file = "Pong/res/regles_pong.png")
+        self.Frame_main1_wind2.create_image(335,263,image =self.Fond_Frame_main1_wind2)
         self.Frame_main2_wind2 = Frame(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE)
         self.Frame_main2_wind2.place(x = 60, y = 45)
         self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
         self.Rules.place(x = 200, y =5)
 
-        #détail des rêgles
+        first_label = Label(self.Frame_main2_wind2, text = "Le but du jeu est de renvoyer la \n balle le plus longtemps possible")
+        self.show_rules.after(1000, lambda: first_label.place(x = 20, y = 80))
+        self.image1 = PhotoImage(file = "Flappy_Bird/Ressources/rules1.png")
+        first_image = Label(self.Frame_main2_wind2, image = self.image1)
+        self.show_rules.after(1500, lambda: first_image.place(x = 380, y = 57))
 
-        self.Rules2 = Label(self.Frame_main2_wind2, text = "Le but est que Jerry puisse arriver \n\
-        au fromage sans que Tom l'attrape. \n Pour cela tu pourras utiliser les flèches \n du keyboard afin de déplacer Jerry", font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(500, lambda: self.Rules2.place(x = 40, y = 70))
+        second_label = Label(self.Frame_main2_wind2, text = "Pour ce faire, tu peux utiliser la bar espace\n ou le clic souris\n pour que l'oiseau fasse un bond")
+        self.show_rules.after(2000, lambda: second_label.place(x = 20, y = 190))
 
-        self.CANVAS1 = Canvas(self.Frame_main2_wind2, width = 120, height = 70)
-        self.CANVAS2 = Canvas(self.Frame_main2_wind2, width = 100, height = 70)
-        self.Frame_main2_wind2.after(1000, lambda: self.CANVAS1.place(x = 388, y = 35))
-        self.Frame_main2_wind2.after(1000, lambda: self.CANVAS2.place(x = 400, y = 106))
-        #self.CANVAS1.create_image(60, 35,image = self.Jerry_1)
-        #self.CANVAS2.create_image(50, 35,image = self.keyboard_fantome)
-        self.CANVAS2.create_rectangle(2,2,98,68, outline='black')
+        self.image3 = PhotoImage(file = "Flappy_Bird/Ressources/rules2.png")
+        third_image = Label(self.Frame_main2_wind2, image = self.image3)
+        self.show_rules.after(2500, lambda: third_image.place(x = 380, y = 200))
 
-        #------------------2-----------------------------------------------------------------
-        self.Rules3 = Label(self.Frame_main2_wind2, text = "Mais Attention !! Tom va plus vite que toi car il peut \n\
-        se déplacer en diagonale. Tom se déplace par \n rapport à Jerry et fait tout pour se rapprocher." ,font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(2000, lambda: self.Rules3.place(x = 30, y = 202))
+        third_label = Label(self.Frame_main2_wind2, text = "Mais attention, si tu touche un tuyau ou le sol,\n l'oiseau meurt")
+        self.show_rules.after(3000, lambda: third_label.place(x = 20, y = 290))
 
-        self.CANVAS3 = Canvas(self.Frame_main2_wind2,  width = 100, height = 100)
-        self.Frame_main2_wind2.after(2500, lambda: self.CANVAS3.place(x = 400, y = 183 ))
-        #self.CANVAS3.create_image(50,50, image = self.Jerry_3)
+        self.image4 = PhotoImage(file = "Flappy_Bird/Ressources/rules3.png")
+        fourth_image = Label(self.Frame_main2_wind2, image = self.image4)
+        self.show_rules.after(3500, lambda: fourth_image.place(x = 350, y = 300))
 
-        #------------------3------------------------------------------------------------------
-        self.Rules4 = Label(self.Frame_main2_wind2, text = "L'astuce est alors de bloquer le robot grâce\n\
-        aux bloques disposés sur la carte",font = ("Berlin Sans FB", 12))
-        self.Frame_main2_wind2.after(3500, lambda: self.Rules4.place(x = 40, y = 315))
-
-        self.CANVAS4 = Canvas(self.Frame_main2_wind2, width = 130, height = 95)
-        self.Frame_main2_wind2.after(4000, lambda: self.CANVAS4.place(x = 388, y = 293 ))
-        #self.CANVAS4.create_image(65, 47,image = self.Jerry_2)
-
-        #------------------Skip------------------------------------------------------------------
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
-        self.Button_Skip.place(x = 200, y = 390)
+        self.Button_Skip.place(x = 150, y = 370)
         self.show_rules.mainloop()
-
         """#################----------------- début du jeu ----------------#################### """
         self.root = Toplevel()
         self.root.geometry("902x552")
@@ -80,6 +59,14 @@ class pong:
         self.root.resizable(False,False)
         self.root.title('Pong')
         self.root.focus_force()
+        self.user = user
+        self.pressing = False
+        self.score = 0
+        self.launch = -1
+        self.count = 0
+        self.death_pos = []
+        self.average_score = []
+
 
         ##########-----------Import des photos------------------###############################
         self.raquette_pong = PhotoImage(file = "Pong/res/raquette_pong.png")
@@ -146,8 +133,8 @@ class pong:
         self.root.bind("<space>", self.pause_command)
         self.update()
 
-        self.start_button.configure(state = "normal") 
-        
+        self.start_button.configure(state = "normal")
+
     def resume(self, event):
         if self.paused == True:
             self.paused = False
