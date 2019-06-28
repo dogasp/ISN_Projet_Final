@@ -601,14 +601,14 @@ class Stats:
                     label_y = "temps"
                     title = "Différentes stats sur les Scores Moyens en fonction des Jeux"
                     Legend1 = " Score total"
-                    x0 ={"Temps moyen passé par {}".format(self.user): {},"Temps passé par {} (Meilleur partie)".format(self.user): {},"Temps passé en moyenne": {},"Temps passé par le meilleur du jeu": {}}
+                    x0 ={"Temps moyen passé par {}".format(self.user): {},"Temps passé en moyenne": {}}
                     for parametters in x0:
                         for games in self.data[2].keys():
                             if parametters == "Temps moyen passé par {}".format(self.user):
-                                try: x0[parametters][games] = self.data[0][games]["player_count"][self.user]
+                                try: x0[parametters][games] = self.data[0][games]["player_count"][self.user][1]
                                 except: x0[parametters][games] = 0
                             elif parametters == "Temps passé en moyenne":
-                                try: x0[parametters][games] = self.data[0][games]["moyenne"]
+                                try: x0[parametters][games] = self.data[0][games]["moyenne"][0]
                                 except: x0[parametters][games] = 0
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
