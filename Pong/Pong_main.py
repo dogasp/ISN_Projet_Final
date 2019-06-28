@@ -74,16 +74,16 @@ class pong:
         ##########-----------Import des photos------------------###############################
         self.raquette_pong = PhotoImage(file = "Pong/res/raquette_pong.png")
         self.button_start_image = PhotoImage(file = "Pong/res/button_start.png")
-
+        self.title_pong = PhotoImage(file = "Pong/res/title_pong.png")
 
         ########-----------Frames Principaux------------#######################################
         self.Frame_left = Frame(self.root, width = 200, height = 500, bg = 'white')
-        self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'lightgrey')
+        self.Frame_top = Frame(self.root, width = 900, height = 50, highlightthickness=0, bg = 'black')
 
         ########-----------Frames Secondaires------------#######################################
         self.Frame1 = Canvas(self.Frame_left, width = 200, height = 200, bg = 'black')
         self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'black')
-        self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'white')
+        self.Frame_right = Frame(self.root, width = 700, height = 500,  highlightthickness=0,bg = 'black')
         #######-----------Package des Frames-------------####################################
         self.Frame_top.pack(side = TOP)
         self.Frame_left.pack(side = LEFT)
@@ -100,6 +100,8 @@ class pong:
 
         #######----------Dessins-----------####################
         self.Frame_main_game.create_image(100,150, image = self.raquette_pong)
+        self.Image_title = Label(self.Frame_top, image = self.title_pong, borderwidth = 0)
+        self.Image_title.place(x = 456,y = 0)
 
         self.rayon = 75
         self.width = 700
@@ -117,11 +119,16 @@ class pong:
         self.root.bind("<KeyRelease>", self.stop_move)
         self.Canvas_dessine.delete("all")
 
-        self.Pause_Button = Button(self.Frame_top, text = "PAUSE", font = ("Helvetica", 15),borderwidth = 0, relief = FLAT, cursor ='hand2', command = self.pause_command)
-        self.Pause_Button.place(x = 510, y = 19)
-
         self.start_button = Button(self.Frame1, image = self.button_start_image, borderwidth = 0, relief = FLAT, bg = 'black', cursor ='hand2',activebackground = 'black', highlightthickness = 0,  command = self.update)
         self.start_button.place(x = 39, y = 40)
+
+        self.Pause_Button = Button(self.Frame_top, text = "PAUSE", font = ("Helvetica", 15),fg = 'white', bg = 'black', borderwidth = 0, relief = FLAT, cursor ='hand2', command = self.pause_command)
+        self.Pause_Button.place(x = 720, y = 8)
+
+        self.Quit_button = Button(self.Frame_top, text = 'QUIT',font = ("Helvetica", 15),fg = 'white', bg = 'black', borderwidth = 0, relief = FLAT, cursor ='hand2', command = self.exit)
+        self.Quit_button.place(x = 820, y = 8)
+
+
 
         self.run = True
         self.touch = 0
