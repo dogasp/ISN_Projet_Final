@@ -13,14 +13,22 @@ class Stats:
         self.titre = Label(self.root, text = "Page de sélection des graphs à afficher")
         self.titre.place(x = 200, y = 20)
 
-        self.Radio_1_Var = StringVar()
+        """self.listbox_1 = Listbox(self.root)
+        self.listbox_1.place(x = 50, y = 60)
+        self.listbox_1.insert(END, "Statistiques sur toi")
+        self.listbox_1.insert(END, "Statistiques globales")
+        self.listbox_1.bind("<ButtonRelease-1>", self.get_variable_1)
+        self.selected_mode = 0"""
+
+        self.Radio_1_Var = IntVar()
         self.Radio_1 = []
 
         self.words1 = ["Statistiques sur toi", "Statistiques globales"]
+        self.Radio_1_Var.set(0)
         for i in range(len(self.words1)):
-            self.Radio_1.append(Radiobutton(self.root, variable = self.Radio_1_Var, text= self.words1[i], value = self.words1[i]))
-            self.Radio_1[-1].place(x = 50, y = 60 + i*20)
-            self.Radio_1[-1].bind("<ButtonRelease-1>", self.get_variable_1)
+            g = Radiobutton(self.root, text= self.words1[i], variable = self.Radio_1_Var,  value = i, command = self.get_variable_1)
+            g.place(x = 50, y = 60 + i*20)
+            self.Radio_1.append(g)
         self.selected_mode = 0
 
         self.games = []
@@ -56,9 +64,10 @@ class Stats:
         self.root.destroy()
 
     def get_variable_1(self, event = None):
-        self.selected_mode = self.Radio_1_Var.get()
+        self.variable = self.Radio_1_Var.get()
+        self.selected_mode = self.words1[self.variable]
         print(self.selected_mode)
-        self.variable = self.words1.index(self.selected_mode)
+
         try:
             self.listbox_2.destroy()
             self.listbox_3.destroy()
