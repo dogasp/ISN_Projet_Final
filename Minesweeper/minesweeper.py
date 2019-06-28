@@ -129,7 +129,7 @@ class demineur:
         self.root.deiconify()   # affichage de la fenetre principale
         self.root.focus_force() # on force le focus
 
-        self.Frame_right = Frame(self.root, width = 700 , height = 400, bg = 'pink')
+        self.Frame_right = Frame(self.root, width = 700 , height = 400, bg = 'white')
         self.Frame_left = Frame(self.root, width = 200  , height = 800  , bg = 'white')
         self.Frame_top = Frame(self.root, width = 600 , height = 50, bg = 'lightgrey')
 
