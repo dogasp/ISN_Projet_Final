@@ -145,10 +145,10 @@ class tetris:
 
         
         fourth_label = Label(self.Frame_main2_wind2, text = "Mais attention, si le tas atteint le heut,\n tu as perdus")
-        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 350, y = 300))
+        self.Frame_main2_wind2.after(3500, lambda: fourth_label.place(x = 350, y = 300))
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
-        self.Button_Skip.place(x = 150, y = 370)
+        self.Button_Skip.place(x = 30, y = 370)
 
 
         self.show_rules.mainloop()
@@ -157,6 +157,7 @@ class tetris:
         self.root.geometry("420x420")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.title('Tetris')
+        self.root.configure(background = "#31363b")
         self.root.resizable(False,False)
         self.root.focus_force()
         self.image_tiles = {"I": PhotoImage(file = "Tetris/Images/I.png"), "L": PhotoImage(file = "Tetris/Images/L.png"), "O": PhotoImage(file = "Tetris/Images/O.png"),\
@@ -195,7 +196,7 @@ class tetris:
         self.count += 1
         self.root.bind("<Key>", self.KeyPressed)
         self.canvas = Canvas(self.root, width = self.width, height = self.height, bg = "grey", highlightthickness=0)
-        self.next_Canvas = Canvas(self.root, width = 4*self.width/10, height = 4*self.height/22, bg = "lightgrey")
+        self.next_Canvas = Canvas(self.root, width = 4*self.width/10, height = 4*self.height/22, bg = "#31363b")
         self.next_Canvas.place(x = 270, y = 230)
         self.canvas.place(x=0, y=0)
         self.grid = [["" for i in range(22)] for j in range(10)]
