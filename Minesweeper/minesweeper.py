@@ -283,4 +283,7 @@ class demineur:
 
 def Minesweeper(user):    # fonction appelée pour lancer le jeu
     jeux = demineur(user) # création de la classe
-    return (jeux.score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois les données
+    if jeux.count != 0:
+        return (jeux.score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois les données
+    else:
+      return (0, 0, 0, 0, [])

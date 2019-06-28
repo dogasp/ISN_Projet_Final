@@ -390,4 +390,7 @@ class application:
 
 def Tete(user): #fonction principale
     jeux = application(user)
-    return (sum(jeux.score), sum(jeux.score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, []) #retour du score total du joueur sur tout les niveaux joués
+    if jeux.count !=0:
+        return (sum(jeux.score), sum(jeux.score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, []) #retour du score total du joueur sur tout les niveaux joués
+    else:
+      return (0, 0, 0, 0, [])

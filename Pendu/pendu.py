@@ -61,21 +61,21 @@ class pendu:
         self.Frame_main2_wind2.after(1000, lambda: first_label.place(x = 20, y = 80))
         self.image1 = PhotoImage(file = "Pendu/ressources/rules1.png")
         first_image = Label(self.Frame_main2_wind2, image = self.image1)
-        self.Frame_main2_wind2.after(1500, lambda: first_image.place(x = 380, y = 57))
+        self.Frame_main2_wind2.after(1500, lambda: first_image.place(x = 370, y = 57))
 
         second_label = Label(self.Frame_main2_wind2, text = "Pour ce faire, tu peux proposer des lettres \n en espérant qu'elle appartient au mot")
         self.Frame_main2_wind2.after(2000, lambda: second_label.place(x = 20, y = 190))
 
         self.image3 = PhotoImage(file = "Pendu/ressources/rules2.png")
         third_image = Label(self.Frame_main2_wind2, image = self.image3)
-        self.Frame_main2_wind2.after(2500, lambda: third_image.place(x = 380, y = 200))
+        self.Frame_main2_wind2.after(2500, lambda: third_image.place(x = 370, y = 200))
 
         third_label = Label(self.Frame_main2_wind2, text = "Mais attention, tu rentre une mauvaise lettre,\n le pendu apparait\n et tu perds au bout de 11 fautes")
         self.Frame_main2_wind2.after(3000, lambda: third_label.place(x = 20, y = 290))
 
         self.image4 = PhotoImage(file = "Pendu/ressources/rules3.png")
         fourth_image = Label(self.Frame_main2_wind2, image = self.image4)
-        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 350, y = 300))
+        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 340, y = 300))
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 50, y = 350)
@@ -233,4 +233,7 @@ def letter_count(word):
 
 def Pendu(user):
     jeux = pendu(user)
-    return (jeux.score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, [])   #renvois du meilleur score
+    if jeux.count!=0:
+        return (jeux.score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, [])   #renvois du meilleur score
+    else:
+      return (0, 0, 0, 0, [])

@@ -454,4 +454,7 @@ class Pipe:                     #Creéation de la classe Pipe
 
 def Flappy_Bird(User):    # fonction pour commencer le jeu
   jeux = bird(User)       # création de l'instance
-  return (jeux.Best_Score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois des données
+  if jeux.count != 0:
+    return (jeux.Best_Score, sum(jeux.average_score)/jeux.count, (time()-jeux.time_start)/jeux.count, jeux.count, jeux.death_pos)   #renvois des données
+  else:
+      return (0, 0, 0, 0, [])
