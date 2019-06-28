@@ -32,24 +32,24 @@ class bird:
         self.Rules.place(x = 200, y =5)
 
         first_label = Label(self.Frame_main2_wind2, text = "Le but du jeu est de faire avancer l'oiseau\n entre des tuyaux")
-        self.show_rules.after(1000, lambda: first_label.place(x = 20, y = 80))
+        self.Frame_main2_wind2.after(1000, lambda: first_label.place(x = 20, y = 80))
         self.image1 = PhotoImage(file = "Flappy_Bird/Ressources/rules1.png")
         first_image = Label(self.Frame_main2_wind2, image = self.image1)
-        self.show_rules.after(1500, lambda: first_image.place(x = 380, y = 57))
+        self.Frame_main2_wind2.after(1500, lambda: first_image.place(x = 380, y = 57))
 
         second_label = Label(self.Frame_main2_wind2, text = "Pour ce faire, tu peux utiliser la bar espace\n ou le clic souris\n pour que l'oiseau fasse un bond")
-        self.show_rules.after(2000, lambda: second_label.place(x = 20, y = 190))
+        self.Frame_main2_wind2.after(2000, lambda: second_label.place(x = 20, y = 190))
 
         self.image3 = PhotoImage(file = "Flappy_Bird/Ressources/rules2.png")
         third_image = Label(self.Frame_main2_wind2, image = self.image3)
-        self.show_rules.after(2500, lambda: third_image.place(x = 380, y = 200))
+        self.Frame_main2_wind2.after(2500, lambda: third_image.place(x = 380, y = 200))
 
         third_label = Label(self.Frame_main2_wind2, text = "Mais attention, si tu touche un tuyau ou le sol,\n l'oiseau meurt")
-        self.show_rules.after(3000, lambda: third_label.place(x = 20, y = 290))
+        self.Frame_main2_wind2.after(3000, lambda: third_label.place(x = 20, y = 290))
 
         self.image4 = PhotoImage(file = "Flappy_Bird/Ressources/rules3.png")
         fourth_image = Label(self.Frame_main2_wind2, image = self.image4)
-        self.show_rules.after(3500, lambda: fourth_image.place(x = 350, y = 300))
+        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 350, y = 300))
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 150, y = 370)
