@@ -70,7 +70,6 @@ def valider(event = None):
     root_user.quit()
 
 def para():
-
     playground = Canvas(root_main, highlightthickness = 0,width = 800, height = 500, bg = "#111111")
     playground.place(x = 200, y = 100)
     Button_para.config( image = door, command = lambda: leave_para(playground))

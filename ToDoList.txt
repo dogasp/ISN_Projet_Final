@@ -64,6 +64,6 @@ for players in get_game_score_list('Flappy'):
 
 {'Temps moyen pass� par dodo': {'Minesweeper': [14, 182.0], 'Snake': [3, 266.6666666666667], 'Tete': 0, 'Tetris': [2, 428.0], 'Flappy': 0, 'Ghost': 0, 'Pendu': 0, 'Pong': [1, 0]}, 'Temps pass� par dodo (Meilleur partie)': {}, 'Temps pass� en moyenne': {'Minesweeper': [169.86666666666667, 15], 'Snake': [200.0, 5], 'Tete': [0.0, 1], 'Tetris': [171.2, 5], 'Flappy': [300.0, 1], 'Ghost': [0, 0], 'Pendu': [0, 0], 'Pong': [86.0, 25]}, 'Temps pass� par le meilleur du jeu': {}}
 
-
+{'Nb parties moyenne': {'Minesweeper': 8.0, 'Snake': 2.5, 'Tete': 1.0, 'Tetris': 1.6666666666666667, 'Flappy': 1.0, 'Ghost': 0, 'Pendu': 0, 'Pong': 2.0833333333333335}, 'Nb parties dodo': {'Minesweeper': [15, 183.2], 'Snake': [3, 266.6666666666667], 'Tete': 0, 'Tetris': [2, 428.0], 'Flappy': 0, 'Ghost': 0, 'Pendu': 0, 'Pong': [1, 0]}, 'Nb parties du meilleur joueur du jeu': {'Minesweeper': 0, 'Snake': [3, 266.6666666666667], 'Tete': 0, 'Tetris': [2, 428.0], 'Flappy': [1, 300], 'Ghost': 0, 'Pendu': 0, 'Pong': [1, 0]}}
 
 Refaire regles flappy

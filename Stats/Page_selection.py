@@ -562,10 +562,10 @@ class Stats:
                                     x0[parametters][games] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
                                 else: x0[parametters][games] = 0
                             elif parametters == "Nb parties {}".format(self.user):
-                                try:x0[parametters][games] = self.data[0][games]["player_count"][self.user]
+                                try:x0[parametters][games] = self.data[0][games]["player_count"][self.user][0]
                                 except: x0[parametters][games] = 0
                             elif parametters == "Nb parties du meilleur joueur du jeu":
-                                try: x0[parametters][games] = self.data[0][games]["player_count"][get_game_score_list(games)[0][0]]
+                                try: x0[parametters][games] = self.data[0][games]["player_count"][get_game_score_list(games)[0][0]][0]
                                 except: x0[parametters][games] = 0
                 elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
                     title = "Différentes stats sur les Scores Max en fonction des Jeux"
