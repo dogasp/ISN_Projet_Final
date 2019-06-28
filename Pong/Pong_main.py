@@ -138,7 +138,7 @@ class pong:
 
         self.start_button.configure(state = "normal")
 
-    def resume(self, event):
+    def resume(self, event = None):
         if self.paused == True:
             self.paused = False
             self.update()
