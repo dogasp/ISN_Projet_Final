@@ -134,7 +134,7 @@ class pendu:
                 start += "_ "
             else:
                 start += "  "
-        self.result = Label(self.root, text = "{}".format(start), font = Font(size = 30))
+        self.result = Label(self.root, text = "{}".format(start), font = Font(family='Helvetica', size = 32, weight = "bold"))
         self.result.place(x = 30, y = 20)
 
         self.entry = Entry(self.root)
