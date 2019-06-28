@@ -115,26 +115,26 @@ class demineur:
         if level == 0: #sélection des dimensions et du nombre de mines suivant le niveau sélectionné
             self.dims = (9,9)
             self.mine_Count = 10
-            offset = (150, )
+            offset = (150, 50)
         elif level == 1:
             self.dims = (16,16)
             self.mine_Count = 40
-            offset = 100
+            offset = (100, 0)
         else:
             self.dims = (30, 16)
             self.mine_Count = 99
-            offset = 0
+            offset = (0, 0)
 
         self.first = False
         self.root.deiconify()   # affichage de la fenetre principale
         self.root.focus_force() # on force le focus
 
         self.Frame_right = Frame(self.root, width = 700 , height = 400, bg = 'pink')
-        self.Frame_left = Frame(self.root, width = 200  , height = self.dims[1]*self.border  , bg = 'white')
-        self.Frame_top = Frame(self.root, width = 200 + self.dims[0]*self.border , height = 50, bg = 'lightgrey')
+        self.Frame_left = Frame(self.root, width = 200  , height = 800  , bg = 'white')
+        self.Frame_top = Frame(self.root, width = 600 , height = 50, bg = 'lightgrey')
 
-        self.Frame1 = Frame(self.Frame_left, width = 200, height = 2*self.dims[1]*self.border/5)
-        self.Frame2 = Frame(self.Frame_left, width = 200, height = 3*self.dims[1]*self.border/5, bg = 'black')
+        self.Frame1 = Frame(self.Frame_left, width = 200, height = 320)
+        self.Frame2 = Frame(self.Frame_left, width = 200, height = 480, bg = 'black')
 
         self.Frame_top.pack(side = TOP)
         self.Frame_left.pack(side = LEFT)
@@ -151,9 +151,9 @@ class demineur:
 
         self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #création de la grille contenant l'état des cellules
 
-        self.canvas = Canvas(self.Frame_right, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "white", highlightthickness=0)
+        self.canvas = Canvas(self.Frame_right, width = 800, height = 400, bg = "white", highlightthickness=0)
         self.canvas.bind("<Button>", self.click)
-        self.canvas.place(x = offset, y = 0)
+        self.canvas.place(x = offset[0], y = offset[1])
 
         self.list_images = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #liste contenant les images de la grille
         for i in range(self.dims[0]):

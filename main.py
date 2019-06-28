@@ -77,7 +77,7 @@ def para():
     text = "Le but de cette application est de s'ammuser en jouant a des jeux.\nTu peux défier tes amis en comparant leur score au tien\nsur différents jeux et essayer de faire le meilleur score possible."
     Label(playground, text = "Aide", font = ("Helvetica", 25), bg = "#111111", fg = "#888888").place(x = 300, y = 20)
     Label(playground, text = text, font = ("Helvetica", 10), bg = "#111111", fg = "#888888").place(x = 100, y = 60)
-    bouton_stat = playground.create_text(40,250, text = 'Stat', font = ("Helvetica", 25))
+    bouton_stat = playground.create_text(40,250, text = 'Stat', font = ("Helvetica", 25), fill = "grey")
 
     playground.tag_bind(bouton_stat, "<Button-1>", execute)
 
