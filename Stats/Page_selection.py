@@ -622,7 +622,7 @@ class Stats:
                         else:
                             x0[games]["Moyenne de parties"] = 0
                         x0[games]["Nb de parties du meilleur"] = self.data[0][games]["player_count"][get_game_score_list(games)[0][1]]
-                        x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user]
+                        x0[games]["Nb parties {}".format(self.user)] = self.data[0][games]["player_count"][self.user][0]
                 elif lequel == "stat2": #Meilleur score du joueur en fonction du jeu
                     Legend1 = "score"
                     label_y = "score"
