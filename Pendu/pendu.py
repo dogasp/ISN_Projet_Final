@@ -130,6 +130,7 @@ class pendu:
     def start(self, level): #fontion appelée après la sélection de la difficulté avec level en paramètre
         self.entred = []
         self.root_difficulty.destroy() #destruction de la fenetre de la difficulté
+        self.root_difficulty.quit()
         self.level = level
         if level == 0:
             self.selection = [list[0] for list in self.data if 4 > list[1] and len(list[0]) > 3]
