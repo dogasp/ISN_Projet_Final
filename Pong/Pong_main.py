@@ -81,27 +81,37 @@ class pong:
         self.root.title('Pong')
         self.root.focus_force()
 
+        ##########-----------Import des photos------------------###############################
+        self.raquette_pong = PhotoImage(file = "Pong/res/raquette_pong.png")
+        self.button_start_image = PhotoImage(file = "Pong/res/button_start.png")
+
+
         ########-----------Frames Principaux------------#######################################
         self.Frame_left = Frame(self.root, width = 200, height = 500, bg = 'white')
         self.Frame_top = Frame(self.root, width = 700, height = 50, bg = 'lightgrey')
 
         ########-----------Frames Secondaires------------#######################################
-        self.Frame1 = Frame(self.Frame_left, width = 200, height = 200)
+        self.Frame1 = Canvas(self.Frame_left, width = 200, height = 200, bg = 'black')
         self.Frame2 = Frame(self.Frame_left, width = 200, height = 300, bg = 'black')
-
+        self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'white')
         #######-----------Package des Frames-------------####################################
         self.Frame_top.pack(side = TOP)
         self.Frame_left.pack(side = LEFT)
         self.Frame1.pack(side = TOP)
         self.Frame2.pack(side = BOTTOM)
-
-        self.rayon = 75
-
-        self.Frame_right = Frame(self.root, width = 700, height = 500, bg = 'white')
         self.Frame_right.pack(side = RIGHT)
 
+        ########-------------Différents Canvas--------------------#############################
+        self.Frame_main_game = Canvas(self.Frame2, width = 200, height = 300, bg = 'black', highlightthickness=0)
         self.Canvas_dessine = Canvas(self.Frame_right, width = 700, height = 500, bg = "black", highlightthickness=0)
+
+        self.Frame_main_game.place(x = 0, y = 0)
         self.Canvas_dessine.place(x = 0, y = 0)
+
+        #######----------Dessins-----------####################
+        self.Frame_main_game.create_image(100,150, image = self.raquette_pong)
+
+        self.rayon = 75
         self.width = 700
         self.height = 500
         self.Best_Player = get_game_score_list("Pong")[0]
@@ -116,14 +126,32 @@ class pong:
         self.root.bind("<KeyPress>", self.start_move)
         self.root.bind("<KeyRelease>", self.stop_move)
         self.Canvas_dessine.delete("all")
+
+        self.Pause_Button = Button(self.Frame_top, text = "PAUSE", font = ("Helvetica", 15),borderwidth = 0, relief = FLAT, cursor ='hand2', command = self.pause_command)
+        self.Pause_Button.place(x = 510, y = 19)
+
+        self.start_button = Button(self.Frame1, image = self.button_start_image, borderwidth = 0, relief = FLAT, bg = 'black', cursor ='hand2',activebackground = 'black', highlightthickness = 0,  command = self.update)
+        self.start_button.place(x = 50, y = 15)
+
         self.run = True
         self.touch = 0
         self.speed = 0
+        self.paused = True
 
         self.player = Board(10, self)
         self.bot = Board(self.width-10, self)
         self.ball = Ball(self)
+
+        self.root.bind("<Return>", self.resume)
+        self.root.bind("<space>", self.pause_command)
         self.update()
+
+        self.start_button.configure(state = "normal") 
+        
+    def resume(self, event):
+        if self.paused == True:
+            self.paused = False
+            self.update()
 
     def start_move(self, event):
         if not(self.pressing):
@@ -156,6 +184,7 @@ class pong:
         Scoreboard(self.Frame_main1_wind2, self.show_rules, "Pong", self.user)
 
     def update(self):
+        self.start_button.configure(state = "disabled")
         self.Canvas_dessine.delete("all")
         self.Canvas_dessine.create_text(290, 35, text = "Score actuel:", fill = "white", font = ("Helvetica", 10))
         self.Canvas_dessine.create_text(430, 35, text = "Meilleur score par {}:".format(self.Best_Player[0]), fill = "white", font = ("Helvetica", 10))
@@ -189,9 +218,20 @@ class pong:
         self.player.show()
         self.bot.show()
         self.ball.update()
-        self.root.after(25, self.update)
+        if self.paused == False:
+            self.root.after(25, self.update)
+
+    def pause_command(self, event = None):
+        if self.paused == False:
+            self.start_button.configure(state = "normal")
+            self.paused = True
+        else:
+            self.paused = False
+            self.update()
 
     def dead(self, looser):
+        self.start_button.configure(state = "normal")
+        self.paused = True
         self.average_score.append(self.touch * 50)
         self.death_pos.append((0, self.player.pos.y/self.height))
         self.launch = looser
