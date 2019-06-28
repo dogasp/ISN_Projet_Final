@@ -48,6 +48,7 @@ class Stats:
         Reset_button.place(x = 700, y = 300)
         self.root.mainloop()
 
+
     def exit(self):
         self.root.quit()
         self.root.destroy()
