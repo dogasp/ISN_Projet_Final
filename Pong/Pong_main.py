@@ -121,7 +121,7 @@ class pong:
         self.Pause_Button.place(x = 510, y = 19)
 
         self.start_button = Button(self.Frame1, image = self.button_start_image, borderwidth = 0, relief = FLAT, bg = 'black', cursor ='hand2',activebackground = 'black', highlightthickness = 0,  command = self.update)
-        self.start_button.place(x = 50, y = 15)
+        self.start_button.place(x = 39, y = 40)
 
         self.run = True
         self.touch = 0
