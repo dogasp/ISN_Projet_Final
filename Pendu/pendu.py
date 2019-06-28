@@ -47,38 +47,41 @@ class pendu:
         self.level_medium = PhotoImage(file = "Minesweeper/Images/level_medium.png")
         self.level_hard = PhotoImage(file = "Minesweeper/Images/level_hard.png")
 
+        self.image1 = PhotoImage(file = "Pendu/ressources/rules1.png")
+        self.image3 = PhotoImage(file = "Pendu/ressources/rules2.png")
+        self.image4 = PhotoImage(file = "Pendu/ressources/rules3.png")
+
         self.Frame_main1_wind2 = Canvas(self.show_rules, bg = 'red', relief = GROOVE) #premier frame, celui en dessous
         self.Frame_main1_wind2.pack(ipadx = 670, ipady = 530)
-        #self.Fond_Frame_main1_wind2 = PhotoImage(file = "thumbnail/Tete2.png")
-        #self.Frame_main1_wind2.create_image(335,265,image =Fond_Frame_main1_wind2)
-        self.Frame_main2_wind2 = Frame(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE) #second frame, au dessus
+        self.Frame_main2_wind2 = Canvas(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE) #second frame, au dessus
         self.Frame_main2_wind2.place(x = 60, y = 45)
+
+        self.Fond_Frame_main1_wind2 = PhotoImage(file = "Pendu/ressources/image_fond.png")
+        self.Frame_main1_wind2.create_image(335,265,image = self.Fond_Frame_main1_wind2)
+
         self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
         self.Rules.place(x = 200, y =5)
 
-
         first_label = Label(self.Frame_main2_wind2, text = "Le but du jeu est de trouver le mot mystère")
         self.Frame_main2_wind2.after(1000, lambda: first_label.place(x = 20, y = 80))
-        self.image1 = PhotoImage(file = "Pendu/ressources/rules1.png")
+
         first_image = Label(self.Frame_main2_wind2, image = self.image1)
-        self.Frame_main2_wind2.after(1500, lambda: first_image.place(x = 370, y = 57))
+        self.Frame_main2_wind2.after(1500, lambda: first_image.place(x = 350, y = 75))
 
         second_label = Label(self.Frame_main2_wind2, text = "Pour ce faire, tu peux proposer des lettres \n en espérant qu'elle appartient au mot")
-        self.Frame_main2_wind2.after(2000, lambda: second_label.place(x = 20, y = 190))
+        self.Frame_main2_wind2.after(2000, lambda: second_label.place(x = 20, y = 170))
 
-        self.image3 = PhotoImage(file = "Pendu/ressources/rules2.png")
         third_image = Label(self.Frame_main2_wind2, image = self.image3)
-        self.Frame_main2_wind2.after(2500, lambda: third_image.place(x = 370, y = 200))
+        self.Frame_main2_wind2.after(2500, lambda: third_image.place(x = 365, y = 150))
 
         third_label = Label(self.Frame_main2_wind2, text = "Mais attention, tu rentre une mauvaise lettre,\n le pendu apparait\n et tu perds au bout de 11 fautes")
         self.Frame_main2_wind2.after(3000, lambda: third_label.place(x = 20, y = 290))
 
-        self.image4 = PhotoImage(file = "Pendu/ressources/rules3.png")
         fourth_image = Label(self.Frame_main2_wind2, image = self.image4)
-        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 340, y = 300))
+        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 345, y = 253))
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
-        self.Button_Skip.place(x = 50, y = 350)
+        self.Button_Skip.place(x = 100, y = 380)
         self.show_rules.mainloop()
 
         self.root = Toplevel() #fenetre principale
@@ -88,7 +91,6 @@ class pendu:
         self.root.title("Pendu")
         self.root.focus_force()
         self.root.withdraw() #on masque la fenetre principale le temps de la sélection de la difficulté
-
         self.time_start = time()
 
         self.difficulty() #on charge la difficulté
