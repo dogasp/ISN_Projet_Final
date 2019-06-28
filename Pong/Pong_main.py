@@ -119,7 +119,14 @@ class pong:
         self.root.bind("<KeyRelease>", self.stop_move)
         self.Canvas_dessine.delete("all")
 
+<<<<<<< HEAD
         self.start_button = Button(self.Frame1, image = self.button_start_image, borderwidth = 0, relief = FLAT, bg = 'black', cursor ='hand2',activebackground = 'black', highlightthickness = 0,  command = self.update)
+=======
+        self.Pause_Button = Button(self.Frame_top, text = "PAUSE", font = ("Helvetica", 15),borderwidth = 0, relief = FLAT, cursor ='hand2', command = self.pause_command)
+        self.Pause_Button.place(x = 510, y = 19)
+
+        self.start_button = Button(self.Frame1, image = self.button_start_image, borderwidth = 0, relief = FLAT, bg = 'black', cursor ='hand2',activebackground = 'black', highlightthickness = 0,  command = self.resume)
+>>>>>>> 80361435148f8b64c7995befee146e7a59a70b2c
         self.start_button.place(x = 39, y = 40)
 
         self.Pause_Button = Button(self.Frame_top, text = "PAUSE", font = ("Helvetica", 15),fg = 'white', bg = 'black', borderwidth = 0, relief = FLAT, cursor ='hand2', command = self.pause_command)
@@ -145,7 +152,7 @@ class pong:
 
         self.start_button.configure(state = "normal")
 
-    def resume(self, event):
+    def resume(self, event = None):
         if self.paused == True:
             self.paused = False
             self.update()
