@@ -19,8 +19,7 @@ class pendu:
         self.score = 0
         self.count = 0
         self.average_score = []
-        with open("Pendu/ressources/liste_francais.txt") as f:
-            self.data = f.read().lower().split("\n")
+        self.data = ["chat", "nasa", "abasourdissement", "debut"]
         #elements du pendu
         self.elements = [lambda: self.canvas.create_rectangle(50,350,150,370, fill = "sienna4"),\
                         lambda: self.canvas.create_rectangle(90, 350, 110, 50, fill = "sienna4"),\
@@ -58,9 +57,26 @@ class pendu:
         self.Rules.place(x = 200, y =5)
 
 
-        self.explanation = Label(self.Frame_main2_wind2, text = "Le but du jeu est de découvrir quel est  le mot mystère\n\
-        fleime d'écrire la suite")
-        self.explanation.place(x = 20, y = 100)
+        first_label = Label(self.Frame_main2_wind2, text = "Le but du jeu est de trouver le mot mystère")
+        self.Frame_main2_wind2.after(1000, lambda: first_label.place(x = 20, y = 80))
+        self.image1 = PhotoImage(file = "Pendu/ressources/rules1.png")
+        first_image = Label(self.Frame_main2_wind2, image = self.image1)
+        self.Frame_main2_wind2.after(1500, lambda: first_image.place(x = 380, y = 57))
+
+        second_label = Label(self.Frame_main2_wind2, text = "Pour ce faire, tu peux proposer des lettres \n en espérant qu'elle appartient au mot")
+        self.Frame_main2_wind2.after(2000, lambda: second_label.place(x = 20, y = 190))
+
+        self.image3 = PhotoImage(file = "Pendu/ressources/rules2.png")
+        third_image = Label(self.Frame_main2_wind2, image = self.image3)
+        self.Frame_main2_wind2.after(2500, lambda: third_image.place(x = 380, y = 200))
+
+        third_label = Label(self.Frame_main2_wind2, text = "Mais attention, tu rentre une mauvaise lettre,\n le pendu apparait\n et tu perds au bout de 11 fautes")
+        self.Frame_main2_wind2.after(3000, lambda: third_label.place(x = 20, y = 290))
+
+        self.image4 = PhotoImage(file = "Pendu/ressources/rules3.png")
+        fourth_image = Label(self.Frame_main2_wind2, image = self.image4)
+        self.Frame_main2_wind2.after(3500, lambda: fourth_image.place(x = 350, y = 300))
+
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 50, y = 350)
         self.show_rules.mainloop()
@@ -118,9 +134,8 @@ class pendu:
             self.selection = [list[0] for list in self.data if 5 >= list[1] >= 4 and len(list[0]) > 3]
         elif level == 2:
             self.selection = [list[0] for list in self.data if list[1] > 5 and len(list[0]) > 3]
-        self.word = choice(self.selection)
-        self.word_accentless = remove_accent(self.word)
-        print(self.word)
+        self.word = choice(self.selection)                  #mot a trouver
+        self.word_accentless = remove_accent(self.word)     #mot a trouver sans les accents
 
         self.root.deiconify()
         self.root.focus_force()
