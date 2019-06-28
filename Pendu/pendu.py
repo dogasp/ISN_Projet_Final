@@ -19,7 +19,8 @@ class pendu:
         self.score = 0
         self.count = 0
         self.average_score = []
-        self.data = ["chat", "nasa", "abasourdissement", "debut"]
+        with open("Pendu/ressources/liste_francais.txt") as f:
+            self.data = f.read().lower().split("\n")
         #elements du pendu
         self.elements = [lambda: self.canvas.create_rectangle(50,350,150,370, fill = "sienna4"),\
                         lambda: self.canvas.create_rectangle(90, 350, 110, 50, fill = "sienna4"),\

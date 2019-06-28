@@ -146,6 +146,7 @@ class Graph_5_exe(App_stat):
         print(x_att2)
         plt.xlim(-0.1, len(x_att2)-1)
         plt.ylabel('Scores')
+        plt.yscale('symlog')
         plt.title("Tracé des différents scores", fontsize=22)
 
         plt.gca().spines["top"].set_alpha(0.0)

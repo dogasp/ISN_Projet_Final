@@ -41,13 +41,12 @@ class Stats:
         1, 0, 0, 4, 5, 1, 0, 0, 4, 5,  #stat1
         1, 0, 0, 4, 5, 1, 0, 0, 4, 5,  #stat2
         1, 0, 0, 4, 5, 1, 0, 0, 4, 5,  #stat3
-        1, 0, 0, 0, 5, 1, 0, 0, 0, 5])#stat4
+        1, 0, 0, 4, 5, 1, 0, 0, 4, 5])#stat4
         self.select_graph_liste_stat.resize((4,2,5))
 
         Reset_button = Button(self.root, text = "Reset", command = self.Reset)
         Reset_button.place(x = 700, y = 300)
         self.root.mainloop()
-
 
     def exit(self):
         self.root.quit()
@@ -79,7 +78,6 @@ class Stats:
             self.listbox_3.destroy()
             self.listbox_4.destroy()
         except: pass
-
         if self.selected_mode2 == "Statistiques sur Application":
             self.listbox_3 = Listbox(self.root)
             self.listbox_3.place(x = 350, y = 60)
@@ -134,6 +132,8 @@ class Stats:
                     self.listbox_4.insert(END, "Graph_2")
                 if self.select_graph_liste_stat[self.variable2][self.variable][z] == 3:
                     self.listbox_4.insert(END, "Graph_3")
+                if self.select_graph_liste_stat[self.variable2][self.variable][z]== 4:
+                    self.listbox_4.insert(END, "Graph_4")
                 if self.select_graph_liste_stat[self.variable2][self.variable][z] == 5:
                     self.listbox_4.insert(END, "Graph_5")
 
@@ -465,12 +465,18 @@ class Stats:
                     title2 = "Jeux"
                     title = "Score Moyen en fonction du Jeu"
                     Legend1 = "Score Moyen"
-                    moyenne_moyenne = [] #moyenne des moyennes
                     for jeu in self.data[0].keys():
                         x0.append(self.data[0][jeu]["moyenne"][0])
                         y.append(jeu)
                 elif lequel == "stat4":
-                    pass
+                    title2 = "Jeux"
+                    title = "Temps moyen en fonction du Jeu"
+                    Legend1 = "Temps Moyen"
+                    for jeu in self.data[2].keys():
+                        x0.append(self.data[2][jeu]["player_count"][self.user])
+                        y.append(jeu)
+
+
 
         Graph_4_exe(self.root,self.user,x0,y, x1,title,title2, Legend1, Legend2,name_y_axe)
 
@@ -599,16 +605,10 @@ class Stats:
                     for parametters in x0:
                         for games in self.data[2].keys():
                             if parametters == "Temps moyen passé par {}".format(self.user):
-                                try: x0[parametters][games] = self.data[0][games][self.user][0]
-                                except: x0[parametters][games] = 0
-                            elif parametters == "Temps passé par {} (Meilleur partie)".format(self.user):
-                                try: x0[parametters][games] = self.data[0][games][self.user][1]
+                                try: x0[parametters][games] = self.data[0][games]["player_count"][self.user]
                                 except: x0[parametters][games] = 0
                             elif parametters == "Temps passé en moyenne":
-                                try: x0[parametters][games] = self.data[0][games]["moyenne"][0]
-                                except: x0[parametters][games] = 0
-                            elif parametters == "Temps passé par le meilleur du jeu":
-                                try: x0[parametters][games] = self.data[0][games]["moyenne"][1]
+                                try: x0[parametters][games] = self.data[0][games]["moyenne"]
                                 except: x0[parametters][games] = 0
             elif sur_qui == "Statistiques sur toi": #si la personne veut un graphique sur ses données
                 if lequel == "stat1": #Nombres de parties du joueur en fonction de jeu*
@@ -650,14 +650,10 @@ class Stats:
                     label_y = "temps"
                     x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
                     for games in x0:
-                        try: x0[games]["Temps moyen passé par {}".format(self.user)] = self.data[0][games][self.user][0]
+                        try: x0[games]["Temps moyen passé par {}".format(self.user)] = self.data[2][games]["player_count"][self.user][0]
                         except: x0[games]["Temps moyen passé par {}".format(self.user)] = 0
-                        try: x0[games]["Temps passé par {} (Meilleur partie)".format(self.user)] = self.data[0][games][self.user][1]
-                        except: x0[games]["Temps passé par {} (Meilleur partie)".format(self.user)] = 0
-                        try: x0[games]["Temps passé en moyenne"] = self.data[0][games]["moyenne"][0]
+                        try: x0[games]["Temps passé en moyenne"] = self.data[2][games]["moyenne"]
                         except: x0[games]["Temps passé en moyenne"] = 0
-                        try: x0[games]["Temps passé par le meilleur du jeu"] = self.data[0][games]["moyenne"][1]
-                        except: x0[games]["Temps passé par le meilleur du jeu"] = 0
 
         Graph_5_exe(self.root,self.user,x0,title,label_y)
 
