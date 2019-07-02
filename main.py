@@ -188,5 +188,4 @@ bouton_7 = BoutonS(2, 7, "Flappy", Flappy_Bird, "Flappy")
 #data__ = get_statistics()
 #print(data__)
 
-
 root_main.mainloop()
