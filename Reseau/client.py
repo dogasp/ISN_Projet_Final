@@ -73,7 +73,7 @@ def get_player_score(User_name):
 def get_statistics():
     """récupération des données statistiques récoltées"""
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket
-    s.settimeout(0.4)
+    s.settimeout(1)
     try:
         s.connect((Host, Port)) #on lie l'adresse ip et le port
     except:
@@ -83,11 +83,16 @@ def get_statistics():
          {"Tete": {"moyenne": 0, "player_count":{}}, "Snake": {"moyenne":0, "player_count":{}}, "Ghost": {"moyenne":0, "player_count":{}}, "Minesweeper": {"moyenne":0, "player_count":{}},\
          "Tetris": {"moyenne":0, "player_count":{}}, "Pendu": {"moyenne":0, "player_count":{}}, "Pong": {"moyenne":0, "player_count": {}}, "Flappy": {"moyenne":0, "player_count":{}} }]
     s.send("statistics_get ".encode("utf-8")) #on demande la liste
-    response = s.recv(8192)
+    response = b""
+    while True:
+        packet = s.recv(4096)
+        response += packet
+        if len(packet) < 4096:
+            break
+        
     response = pickle.loads(response) #on désérialise la réponse pour récupérer un dictionnaire
 
     s.close()
 
     return response
 
-#https://pythonprogramming.net/pickle-objects-sockets-tutorial-python-3/
