@@ -26,17 +26,17 @@ class Stats:
         self.Canvas_stat.create_text(100,350, text = "Graph_1", fill  = 'white',font= ("Berlin Sans FB", 21))
         self.Canvas_stat.create_image(100, 475, image = self.graph1)
 
-        """self.Canvas_stat.create_text(300,350, text = "Graph_2", fill  = 'white',font= ("Berlin Sans FB", 21))
-        self.Canvas_stat.create_image(500, 300, image = self.graph2)
+        self.Canvas_stat.create_text(300,350, text = "Graph_2", fill  = 'white',font= ("Berlin Sans FB", 21))
+        self.Canvas_stat.create_image(300, 475, image = self.graph2)
 
         self.Canvas_stat.create_text(500,350, text = "Graph_3", fill  = 'white',font= ("Berlin Sans FB", 21))
-        self.Canvas_stat.create_image(500, 300, image = self.graph3)
+        self.Canvas_stat.create_image(500, 475, image = self.graph3)
 
         self.Canvas_stat.create_text(700,350, text = "Graph_4", fill  = 'white',font= ("Berlin Sans FB", 21))
-        self.Canvas_stat.create_image(500, 300, image = self.graph4)
+        self.Canvas_stat.create_image(700, 475, image = self.graph4)
 
         self.Canvas_stat.create_text(900,350, text = "Graph_5", fill  = 'white',font= ("Berlin Sans FB", 21))
-        self.Canvas_stat.create_image(500, 300, image = self.graph5)"""
+        self.Canvas_stat.create_image(900, 475, image = self.graph5)
 
         self.listbox_1 = Listbox(self.Canvas_stat, width = 16, height = 9, font = ("Berlin Sans FB", 15))
         self.listbox_1.place(x = 50, y = 90)
