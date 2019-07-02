@@ -33,6 +33,9 @@ class demineur:
         self.level_medium = PhotoImage(file = "Minesweeper/Images/level_medium.png")
         self.level_hard = PhotoImage(file = "Minesweeper/Images/level_hard.png")
 
+        self.image_fond_mine = PhotoImage(file = "Minesweeper/Images/image_fond_mine.png")
+        self.iamge_title = PhotoImage(file = "Minesweeper/Images/titre.png")
+
         #interface pour afficher les regles
         self.show_rules = Toplevel()
         self.show_rules.title('Règles')
@@ -75,7 +78,7 @@ class demineur:
         self.root = Toplevel() #fenetre principale
         self.root.title("Minesweeper")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
-        self.root.geometry("950x450")
+        self.root.geometry("950x490")
         self.root.resizable(False,False)
         self.root.focus_force()
         self.root.withdraw() #on masque la fenetre principale le temps de la sélection de la difficulté
@@ -115,43 +118,36 @@ class demineur:
         if level == 0: #sélection des dimensions et du nombre de mines suivant le niveau sélectionné
             self.dims = (9,9)
             self.mine_Count = 10
-            offset = (150, 50)
+            offset = (362, 117)
         elif level == 1:
             self.dims = (16,16)
             self.mine_Count = 40
-            offset = (100, 0)
+            offset = (275, 75)
         else:
             self.dims = (30, 16)
             self.mine_Count = 99
-            offset = (0, 0)
+            offset = (100, 75)
 
         self.first = False
         self.root.deiconify()   # affichage de la fenetre principale
         self.root.focus_force() # on force le focus
 
-        self.Frame_right = Frame(self.root, width = 700 , height = 400, bg = 'white')
-        self.Frame_left = Frame(self.root, width = 200  , height = 800  , bg = 'white')
-        self.Frame_top = Frame(self.root, width = 600 , height = 50, bg = 'lightgrey')
+        self.Frame_right = Canvas(self.root, width = 950 , height = 490, bg = 'white')
+        self.Frame_right.place(x = 0, y = 0)
 
-        self.Frame1 = Frame(self.Frame_left, width = 200, height = 320)
-        self.Frame2 = Frame(self.Frame_left, width = 200, height = 480, bg = 'black')
+        self.Frame_right.create_image(475,245, image = self.image_fond_mine)
+        self.Frame_right.create_image(475,35, image = self.iamge_title)
 
-        self.Frame_top.pack(side = TOP)
-        self.Frame_left.pack(side = LEFT)
-        self.Frame_right.pack(side = LEFT, fill = BOTH)
-        self.Frame1.pack(side = TOP)
-        self.Frame2.pack(side = BOTTOM)
-
-        self.Button_quit = Button(self.Frame_top, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 10), cursor ='hand2',command = self.exit)
-        self.Button_quit.place(x = 550, y = 19)
+        self.Button_quit = Button(self.Frame_right, text = 'QUIT' ,relief = GROOVE ,font = ("Helvetica", 18), cursor ='hand2',command = self.exit)
+        self.Button_quit.place(x = 725, y = 17)
 
         self.flag_count = 0 #nombre de drapeaux cliqués
-        self.label_flag = Label(self.Frame1, text = "Drapeaux restants: {}".format(self.mine_Count))
-        self.label_flag.place(x = 20, y = 10)
+        self.label_flag = Label(self.Frame_right, text = "Drapeaux restants: {}".format(self.mine_Count),font = ("Helvetica", 18))
+        self.label_flag.place(x = 30, y = 20)
 
         self.grid = [[0 for i in range(self.dims[1])] for j in range(self.dims[0])] #création de la grille contenant l'état des cellules
 
-        self.canvas = Canvas(self.Frame_right, width = 800, height = 400, bg = "white", highlightthickness=0)
+        self.canvas = Canvas(self.Frame_right, width = self.dims[0]*self.border, height = self.dims[1]*self.border, bg = "red", highlightthickness=0)
         self.canvas.bind("<Button>", self.click)
         self.canvas.place(x = offset[0], y = offset[1])
 
@@ -275,8 +271,6 @@ class demineur:
         question = askquestion("Restart", "Partie finie.\nVeux-tu recommencer?")
         if question == "yes": #si oui, on cache la fenete et on redemande la difficulté
             self.Frame_right.destroy()
-            self.Frame_left.destroy()
-            self.Frame_top.destroy()
             self.root.withdraw()
             self.difficulty()
         else:
