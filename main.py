@@ -75,12 +75,17 @@ def para():
     Button_para.config( image = door, command = lambda: leave_para(playground))
 
     text = "Le but de cette application est de s'ammuser en jouant a des jeux.\nTu peux défier tes amis en comparant leur score au tien\nsur différents jeux et essayer de faire le meilleur score possible."
+
     Label(playground, text = "Aide", font = ("Helvetica", 25), bg = "#111111", fg = "#888888").place(x = 300, y = 20)
     Label(playground, text = text, font = ("Helvetica", 10), bg = "#111111", fg = "#888888").place(x = 100, y = 60)
-    bouton_stat = playground.create_text(40,250, text = 'Stat', font = ("Helvetica", 25), fill = "grey")
+
+    image_stat = PhotoImage(file = 'Parametters/image_stat.png')
+    image_stat_button = playground.create_image(300,240, image = image_stat)
+    bouton_stat = playground.create_text(300,200, text = 'Statistiques', font = ("Helvetica", 25), fill = "grey")
+
 
     playground.tag_bind(bouton_stat, "<Button-1>", execute)
-
+    playground.tag_bind(image_stat_button, "<Button-1>", execute)
 def execute(event = None):
     root_main.withdraw()
     app = Stats(User_name)

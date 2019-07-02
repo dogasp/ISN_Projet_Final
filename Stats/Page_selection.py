@@ -68,9 +68,9 @@ class Stats:
         1, 0, 0, 4, 5, 1, 0, 0, 4, 5,  #Score moyen
         1, 0, 0, 4, 5, 1, 0, 0, 4, 5])#Temps
         self.select_graph_liste_stat.resize((4,2,5))
-
+        """
         Reset_button = Button(self.Canvas_stat, text = "Reset", command = self.Reset)
-        Reset_button.place(x = 700, y = 300)
+        Reset_button.place(x = 700, y = 300)"""
         self.root.mainloop()
 
     def exit(self):
