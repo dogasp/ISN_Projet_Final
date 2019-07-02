@@ -9,6 +9,7 @@ class Stats:
         self.user = user
         self.root = Toplevel()
         self.root.geometry("1000x600")
+        self.root.resizable(False,False)
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
 
         self.image_fond = PhotoImage(file = "Parametters/Stat.png")
