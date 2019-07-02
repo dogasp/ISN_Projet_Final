@@ -120,8 +120,6 @@ class pong:
 
     def start(self):
         self.count += 1
-        self.root.bind("<KeyPress>", self.start_move)
-        self.root.bind("<KeyRelease>", self.stop_move)
         self.Canvas_dessine.delete("all")
 
         self.start_button = Button(self.Frame1, image = self.button_start_image, borderwidth = 0, relief = FLAT, bg = 'black', cursor ='hand2',activebackground = 'black', highlightthickness = 0,  command = self.resume)
@@ -151,6 +149,8 @@ class pong:
     def resume(self, event = None):
         if self.paused == True:
             self.paused = False
+            self.root.bind("<KeyPress>", self.start_move)
+            self.root.bind("<KeyRelease>", self.stop_move)
             self.update()
 
     def start_move(self, event):
@@ -224,9 +224,13 @@ class pong:
     def pause_command(self, event = None):
         if self.paused == False:
             self.start_button.configure(state = "normal")
+            self.root.unbind("<KeyPress>")
+            self.root.unbind("KeyRelease")
             self.paused = True
         else:
             self.paused = False
+            self.root.bind("<KeyPress>", self.start_move)
+            self.root.bind("<KeyRelease>", self.stop_move)
             self.update()
 
     def dead(self, looser):
@@ -263,7 +267,7 @@ class Ball:
         self.vitesse = Vector(direction, 0)
         theta = randrange(-70,70)/100
         self.vitesse.rotate(theta)
-        self.vitesse.setMag(4)
+        self.vitesse.setMag(10)
 
     def update(self):
         if self.pos.y + 20 > self.parent.height:
@@ -280,7 +284,7 @@ class Ball:
                 return 0
             offset = self.parent.bot.pos.y - self.pos.y
             toApply = mapping(offset, -55, 55, 4, -4)
-            toApply += randrange(-int(abs(self.vitesse.y/1.2)), int(abs(self.vitesse.y/1.2))+1) #un peux d'aléatoire...
+            toApply += randrange(-int(abs(self.vitesse.y)), int(abs(self.vitesse.y))+1) #un peux d'aléatoire...
             temp = self.vitesse.mag()
             self.vitesse.y += toApply
             self.vitesse.setMag(temp)
