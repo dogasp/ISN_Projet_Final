@@ -41,6 +41,7 @@ class application:
         self.cell_height = 500/self.nbcases_height
         self.score_star = 0            #bonnus des pièces
         self.time_game = 0
+        self.score_temp = 0
 
         self.table = [[0 for i in range(self.nbcases_width)] for j in range(self.nbcases_height)]#tableau
         self.level = 1 #niveau
@@ -216,6 +217,7 @@ class application:
         self.update()
 
     def update(self, Print_Score = True): #fonction pour regénérer l'affichage
+        self.verite = True
         try:
             self.Table.delete("all") #on supprime tout ce qu'il y a sur le canvas
         except: pass
@@ -247,6 +249,7 @@ class application:
             self.show_score["text"] = "Score: %s" %str(int(sum(self.score))) #actualisation du score
 
     def exit_menu(self):
+        self.score[-1] += self.score_temp
         self.exit()
 
     def next(self):
@@ -254,6 +257,7 @@ class application:
         self.score.append(50*(self.level+1))  # création d'un nouveau slot dans la liste des scores pour le nouveau niveau initié avec une valeur car il y a un malus appliqué dans la foction restart
         self.level += 1                  # incrémentation du niveau
         if self.level == len(Levels)+1:  # si le joueur a atteint la fin de la liste des niveaux
+            self.verite = False
             self.score[-1] = 0           # le dernier score ne doit pas avoir d'offset
             self.exit()                  # on quitte le jeu en arretant la fonction
             return
@@ -297,6 +301,9 @@ class application:
     def restart2(self):
         try:
             self.canvas_question.destroy()
+        except: pass
+        try:
+            self.Table.destroy()
         except: pass
         self.Table = Canvas(self.Frame_right,width = 500, height = 500, bg ='white', highlightthickness=0)
         self.Table.pack(fill = BOTH)
@@ -380,13 +387,11 @@ class application:
         self.restart2()   #restart de l'application
 
     def exit(self): #fonction pour quitter, elle se charge de détruire les fenètres lancées
-        try:
-            self.canvas_question.destroy()
-        except: pass
+        if self.verite == True:
+            self.score[-1] += self.score_temp
         self.count = 1
         self.root_tete.destroy()
         self.root_tete.quit()
-
 
 def Tete(user): #fonction principale
     jeux = application(user)

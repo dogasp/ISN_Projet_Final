@@ -66,7 +66,7 @@ class snake:
 
     #------------------3------------------------------------------------------------------
         self.Rules4 = Label(self.Frame_main2_wind2, text = "Cependant attention tu peux mourir en rencontrant \n\
-        en mourir, ou en te retournant sur toi même.",font = ("Berlin Sans FB", 12))
+        le mur, ou en te retournant sur toi même.",font = ("Berlin Sans FB", 12))
         self.Frame_main2_wind2.after(3500, lambda: self.Rules4.place(x = 20, y = 300))
 
         self.CANVAS3 = Canvas(self.Frame_main2_wind2, width = 90, height = 62)

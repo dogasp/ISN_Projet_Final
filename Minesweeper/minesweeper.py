@@ -56,7 +56,7 @@ class demineur:
         self.image1 = PhotoImage(file = "Minesweeper/Images/explode.png")
         Label(self.Frame_main2_wind2, image = self.image1).place(x = 450, y = 80)
 
-        Label(self.Frame_main2_wind2, text = "il faut donc révéler les cases avec le clique gauche\n Ne nombre affiché sur la case renseigne sur\n le nombre de bombres adjascentes à celle-ci").place(x = 20, y = 150)
+        Label(self.Frame_main2_wind2, text = "il faut donc révéler les cases avec le clique gauche\n Le nombre affiché sur la case renseigne sur\n le nombre de bombres adjascentes à celle-ci").place(x = 20, y = 150)
 
         Label(self.Frame_main2_wind2, text = "Il faut donc placer des drapeaux (clique droit) sur les cases\n contenant des bombes afin de les sécuriser").place(x = 20, y = 220)
         self.image3 = PhotoImage(file = "Minesweeper/Images/flag.png")
