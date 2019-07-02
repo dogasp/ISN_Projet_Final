@@ -79,13 +79,10 @@ def para():
     Label(playground, text = "Aide", font = ("Helvetica", 25), bg = "#111111", fg = "#888888").place(x = 300, y = 20)
     Label(playground, text = text, font = ("Helvetica", 10), bg = "#111111", fg = "#888888").place(x = 100, y = 60)
 
-    image_stat = PhotoImage(file = 'Parametters/image_stat.png')
-    image_stat_button = playground.create_image(300,500, image = image_stat)
-    bouton_stat = playground.create_text(300,200, text = 'Statistiques', font = ("Helvetica", 25), fill = "grey")
+    bouton_stat = playground.create_text(300,100, text = 'Statistiques', font = ("Helvetica", 25), fill = "grey")
 
 
     playground.tag_bind(bouton_stat, "<Button-1>", execute)
-    playground.tag_bind(image_stat_button, "<Button-1>", execute)
 
 def execute(event = None):
     root_main.withdraw()
