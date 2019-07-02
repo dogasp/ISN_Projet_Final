@@ -91,7 +91,7 @@ class Stats:
 
     def Select_mode0(self, event = None):
         self.listbox_2 = Listbox(self.Canvas_stat, width = 19, height = 9, font = ("Berlin Sans FB", 15))
-        self.listbox_2.place(x = 250, y = 90)
+        self.listbox_2.place(x = 270, y = 90)
         self.listbox_2.insert(END, "Statistiques sur Application")
         self.listbox_2.insert(END, "Statistiques sur jeu")
         self.listbox_2.bind("<ButtonRelease-1>", self.Select_mode)
@@ -120,7 +120,7 @@ class Stats:
             self.listbox_3.bind("<ButtonRelease-1>", self.get_variable_2)
         else:
             self.listbox_3 = Listbox(self.Canvas_stat, width = 15, height = 9, font = ("Berlin Sans FB", 15))
-            self.listbox_3.place(x = 500, y = 90)
+            self.listbox_3.place(x = 520, y = 90)
             self.listbox_3.insert(END, "tous les jeux")
             for elt in self.games:
                 self.listbox_3.insert(END, elt)
@@ -136,7 +136,7 @@ class Stats:
 
     def Select_graphType(self, event = None):
         self.listbox_4 = Listbox(self.Canvas_stat, width = 15, height = 9, font = ("Berlin Sans FB", 15))
-        self.listbox_4.place(x = 700, y = 90)
+        self.listbox_4.place(x = 720, y = 90)
         if self.selected_mode2 == "Statistiques sur jeu":
             for z in range(len(self.select_graph_liste_game[0][0])):
                 if self.select_graph_liste_game[self.variable2][self.variable][z]== 1:
