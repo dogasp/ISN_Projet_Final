@@ -1,6 +1,7 @@
 from tkinter import *
 from Reseau.client import *
 from tkinter import font
+import sys
 sys.path.append('../')
 
 from Tete_chercheuse.tete_chercheuse import *
@@ -118,7 +119,6 @@ Frame_top.pack(ipadx = 1000, ipady =50, side = TOP)
 
 Frame_left = Frame(root_main, bg ='#111111')
 Frame_left.pack(ipadx = 100, ipady =500,side = LEFT)
-
 Frame_right = Frame(root_main, bg ='#111111')
 Frame_right.pack(ipadx = 20, ipady = 600,side = RIGHT)
 

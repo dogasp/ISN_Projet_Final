@@ -1,4 +1,5 @@
 from tkinter import *
+import sys
 
 sys.path.append("../Reseau")
 from Stats.Page_stat import *
@@ -622,7 +623,7 @@ class Stats:
                     Legend1 = "Nb de parties"
                     label_y = "score"
                     title = "Différentes stats sur les nombres de parties en fonctions des jeux"
-                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
+                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
                     for games in x0:
                         if len(self.data[0][games]["player_count"]) != 0:
                             x0[games]["Moyenne de parties"] = self.data[0][games]["moyenne"][1]/len(self.data[0][games]["player_count"])
@@ -634,7 +635,7 @@ class Stats:
                     Legend1 = "score"
                     label_y = "score"
                     title = "Différentes stats sur les Scores Max en fonction des Jeux"
-                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
+                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
                     for games in x0:
                         x0[games]["Score maximum"] = get_game_score_list(games)[0][1]
                         x0[games]["Score moyen"] = self.data[0][games]["moyenne"][0]
@@ -644,7 +645,7 @@ class Stats:
                     Legend1 = "Nb de parties"
                     label_y = "score"
                     title = "Différentes stats sur les Scores Moyens en fonction des Jeux"
-                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
+                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
                     for games in x0:
                         try: x0[games]["Score moyen de {}".format(self.user)] = self.data[0][games]["player_count"][self.user][1]
                         except: x0[games]["Score moyen de {}".format(self.user)] = 0
@@ -655,7 +656,7 @@ class Stats:
                     title = "Différentes stats sur les Scores Moyens en fonction des Jeux"
                     Legend1 = " Score total"
                     label_y = "temps"
-                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Space': {}, 'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
+                    x0 ={'Tete': {}, 'Pendu': {}, 'Ghost': {},'Snake': {},'Minesweeper': {}, 'Tetris': {}, 'Pong': {},  'Flappy': {}}
                     for games in x0:
                         try: x0[games]["Temps moyen passé par {}".format(self.user)] = self.data[2][games]["player_count"][self.user][0]
                         except: x0[games]["Temps moyen passé par {}".format(self.user)] = 0

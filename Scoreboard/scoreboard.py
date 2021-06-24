@@ -1,4 +1,5 @@
 from tkinter import *
+import sys
 sys.path.append('../')
 from Reseau.client import *
 

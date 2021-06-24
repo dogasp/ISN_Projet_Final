@@ -2,6 +2,7 @@ from tkinter import * #@UnusedWildImport
 from tkinter.messagebox import *
 from tkinter.font import Font
 from time import sleep, time
+import sys
 sys.path.append('../Reseau')
 from Reseau.client import *
 sys.path.append('../Scoreboard')

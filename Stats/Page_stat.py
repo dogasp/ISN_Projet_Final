@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter as tk
 import matplotlib
+import sys
 matplotlib.use("TkAgg")
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
