@@ -30,7 +30,6 @@ class ghost:
         self.Jerry_3 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_3.png")
         self.Jerry_2 = PhotoImage(file = "Fantome/Ressources/Images/Jerry_2.png")
 
-
         self.main = PhotoImage(file = "Parametters/main2.png")
         self.next_image = PhotoImage(file = "Parametters/next2.png")
         self.fond_ecran = PhotoImage(file = "Parametters/fond_ecran.png")

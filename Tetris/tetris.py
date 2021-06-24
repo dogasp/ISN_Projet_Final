@@ -127,9 +127,9 @@ class tetris:
         self.Frame_main2_wind2 = Frame(self.Frame_main1_wind2,width = 550, height = 425, relief = GROOVE) #second frame, au dessus
         self.Frame_main2_wind2.place(x = 60, y = 45)
 
-        first_label = Label(self.Frame_main2_wind2, text = "Tu disposes de pièces qui descendent du ciel\n pour interagir, tu peux utiliser\n les touches directionelles")
+        first_label = Label(self.Frame_main2_wind2, text = "Tu disposes de pièces qui descendent du ciel\n pour intéragir, tu peux utiliser\n les touches directionelles")
         self.Frame_main2_wind2.after(1000, lambda: first_label.place(x = 20, y = 80))
-        
+
         self.image1 = PhotoImage(file = "Tetris/Images/rules1.png")
         first_image = Label(self.Frame_main2_wind2, image = self.image1)
         self.Frame_main2_wind2.after(1500, lambda: first_image.place(x = 380, y = 57))
@@ -141,16 +141,14 @@ class tetris:
         third_image = Label(self.Frame_main2_wind2, image = self.image3)
         self.Frame_main2_wind2.after(2500, lambda: third_image.place(x = 380, y = 200))
 
-        third_label = Label(self.Frame_main2_wind2, text = "Tu gagne des points lorsque tu complète des lignes")
+        third_label = Label(self.Frame_main2_wind2, text = "Tu gagnes des points lorsque tu complètes des lignes")
         self.Frame_main2_wind2.after(3000, lambda: third_label.place(x = 20, y = 230))
 
-        
-        fourth_label = Label(self.Frame_main2_wind2, text = "Mais attention, si le tas atteint le heut,\n tu as perdus")
-        self.Frame_main2_wind2.after(3500, lambda: fourth_label.place(x = 350, y = 300))
+        fourth_label = Label(self.Frame_main2_wind2, text = "Mais attention, si le tas atteints le haut,\n tu as perdu!!!")
+        self.Frame_main2_wind2.after(3500, lambda: fourth_label.place(x = 200, y = 300))
 
         self.Button_Skip = Button(self.Frame_main2_wind2, text = "-Skip-", cursor ='hand2', command = self.quit_rules)
         self.Button_Skip.place(x = 30, y = 370)
-
 
         self.show_rules.mainloop()
 

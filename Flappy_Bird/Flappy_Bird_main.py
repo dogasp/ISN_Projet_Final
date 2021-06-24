@@ -32,7 +32,7 @@ class bird:
         self.Rules = Label(self.Frame_main2_wind2, text = 'Les règles:', font = ("Berlin Sans FB", 23), relief = GROOVE)
         self.Rules.place(x = 200, y =5)
 
-        first_label = Label(self.Frame_main2_wind2, text = "Le but du jeu est de faire avancer l'oiseau\n entre des tuyaux")
+        first_label = Label(self.Frame_main2_wind2, text = "Le but du jeu est de faire avancer l'oiseau\n entre les tuyaux")
         self.Frame_main2_wind2.after(1000, lambda: first_label.place(x = 20, y = 80))
         self.image1 = PhotoImage(file = "Flappy_Bird/Ressources/rules1.png")
         first_image = Label(self.Frame_main2_wind2, image = self.image1)

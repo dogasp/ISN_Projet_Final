@@ -74,13 +74,9 @@ def para():
     playground = Canvas(root_main, highlightthickness = 0,width = 800, height = 500, bg = "#111111")
     playground.place(x = 200, y = 100)
     Button_para.config( image = door, command = lambda: leave_para(playground))
-
     text = "Le but de cette application est de s'ammuser en jouant a des jeux.\nTu peux défier tes amis en comparant leur score au tien\nsur différents jeux et essayer de faire le meilleur score possible."
     Label(playground, text = "Aide", font = ("Helvetica", 25), bg = "#111111", fg = "#888888").place(x = 300, y = 20)
     Label(playground, text = text, font = ("Helvetica", 10), bg = "#111111", fg = "#888888").place(x = 100, y = 60)
-    bouton_stat = playground.create_text(40,250, text = 'Stat', font = ("Helvetica", 25), fill = "grey")
-
-    playground.tag_bind(bouton_stat, "<Button-1>", execute)
 
 def execute(event = None):
     root_main.withdraw()
@@ -112,6 +108,7 @@ root_user.mainloop()
 root_main = Tk()
 root_main.geometry('1020x600')
 root_main.title("Menu")
+root_main.resizable(False,False)
 root_main.focus_force()
 #########################-----Création de la forme de la page----------------------#######################################
 Frame_top = Frame(root_main, bg ='#111111') #création des pannels
@@ -143,9 +140,11 @@ Frame_ranking.place(x = 2, y = 70)
 
 gearImg = PhotoImage(file = 'Parametters/gear.png')
 door = PhotoImage(file = "Parametters/door.png")
+image_stat = PhotoImage(file = "Parametters/image_stat.png")
 Button_para = Button(Frame_top, image = gearImg, bg = "#111111", borderwidth = 0, highlightthickness = 0, cursor = "hand2", command = para)
-Button_para.place(x = 900, y = 30)
-
+Button_para.place(x = 860, y = 25)
+Button_stats = Button(Frame_top,image = image_stat, bg = "#111111", borderwidth = 0, highlightthickness = 0, cursor = "hand2", command = execute)
+Button_stats.place(x = 930, y = 20)
 score = get_score_list() #récupération du scoreboard
 
 #############---------Création des labels et autres au contour du Frame_main-------#########################
@@ -185,5 +184,7 @@ bouton_5 = BoutonS(5, 1, "Tetris", Tetris, "Tetris")
 bouton_6 = BoutonS(5, 7, "Pong", Pong, "Pong")
 bouton_7 = BoutonS(2, 7, "Flappy", Flappy_Bird, "Flappy")
 
-#print(get_statistics())
+#data__ = get_statistics()
+#print(data__)
+
 root_main.mainloop()
